@@ -68,5 +68,7 @@ nav:
   - Network Context: network_context.md
   - Hardware Inventory: hw_inv.md
   - Docker Inventory: docker_inv.md
+  - Software Inventory: software_inventory.md
+  - Tailscale Reference: tailscale.md
 copyright: Copyright &copy; 2025 C. O'Shaughnessy as inspired by James Willett
 

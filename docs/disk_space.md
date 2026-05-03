@@ -1,13 +1,13 @@
 # Disk Space Report
 
-_Last updated: 2026-04-15 05:15 PM EDT_
+_Last updated: 2026-04-28 08:15 PM EDT_
 ## Summary
 
 | Host | Healthy Filesystems |
 |------|-------------------|
 | git-ansible-deb | ✅ 3 OK |
 | snipeit-deb | ✅ 4 OK |
-| grafana-docker-deb | ✅ 9 OK |
+| grafana-docker-deb | ✅ 13 OK |
 | swarm01-deb | ✅ 3 OK |
 | swarm02-deb | ✅ 4 OK |
 | swarm03-deb | ✅ 4 OK |
@@ -17,7 +17,7 @@ _Last updated: 2026-04-15 05:15 PM EDT_
 | pihole-book-deb | ✅ 2 OK |
 | docker-deb | ✅ 7 OK |
 | 2404HV-deb | ✅ 4 OK |
-| mediastack-deb | ✅ 25 OK |
+| mediastack-deb | ✅ 31 OK |
 | rocky-rpm | ✅ 2 OK |
 | alma-rpm | ✅ 2 OK |
 | plow-rpm | ✅ 9 OK |

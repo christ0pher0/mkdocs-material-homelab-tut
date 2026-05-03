@@ -1,22 +1,22 @@
 # Homelab Todo & Roadmap
-_Last updated: 2026-04-27_
+_Last updated: 2026-04-12_
 
 ---
 
 ## Critical / Security
-  - [x] **Deploy Zabbix** — proactive monitoring before failures hit
-  - [x] Zabbix server — deploy on Proxmox VM or docker-deb
-  - [x] Zabbix agent on every managed Linux host
-  - [ ] ZFS plugin — monitor RAIDZ1 health, drive errors on TrueNAS ⚠️
+- [ ] FreeNAS 2019 → TrueNAS Community Edition — EOL OS on 45TB of data
+- [ ] **Deploy Zabbix** — proactive monitoring before failures hit
+  - [ ] Zabbix server — deploy on Proxmox VM or docker-deb
+  - [ ] Zabbix agent on every managed Linux host
+  - [ ] ZFS plugin — monitor RAIDZ1 health, drive errors on FreeNAS ⚠️
   - [ ] Disk space alerts — eld D: (10%), amontillado D: (11%), pi1 SD (91%) ⚠️
   - [ ] RAM/CPU/temperature monitoring fleet-wide
-  - [ ] Service health checks — mediastack containers, Plex/Ozymandias
+  - [ ] Service health checks — mediastack containers, Plex jails
   - [ ] **Telegram alerts** — bot notifications when something looks wrong
   - [ ] Alert on: drive errors, disk >85%, service down, high temp, RAM pressure
-
 ### Backup Strategy (eld)
 - [ ] Migrate eld to Ubuntu 26.04
-- [ ] Deploy Restic — automated backups from TrueNAS (Tier 1)
+- [ ] Deploy Restic — automated backups from FreeNAS (Tier 1)
 - [ ] Configure 2x CRU bays on eld for rotating manual drives (Tier 2)
 - [ ] Establish offsite drive rotation schedule (Tier 3)
 - [ ] Expand backup coverage — currently only Patreon O-Z backed up, A-N missing
@@ -29,7 +29,8 @@ _Last updated: 2026-04-27_
 - [ ] Inventory 5 remaining waiting systems — match hardware to roles
 - [ ] Inventory pve3 (ThinkStation offsite) — specs, storage, role
 - [ ] Complete IP renumbering (Rocky/Alma/RHEL .51-.53 → .80-.82, Pis, TVs etc.)
-- [ ] Purchase [Hologram.io](http://Hologram.io) SIM for argos-deb LTE
+- [ ] Remove alea_iacta_est (plex-plexpass_2) jail from FreeNAS — experimental, not needed
+- [ ] Purchase Hologram.io SIM for argos-deb LTE
 - [ ] Purchase larger SD card for pi1-deb (3.8GB, 91% full)
 - [ ] Evaluate LambdaLabs workstation — potential multi-GPU AI node
 - [x] Deploy Gitea as Docker container — not dedicated Pi 4-15-1026
@@ -52,44 +53,6 @@ _Last updated: 2026-04-27_
 ---
 
 ## Planned Projects
-
-### TrueNAS Hardware Rebuild ⭐
-- [ ] Check temerant-win 2x 3TB HDDs for important data before touching hardware
-- [ ] Pull mobo (Gigabyte AB350-Gaming), Ryzen 5 1600X, 32GB DDR4, GTX 1080 Ti, 500GB SSD from temerant-win
-- [ ] Install temerant hardware into existing FreeNAS beige full tower
-- [ ] Order LSI 9207-8i or 9211-8i HBA card — flashed to IT mode (~$20-40 on eBay)
-- [ ] Order 2x SFF-8087 to SATA breakout cables (~$5-10 each on eBay)
-- [ ] Install HBA in new mobo, connect 5x 18TB drives via breakout cables
-- [ ] Install TrueNAS 13.0 on 500GB SSD — no more USB boot drives
-- [ ] Boot TrueNAS, import TRYAGAIN pool
-- [ ] Reconfigure SMB shares, cifs1 user, services
-- [ ] Update mediastack-deb fstab if IP changes
-- [ ] Update hw_inventory.md — freenas-bsd entry reflects new hardware
-- [ ] Future expansion: 1x CRU hot-swap bay available + 2x internal mounts = up to 8 drives total (144TB raw at 18TB, 160TB raw at 20TB)
-- [ ] Consider TrueNAS SCALE for VM/container support on same box
-
-### TrueNAS — Current State (post 2026-04-27 migration)
-- [ ] Set ue0 (USB NIC) to static 192.168.1.5 — survives reboots
-- [ ] Fix alc0 onboard NIC — currently non-functional, investigate driver/hardware issue
-- [ ] Add second USB boot drive to freenas-boot mirror (zpool replace)
-- [ ] Investigate ada4 bad sectors alert from February 2026
-- [ ] Delete iocage datasets — Weltgeist and Alea Iacta Est jails no longer needed (91GB)
-- [ ] Add Training library to Ozymandias Plex — pending compose update
-- [ ] Add Photos library to Ozymandias Plex — pending compose update
-- [ ] Update hw_inventory.md freenas-bsd entry — now running TrueNAS 13.0-U6.8
-- [ ] Rename freenas-bsd host entry to truenas in inventory_auto and MkDocs
-
-### Ozymandias (Plex — mediastack-deb)
-- [x] Deploy Plex as Docker container on mediastack-deb — 2026-04-27
-- [x] Movies library scanning complete — 2026-04-27
-- [x] TV library scanning complete — 2026-04-27
-- [ ] Music library scan in progress
-- [ ] Add Training volume and library
-- [ ] Add Photos volume and library
-- [ ] Update Homepage widget with new Plex token
-- [ ] Add Tautulli — Plex analytics
-- [ ] Remove Weltgeist and Alea Iacta Est from plex.tv devices (old jails)
-- [ ] Set Powerslave Eddie as Ozymandias server icon
 
 ### Local AI Assistant
 - [ ] Deploy Ollama — local LLM backend on GPU node
@@ -125,9 +88,9 @@ _Last updated: 2026-04-27_
 - [ ] Flashforge Dreamer — evaluate FlashPrint vs Simplify3D
 
 ### eld-win → Ubuntu 26.04
-- [ ] Fresh install Ubuntu 26.04 LTS
-- [ ] Onboard with onboard_host.yml
-- [ ] Deploy Restic backup server role
+- [ ] Wait for Ubuntu 26.04 LTS release
+- [ ] Fresh install, onboard with onboard_host.yml
+- [ ] Assign new role (TBD from projects below)
 
 ### Kubernetes
 - [ ] Evaluate k3s vs full k8s
@@ -147,12 +110,7 @@ _Last updated: 2026-04-27_
 - [ ] Research Sixfab EC25-A 4G LTE setup — needs SIM card (Hologram.io recommended)
 - [ ] Research Adafruit RFM9x LoRa setup — potential LoRa gateway for long range sensors
 - [ ] Decide role — mobile node, HA kiosk, camera, LoRa gateway, or all of the above
-
-### Home Assistant — Full Setup Project
-- [ ] Phase 1 — Foundation: backup to TrueNAS share, Tailscale (WiFi disable deferred)
-- [ ] Phase 2 — Integrations: Zigbee coordinator (pi4-deb + USB dongle), MQTT broker (pi2-deb + Mosquitto), ESPHome, Frigate NVR (argos-deb camera)
-- [ ] Phase 3 — Automations: lighting, presence detection, OctoPrint integration, Music Assistant + Plex
-- [ ] Phase 4 — Display: argos-deb wall mounted kiosk dashboard
+- [ ] Home Assistant — already running on ha-net (192.168.1.125) ✅
 - [ ] Configure HA backups — currently none configured ⚠️
 - [ ] Disable WiFi on ha-net — defer until HA is fully configured
 - [x] Set DHCP reservation for ha-net ethernet MAC (e4:5f:01:65:56:ee) → .125 ✅ 2026-04-12
@@ -162,20 +120,28 @@ _Last updated: 2026-04-27_
 - [ ] Connect smart home devices to HA
 - [ ] Decide host for Zigbee/Z-Wave coordinator (pi4-deb candidate)
 
-### pve2 (Dell OptiPlex 7050 — maturin)
-- [x] Fix Proxmox enterprise repo ✅ 2026-04-12
+### Home Assistant — Full Setup Project
+- [ ] Phase 1 — Foundation: backup to FreeNAS share, Tailscale (WiFi disable deferred)
+- [ ] Phase 2 — Integrations: Zigbee coordinator (pi4-deb + USB dongle), MQTT broker (pi2-deb + Mosquitto), ESPHome, Frigate NVR (argos-deb camera)
+- [ ] Phase 3 — Automations: lighting, presence detection, OctoPrint integration, Music Assistant + Plex
+- [ ] Phase 4 — Display: argos-deb wall mounted kiosk dashboard
+
+### pve2 (Dell OptiPlex 7050)
+- [x] Fix Proxmox enterprise repo — disable ceph/enterprise, add pve-no-subscription repo ✅ 2026-04-12
 - [ ] Decide role — GPU node, k8s, Immich, or join proxmox-deb cluster
 - [ ] Check PCIe slot availability for GPU — SFF case may limit options
 - [ ] Upgrade RAM to 64GB DDR4 if needed for role
+- [ ] Set static IP or DHCP reservation at .7
+- [ ] Join Proxmox cluster with proxmox-deb and pve3 (ThinkStation)
 
 ### Proxmox Cluster
 - [x] Build 2-node wheel cluster — shardik + maturin ✅ 2026-04-12
 - [x] QDevice on git-ansible ✅ 2026-04-12
 - [ ] Add pve3 (ThinkStation) to cluster when available — proper 3-node quorum
-- [ ] Set up shared storage — NFS from TrueNAS or ZFS_SDBC via NFS to maturin
+- [ ] Set up shared storage — NFS from FreeNAS or ZFS_SDBC via NFS to maturin
 - [ ] Configure Proxmox HA for automatic VM failover
 - [ ] Add maturin and shardik to [proxmox] group in inventory_auto
-- [ ] Create Ubuntu 26.04 template on maturin
+- [ ] Create Ubuntu 24.04 template on maturin
 - [ ] Onboard shardik and maturin properly via Ansible
 - [ ] Fix AllowUsers on shardik and git-ansible — remove root, keep cos only
 - [ ] Remove ZeroTier from amontillado-win
@@ -210,10 +176,11 @@ _Last updated: 2026-04-27_
 ### Storage & Backup
 - [ ] Restic — backup solution for VMs, configs, and critical data
 - [ ] Plan backup strategy for 45TB NAS
-- [ ] Immich — self-hosted Google Photos alternative — deploy on lee-deb or Proxmox VM
-- [ ] Install Samsung 870 EVO in lee-deb, install Ubuntu Server, deploy Immich
+- [ ] Evaluate OpenMediaVault as FreeNAS alternative (lighter weight)
+- [ ] Immich — self-hosted Google Photos alternative — deploy on Proxmox VM or docker-deb (Pi 2B too slow for ML processing)
 
 ### CI/CD & Dev
+- [ ] Gitea — already suspected on git-ansible, confirm and document
 - [ ] GitLab — heavier but full CI/CD pipelines
 - [ ] Jenkins or Drone — build automation
 - [ ] ArgoCD — Kubernetes GitOps
@@ -237,11 +204,11 @@ _Last updated: 2026-04-27_
 - [ ] Document Docker Swarm setup
 - [ ] Document Proxmox VM/LXC layout
 - [ ] BookStack or Wiki.js — evaluate as MkDocs replacement for richer docs
-- [ ] Update hw_inventory.md — freenas-bsd entry to reflect TrueNAS 13.0 and new hardware plan
 
 ---
 
 ## Mediastack — Current Stack
+
 | App            | Port  | Status      |
 |----------------|-------|-------------|
 | Sonarr         | 8989  | ✅ Running  |
@@ -254,35 +221,26 @@ _Last updated: 2026-04-27_
 | Komga          | 8085  | ✅ Running  |
 | Audiobookshelf | 13378 | ✅ Running  |
 | Romm           | 8998  | ✅ Running  |
-| Gluetun VPN    | —     | ✅ Running  |
-| qBittorrent    | 8082  | ✅ Running  |
-| Homepage       | 9898  | ✅ Running  |
-| Unpackerr      | —     | ✅ Running  |
-| MariaDB        | —     | ✅ Running  |
 | WireGuard VPN  | 8080  | ✅ Running  |
-| Ozymandias (Plex) | 32400 | ✅ Running |
+| MariaDB        | —     | ✅ Running  |
 
-## Mediastack — To Do
-- [ ] Clean up dead indexers in Prowlarr — Badass Torrents, BitSearch, Torlock, LimeTorrents, Pirate Bay, TheRARBG
-- [ ] Plex Music library not showing on mobile — unresolved (Plex Pass confirmed)
-- [ ] Unify all separate docker-compose files into one master compose
-- [ ] Add Unpackerr to Uptime Kuma monitoring (Docker container type)
-- [ ] Add mediastack-deb containers to Uptime Kuma via agent
+## Mediastack — To Add
 - [ ] Authelia — authentication layer for all services
 - [ ] Bazarr — subtitle automation for Sonarr/Radarr
+- [ ] Homepage or Heimdall — dashboard
 - [ ] Tdarr — transcoding (needs GPU node first)
+- [ ] Gluetun — VPN container routing
 - [ ] FlareSolverr — Cloudflare bypass for indexers
 - [ ] Traefik — replace SWAG as reverse proxy
+- [ ] Unpackerr — auto extract downloads
 - [ ] Portainer — Docker management UI
+- [ ] DDNS-Updater — dynamic DNS
+- [ ] qBittorrent — torrent client
+- [ ] Whisparr — adult media management
 - [ ] Tautulli — Plex analytics
-- [ ] Notifiarr or Apprise — download completion notifications
-- [ ] Add container_name to all docker-compose services — prevent hash prefix names after recreate
 
 ## Mediastack — Cleanup
 - [ ] Review Lidarr MediaCover cache growth (currently 6.5GB)
-- [ ] Investigate wireguard vpn container — not routing any traffic, may be redundant now that Gluetun is in use
-- [ ] Add soft,timeo=30 CIFS mount options to fstab — ✅ done 2026-04-27
-- [ ] Add Training and Photos libraries to Ozymandias after music scan completes
 
 ---
 
@@ -297,6 +255,7 @@ _Last updated: 2026-04-27_
 ---
 
 ## Maintenance Backlog
+- [ ] Enable SSH on freenas-bsd and run dmidecode for hardware inventory
 - [ ] Add fail2ban to homelab_baseline.yml
 - [ ] Add chrony LXC skip to sync_time.yml
 - [ ] Update check_services.yml to reflect current services
@@ -320,8 +279,6 @@ _Last updated: 2026-04-27_
 
 ## Hardware Wishlist
 - [x] GL-MT6000 Flint 2 — purchased, in use as router
-- [ ] LSI 9207-8i or 9211-8i HBA card — flashed to IT mode (~$20-40 eBay) — for TrueNAS rebuild
-- [ ] 2x SFF-8087 to SATA breakout cables (~$5-10 each eBay) — for HBA drive connections
 
 ---
 
@@ -364,28 +321,12 @@ _Last updated: 2026-04-27_
 - [x] urnst-deb inventoried and onboarded — Ryzen 5 1600X, 8GB DDR4, 3x 2.7TB — 2026-04-13
 - [x] ctrl-alt-del disabled on shardik and maturin — 2026-04-13
 - [x] fail2ban ignoreip whitelist fixed on git-ansible (192.168.1.0/24) — 2026-04-13
+- [x] ZeroTier removal from amontillado — todo
 - [x] DHCP reservation set for argos WiFi (.128) — 2026-04-13
-- [x] Gluetun + qBittorrent deployed with Surfshark WireGuard VPN — 2026-04-18
-- [x] qBittorrent added as download client to Sonarr, Radarr, Lidarr, Mylar, Prowlarr — 2026-04-18
-- [x] Prowlarr synced indexers to all arrs — 2026-04-18
-- [x] Sonarr old Windows config migrated, paths remapped to /tv — 2026-04-19
-- [x] Radarr fresh install — clean state, movies rescanned — 2026-04-19
-- [x] Homepage dashboard deployed (port 9898) with live widgets for all services — 2026-04-20
-- [x] Unpackerr deployed — auto-extracts rar/zip/7z downloads for all arrs — 2026-04-20
-- [x] api_keys.env created — all mediastack API keys documented — 2026-04-20
-- [x] FreeNAS 11.3 → TrueNAS CORE 13.0-U6.8 migration complete — 2026-04-27
-- [x] TRYAGAIN pool imported into TrueNAS — 45TB intact, 0 errors — 2026-04-27
-- [x] SMB shares recreated on TrueNAS — cifs1 user, plex share — 2026-04-27
-- [x] All 9 CIFS mounts restored on mediastack-deb — 2026-04-27
-- [x] Plex migrated from FreeNAS jail to Docker container on mediastack-deb — 2026-04-27
-- [x] Ozymandias (Plex) deployed — Movies and TV scanning complete — 2026-04-27
-- [x] Plex remote access enabled — port 32400 forwarded on Flint 2 — 2026-04-27
-- [x] Weltgeist and Alea Iacta Est jails decommissioned — 2026-04-27
-- [x] soft,timeo=30 added to all CIFS fstab entries on mediastack-deb — 2026-04-27
-- [x] Kasm docker network plugin re-enabled after host restart — 2026-04-27
 
 ---
 
 ## Package Baseline (managed by onboard_host.yml)
 tmux, plocate, screen, cifs-utils, tree, vim, inxi, screenfetch,
 curl, wget, git, htop, net-tools, unzip, apt-utils
+

@@ -1,6 +1,6 @@
 # User Audit Report
 
-_Last updated: 2026-04-15 02:00 AM EDT_
+_Last updated: 2026-04-28 02:01 AM EDT_
 
 ??? info "snipeit-deb (4 users)"
     | Username | UID | Shell | Sudo | Empty Password | Online |
