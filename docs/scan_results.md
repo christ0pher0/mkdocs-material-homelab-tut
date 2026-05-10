@@ -1,8 +1,8 @@
 # Network Scan Results
 
-_Last updated: 2026-05-09 23:00:13_
+_Last updated: 2026-05-10 03:00:27_
 
-_Hosts found: 29_
+_Hosts found: 28_
 
 ## Status
 
@@ -32,8 +32,7 @@ _Hosts found: 29_
 | 192.168.1.106 | fortunato-win | Windows | none detected | 00:15:5D:00:B3:1A |
 | 192.168.1.122 | octopi-deb | Debian/Ubuntu Linux | 22/ssh, 80/http, 443/https, 9100/node-exporter | DC:A6:32:5E:04:08 |
 | 192.168.1.125 | unknown-192.168.1.125 | Linux 4.15 - 5.8 | 22/ssh, 111/rpcbind | E4:5F:01:65:56:EE |
-| 192.168.1.140 | tv1-media | Media Device | 3000/grafana | A8:23:FE:13:A9:D1 |
 | 192.168.1.141 | tv2-media | Media Device | none detected | 22:57:5A:A7:04:87 |
 | 192.168.1.201 | pixel8-droid | Android | none detected | EE:FC:9C:95:22:1B |
 | 192.168.1.202 | fire-tablet-droid | Android | none detected | B0:FC:0D:51:8F:78 |
-| 192.168.1.250 | swarm-shared-vip | Virtual IP | 22/ssh, 80/http, 8080/http-proxy, 9100/node-exporter | BC:24:11:3C:C5:B6 |
+| 192.168.1.250 | swarm-shared-vip | Virtual IP | 22/ssh, 80/http, 8080/http-proxy, 9100/node-exporter | BC:24:11:9C:D8:2F |

@@ -1,5 +1,5 @@
 # Hosts
-_Last update: 2026-05-09 23:05:01_
+_Last update: 2026-05-10 03:05:01_
 
 | # | Hostname | IP Address | MAC Address | OS | Status | Notes |
 |---|----------|------------|------------|----|--------|-------|
@@ -27,8 +27,7 @@ _Last update: 2026-05-09 23:05:01_
 | 22 | fortunato-win | 192.168.1.106 | 00:15:5D:00:B3:1A | Windows | Online | ------ |
 | 23 | octopi-deb | 192.168.1.122 | DC:A6:32:5E:04:08 | Debian/Ubuntu Linux | Online | ------ |
 | 24 | unknown-192.168.1.125 | 192.168.1.125 | E4:5F:01:65:56:EE | Linux 4.15 - 5.8 | Online | ------ |
-| 25 | tv1-media | 192.168.1.140 | A8:23:FE:13:A9:D1 | Media Device | Online | ------ |
-| 26 | tv2-media | 192.168.1.141 | 22:57:5A:A7:04:87 | Media Device | Online | ------ |
-| 27 | pixel8-droid | 192.168.1.201 | EE:FC:9C:95:22:1B | Android | Online | ------ |
-| 28 | fire-tablet-droid | 192.168.1.202 | B0:FC:0D:51:8F:78 | Android | Online | ------ |
-| 29 | swarm-shared-vip | 192.168.1.250 | BC:24:11:3C:C5:B6 | Virtual IP | Online | ------ |
+| 25 | tv2-media | 192.168.1.141 | 22:57:5A:A7:04:87 | Media Device | Online | ------ |
+| 26 | pixel8-droid | 192.168.1.201 | EE:FC:9C:95:22:1B | Android | Online | ------ |
+| 27 | fire-tablet-droid | 192.168.1.202 | B0:FC:0D:51:8F:78 | Android | Online | ------ |
+| 28 | swarm-shared-vip | 192.168.1.250 | BC:24:11:9C:D8:2F | Virtual IP | Online | ------ |
