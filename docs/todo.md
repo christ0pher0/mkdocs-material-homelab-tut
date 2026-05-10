@@ -1,18 +1,14 @@
 # Homelab Todo & Roadmap
-_Last updated: 2026-04-27_
-
+_Last updated: 2026-05-10_
 ---
-
 ## Critical / Security
-  - [x] **Deploy Zabbix** — proactive monitoring before failures hit
-  - [x] Zabbix server — deploy on Proxmox VM or docker-deb
-  - [x] Zabbix agent on every managed Linux host
-  - [ ] ZFS plugin — monitor RAIDZ1 health, drive errors on TrueNAS ⚠️
-  - [ ] Disk space alerts — eld D: (10%), amontillado D: (11%), pi1 SD (91%) ⚠️
-  - [ ] RAM/CPU/temperature monitoring fleet-wide
-  - [ ] Service health checks — mediastack containers, Plex/Ozymandias
-  - [ ] **Telegram alerts** — bot notifications when something looks wrong
-  - [ ] Alert on: drive errors, disk >85%, service down, high temp, RAM pressure
+- [ ] **Dirty Frag mitigation** (CVE-2026-43284/43500) — disable esp4, esp6, rxrpc fleet-wide ⚠️
+- [ ] **Copy Fail** (CVE-2026-31431) — verify patches applied fleet-wide ⚠️
+- [ ] ZFS plugin — monitor RAIDZ1 health, drive errors on TrueNAS ⚠️
+- [ ] Disk space alerts — eld D: (10%), amontillado D: (11%), pi1 SD (91%) ⚠️
+- [ ] **Telegram alerts** — bot notifications when something looks wrong
+- [ ] Alert on: drive errors, disk >85%, service down, high temp, RAM pressure
+- [ ] sudoers drop-in for docker group auto-add script (per-user, NOPASSWD usermod)
 
 ### Backup Strategy (eld)
 - [ ] Migrate eld to Ubuntu 26.04
@@ -24,21 +20,16 @@ _Last updated: 2026-04-27_
 - [ ] Upgrade eld RAM to 32GB DDR3 before migration
 
 ---
-
 ## In Progress
 - [ ] Inventory 5 remaining waiting systems — match hardware to roles
 - [ ] Inventory pve3 (ThinkStation offsite) — specs, storage, role
-- [ ] Complete IP renumbering (Rocky/Alma/RHEL .51-.53 → .80-.82, Pis, TVs etc.)
 - [ ] Purchase [Hologram.io](http://Hologram.io) SIM for argos-deb LTE
 - [ ] Purchase larger SD card for pi1-deb (3.8GB, 91% full)
-- [ ] Evaluate LambdaLabs workstation — potential multi-GPU AI node
-- [x] Deploy Gitea as Docker container — not dedicated Pi 4-15-1026
 - [ ] Pi rack — 3D print or buy, house all 8 Pis cleanly
 - [ ] PoE switch + PoE HATs — single cable per Pi for power + network
 
 ### Hardware Inventory Completion
 - [ ] Photo and dmidecode all 5 waiting systems
-- [ ] Photo pve2 (Dell OptiPlex 7050)
 - [ ] Photo pve3 (ThinkStation offsite)
 - [ ] Photo Elegoo Mars 3 resin printer
 - [ ] Photo Creality Ender 3 V1
@@ -46,201 +37,124 @@ _Last updated: 2026-04-27_
 - [ ] Photo GTX 1080 and GTX 1080 Ti cards
 - [ ] Photo all laptops
 - [ ] SCP all new photos to MkDocs docs/images/hw/
-- [ ] Import all hardware into Snipe-IT (192.168.1.20)
+- [ ] Import all hardware into Snipe-IT (192.168.1.53)
 - [ ] Push completed hw_inventory.md to MkDocs
 
 ---
-
 ## Planned Projects
+
+### PVE3 — temerant → Proxmox node 3
+- [ ] Check temerant-win 2x 3TB HDDs (Seagate ST3000DM001) for important data ⚠️
+- [ ] Pull drives, wipe Windows, install Proxmox VE
+- [ ] Add to wheel cluster (shardik + maturin)
+- [ ] Configure Tailscale on pve3
+- [ ] Add to inventory_auto and MkDocs
+- [ ] Eventually: GPU passthrough of GTX 1080 Ti for RPCS3/AI workloads
+- [ ] Check AB350 IOMMU groupings before passthrough attempt
+
+### Monitoring Stack (monitor-deb 192.168.1.29)
+- [x] Deploy Homepage, Zabbix, Grafana, Uptime Kuma on monitor-deb ✅ 2026-05-10
+- [x] Deploy Prometheus + node-exporter + PVE-exporter + cAdvisor ✅ 2026-05-10
+- [x] Import Node Exporter Full, cAdvisor, Proxmox dashboards in Grafana ✅ 2026-05-10
+- [x] Add Zabbix as Grafana data source ✅ 2026-05-10
+- [x] Push monitoring configs to Gitea (cos/monitor-deb) ✅ 2026-05-10
+- [ ] Deploy node-exporter to non-Docker hosts (plow-rpm, pihole-book-deb, restic-deb)
+- [ ] Fix Python 3.12 interpreter issue for restic-deb, octopi-deb in Ansible
+- [ ] Add Uptime Kuma to Homepage widget (fix slug)
+- [ ] Configure Zabbix → Telegram alerting
+- [ ] Deploy Loki for log aggregation
+
+### Portainer Fleet
+- [x] Deploy Portainer agent fleet-wide ✅ 2026-05-10
+- [x] Register all Docker hosts in Portainer ✅ 2026-05-10
+- [ ] Write portainer_sync.py scheduled task — detect Docker hosts, auto-register missing ones
+- [ ] Fix TLS registration API issue in portainer_sync.py
 
 ### TrueNAS Hardware Rebuild ⭐
 - [ ] Check temerant-win 2x 3TB HDDs for important data before touching hardware
-- [ ] Pull mobo (Gigabyte AB350-Gaming), Ryzen 5 1600X, 32GB DDR4, GTX 1080 Ti, 500GB SSD from temerant-win
-- [ ] Install temerant hardware into existing FreeNAS beige full tower
-- [ ] Order LSI 9207-8i or 9211-8i HBA card — flashed to IT mode (~$20-40 on eBay)
-- [ ] Order 2x SFF-8087 to SATA breakout cables (~$5-10 each on eBay)
-- [ ] Install HBA in new mobo, connect 5x 18TB drives via breakout cables
-- [ ] Install TrueNAS 13.0 on 500GB SSD — no more USB boot drives
+- [ ] Pull mobo, Ryzen 5 1600X, 32GB DDR4, GTX 1080 Ti, 500GB SSD from temerant
+- [ ] Install into existing FreeNAS beige full tower
+- [ ] Order LSI 9207-8i or 9211-8i HBA card (~$20-40 eBay)
+- [ ] Order 2x SFF-8087 to SATA breakout cables (~$5-10 each eBay)
+- [ ] Install TrueNAS on 500GB SSD — no more USB boot drives
 - [ ] Boot TrueNAS, import TRYAGAIN pool
 - [ ] Reconfigure SMB shares, cifs1 user, services
 - [ ] Update mediastack-deb fstab if IP changes
-- [ ] Update hw_inventory.md — freenas-bsd entry reflects new hardware
-- [ ] Future expansion: 1x CRU hot-swap bay available + 2x internal mounts = up to 8 drives total (144TB raw at 18TB, 160TB raw at 20TB)
-- [ ] Consider TrueNAS SCALE for VM/container support on same box
 
-### TrueNAS — Current State (post 2026-04-27 migration)
+### TrueNAS — Current State
 - [ ] Set ue0 (USB NIC) to static 192.168.1.5 — survives reboots
-- [ ] Fix alc0 onboard NIC — currently non-functional, investigate driver/hardware issue
-- [ ] Add second USB boot drive to freenas-boot mirror (zpool replace)
-- [ ] Investigate ada4 bad sectors alert from February 2026
-- [ ] Delete iocage datasets — Weltgeist and Alea Iacta Est jails no longer needed (91GB)
-- [ ] Add Training library to Ozymandias Plex — pending compose update
-- [ ] Add Photos library to Ozymandias Plex — pending compose update
-- [ ] Update hw_inventory.md freenas-bsd entry — now running TrueNAS 13.0-U6.8
-- [ ] Rename freenas-bsd host entry to truenas in inventory_auto and MkDocs
+- [ ] Fix alc0 onboard NIC
+- [ ] Add second USB boot drive to freenas-boot mirror
+- [ ] Investigate ada4 bad sectors alert from February 2026 ⚠️
+- [ ] Delete iocage datasets — Weltgeist and Alea Iacta Est jails (91GB)
+- [ ] Dedupe/find duplicate filenames on TRYAGAIN pool — fdupes or rdfind
+- [ ] Explore LaunchBox ROM archive on NAS — migrate to RomM
 
-### Ozymandias (Plex — mediastack-deb)
-- [x] Deploy Plex as Docker container on mediastack-deb — 2026-04-27
-- [x] Movies library scanning complete — 2026-04-27
-- [x] TV library scanning complete — 2026-04-27
-- [ ] Music library scan in progress
-- [ ] Add Training volume and library
-- [ ] Add Photos volume and library
-- [ ] Update Homepage widget with new Plex token
+### RomM / Gaming
+- [x] Deploy RomM on mediastack-deb ✅
+- [x] Clean ROM folder structure — rename to IGDB slugs ✅ 2026-05-10
+- [x] Run Skraper against all 12 platforms ✅ 2026-05-10
+- [ ] Add SNES folder — Lufia I & II, other SNES RPGs
+- [ ] Add PSP folder — FFT War of the Lions, Tactics Ogre, Jeanne d'Arc
+- [ ] Complete tactical RPG collections across all supported platforms
+- [ ] Deduplicate DS ROMs (Fire Emblem Shadow Dragon appears 3x)
+- [ ] RomM full scan after cleanup to pick up Skraper metadata
+
+### Mediastack / Plex
+- [x] Deploy Kometa on mediastack-deb ✅ 2026-05-10
+- [ ] Kometa — configure Trakt, MDBList integrations
 - [ ] Add Tautulli — Plex analytics
-- [ ] Remove Weltgeist and Alea Iacta Est from plex.tv devices (old jails)
-- [ ] Set Powerslave Eddie as Ozymandias server icon
-
-### Local AI Assistant
-- [ ] Deploy Ollama — local LLM backend on GPU node
-- [ ] Deploy Open WebUI — chat interface with multi-model support
-- [ ] Create sysadmin assistant — fed network context doc, knows the whole lab
-- [ ] Create homelab advisor — planning and research personality
-- [ ] Create casual assistant — general chat, different vibe
-- [ ] Each character gets: name, avatar, system prompt, model
-- [ ] Add Whisper — local speech to text
-- [ ] Add Piper — local text to speech, multiple voice models
-- [ ] Feed MkDocs docs as RAG knowledge base
-- [ ] Feed Ansible inventory and playbooks as context
-- [ ] Name them — continuing Poe/Spanish wine theme 🍷
-
-### GPU Node (GTX 1080 8GB)
-- [ ] Pick host system from waiting hardware (Ryzen 5 1600 twin preferred)
-- [ ] Add as Proxmox second node with PCIe GPU passthrough
-- [ ] Deploy Ollama — use GTX 1080 Ti (11GB VRAM) over 1080 (8GB) for better model support
-- [ ] Deploy Tdarr — NVENC hardware transcoding for mediastack
-- [ ] Consider Stable Diffusion (ComfyUI or Automatic1111)
-- [ ] Consider Sunshine — game streaming server to TVs
-- [ ] Note: Pascal NVENC = 1 transcode stream, no AV1 encoding
-
-### 3D Printing
-- [ ] Design or source Pi rack — check Printables.com, size for Pi count
-- [ ] Flash pi3-deb (RPi B) with latest RetroPie Bookworm image — upgrade possible
-- [x] pi4-deb (RPi 2B) — flashed DietPi, onboarded ✅ 2026-04-12
-- [ ] Obico (formerly The Spaghetti Detective) — AI failure detection, remote monitoring
-- [ ] Evaluate Klipper + Moonraker + Mainsail/Fluidd as OctoPrint alternative for Ender 3 V2
-- [ ] Add OctoPrint Pi for Ender 3 V1
-- [ ] Automate print monitoring via Home Assistant integration
-- [ ] Elegoo Mars 3 — evaluate Chitubox vs Lychee slicer
-- [ ] Flashforge Dreamer — evaluate FlashPrint vs Simplify3D
-
-### eld-win → Ubuntu 26.04
-- [ ] Fresh install Ubuntu 26.04 LTS
-- [ ] Onboard with onboard_host.yml
-- [ ] Deploy Restic backup server role
-
-### Kubernetes
-- [ ] Evaluate k3s vs full k8s
-- [ ] Plan migration from Docker Swarm (swarm01/02/03)
-- [ ] Consider dedicated k8s nodes from waiting hardware
-- [ ] Investigate ArgoCD for GitOps deployments
-
-### argos-deb (ewaste RPi 4 IoT station)
-- [x] Flash Bookworm 64-bit, onboard via Ansible ✅ 2026-04-12
-- [x] Set DHCP reservation → .127 (ethernet) ✅ 2026-04-12
-- [x] Verify 7" touchscreen works on Bookworm ✅ works out of the box
-- [x] Set DHCP reservation for argos WiFi MAC (dc:a6:32:4c:94:8f) → .128 ✅ 2026-04-12
-- [ ] Wall mount argos — picture frame design, right angle USB-C for power
-- [ ] Print picture frame surround on Ender 3 V2 — search Printables for RPi 7" frame designs
-- [ ] Deploy HA kiosk dashboard on argos touchscreen
-- [ ] Test RPi Camera V2.1
-- [ ] Research Sixfab EC25-A 4G LTE setup — needs SIM card (Hologram.io recommended)
-- [ ] Research Adafruit RFM9x LoRa setup — potential LoRa gateway for long range sensors
-- [ ] Decide role — mobile node, HA kiosk, camera, LoRa gateway, or all of the above
-
-### Home Assistant — Full Setup Project
-- [ ] Phase 1 — Foundation: backup to TrueNAS share, Tailscale (WiFi disable deferred)
-- [ ] Phase 2 — Integrations: Zigbee coordinator (pi4-deb + USB dongle), MQTT broker (pi2-deb + Mosquitto), ESPHome, Frigate NVR (argos-deb camera)
-- [ ] Phase 3 — Automations: lighting, presence detection, OctoPrint integration, Music Assistant + Plex
-- [ ] Phase 4 — Display: argos-deb wall mounted kiosk dashboard
-- [ ] Configure HA backups — currently none configured ⚠️
-- [ ] Disable WiFi on ha-net — defer until HA is fully configured
-- [x] Set DHCP reservation for ha-net ethernet MAC (e4:5f:01:65:56:ee) → .125 ✅ 2026-04-12
-- [ ] Explore Ansible URI module to manage HA via REST API
-- [ ] Install ESPHome add-on — for flashing/managing ESP8266/ESP32 IoT devices
-- [ ] Install Music Assistant add-on — integrates with Plex/media stack
-- [ ] Connect smart home devices to HA
-- [ ] Decide host for Zigbee/Z-Wave coordinator (pi4-deb candidate)
-
-### pve2 (Dell OptiPlex 7050 — maturin)
-- [x] Fix Proxmox enterprise repo ✅ 2026-04-12
-- [ ] Decide role — GPU node, k8s, Immich, or join proxmox-deb cluster
-- [ ] Check PCIe slot availability for GPU — SFF case may limit options
-- [ ] Upgrade RAM to 64GB DDR4 if needed for role
+- [ ] Bazarr — subtitle automation
+- [ ] Tdarr — transcoding (needs GPU node first)
+- [ ] FlareSolverr — Cloudflare bypass for indexers
+- [ ] Clean dead indexers in Prowlarr
+- [ ] Add Plex Music library fix for mobile (Plex Pass confirmed, unresolved)
+- [ ] Add Training and Photos libraries to Plex
 
 ### Proxmox Cluster
-- [x] Build 2-node wheel cluster — shardik + maturin ✅ 2026-04-12
-- [x] QDevice on git-ansible ✅ 2026-04-12
-- [ ] Add pve3 (ThinkStation) to cluster when available — proper 3-node quorum
-- [ ] Set up shared storage — NFS from TrueNAS or ZFS_SDBC via NFS to maturin
+- [x] Build 2-node wheel cluster — shardik + maturin ✅
+- [x] QDevice on git-ansible ✅
+- [ ] Add pve3 (temerant → ThinkStation) to cluster
+- [ ] Migrate swarm VMs (102/104/105) to SDA_store on maturin
+- [ ] Rebuild lost VMs: 101 (monitor-deb rebuilt ✅), 106 (git-ansible rebuilt ✅), 107 (docker-deb rebuilt ✅)
 - [ ] Configure Proxmox HA for automatic VM failover
-- [ ] Add maturin and shardik to [proxmox] group in inventory_auto
-- [ ] Create Ubuntu 26.04 template on maturin
-- [ ] Onboard shardik and maturin properly via Ansible
-- [ ] Fix AllowUsers on shardik and git-ansible — remove root, keep cos only
-- [ ] Remove ZeroTier from amontillado-win
-- [ ] Add urnst-deb photo to hw_inventory
-- [ ] Inventory 4 remaining unknown waiting systems
-- [ ] Decide urnst-deb role — Proxmox node 3 or PBS
-- [ ] Add Beryl AX as wired AP — run cable, configure as AP
-- [ ] MkDocs — dockerize, add to Traefik, expose publicly
-- [ ] Authelia — add auth layer in front of exposed services
-- [ ] Zabbix + Telegram alerts — CRITICAL, monitoring before next failure
+- [ ] Set up shared storage — NFS from TrueNAS
 
-### Homelab Rebrand (The Dark Tower theme)
-- [ ] Map all hosts to Dark Tower names — Tower + 6 Beams + Guardians
-- [ ] Write Ansible playbook to rename fleet — hostname, /etc/hosts, inventory
-- [ ] Change cos passwords fleet-wide
-- [ ] Update DHCP reservations with new hostnames
-- [ ] Update MkDocs documentation with new names
+### Local AI Assistant
+- [ ] Deploy Ollama on idee-deb (GPU node) with GTX 1080 Ti passthrough
+- [ ] Deploy Open WebUI
+- [ ] Create sysadmin / homelab / casual assistant personalities
+- [ ] Add Whisper (STT) and Piper (TTS)
+- [ ] Feed MkDocs docs as RAG knowledge base
 
-### Secrets & Identity
-- [ ] Vaultwarden (Bitwarden) — self-hosted password manager
-- [ ] Vault (HashiCorp) — secrets management for Ansible/k8s
-- [ ] Authelia — already in mediastack app list, evaluate for broader use
-- [ ] Authentik — alternative to Authelia, more features
+### Vaultwarden / Secrets
+- [x] Vaultwarden deployed behind Caddy + Tailscale TLS ✅
+- [ ] Fix Vaultwarden autofill port matching issue in browser extension
+- [ ] Store all service credentials with full URL including port
+- [ ] Evaluate HashiCorp Vault for Ansible secrets management
 
-### Monitoring Expansion
-- [ ] Zabbix — network and service monitoring with alerting
-- [ ] Netdata — real-time per-host monitoring
-- [ ] InfluxDB + Telegraf — time series metrics
-- [ ] Loki — log aggregation alongside Grafana
-- [ ] Already have: Grafana, Prometheus, node-exporter, PVE-exporter
-
-### Storage & Backup
-- [ ] Restic — backup solution for VMs, configs, and critical data
-- [ ] Plan backup strategy for 45TB NAS
-- [ ] Immich — self-hosted Google Photos alternative — deploy on lee-deb or Proxmox VM
-- [ ] Install Samsung 870 EVO in lee-deb, install Ubuntu Server, deploy Immich
-
-### CI/CD & Dev
-- [ ] GitLab — heavier but full CI/CD pipelines
-- [ ] Jenkins or Drone — build automation
-- [ ] ArgoCD — Kubernetes GitOps
-- [ ] Terraform — IaC for Proxmox provisioning
-- [ ] Packer — machine image builds
-
-### Network
-- [ ] Clarify Flint2 + Netgate topology — consolidate or keep both
-- [ ] Evaluate VLANs for IoT/media/server segmentation
-- [ ] Unbound — local DNS resolver
-- [ ] Traefik — reverse proxy with auto HTTPS, Docker-native, replaces SWAG
-- [ ] WireGuard — already running in mediastack, evaluate for wider use
-- [ ] DDNS-Updater — if exposing services externally
+### Home Assistant
+- [ ] Phase 1 — backup to TrueNAS, Tailscale
+- [ ] Phase 2 — Zigbee, MQTT, ESPHome, Frigate
+- [ ] Phase 3 — automations, Music Assistant, OctoPrint
+- [ ] Phase 4 — argos-deb wall kiosk
 
 ### Documentation
-- [ ] Verify network diagram rendering in MkDocs — check Mermaid/PlantUML plugin
-- [ ] Create UML network diagram — all hosts, IPs, connections, VLANs
-- [ ] Create Proxmox cluster diagram — VMs, LXCs, storage
-- [ ] Create Pi fleet diagram — all 8 Pis, roles, connections
-- [ ] Expand MkDocs site with Ansible playbook docs
-- [ ] Document Docker Swarm setup
-- [ ] Document Proxmox VM/LXC layout
-- [ ] BookStack or Wiki.js — evaluate as MkDocs replacement for richer docs
-- [ ] Update hw_inventory.md — freenas-bsd entry to reflect TrueNAS 13.0 and new hardware plan
+- [ ] Rename typo'd MkDocs files: git_nfo.md → git_info.md, mdeiastack_apps.md → mediastack_apps.md
+- [ ] Organize mkdocs.yml nav into sections
+- [ ] Update network_context.md — remove dead VMs (101/106/107 rebuilt, grafana-docker-deb gone)
+- [ ] Update hw_inventory.md — freenas-bsd → TrueNAS, add monitor-deb
+- [ ] Create Proxmox cluster diagram
+- [ ] Document monitoring stack architecture
+
+### Network
+- [ ] Dirty Frag mitigation — disable esp4/esp6/rxrpc fleet-wide
+- [ ] Clarify Flint2 + Netgate topology
+- [ ] Evaluate VLANs for IoT/media/server segmentation
+- [ ] Unbound — local DNS resolver
+- [ ] Authelia — auth layer for exposed services
 
 ---
-
 ## Mediastack — Current Stack
 | App            | Port  | Status      |
 |----------------|-------|-------------|
@@ -253,139 +167,58 @@ _Last updated: 2026-04-27_
 | Seerr          | 5055  | ✅ Running  |
 | Komga          | 8085  | ✅ Running  |
 | Audiobookshelf | 13378 | ✅ Running  |
-| Romm           | 8998  | ✅ Running  |
+| RomM           | 8998  | ✅ Running  |
+| Kometa         | —     | ✅ Running  |
 | Gluetun VPN    | —     | ✅ Running  |
 | qBittorrent    | 8082  | ✅ Running  |
-| Homepage       | 9898  | ✅ Running  |
 | Unpackerr      | —     | ✅ Running  |
 | MariaDB        | —     | ✅ Running  |
-| WireGuard VPN  | 8080  | ✅ Running  |
-| Ozymandias (Plex) | 32400 | ✅ Running |
-
-## Mediastack — To Do
-- [ ] Clean up dead indexers in Prowlarr — Badass Torrents, BitSearch, Torlock, LimeTorrents, Pirate Bay, TheRARBG
-- [ ] Plex Music library not showing on mobile — unresolved (Plex Pass confirmed)
-- [ ] Unify all separate docker-compose files into one master compose
-- [ ] Add Unpackerr to Uptime Kuma monitoring (Docker container type)
-- [ ] Add mediastack-deb containers to Uptime Kuma via agent
-- [ ] Authelia — authentication layer for all services
-- [ ] Bazarr — subtitle automation for Sonarr/Radarr
-- [ ] Tdarr — transcoding (needs GPU node first)
-- [ ] FlareSolverr — Cloudflare bypass for indexers
-- [ ] Traefik — replace SWAG as reverse proxy
-- [ ] Portainer — Docker management UI
-- [ ] Tautulli — Plex analytics
-- [ ] Notifiarr or Apprise — download completion notifications
-- [ ] Add container_name to all docker-compose services — prevent hash prefix names after recreate
-
-## Mediastack — Cleanup
-- [ ] Review Lidarr MediaCover cache growth (currently 6.5GB)
-- [ ] Investigate wireguard vpn container — not routing any traffic, may be redundant now that Gluetun is in use
-- [ ] Add soft,timeo=30 CIFS mount options to fstab — ✅ done 2026-04-27
-- [ ] Add Training and Photos libraries to Ozymandias after music scan completes
+| Plex           | 32400 | ✅ Running  |
 
 ---
-
-## Apps to Investigate Further
-- [ ] BookStack — documentation platform
-- [ ] Wiki.js — modern wiki engine
-- [ ] Ghost — blogging platform
-- [ ] WordPress — CMS
-- [ ] Hugo / Jekyll — static site generators
-- [ ] Vagrant — VM environment management
-
----
-
 ## Maintenance Backlog
 - [ ] Add fail2ban to homelab_baseline.yml
 - [ ] Add chrony LXC skip to sync_time.yml
 - [ ] Update check_services.yml to reflect current services
-- [x] ~~Remove duplicate mediastack-deb from inventory_auto~~ ✅ 2026-04-10
-- [x] ~~Remove overseerr config dir (replaced by seerr)~~ ✅ 2026-04-10
-- [ ] Update fail2ban.yml — add pause before verify task (timing fix)
+- [ ] Update fail2ban.yml — add pause before verify task
 - [ ] Clarify MariaDB and nginx role on git-ansible-deb
-- [x] ~~Create docs/images/hw/ directory in MkDocs project~~ ✅ 2026-04-12
-- [x] ~~Save proxmox-deb photo to docs/images/hw/proxmox-deb.jpg~~ ✅ 2026-04-12
 - [ ] Confirm git-ansible physical host specs with dmidecode
-- [x] ~~Run Get-ComputerInfo on eld-win for hardware inventory~~ ✅ 2026-04-12
-- [ ] Inventory offsite ThinkStation (pve3) — specs, storage, role
-- [ ] Add pve3 to Tailscale
-- [ ] Add pve3 to Ansible inventory
-- [ ] Take photos of waiting systems and 3D printers
-- [ ] Import all hardware into Snipe-IT (192.168.1.20)
-- [x] ~~Fix pve2 Proxmox enterprise repo~~ ✅ 2026-04-12
-- [x] ~~pve2 onboarded~~ ✅ 2026-04-12
+- [ ] Inventory offsite ThinkStation (pve3)
+- [ ] Add pve3 to Tailscale and Ansible inventory
+- [ ] Remove snipeit-deb from all docs (LXC destroyed 2026-05-10)
+- [ ] Remove grafana-docker-deb, ubuntu-ansible-deb, apache-deb from all docs
 
 ---
-
 ## Hardware Wishlist
-- [x] GL-MT6000 Flint 2 — purchased, in use as router
-- [ ] LSI 9207-8i or 9211-8i HBA card — flashed to IT mode (~$20-40 eBay) — for TrueNAS rebuild
-- [ ] 2x SFF-8087 to SATA breakout cables (~$5-10 each eBay) — for HBA drive connections
+- [ ] LSI 9207-8i or 9211-8i HBA card (~$20-40 eBay)
+- [ ] 2x SFF-8087 to SATA breakout cables (~$5-10 each eBay)
+- [ ] 2TB SSD for PVE3 VM storage
 
 ---
-
 ## Completed ✅
 - [x] Deleted frodo user from rocky-rpm, alma-rpm, plow-rpm — 2026-04-09
-- [x] fail2ban deployed fleet-wide with 192.168.1.0/24 whitelist — 2026-04-09
+- [x] fail2ban deployed fleet-wide — 2026-04-09
 - [x] Fleet packages updated — 2026-04-09
 - [x] mediastack-deb root disk expanded 30GB → 164GB — 2026-04-09
-- [x] docker-deb broken packages fixed — 2026-04-09
-- [x] chrony disabled on LXC containers (snipeit, pihole) — 2026-04-09
-- [x] plow-rpm xrdp conflict resolved — 2026-04-09
-- [x] batocera /overlay/base false alarm resolved — 2026-04-09
-- [x] Tailscale installed on git-ansible-deb (100.68.195.68) — 2026-04-10
-- [x] git-ansible-deb passwordless sudo configured — 2026-04-10
-- [x] mediastack-deb onboarded and SSH hardened — 2026-04-10
-- [x] fail2ban playbook cleaned up (batocera/git-ansible excluded) — 2026-04-10
-- [x] FreeNAS hardware fully inventoried — 2026-04-12
-- [x] eld-win hardware fully inventoried — 2026-04-12
-- [x] amontillado-win hardware fully inventoried — 2026-04-12
-- [x] Hardware inventory MkDocs page live with photos — 2026-04-12
-- [x] pi1-deb onboarded (Raspbian Bookworm, .120) — 2026-04-12
-- [x] pi2-deb onboarded (DietPi, .121) — 2026-04-12
-- [x] pi4-deb onboarded (DietPi RPi 2B, .126) — 2026-04-12
-- [x] argos-deb onboarded (RPi 4 ewaste, Bookworm, .127) — 2026-04-12
-- [x] ha-net documented (HAOS 17.2, RPi 4, .125) — 2026-04-12
-- [x] inventory_auto cleaned — duplicates removed, legacy group added — 2026-04-12
-- [x] onboard_host.yml fixed — hostname fallback, SSH ignore_errors, duplicate entry fix — 2026-04-12
-- [x] 8 Pis + argos identified, photographed, and documented — 2026-04-12
-- [x] proxmox-deb renamed to shardik — 2026-04-12 (the hard way 😅)
-- [x] pve2 renamed to maturin — 2026-04-12
-- [x] wheel cluster created — shardik + maturin — 2026-04-12
-- [x] QDevice configured on git-ansible — 2026-04-12
-- [x] Live VM/LXC migration working between nodes — 2026-04-12
-- [x] Ubuntu 24.04 ISO downloaded on maturin — 2026-04-12
-- [x] Traefik deployed on docker-deb with DuckDNS + Let's Encrypt — 2026-04-13
-- [x] Vaultwarden deployed behind Traefik with valid HTTPS cert — 2026-04-13
-- [x] oerth.duckdns.org DDNS configured on git-ansible (cron every 5min) — 2026-04-13
-- [x] Port forwarding 80/443 → docker-deb configured on Flint 2 — 2026-04-13
-- [x] Passwords migrated off Google to self-hosted Vaultwarden — 2026-04-13
-- [x] urnst-deb inventoried and onboarded — Ryzen 5 1600X, 8GB DDR4, 3x 2.7TB — 2026-04-13
-- [x] ctrl-alt-del disabled on shardik and maturin — 2026-04-13
-- [x] fail2ban ignoreip whitelist fixed on git-ansible (192.168.1.0/24) — 2026-04-13
-- [x] DHCP reservation set for argos WiFi (.128) — 2026-04-13
-- [x] Gluetun + qBittorrent deployed with Surfshark WireGuard VPN — 2026-04-18
-- [x] qBittorrent added as download client to Sonarr, Radarr, Lidarr, Mylar, Prowlarr — 2026-04-18
-- [x] Prowlarr synced indexers to all arrs — 2026-04-18
-- [x] Sonarr old Windows config migrated, paths remapped to /tv — 2026-04-19
-- [x] Radarr fresh install — clean state, movies rescanned — 2026-04-19
-- [x] Homepage dashboard deployed (port 9898) with live widgets for all services — 2026-04-20
-- [x] Unpackerr deployed — auto-extracts rar/zip/7z downloads for all arrs — 2026-04-20
-- [x] api_keys.env created — all mediastack API keys documented — 2026-04-20
-- [x] FreeNAS 11.3 → TrueNAS CORE 13.0-U6.8 migration complete — 2026-04-27
-- [x] TRYAGAIN pool imported into TrueNAS — 45TB intact, 0 errors — 2026-04-27
-- [x] SMB shares recreated on TrueNAS — cifs1 user, plex share — 2026-04-27
-- [x] All 9 CIFS mounts restored on mediastack-deb — 2026-04-27
-- [x] Plex migrated from FreeNAS jail to Docker container on mediastack-deb — 2026-04-27
-- [x] Ozymandias (Plex) deployed — Movies and TV scanning complete — 2026-04-27
-- [x] Plex remote access enabled — port 32400 forwarded on Flint 2 — 2026-04-27
-- [x] Weltgeist and Alea Iacta Est jails decommissioned — 2026-04-27
-- [x] soft,timeo=30 added to all CIFS fstab entries on mediastack-deb — 2026-04-27
-- [x] Kasm docker network plugin re-enabled after host restart — 2026-04-27
-
----
-
-## Package Baseline (managed by onboard_host.yml)
-tmux, plocate, screen, cifs-utils, tree, vim, inxi, screenfetch,
-curl, wget, git, htop, net-tools, unzip, apt-utils
+- [x] Traefik deployed on docker-deb — 2026-04-13
+- [x] Vaultwarden deployed behind Caddy + Tailscale TLS — 2026-04-13
+- [x] Passwords migrated from Google to Vaultwarden — 2026-04-13
+- [x] FreeNAS 11.3 → TrueNAS CORE 13.0-U6.8 — 2026-04-27
+- [x] TRYAGAIN pool imported — 45TB intact — 2026-04-27
+- [x] Plex migrated from FreeNAS jail to Docker — 2026-04-27
+- [x] wheel cluster built — shardik + maturin + QDevice — 2026-04-12
+- [x] Gitea deployed on git-ansible — 2026-04-15
+- [x] Kasm Workspaces 1.17.0 deployed on kasm-2404-deb — 2026-04-27
+- [x] Portainer agents deployed fleet-wide — 2026-05-10
+- [x] monitor-deb deployed (192.168.1.29) — Homepage, Zabbix, Grafana, Kuma — 2026-05-10
+- [x] Prometheus + node-exporter + PVE-exporter + cAdvisor deployed — 2026-05-10
+- [x] Grafana dashboards: Node Exporter Full, cAdvisor, Proxmox via Prometheus — 2026-05-10
+- [x] Fleet packages patched (Copy Fail CVE-2026-31431) — 2026-05-10
+- [x] snipeit-deb LXC destroyed (Snipe-IT moved to plow-rpm) — 2026-05-10
+- [x] Dead inventory entries removed (grafana-docker-deb, ubuntu-ansible-deb, apache-deb) — 2026-05-10
+- [x] monitor-deb configs pushed to Gitea — 2026-05-10
+- [x] Kometa deployed on mediastack-deb — 2026-05-10
+- [x] RomM ROM folders renamed to IGDB slugs — 2026-05-10
+- [x] Skraper run complete — all 12 platforms scraped — 2026-05-10
+- [x] mediastack-deb RAM doubled to 16GB — 2026-05-10
+- [x] monitor-deb root LV expanded 15GB → 30GB — 2026-05-10
