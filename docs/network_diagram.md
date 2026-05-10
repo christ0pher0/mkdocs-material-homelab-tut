@@ -1,6 +1,6 @@
 # Network Diagram
 
-_Last update: 2026-05-03 07:10:01_
+_Last update: 2026-05-09 20:10:01_
 
 ```mermaid
 graph LR
@@ -37,6 +37,8 @@ graph LR
     GRP_linux --> urnst_deb
     idee_deb["idee-deb<br/>192.168.1.28<br/>Linux"]
     GRP_linux --> idee_deb
+    monitor_deb["monitor-deb<br/>192.168.1.29<br/>Linux"]
+    GRP_linux --> monitor_deb
     apache_deb["apache-deb<br/>192.168.1.32<br/>Linux"]
     GRP_linux --> apache_deb
     pihole_book_deb["pihole-book-deb<br/>192.168.1.33<br/>Linux"]
@@ -47,6 +49,8 @@ graph LR
     GRP_linux --> 2404HV_deb
     mediastack_deb["mediastack-deb<br/>192.168.1.36<br/>Linux"]
     GRP_linux --> mediastack_deb
+    restic_deb["restic-deb<br/>192.168.1.40<br/>Linux"]
+    GRP_linux --> restic_deb
     rocky_rpm["rocky-rpm<br/>192.168.1.51<br/>Linux"]
     GRP_linux --> rocky_rpm
     alma_rpm["alma-rpm<br/>192.168.1.52<br/>Linux"]
@@ -73,10 +77,6 @@ graph LR
 
     amontillado_win["amontillado-win<br/>192.168.1.100<br/>Windows"]
     GRP_windows --> amontillado_win
-    eld_win["eld-win<br/>192.168.1.101<br/>Windows"]
-    GRP_windows --> eld_win
-    replacements_win["replacements-win<br/>192.168.1.102<br/>Windows"]
-    GRP_windows --> replacements_win
     todash_win["todash-win<br/>192.168.1.103<br/>Windows"]
     GRP_windows --> todash_win
     work_win["work-win<br/>192.168.1.104<br/>Windows"]
@@ -155,6 +155,8 @@ graph LR
     GRP_debian --> urnst_deb
     idee_deb["idee-deb<br/>192.168.1.28<br/>Debian"]
     GRP_debian --> idee_deb
+    monitor_deb["monitor-deb<br/>192.168.1.29<br/>Debian"]
+    GRP_debian --> monitor_deb
     apache_deb["apache-deb<br/>192.168.1.32<br/>Debian"]
     GRP_debian --> apache_deb
     pihole_book_deb["pihole-book-deb<br/>192.168.1.33<br/>Debian"]
@@ -165,6 +167,8 @@ graph LR
     GRP_debian --> 2404HV_deb
     mediastack_deb["mediastack-deb<br/>192.168.1.36<br/>Debian"]
     GRP_debian --> mediastack_deb
+    restic_deb["restic-deb<br/>192.168.1.40<br/>Debian"]
+    GRP_debian --> restic_deb
     pi1_deb["pi1-deb<br/>192.168.1.120<br/>Debian"]
     GRP_debian --> pi1_deb
     pi2_deb["pi2-deb<br/>192.168.1.121<br/>Debian"]
@@ -224,11 +228,13 @@ graph LR
     class kasm_2404_deb linux
     class urnst_deb linux
     class idee_deb linux
+    class monitor_deb linux
     class apache_deb linux
     class pihole_book_deb linux
     class docker_deb linux
     class 2404HV_deb linux
     class mediastack_deb linux
+    class restic_deb linux
     class rocky_rpm linux
     class alma_rpm linux
     class plow_rpm linux
@@ -241,8 +247,6 @@ graph LR
     class argos_deb linux
     class GRP_windows group
     class amontillado_win windows
-    class eld_win windows
-    class replacements_win windows
     class todash_win windows
     class work_win windows
     class fortunato_win windows
@@ -276,11 +280,13 @@ graph LR
     class kasm_2404_deb other
     class urnst_deb other
     class idee_deb other
+    class monitor_deb other
     class apache_deb other
     class pihole_book_deb other
     class docker_deb other
     class 2404HV_deb other
     class mediastack_deb other
+    class restic_deb other
     class pi1_deb other
     class pi2_deb other
     class octopi_deb other
