@@ -1,5 +1,5 @@
 # Hosts
-_Last update: 2026-05-09 20:05:01_
+_Last update: 2026-05-09 23:05:01_
 
 | # | Hostname | IP Address | MAC Address | OS | Status | Notes |
 |---|----------|------------|------------|----|--------|-------|
@@ -31,4 +31,4 @@ _Last update: 2026-05-09 20:05:01_
 | 26 | tv2-media | 192.168.1.141 | 22:57:5A:A7:04:87 | Media Device | Online | ------ |
 | 27 | pixel8-droid | 192.168.1.201 | EE:FC:9C:95:22:1B | Android | Online | ------ |
 | 28 | fire-tablet-droid | 192.168.1.202 | B0:FC:0D:51:8F:78 | Android | Online | ------ |
-| 29 | swarm-shared-vip | 192.168.1.250 | BC:24:11:9C:D8:2F | Virtual IP | Online | ------ |
+| 29 | swarm-shared-vip | 192.168.1.250 | BC:24:11:3C:C5:B6 | Virtual IP | Online | ------ |

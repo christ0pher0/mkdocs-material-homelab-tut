@@ -1,6 +1,6 @@
 # Network Scan Results
 
-_Last updated: 2026-05-09 20:00:28_
+_Last updated: 2026-05-09 23:00:13_
 
 _Hosts found: 29_
 
@@ -36,4 +36,4 @@ _Hosts found: 29_
 | 192.168.1.141 | tv2-media | Media Device | none detected | 22:57:5A:A7:04:87 |
 | 192.168.1.201 | pixel8-droid | Android | none detected | EE:FC:9C:95:22:1B |
 | 192.168.1.202 | fire-tablet-droid | Android | none detected | B0:FC:0D:51:8F:78 |
-| 192.168.1.250 | swarm-shared-vip | Virtual IP | 22/ssh, 80/http, 8080/http-proxy, 9100/node-exporter | BC:24:11:9C:D8:2F |
+| 192.168.1.250 | swarm-shared-vip | Virtual IP | 22/ssh, 80/http, 8080/http-proxy, 9100/node-exporter | BC:24:11:3C:C5:B6 |

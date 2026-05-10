@@ -1,6 +1,6 @@
 # Network Diagram
 
-_Last update: 2026-05-09 20:10:01_
+_Last update: 2026-05-09 23:10:01_
 
 ```mermaid
 graph LR
@@ -77,6 +77,10 @@ graph LR
 
     amontillado_win["amontillado-win<br/>192.168.1.100<br/>Windows"]
     GRP_windows --> amontillado_win
+    eld_win["eld-win<br/>192.168.1.101<br/>Windows"]
+    GRP_windows --> eld_win
+    replacements_win["replacements-win<br/>192.168.1.102<br/>Windows"]
+    GRP_windows --> replacements_win
     todash_win["todash-win<br/>192.168.1.103<br/>Windows"]
     GRP_windows --> todash_win
     work_win["work-win<br/>192.168.1.104<br/>Windows"]
@@ -247,6 +251,8 @@ graph LR
     class argos_deb linux
     class GRP_windows group
     class amontillado_win windows
+    class eld_win windows
+    class replacements_win windows
     class todash_win windows
     class work_win windows
     class fortunato_win windows
