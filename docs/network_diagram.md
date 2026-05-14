@@ -1,6 +1,6 @@
 # Network Diagram
 
-_Last update: 2026-05-10 12:10:01_
+_Last update: 2026-05-13 20:10:01_
 
 ```mermaid
 graph LR
@@ -19,10 +19,6 @@ graph LR
 
     git_ansible_deb["git-ansible-deb<br/>192.168.1.3<br/>Linux"]
     GRP_linux --> git_ansible_deb
-    snipeit_deb["snipeit-deb<br/>192.168.1.20<br/>Linux"]
-    GRP_linux --> snipeit_deb
-    grafana_docker_deb["grafana-docker-deb<br/>192.168.1.21<br/>Linux"]
-    GRP_linux --> grafana_docker_deb
     swarm01_deb["swarm01-deb<br/>192.168.1.22<br/>Linux"]
     GRP_linux --> swarm01_deb
     swarm02_deb["swarm02-deb<br/>192.168.1.23<br/>Linux"]
@@ -141,10 +137,6 @@ graph LR
 
     git_ansible_deb["git-ansible-deb<br/>192.168.1.3<br/>Debian"]
     GRP_debian --> git_ansible_deb
-    snipeit_deb["snipeit-deb<br/>192.168.1.20<br/>Debian"]
-    GRP_debian --> snipeit_deb
-    grafana_docker_deb["grafana-docker-deb<br/>192.168.1.21<br/>Debian"]
-    GRP_debian --> grafana_docker_deb
     swarm01_deb["swarm01-deb<br/>192.168.1.22<br/>Debian"]
     GRP_debian --> swarm01_deb
     swarm02_deb["swarm02-deb<br/>192.168.1.23<br/>Debian"]
@@ -223,8 +215,6 @@ graph LR
     class ONT,Router,Firewall,Switch infra
     class GRP_linux group
     class git_ansible_deb linux
-    class snipeit_deb linux
-    class grafana_docker_deb linux
     class swarm01_deb linux
     class swarm02_deb linux
     class swarm03_deb linux
@@ -277,8 +267,6 @@ graph LR
     class tahoe_mac other
     class GRP_debian group
     class git_ansible_deb other
-    class snipeit_deb other
-    class grafana_docker_deb other
     class swarm01_deb other
     class swarm02_deb other
     class swarm03_deb other
