@@ -1,275 +1,217 @@
 # Network Context Document
-_Paste this at the start of any new Claude session._
-_Last updated: 2026-04-09_
-
+_Paste this at the start of any new Claude session to provide homelab context._
+_Last updated: 2026-05-15_
 ---
-
 ## Network Overview
-
 - **ISP:** FIOS (fiber ONT)
 - **Router/Firewall:** GL.iNet Flint 2 (192.168.1.1) — OpenWrt-based, AdGuard Home enabled
 - **Secondary firewall:** Netgate (192.168.1.6) — pfSense
-- **Hypervisor:** Proxmox VE (192.168.1.2) — AMD Ryzen 5 1600, 56GB RAM (ASRock AB350M Pro4)
-- **NAS:** FreeNAS 2019 (192.168.1.5) — 70TB pool, CIFS shares
+- **Proxmox Cluster:** "wheel" — 2-node cluster with QDevice
+  - **shardik** (192.168.1.2) — AMD Ryzen 5 1600, 62GB RAM, ASRock AB350M Pro4 — primary hypervisor
+  - **maturin** (192.168.1.7) — Dell OptiPlex 7050 SFF, SATA SSD — secondary hypervisor
+  - **QDevice:** git-ansible-deb (192.168.1.3)
+- **NAS:** TrueNAS CORE 13.0-U6.8 (192.168.1.5) — ~45TB TRYAGAIN pool, CIFS shares, USB NIC (ue0)
 - **Subnet:** 192.168.1.0/24
 - **DNS:** AdGuard Home on router + PiHole (192.168.1.33)
-- **Monitoring:** Grafana + Prometheus + node-exporter on 192.168.1.21
+- **Monitoring:** monitor-deb (192.168.1.29) — Homepage, Zabbix, Grafana, Uptime Kuma, Prometheus, node-exporter, PVE-exporter, cAdvisor
 - **Ansible control node:** git-ansible-deb (192.168.1.3)
 - **Tailscale tailnet:** coshaughnessy@
-
+- **VPN:** Surfshark WireGuard (via Gluetun on mediastack-deb)
 ---
-
 ## IP Schema
-
-| Range     | Purpose                          |
-|-----------|----------------------------------|
-| 1–19      | Infrastructure (router, Proxmox, NAS, network gear) |
-| 20–49     | Debian/Ubuntu servers, VMs, LXCs |
-| 50–69     | RPM servers (Rocky, Alma, RHEL)  |
-| 100–119   | Windows workstations             |
-| 120–139   | Raspberry Pis                    |
-| 140–159   | TVs, media devices, Plex jails   |
-| 160–179   | Peripherals, printers, IoT       |
-| 200–249   | Mobile, Android devices          |
-| 250+      | Special, reserved, virtual IPs   |
-
+| Range   | Purpose                          |
+|---------|----------------------------------|
+| 1–19    | Infrastructure (router, Proxmox, NAS, network gear) |
+| 20–49   | Debian/Ubuntu servers, VMs, LXCs |
+| 50–69   | RPM servers (Rocky, Alma, RHEL)  |
+| 100–119 | Windows workstations             |
+| 120–139 | Raspberry Pis                    |
+| 140–159 | TVs, media devices               |
+| 160–179 | Peripherals, printers, IoT       |
+| 200–249 | Mobile, Android devices          |
+| 250+    | Special, reserved, virtual IPs   |
 ---
-
 ## Full Host Inventory
-
 ### Infrastructure (1–19)
-
-| IP             | Hostname        | OS/Type         | Role                                | Status |
-|----------------|-----------------|-----------------|-------------------------------------|--------|
-| 192.168.1.1    | router-net      | GL.iNet Flint 2 | Router, AdGuard Home, WireGuard VPN | Online |
-| 192.168.1.2    | proxmox-deb     | Debian 12 (PVE) | Proxmox VE hypervisor               | Online |
-| 192.168.1.3    | git-ansible-deb | Ubuntu 24.04    | Ansible control node, MkDocs, Git   | Online |
-| 192.168.1.5    | freenas-bsd     | FreeNAS (2019)  | NAS — 70TB CIFS shares              | Online |
-| 192.168.1.6    | netgate-net     | pfSense         | Secondary firewall/router           | Online |
-
-### Debian/Ubuntu Servers (20–49) — mostly Proxmox VMs/LXCs
-
-| IP           | Hostname           | OS           | Virt  | Role                                        | Status |
-|--------------|--------------------|--------------|-------|---------------------------------------------|--------|
-| 192.168.1.20 | snipeit-deb        | Debian 12    | LXC   | Snipe-IT asset management                   | Online |
-| 192.168.1.21 | grafana-docker-deb | Ubuntu 24.04 | LXC   | Grafana, Prometheus, Portainer, PVE-exporter| Online |
-| 192.168.1.22 | swarm01-deb        | Ubuntu 24.04 | KVM   | Docker Swarm manager                        | Online |
-| 192.168.1.23 | swarm02-deb        | Ubuntu 24.04 | KVM   | Docker Swarm worker                         | Online |
-| 192.168.1.24 | swarm03-deb        | Ubuntu 24.04 | KVM   | Docker Swarm worker                         | Online |
-| 192.168.1.25 | ubuntu-ansible-deb | Ubuntu 24.04 | KVM   | Ubuntu Ansible host (GUI)                   | Online |
-| 192.168.1.26 | kasm-2404-deb      | Ubuntu 24.04 | KVM   | Kasm Workspaces                             | Online |
-| 192.168.1.27 | urnst-deb          | Debian 13    | Physical | Ryzen 5 1600X — role TBD (Proxmox node 3 / PBS candidate) | Online |
-| 192.168.1.32 | apache-deb         | Ubuntu 22.04 | LXC   | Apache web server                           | Online |
-| 192.168.1.33 | pihole-book-deb    | Debian 12    | LXC   | Pi-hole DNS (1 core, 512MB RAM)             | Online |
-| 192.168.1.34 | docker-deb         | Ubuntu 24.04 | KVM   | Docker host                                 | Online |
-| 192.168.1.35 | 2404HV-deb         | Ubuntu 24.04 | HyperV| Hyper-V Ubuntu VM (i7-13700K, 12 cores)    | Online |
-| 192.168.1.36 | mediastack-deb     | Ubuntu 24.04 | KVM   | Media stack — 12 Docker containers          | Online |
-
-### RPM Servers (50–69) — pending renumber to 80–82
-
-| IP (current) | IP (new)     | Hostname  | OS            | Virt  | Role                        | Status |
-|--------------|--------------|-----------|---------------|-------|-----------------------------|--------|
-| 192.168.1.51 | → .80        | rocky-rpm | Rocky 9.7     | KVM   | Rocky Linux test            | Online |
-| 192.168.1.52 | → .81        | alma-rpm  | AlmaLinux 9.7 | KVM   | AlmaLinux test              | Online |
-| 192.168.1.53 | → .82        | plow-rpm  | RHEL 9.6      | HyperV| RHEL VM (i7-13700K)        | Online |
-
+| IP          | Hostname        | OS/Type              | Role                                      | Status  |
+|-------------|-----------------|----------------------|-------------------------------------------|---------|
+| 192.168.1.1 | router-net      | GL.iNet Flint 2      | Router, AdGuard Home, WireGuard VPN       | Online  |
+| 192.168.1.2 | shardik         | Debian 12 (PVE)      | Proxmox node 1 — primary hypervisor       | Online  |
+| 192.168.1.3 | git-ansible-deb | Ubuntu 24.04         | Ansible control, MkDocs, Gitea, QDevice   | Online  |
+| 192.168.1.5 | freenas-bsd     | TrueNAS CORE 13.0    | NAS — ~45TB TRYAGAIN pool, CIFS shares    | Online  |
+| 192.168.1.6 | netgate-net     | pfSense              | Secondary firewall/router                 | Online  |
+| 192.168.1.7 | maturin         | Debian 12 (PVE)      | Proxmox node 2 — secondary hypervisor     | Online  |
+### Debian/Ubuntu Servers (20–49)
+| IP           | Hostname        | OS           | Virt    | Role                                          | Status  |
+|--------------|-----------------|--------------|---------|-----------------------------------------------|---------|
+| 192.168.1.22 | swarm01-deb     | Ubuntu 24.04 | KVM     | Docker Swarm manager (VM 102, shardik)        | Online  |
+| 192.168.1.23 | swarm02-deb     | Ubuntu 24.04 | KVM     | Docker Swarm worker (VM 104, shardik)         | Online  |
+| 192.168.1.24 | swarm03-deb     | Ubuntu 24.04 | KVM     | Docker Swarm worker (VM 105, shardik)         | Online  |
+| 192.168.1.26 | kasm-2404-deb   | Ubuntu 24.04 | KVM     | Kasm Workspaces 1.17.0 (VM 111, maturin)     | Online  |
+| 192.168.1.27 | urnst-deb       | Debian 13    | Physical| Role TBD                                      | Offline |
+| 192.168.1.28 | idee-deb        | Debian       | Physical| GPU node — GTX 1080 Ti (role TBD)             | Offline |
+| 192.168.1.29 | monitor-deb     | Debian 12    | KVM     | Monitoring stack (VM 110, maturin)            | Online  |
+| 192.168.1.33 | pihole-book-deb | Debian 12    | LXC     | Pi-hole DNS (1 core, 512MB RAM, maturin)      | Online  |
+| 192.168.1.34 | docker-deb      | Ubuntu 24.04 | KVM     | Docker host — Portainer, Vaultwarden, Traefik (VM 107, shardik) | Online |
+| 192.168.1.35 | 2404HV-deb      | Ubuntu 24.04 | Hyper-V | Hyper-V Ubuntu VM (i7-13700K, 12 cores)       | Online  |
+| 192.168.1.36 | mediastack-deb  | Ubuntu 24.04 | KVM     | Full media stack — 17 Docker containers (VM 113, shardik) | Online |
+| 192.168.1.40 | restic-deb      | Debian       | Physical| Backup host — Restic                          | Online  |
+### RPM Servers (50–69)
+| IP           | Hostname  | OS            | Virt    | Role                         | Status |
+|--------------|-----------|---------------|---------|------------------------------|--------|
+| 192.168.1.51 | rocky-rpm | Rocky 9.7     | KVM     | Rocky Linux (VM 109, maturin)| Online |
+| 192.168.1.52 | alma-rpm  | AlmaLinux 9.7 | KVM     | AlmaLinux (VM 108, maturin)  | Online |
+| 192.168.1.53 | plow-rpm  | RHEL 9.6      | Hyper-V | RHEL VM (i7-13700K), Snipe-IT| Online |
 ### Windows Workstations (100–119)
-
-| IP             | Hostname         | Notes                       | Status      |
-|----------------|------------------|-----------------------------|-------------|
-| 192.168.1.100  | amontillado-win  | Main Windows 11 desktop     | Online      |
-| 192.168.1.101  | eld-win          | Windows workstation         | Online      |
-| 192.168.1.102  | replacements-win | Windows workstation         | Unreachable |
-| 192.168.1.103  | todash-win       | Windows workstation         | Online      |
-| 192.168.1.104  | work-win         | Work laptop                 | Unreachable |
-| 192.168.1.105  | fortunato-win    | Hyper-V Windows 11 VM       | Online      |
-
+| IP            | Hostname         | Notes                                    | Status      |
+|---------------|------------------|------------------------------------------|-------------|
+| 192.168.1.100 | amontillado-win  | Main Windows 11 desktop                  | Online      |
+| 192.168.1.101 | eld-win          | Windows workstation — backup target      | Online      |
+| 192.168.1.103 | todash-win       | Windows workstation                      | Online      |
+| 192.168.1.105 | temerant-win     | Windows 11 — LaunchBox, ROM gaming       | Online      |
+| 192.168.1.106 | fortunato-win    | Hyper-V Windows VM (VM 106, shardik rebuilt) | Online  |
 ### Raspberry Pis (120–139)
-
-| IP           | Hostname     | Notes                              | Status      |
-|--------------|--------------|------------------------------------|-------------|
-| 192.168.1.120| pi1-deb      | Raspberry Pi (→ from .75)          | Unreachable |
-| 192.168.1.121| pi2-deb      | Raspberry Pi (→ from .124)         | Unreachable |
-| 192.168.1.122| octopi-deb   | OctoPrint 3D printer (RPi ARMv7)   | Online      |
-| 192.168.1.123| batocera-deb | Batocera retro gaming              | Online      |
-
-### TVs / Media / Plex (140–159)
-
-| IP           | Hostname             | Notes                        | Status      |
-|--------------|----------------------|------------------------------|-------------|
-| 192.168.1.140| tv1-media            | TV                           | Online      |
-| 192.168.1.141| tv2-media            | TV                           | Online      |
-| 192.168.1.142| lg-tv-net            | LG WebOS TV (→ from .105)    | Unreachable |
-| 192.168.1.143| weltgeist-media      | Plex jail (FreeBSD/FreeNAS)  | Online      |
-| 192.168.1.144| alea_iacta_est-media | Plex jail (FreeBSD/FreeNAS)  | Online      |
-| 192.168.1.145| firetv-droid         | Amazon Fire TV (→ from .214) | Unreachable |
-
+| IP            | Hostname     | Notes                                | Status      |
+|---------------|--------------|--------------------------------------|-------------|
+| 192.168.1.122 | octopi-deb   | OctoPrint — 3D printer control       | Online      |
+| 192.168.1.123 | batocera-deb | Batocera retro gaming                | Online      |
+| 192.168.1.125 | pi5-deb      | Raspberry Pi 5                       | Online      |
+### TVs / Media (140–159)
+| IP            | Hostname    | Notes        | Status      |
+|---------------|-------------|--------------|-------------|
+| 192.168.1.140 | tv1-media   | TV           | Online      |
+| 192.168.1.141 | tv2-media   | TV           | Online      |
 ### Peripherals / IoT (160–179)
-
-| IP           | Hostname         | Notes                  | Status      |
-|--------------|------------------|------------------------|-------------|
-| 192.168.1.162| dell-printer-net | Dell 2155cdn Color MFP | Unreachable |
-
+| IP            | Hostname         | Notes                  | Status      |
+|---------------|------------------|------------------------|-------------|
+| 192.168.1.162 | dell-printer-net | Dell 2155cdn Color MFP | Offline     |
 ### Mobile / Android (200–249)
-
-| IP           | Hostname          | Notes                        | Status      |
-|--------------|-------------------|------------------------------|-------------|
-| 192.168.1.200| alexa-droid       | Amazon Echo                  | Unreachable |
-| 192.168.1.201| pixel8-droid      | Google Pixel 8               | Unreachable |
-| 192.168.1.202| fire-tablet-droid | Amazon Fire Tablet           | Online      |
-| 192.168.1.203| roomba-droid      | iRobot Roomba                | Unreachable |
-
+| IP            | Hostname          | Notes              | Status      |
+|---------------|-------------------|--------------------|-------------|
+| 192.168.1.201 | pixel8-droid      | Google Pixel 8     | Mobile      |
+| 192.168.1.202 | fire-tablet-droid | Amazon Fire Tablet | Online      |
+| 192.168.1.203 | roomba-droid      | iRobot Roomba      | Online      |
 ### Special / Virtual (250+)
-
-| IP           | Hostname        | Notes                   |
-|--------------|-----------------|-------------------------|
-| 192.168.1.250| swarm-shared-vip| Docker Swarm shared VIP |
-
+| IP            | Hostname         | Notes                    |
+|---------------|------------------|--------------------------|
+| 192.168.1.250 | swarm-shared-vip | Docker Swarm shared VIP  |
 ---
+## Proxmox Cluster Detail
+### shardik (192.168.1.2) — Node 1
+**Hardware:** AMD Ryzen 5 1600 (6c/12t) | **RAM:** 62GB DDR4
+**Motherboard:** ASRock AB350M Pro4 | **BIOS:** P10.43
+**Note:** ZFS masked off (systemd.mask=zfs-mount.service) — ZFS recovery failed, node rebuilt
 
-## Proxmox Host Detail (192.168.1.2)
+| Pool      | Type    | Notes                        |
+|-----------|---------|------------------------------|
+| local     | dir     | OS                           |
+| local-lvm | lvmthin | VM storage                   |
+| SDA_store | dir     | Large VM storage (~4.8TB free)|
+| SDB_store | dir     | Additional storage           |
+| SDC_store | dir     | Additional storage           |
+| SDD_store | dir     | Additional storage           |
 
-**Hardware:** AMD Ryzen 5 1600 (6c/12t) | **RAM:** 56GB DDR4 2667 (4x DIMM: 16+16+16+8GB mixed)
-**Motherboard:** ASRock AB350M Pro4 | Serial: M80-B1011000766
-**BIOS:** AMI P10.43, updated 2025-06-24
-**Kernel:** 6.8.12-20-pve
+| VMID | Name              | IP           | Status  | RAM  | Node    |
+|------|-------------------|--------------|---------|------|---------|
+| 101  | monitor-deb       | 192.168.1.29 | running | 4GB  | shardik |
+| 102  | swarm01-manager   | 192.168.1.22 | running | 2GB  | shardik |
+| 104  | swarm02-worker    | 192.168.1.23 | running | 2GB  | shardik |
+| 105  | swarm03-worker    | 192.168.1.24 | running | 2GB  | shardik |
+| 106  | git-ansible       | 192.168.1.3  | running | 4GB  | shardik |
+| 107  | docker-deb        | 192.168.1.34 | running | 2GB  | shardik |
+| 113  | mediastack-deb    | 192.168.1.36 | running | 16GB | shardik |
 
-### Storage Pools
+### maturin (192.168.1.7) — Node 2
+**Hardware:** Dell OptiPlex 7050 SFF | **Storage:** 476GB SATA SSD (single disk)
 
-| Pool        | Type    | Used     | Total    | Use% |
-|-------------|---------|----------|----------|------|
-| local       | dir     | 5.72GB   | 93.93GB  | 6%   |
-| local-lvm   | lvmthin | 62.6GB   | 816GB    | 8%   |
-| ZFS_SDBC    | zfspool | 228GB    | 5456GB   | 4%   |
-| DIR_SDA     | dir     | 208GB    | 5544GB   | 4%   |
-| zfs-backups | dir     | 164GB    | 5391GB   | 3%   |
-
-### VMs
-
-| VMID | Name                  | Status  | CPU | RAM |
-|------|-----------------------|---------|-----|-----|
-| 102  | swarm01-manager       | running | 4   | 2GB |
-| 103  | Replacements-11       | stopped | 4   | 4GB |
-| 104  | swarm02-worker        | running | 4   | 2GB |
-| 105  | swarm03-worker        | running | 4   | 2GB |
-| 106  | gui-ubuntu-ansible    | running | 4   | 4GB |
-| 107  | docker-deb            | running | 2   | 2GB |
-| 108  | alma-rpm              | running | 1   | 2GB |
-| 109  | rocky-rpm             | running | 1   | 2GB |
-| 111  | kasm-2404-deb         | running | 2   | 4GB |
-| 112  | mediastack-deb        | running | 4   | 4GB |
-| 900  | ubuntu-24.04-template | stopped | 1   | 1GB |
-| 901  | ubuntu-ansible        | running | 4   | 4GB |
-
-### LXC Containers
-
-| CTID | Name            | Status  | CPU | RAM   |
-|------|-----------------|---------|-----|-------|
-| 100  | apache-deb      | running | 2   | 4GB   |
-| 101  | grafana-dock    | running | 2   | 4GB   |
-| 110  | pihole-book-deb | running | 1   | 0.5GB |
-| 500  | snipe-it        | running | 1   | 2GB   |
-
+| VMID | Name              | IP           | Status  | RAM  | Node   |
+|------|-------------------|--------------|---------|------|--------|
+| 108  | alma-rpm          | 192.168.1.52 | running | 2GB  | maturin|
+| 109  | rocky-rpm         | 192.168.1.51 | running | 2GB  | maturin|
+| 110  | pihole-book-deb   | 192.168.1.33 | running | 512MB| maturin|
+| 111  | kasm-2404-deb     | 192.168.1.26 | running | 4GB  | maturin|
+| 900  | ubuntu-24.04-template | —        | stopped | 1GB  | maturin|
 ---
-
 ## mediastack-deb Detail (192.168.1.36)
-
-Proxmox VM 112 | Ubuntu 24.04 | 4 cores | 4GB RAM
-**⚠️ Root disk — expanded to 164GB, 17% used** | Tailscale: 100.127.236.79
+Proxmox VM 113 | Ubuntu 24.04 | 4 cores | 16GB RAM | shardik
+Tailscale: 100.127.236.79
 
 ### Docker Containers
+| Container      | Port  | Purpose                        |
+|----------------|-------|--------------------------------|
+| plex           | 32400 | Media server                   |
+| sonarr         | 8989  | TV management                  |
+| radarr         | 7878  | Movie management               |
+| lidarr         | 8686  | Music management               |
+| mylar          | 8091  | Comics downloader              |
+| sabnzbd        | 8090  | Usenet downloader              |
+| prowlarr       | 9696  | Indexer manager                |
+| qbittorrent    | 8082  | Torrent client                 |
+| seerr          | 5055  | Media requests                 |
+| komga          | 8085  | Comics/ebooks reader           |
+| audiobookshelf | 13378 | Audiobooks/podcasts            |
+| romm           | 8998  | ROM manager (~300 games)       |
+| kometa         | —     | Plex metadata/collections      |
+| flaresolverr   | 8191  | Cloudflare bypass for Prowlarr |
+| unpackerr      | —     | Archive extractor              |
+| vpn (gluetun)  | —     | Surfshark WireGuard VPN        |
+| mariadb        | —     | Database for RomM              |
 
-| Container      | Port  | Purpose           |
-|----------------|-------|-------------------|
-| romm           | 8998  | ROM manager       |
-| seerr          | 5055  | Media requests    |
-| komga          | 8085  | Comics/ebooks     |
-| mylar          | 8091  | Comics downloader |
-| lidarr         | 8686  | Music mgmt        |
-| radarr         | 7878  | Movie mgmt        |
-| sabnzbd        | 8090  | Usenet downloader |
-| sonarr         | 8989  | TV mgmt           |
-| vpn            | 8080  | WireGuard VPN     |
-| mariadb        | —     | DB for romm       |
-| prowlarr       | 9696  | Indexer manager   |
-| audiobookshelf | 13378 | Audiobooks        |
-
-NAS CIFS mounts at `/mnt/plex/*`: Music420, Movies, Comics, AudioBooksPlex, Reading420, downloads, TV, Training, ROMs
-
+NAS CIFS mounts at `/mnt/plex/*`: Music420, Movies, Comics, AudioBooksPlex, downloads, TV, Training, ROMs, Photos
 ---
-
 ## git-ansible-deb Detail (192.168.1.3)
-
-Ubuntu 24.04 | Disk: 63GB, 35% used | Tailscale: 100.68.195.68
-Ansible core 2.20.4 | Python 3.12.3
-Services: MkDocs :8000, nginx :80, MariaDB :3306 (localhost)
-Docs: `/home/cos/material/mkdocs_dev_material/docs/`
+Ubuntu 24.04 | Proxmox VM 106 on shardik | Tailscale: 100.68.195.68
+Ansible core 2.20.4 | Python 3.12.3 | ansible.cfg: interpreter_python = auto_silent
+Primary inventory: `~/ansible_dev/inventory_auto`
+Playbooks: `~/ansible_dev/playbooks/`
+Docs: `~/material/mkdocs_dev_material/` (MkDocs Material)
+Gitea: port 3000
 VS Code Server installed
-
 ---
-
+## docker-deb Detail (192.168.1.34)
+Ubuntu 24.04 | Proxmox VM 107 on shardik
+Services: Portainer (central), Vaultwarden, Traefik, Caddy
+Vaultwarden: https://docker-deb.taild502ad.ts.net:8443
+Portainer agents deployed fleet-wide
+---
 ## Tailscale Nodes
-
-| git-ansible            | 100.68.195.68  | Linux   | Online  |
-|------------------------|----------------|---------|---------|
-| mediastack-deb         | 100.127.236.79 | Linux   | Online  |
-| amontillado            | 100.126.7.50   | Windows | Online  |
-| coe-thinkpad-p1-gen-4i | 100.81.219.113 | Linux   | Offline |
-| pixel-8                | 100.110.116.11 | Android | Offline |
-
+| Hostname               | Tailscale IP    | OS      | Status  |
+|------------------------|-----------------|---------|---------|
+| git-ansible-deb        | 100.68.195.68   | Linux   | Online  |
+| mediastack-deb         | 100.127.236.79  | Linux   | Online  |
+| kasm-2404-deb          | 100.80.14.29    | Linux   | Online  |
+| amontillado            | 100.126.7.50    | Windows | Online  |
+| pixel-8                | 100.110.116.11  | Android | Offline |
 ---
-
 ## Docker Swarm (.22–.24, VIP .250)
-
-swarm01 (.22) — manager | swarm02 (.23) — worker | swarm03 (.24) — worker
-All nodes have Ceph user — storage cluster likely configured
-
+swarm01 (.22) — manager (VM 102, shardik) | swarm02 (.23) — worker (VM 104, shardik) | swarm03 (.24) — worker (VM 105, shardik)
+Swarm VIP: 192.168.1.250
 ---
-
-## Security Flags
-
-| Issue | Affected Hosts |
-|-------|---------------|
-| fail2ban NOT installed | mediastack-deb, docker-deb, grafana-docker-deb, pihole-book-deb |
-| chrony FAILED | snipeit-deb, pihole-book-deb |
-| frodo user — empty password WARNING | rocky-rpm, alma-rpm, plow-rpm |
-| FreeNAS 2019 EOL — no patches | 192.168.1.5 |
-| Root disk 91% CRITICAL | mediastack-deb |
-| /overlay/base 100% CRITICAL | batocera-deb |
-
+## Naming Conventions
+| Type              | Convention              | Examples                              |
+|-------------------|-------------------------|---------------------------------------|
+| Proxmox nodes     | Dark Tower characters   | shardik, maturin                      |
+| Linux servers     | Greyhawk D&D geography  | urnst-deb, idee-deb                   |
+| Windows machines  | Literary references     | amontillado, eld, temerant (Kingkiller)|
+| Cluster/nodes     | Dark Tower              | shardik, maturin                      |
 ---
-
-## Known Issues / To Do
-
-### Critical
-- [x] ~~mediastack-deb root disk at 91% — expand VM disk or clean up Docker~~ ✅ 2026-04-09 — expanded to 164GB, now at 17% (127GB free)
-- [x] ~~batocera-deb /overlay/base at 100%~~ ✅ 2026-04-09 — false alarm, this is the read-only Batocera OS squashfs image, expected behavior
-
-### In Progress
-- [x] ~~docker-deb — broken packages (udev/libudev1 mismatch)~~ ✅ 2026-04-09
-- [ ] plow-rpm — xrdp/SELinux conflict blocking updates — decide: exclude xrdp or remove it
-- [x] ~~git-ansible-deb — cannot sudo via Ansible~~ ✅ 2026-04-10 — passwordless sudo configured
-
-### Security
-- [x] ~~frodo user deleted from rocky-rpm, alma-rpm, plow-rpm~~ ✅ 2026-04-09
-- [x] ~~fail2ban installed on mediastack-deb~~ ✅ 2026-04-09
-- [x] ~~fail2ban — docker-deb still missing (blocked by broken packages)~~ ✅ 2026-04-09
-- [x] ~~fail2ban — update whitelist from 192.168.1.100 to 192.168.1.0/24~~ ✅ 2026-04-09
-- [x] ~~fail2ban — exclude batocera-deb in playbook~~ ✅ 2026-04-09
-- [x] ~~fail2ban — exclude git-ansible-deb in playbook~~ ✅ 2026-04-09
-- [x] ~~Fix chrony on snipeit-deb and pihole-book-deb~~ ✅ 2026-04-09 — disabled in LXC containers, time sync handled by Proxmox host
-- [x] ~~Add Tailscale to git-ansible-deb~~ ✅ 2026-04-10 (100.68.195.68)
-
-### Maintenance
-- [x] ~~Most hosts updated via update_reboot_linux.yml~~ ✅ 2026-04-09
-- [ ] Complete pending IP renumbering (Rocky/Alma/RHEL .51-.53 → .80-.82, Pis, TVs etc.)
-- [ ] Fix duplicate mediastack-deb entry in inventory_auto
-- [ ] Investigate pi1-deb and pi2-deb unreachable
-
-### Long Term
-- [ ] FreeNAS → TrueNAS Community Edition migration
-- [ ] Clarify role of MariaDB and nginx on git-ansible-deb
-
+## Security Status
+| Issue                              | Status                              |
+|------------------------------------|-------------------------------------|
+| fail2ban                           | ✅ Deployed fleet-wide              |
+| Dirty Frag CVE-2026-43284/43500    | ✅ Mitigated fleet-wide 2026-05-15  |
+| Copy Fail CVE-2026-31431           | ✅ Patched fleet-wide 2026-05-10    |
+| TrueNAS CORE EOL                   | ⚠️ Hardware rebuild planned         |
+| ada4 bad sectors (TrueNAS)         | ⚠️ Investigate                      |
+| pi1 SD card 91% full               | ⚠️ Replace SD card                  |
+| eld D: drive 10% free              | ⚠️ Expand storage                   |
 ---
-_Generated from MkDocs docs + enum output | 2026-04-09_
+## Known Issues
+- plow-rpm — xrdp/SELinux conflict blocking updates
+- TrueNAS ue0 (USB NIC) — set to static .5 but may not survive reboots
+- TrueNAS alc0 onboard NIC — broken
+- Vaultwarden autofill port matching issue in browser extension
+- Plex Music library fix for mobile — unresolved
+---
+_Last updated: 2026-05-15_
 
