@@ -44,31 +44,36 @@ markdown_extensions:
           class: mermaid
           format: !!python/name:pymdownx.superfences.fence_code_format
 nav:
-  - Welcome: index.md
-  - Host: host.md
-  - Hosts: hosts.md
-  - Scan Results: scan_results.md
-  - Disk Space: disk_space.md
-  - System Info: system_info.md
-  - Services: services.md
-  - User Audit: user_audit.md
-  - Ping Report: ping_report.md
-  - Concerts: concerts.md
-  - Homelab: homelab.md
-  - MediaStack Applications: mediastack_apps.md
-  - Apps to Investigate: apps_to_investigate.md
-  - Code Examples: code-examples.md
-  - Git Commands: git.commands.md
-  - Git Info: git_info.md
-  - Network Devices: network_devices.md
-  - Network Diagram: network_diagram.md
-  - Todo: todo.md
-  - Proxmox: proxmox.md
-  - Network Schema: network-schema.md
-  - Network Context: network_context.md
-  - Hardware Inventory: hw_inv.md
-  - Docker Inventory: docker_inv.md
-  - Software Inventory: software_inventory.md
-  - Tailscale Reference: tailscale.md
+  - Overview:
+    - Welcome: index.md
+    - Homelab: homelab.md
+    - Todo: todo.md
+  - Infrastructure:
+    - Proxmox: proxmox.md
+    - Network Schema: network-schema.md
+    - Network Context: network_context.md
+    - Network Devices: network_devices.md
+    - Network Diagram: network_diagram.md
+    - Tailscale Reference: tailscale.md
+  - Hosts & Inventory:
+    - Host: host.md
+    - Hosts: hosts.md
+    - Hardware Inventory: hw_inv.md
+    - Docker Inventory: docker_inv.md
+    - Software Inventory: software_inventory.md
+  - Monitoring & Reports:
+    - Scan Results: scan_results.md
+    - Disk Space: disk_space.md
+    - System Info: system_info.md
+    - Services: services.md
+    - Ping Report: ping_report.md
+    - User Audit: user_audit.md
+  - Mediastack:
+    - MediaStack Applications: mediastack_apps.md
+    - Apps to Investigate: apps_to_investigate.md
+  - Reference:
+    - Git Commands: git.commands.md
+    - Git Info: git_info.md
+    - Code Examples: code-examples.md
+    - Concerts: concerts.md
 copyright: Copyright &copy; 2025 C. O'Shaughnessy as inspired by James Willett
-
