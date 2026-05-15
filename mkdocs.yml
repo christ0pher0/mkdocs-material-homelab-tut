@@ -55,11 +55,11 @@ nav:
   - Ping Report: ping_report.md
   - Concerts: concerts.md
   - Homelab: homelab.md
-  - MediaStack Applications: mdeiastack_apps.md
+  - MediaStack Applications: mediastack_apps.md
   - Apps to Investigate: apps_to_investigate.md
   - Code Examples: code-examples.md
   - Git Commands: git.commands.md
-  - Git Info: git_nfo.md
+  - Git Info: git_info.md
   - Network Devices: network_devices.md
   - Network Diagram: network_diagram.md
   - Todo: todo.md
