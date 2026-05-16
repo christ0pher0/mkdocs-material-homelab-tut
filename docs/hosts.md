@@ -1,5 +1,5 @@
 # Hosts
-_Last update: 2026-05-15 19:05:01_
+_Last update: 2026-05-15 21:05:01_
 
 | # | Hostname | IP Address | MAC Address | OS | Status | Notes |
 |---|----------|------------|------------|----|--------|-------|
@@ -23,8 +23,9 @@ _Last update: 2026-05-15 19:05:01_
 | 18 | todash-win | 192.168.1.103 | 00:15:5D:00:B3:08 | Windows | Online | ------ |
 | 19 | fortunato-win | 192.168.1.106 | 00:15:5D:00:B3:1A | Windows | Online | ------ |
 | 20 | octopi-deb | 192.168.1.122 | DC:A6:32:5E:04:08 | Debian/Ubuntu Linux | Online | ------ |
-| 21 | unknown-192.168.1.125 | 192.168.1.125 | E4:5F:01:65:56:EE | Linux 4.15 - 5.8 | Online | ------ |
+| 21 | ha-net | 192.168.1.125 | E4:5F:01:65:56:EE | Network Device | Online | ------ |
 | 22 | tv1-media | 192.168.1.140 | A8:23:FE:13:A9:D1 | Media Device | Online | ------ |
 | 23 | tv2-media | 192.168.1.141 | 22:57:5A:A7:04:87 | Media Device | Online | ------ |
-| 24 | firetv-media | 192.168.1.145 | 74:E2:0C:D6:71:DD | Media Device | Online | ------ |
-| 25 | fire-tablet-droid | 192.168.1.202 | B0:FC:0D:51:8F:78 | Android | Online | ------ |
+| 24 | unknown-192.168.1.145 | 192.168.1.145 | 74:E2:0C:D6:71:DD | Unknown | Online | ------ |
+| 25 | pixel8-droid | 192.168.1.201 | EE:FC:9C:95:22:1B | Android | Online | ------ |
+| 26 | alexa-droid | 192.168.1.202 | B0:FC:0D:51:8F:78 | Android | Online | ------ |
