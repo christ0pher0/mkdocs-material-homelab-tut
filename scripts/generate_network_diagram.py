@@ -167,6 +167,25 @@ def generate_diagram(groups, proxmox_topology, hosts_map, proxmox_vm_names):
         lines.append("")
 
     # All other hosts — directly off Switch, no group bubbles
+    # Skip anything already shown in Proxmox topology or explicitly skipped
+    # Build IP->hostname reverse map for inventory lookups
+    ip_to_inventory = {}
+    for group, hosts in groups.items():
+        for hostname, ip in hosts:
+            ip_to_inventory[ip] = hostname
+
+    # Build set of IPs used by Proxmox VMs so we can exclude by IP too
+    proxmox_vm_ips = set()
+    for node_data in proxmox_topology.values():
+        for vm in node_data.get("vms", []):
+            vm_ip = next((ip for ip, hn in hosts_map.items() if hn == vm["name"]), "")
+            if vm_ip:
+                proxmox_vm_ips.add(vm_ip)
+        for ct in node_data.get("lxc", []):
+            ct_ip = next((ip for ip, hn in hosts_map.items() if hn == ct["name"]), "")
+            if ct_ip:
+                proxmox_vm_ips.add(ct_ip)
+
     seen = set(proxmox_vm_names)
     seen.update(PROXMOX_NODES.keys())
 
@@ -175,6 +194,9 @@ def generate_diagram(groups, proxmox_topology, hosts_map, proxmox_vm_names):
             continue
         for hostname, ip in hosts:
             if hostname in seen or hostname in SKIP_HOSTS:
+                continue
+            # Skip if this host's IP is used by a Proxmox VM
+            if ip in proxmox_vm_ips:
                 continue
             seen.add(hostname)
             safe = sanitize(hostname)
@@ -212,6 +234,8 @@ def generate_diagram(groups, proxmox_topology, hosts_map, proxmox_vm_names):
             continue
         for hostname, ip in hosts:
             if hostname in seen2 or hostname in SKIP_HOSTS:
+                continue
+            if ip in proxmox_vm_ips:
                 continue
             seen2.add(hostname)
             style = "linux"
@@ -259,3 +283,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

@@ -1,6 +1,6 @@
 # Network Diagram
 
-_Last update: 2026-05-15 21:13:10_
+_Last update: 2026-05-15 22:58:49_
 
 ```mermaid
 graph LR
@@ -26,7 +26,7 @@ graph LR
     shardik --> swarm02_worker
     swarm03_worker["swarm03-worker<br/>192.168.1.24<br/>Linux"]
     shardik --> swarm03_worker
-    git_ansible["git-ansible<br/>Linux"]
+    git_ansible["git-ansible<br/>192.168.1.3<br/>Linux"]
     shardik --> git_ansible
     docker_deb["docker-deb<br/>192.168.1.34<br/>Debian/Ubuntu"]
     shardik --> docker_deb
@@ -44,38 +44,6 @@ graph LR
     pihole_book_deb["pihole-book-deb<br/>192.168.1.33<br/>Debian/Ubuntu (LXC)"]
     maturin --> pihole_book_deb
 
-    git_ansible_deb["git-ansible-deb<br/>192.168.1.3<br/>Debian/Ubuntu"]
-    Switch --> git_ansible_deb
-    swarm01_deb["swarm01-deb<br/>192.168.1.22<br/>Debian/Ubuntu"]
-    Switch --> swarm01_deb
-    swarm02_deb["swarm02-deb<br/>192.168.1.23<br/>Debian/Ubuntu"]
-    Switch --> swarm02_deb
-    swarm03_deb["swarm03-deb<br/>192.168.1.24<br/>Debian/Ubuntu"]
-    Switch --> swarm03_deb
-    urnst_deb["urnst-deb<br/>192.168.1.27<br/>Debian/Ubuntu"]
-    Switch --> urnst_deb
-    idee_deb["idee-deb<br/>192.168.1.28<br/>Debian/Ubuntu"]
-    Switch --> idee_deb
-    2404HV_deb["2404HV-deb<br/>192.168.1.35<br/>Debian/Ubuntu"]
-    Switch --> 2404HV_deb
-    restic_deb["restic-deb<br/>192.168.1.40<br/>Debian/Ubuntu"]
-    Switch --> restic_deb
-    plow_rpm["plow-rpm<br/>192.168.1.53<br/>RHEL/Rocky"]
-    Switch --> plow_rpm
-    pi1_deb["pi1-deb<br/>192.168.1.120<br/>Debian/Ubuntu"]
-    Switch --> pi1_deb
-    pi2_deb["pi2-deb<br/>192.168.1.121<br/>Debian/Ubuntu"]
-    Switch --> pi2_deb
-    octopi_deb["octopi-deb<br/>192.168.1.122<br/>Debian/Ubuntu"]
-    Switch --> octopi_deb
-    batocera_deb["batocera-deb<br/>192.168.1.123<br/>Debian/Ubuntu"]
-    Switch --> batocera_deb
-    pi3_deb["pi3-deb<br/>192.168.1.124<br/>Debian/Ubuntu"]
-    Switch --> pi3_deb
-    pi4_deb["pi4-deb<br/>192.168.1.126<br/>Debian/Ubuntu"]
-    Switch --> pi4_deb
-    argos_deb["argos-deb<br/>192.168.1.127<br/>Debian/Ubuntu"]
-    Switch --> argos_deb
     amontillado_win["amontillado-win<br/>192.168.1.100<br/>Windows"]
     Switch --> amontillado_win
     todash_win["todash-win<br/>192.168.1.103<br/>Windows"]
@@ -126,22 +94,6 @@ graph LR
     class rocky_rpm vm
     class kasm_2404_deb vm
     class pihole_book_deb vm
-    class git_ansible_deb linux
-    class swarm01_deb linux
-    class swarm02_deb linux
-    class swarm03_deb linux
-    class urnst_deb linux
-    class idee_deb linux
-    class 2404HV_deb linux
-    class restic_deb linux
-    class plow_rpm linux
-    class pi1_deb linux
-    class pi2_deb linux
-    class octopi_deb linux
-    class batocera_deb linux
-    class pi3_deb linux
-    class pi4_deb linux
-    class argos_deb linux
     class amontillado_win windows
     class todash_win windows
     class work_win windows
