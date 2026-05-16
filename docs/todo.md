@@ -1,5 +1,5 @@
 # Homelab Todo & Roadmap
-_Last updated: 2026-05-15_
+_Last updated: 2026-05-16_
 ---
 ## Critical / Security
 - [ ] ZFS plugin — monitor RAIDZ1 health, drive errors on TrueNAS ⚠️
@@ -23,7 +23,7 @@ _Last updated: 2026-05-15_
 - [ ] Purchase larger SD card for pi1-deb (3.8GB, 91% full)
 - [ ] Pi rack — 3D print or buy, house all 8 Pis cleanly
 - [ ] PoE switch + PoE HATs — single cable per Pi for power + network
-- [ ] Verify swarm VM migration complete (102/104/105 → shardik SDA_store) ⚠️
+- [x] Verify swarm VM migration complete (102/104/105 → shardik SDA_store) ✅ 2026-05-16
 - [ ] Verify Kometa Trakt/MDBList working after next scheduled run
 ### Hardware Inventory Completion
 - [ ] Photo and dmidecode all 5 waiting systems
@@ -47,9 +47,8 @@ _Last updated: 2026-05-15_
 - [ ] Eventually: GPU passthrough of GTX 1080 Ti for RPCS3/AI workloads
 - [ ] Check AB350 IOMMU groupings before passthrough attempt
 ### Maturin Hardware
-- [ ] Check maturin (OptiPlex 7050 SFF) 2.5" bay — confirm empty
-- [ ] Install 2TB SSD in maturin via 2.5" SATA bay OR 2TB NVMe in empty M.2 slot (PCIe NVMe confirmed supported)
-- [ ] Either way: add as dedicated Proxmox dir storage pool
+- [x] Install Samsung 980 Pro 1TB NVMe in maturin M.2 slot ✅ 2026-05-16
+- [x] Add nvme_store as Proxmox dir storage pool on maturin ✅ 2026-05-16
 ### Monitoring Stack (monitor-deb 192.168.1.29)
 - [x] Deploy Homepage, Zabbix, Grafana, Uptime Kuma on monitor-deb ✅ 2026-05-10
 - [x] Deploy Prometheus + node-exporter + PVE-exporter + cAdvisor ✅ 2026-05-10
@@ -109,7 +108,7 @@ _Last updated: 2026-05-15_
 - [x] QDevice on git-ansible ✅
 - [x] Rebuild lost VMs: 101 (monitor-deb ✅), 106 (git-ansible ✅), 107 (docker-deb ✅) ✅ 2026-05-15
 - [x] Migrate swarm VMs 102/104/105 from maturin → shardik SDA_store ✅ 2026-05-15
-- [ ] Verify swarm VM migration fully complete
+- [x] Verify swarm VM migration fully complete ✅ 2026-05-16
 - [ ] Add pve3 (temerant → ThinkStation) to cluster
 - [ ] Configure Proxmox HA for automatic VM failover
 - [ ] Set up shared storage — NFS from TrueNAS
@@ -132,9 +131,9 @@ _Last updated: 2026-05-15_
 ### Documentation
 - [x] Rename typo'd MkDocs files: git_nfo.md → git_info.md, mdeiastack_apps.md → mediastack_apps.md ✅ 2026-05-15
 - [x] mediastack_apps.md overhauled with deployment status table ✅ 2026-05-15
-- [ ] Organize mkdocs.yml nav into sections
-- [ ] Update network_context.md — remove dead VMs (101/106/107 rebuilt, grafana-docker-deb gone)
-- [ ] Update hw_inventory.md — freenas-bsd → TrueNAS, add monitor-deb
+- [x] Organize mkdocs.yml nav into sections ✅ 2026-05-16
+- [x] Update network_context.md — full rewrite ✅ 2026-05-16
+- [x] Update hw_inventory.md ✅ 2026-05-16
 - [ ] Create Proxmox cluster diagram
 - [ ] Document monitoring stack architecture
 ### Network
@@ -184,4 +183,27 @@ _Last updated: 2026-05-15_
 - [ ] LSI 9207-8i or 9211-8i HBA card (~$20-40 eBay)
 - [ ] 2x SFF-8087 to SATA breakout cables (~$5-10 each eBay)
 - [ ] 2TB SSD for PVE3 VM storage
+- [x] Dirty Frag CVE-2026-43284/43500 mitigated fleet-wide — 2026-05-15
+- [x] FlareSolverr deployed, 1337x and KickassTorrents added to Prowlarr — 2026-05-15
+- [x] Unpackerr deployed and wired to Sonarr/Radarr/Lidarr — 2026-05-15
+- [x] Kometa Trakt and MDBList configured — 2026-05-15
+- [x] Renamed typo'd MkDocs files (git_nfo.md, mdeiastack_apps.md) — 2026-05-15
+- [x] mediastack_apps.md overhauled with deployment status table — 2026-05-15
+- [x] Ansible interpreter warnings silenced (auto_silent) — 2026-05-15
+- [x] Swarm VMs 102/104/105 migrated from maturin → shardik SDA_store — 2026-05-15
+- [x] ZFS recovery failed — shardik rebuilt, ZFS masked off — 2026-05-15
+- [x] RomM cleanup complete — orphaned resources, WebP, segacd rescan, filenames — 2026-05-15
+- [x] LaunchBox 13.26 installed, all platforms imported — 2026-05-15
+- [x] MkDocs nav reorganized into sections — 2026-05-16
+- [x] network_context.md fully rewritten — 2026-05-16
+- [x] hw_inv.md updated — 2026-05-16
+- [x] /etc/hosts cleaned, sorted, synced to router reservations — 2026-05-16
+- [x] inventory_auto cleaned — removed duplicate linux/debian/redhat groups — 2026-05-16
+- [x] Network diagram overhauled — Proxmox topology, no duplicates — 2026-05-16
+- [x] Proxmox services restored on shardik (full-upgrade fixed Perl conflict) — 2026-05-16
+- [x] noVNC console working on shardik — 2026-05-16
+- [x] Samsung 980 Pro 1TB NVMe installed in maturin, nvme_store created — 2026-05-16
+- [x] rocky-rpm rebuilt (VM 109) on maturin nvme_store — Rocky 9.7 — 2026-05-16
+- [x] rocky-rpm onboarded — baseline, EPEL, fail2ban, Dirty Frag, Zabbix agent — 2026-05-16
+- [x] rocky-rpm IP changed to 192.168.1.20 — 2026-05-16
 

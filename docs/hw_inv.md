@@ -1,5 +1,5 @@
 # Hardware Inventory
-_Last updated: 2026-05-15_
+_Last updated: 2026-05-16_
 _Physical hosts only — VMs/containers documented in network_context.md_
 _Ordered by utility — least capable first, most capable last_
 !!! tip "Adding Photos"

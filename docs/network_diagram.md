@@ -1,6 +1,6 @@
 # Network Diagram
 
-_Last update: 2026-05-15 22:58:49_
+_Last update: 2026-05-16 01:10:02_
 
 ```mermaid
 graph LR
@@ -18,32 +18,50 @@ graph LR
 
     shardik["shardik<br/>192.168.1.2"]
     Switch --> shardik
-    monitor_deb["monitor-deb<br/>192.168.1.29<br/>Debian/Ubuntu"]
-    shardik --> monitor_deb
-    swarm01_manager["swarm01-manager<br/>192.168.1.22<br/>Linux"]
-    shardik --> swarm01_manager
-    swarm02_worker["swarm02-worker<br/>192.168.1.23<br/>Linux"]
-    shardik --> swarm02_worker
-    swarm03_worker["swarm03-worker<br/>192.168.1.24<br/>Linux"]
-    shardik --> swarm03_worker
-    git_ansible["git-ansible<br/>192.168.1.3<br/>Linux"]
-    shardik --> git_ansible
-    docker_deb["docker-deb<br/>192.168.1.34<br/>Debian/Ubuntu"]
-    shardik --> docker_deb
-    mediastack_deb["mediastack-deb<br/>192.168.1.36<br/>Debian/Ubuntu"]
-    shardik --> mediastack_deb
 
     maturin["maturin<br/>192.168.1.7"]
     Switch --> maturin
-    alma_rpm["alma-rpm<br/>192.168.1.52<br/>RHEL/Rocky"]
-    maturin --> alma_rpm
-    rocky_rpm["rocky-rpm<br/>192.168.1.51<br/>RHEL/Rocky"]
-    maturin --> rocky_rpm
-    kasm_2404_deb["kasm-2404-deb<br/>192.168.1.26<br/>Debian/Ubuntu"]
-    maturin --> kasm_2404_deb
-    pihole_book_deb["pihole-book-deb<br/>192.168.1.33<br/>Debian/Ubuntu (LXC)"]
-    maturin --> pihole_book_deb
 
+    git_ansible_deb["git-ansible-deb<br/>192.168.1.3<br/>Debian/Ubuntu"]
+    Switch --> git_ansible_deb
+    rocky_rpm["rocky-rpm<br/>192.168.1.20<br/>RHEL/Rocky"]
+    Switch --> rocky_rpm
+    kasm_2404_deb["kasm-2404-deb<br/>192.168.1.26<br/>Debian/Ubuntu"]
+    Switch --> kasm_2404_deb
+    urnst_deb["urnst-deb<br/>192.168.1.27<br/>Debian/Ubuntu"]
+    Switch --> urnst_deb
+    idee_deb["idee-deb<br/>192.168.1.28<br/>Debian/Ubuntu"]
+    Switch --> idee_deb
+    monitor_deb["monitor-deb<br/>192.168.1.29<br/>Debian/Ubuntu"]
+    Switch --> monitor_deb
+    pihole_book_deb["pihole-book-deb<br/>192.168.1.33<br/>Debian/Ubuntu"]
+    Switch --> pihole_book_deb
+    docker_deb["docker-deb<br/>192.168.1.34<br/>Debian/Ubuntu"]
+    Switch --> docker_deb
+    2404HV_deb["2404HV-deb<br/>192.168.1.35<br/>Debian/Ubuntu"]
+    Switch --> 2404HV_deb
+    mediastack_deb["mediastack-deb<br/>192.168.1.36<br/>Debian/Ubuntu"]
+    Switch --> mediastack_deb
+    restic_deb["restic-deb<br/>192.168.1.40<br/>Debian/Ubuntu"]
+    Switch --> restic_deb
+    alma_rpm["alma-rpm<br/>192.168.1.52<br/>RHEL/Rocky"]
+    Switch --> alma_rpm
+    plow_rpm["plow-rpm<br/>192.168.1.53<br/>RHEL/Rocky"]
+    Switch --> plow_rpm
+    pi1_deb["pi1-deb<br/>192.168.1.120<br/>Debian/Ubuntu"]
+    Switch --> pi1_deb
+    pi2_deb["pi2-deb<br/>192.168.1.121<br/>Debian/Ubuntu"]
+    Switch --> pi2_deb
+    octopi_deb["octopi-deb<br/>192.168.1.122<br/>Debian/Ubuntu"]
+    Switch --> octopi_deb
+    batocera_deb["batocera-deb<br/>192.168.1.123<br/>Debian/Ubuntu"]
+    Switch --> batocera_deb
+    pi3_deb["pi3-deb<br/>192.168.1.124<br/>Debian/Ubuntu"]
+    Switch --> pi3_deb
+    pi4_deb["pi4-deb<br/>192.168.1.126<br/>Debian/Ubuntu"]
+    Switch --> pi4_deb
+    argos_deb["argos-deb<br/>192.168.1.127<br/>Debian/Ubuntu"]
+    Switch --> argos_deb
     amontillado_win["amontillado-win<br/>192.168.1.100<br/>Windows"]
     Switch --> amontillado_win
     todash_win["todash-win<br/>192.168.1.103<br/>Windows"]
@@ -82,18 +100,27 @@ graph LR
 
     class ONT,Router,Firewall,Switch infra
     class shardik proxmox
-    class monitor_deb vm
-    class swarm01_manager vm
-    class swarm02_worker vm
-    class swarm03_worker vm
-    class git_ansible vm
-    class docker_deb vm
-    class mediastack_deb vm
     class maturin proxmox
-    class alma_rpm vm
-    class rocky_rpm vm
-    class kasm_2404_deb vm
-    class pihole_book_deb vm
+    class git_ansible_deb linux
+    class rocky_rpm linux
+    class kasm_2404_deb linux
+    class urnst_deb linux
+    class idee_deb linux
+    class monitor_deb linux
+    class pihole_book_deb linux
+    class docker_deb linux
+    class 2404HV_deb linux
+    class mediastack_deb linux
+    class restic_deb linux
+    class alma_rpm linux
+    class plow_rpm linux
+    class pi1_deb linux
+    class pi2_deb linux
+    class octopi_deb linux
+    class batocera_deb linux
+    class pi3_deb linux
+    class pi4_deb linux
+    class argos_deb linux
     class amontillado_win windows
     class todash_win windows
     class work_win windows

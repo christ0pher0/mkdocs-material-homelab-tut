@@ -1,6 +1,6 @@
 # Network Context Document
 _Paste this at the start of any new Claude session to provide homelab context._
-_Last updated: 2026-05-15_
+_Last updated: 2026-05-16_
 ---
 ## Network Overview
 - **ISP:** FIOS (fiber ONT)
@@ -59,7 +59,7 @@ _Last updated: 2026-05-15_
 ### RPM Servers (50–69)
 | IP           | Hostname  | OS            | Virt    | Role                         | Status |
 |--------------|-----------|---------------|---------|------------------------------|--------|
-| 192.168.1.51 | rocky-rpm | Rocky 9.7     | KVM     | Rocky Linux (VM 109, maturin)| Online |
+| 192.168.1.20 | rocky-rpm | Rocky 9.7     | KVM     | Rocky Linux (VM 109, maturin)| Online |
 | 192.168.1.52 | alma-rpm  | AlmaLinux 9.7 | KVM     | AlmaLinux (VM 108, maturin)  | Online |
 | 192.168.1.53 | plow-rpm  | RHEL 9.6      | Hyper-V | RHEL VM (i7-13700K), Snipe-IT| Online |
 ### Windows Workstations (100–119)
@@ -106,6 +106,7 @@ _Last updated: 2026-05-15_
 |-----------|---------|------------------------------|
 | local     | dir     | OS                           |
 | local-lvm | lvmthin | VM storage                   |
+| nvme_store | dir     | Samsung 980 Pro 1TB — fast VM storage (~960GB free) |
 | SDA_store | dir     | Large VM storage (~4.8TB free)|
 | SDB_store | dir     | Additional storage           |
 | SDC_store | dir     | Additional storage           |
@@ -127,7 +128,7 @@ _Last updated: 2026-05-15_
 | VMID | Name              | IP           | Status  | RAM  | Node   |
 |------|-------------------|--------------|---------|------|--------|
 | 108  | alma-rpm          | 192.168.1.52 | running | 2GB  | maturin|
-| 109  | rocky-rpm         | 192.168.1.51 | running | 2GB  | maturin|
+| 109  | rocky-rpm         | 192.168.1.20 | running | 2GB  | maturin|
 | 110  | pihole-book-deb   | 192.168.1.33 | running | 512MB| maturin|
 | 111  | kasm-2404-deb     | 192.168.1.26 | running | 4GB  | maturin|
 | 900  | ubuntu-24.04-template | —        | stopped | 1GB  | maturin|
@@ -213,5 +214,5 @@ Swarm VIP: 192.168.1.250
 - Vaultwarden autofill port matching issue in browser extension
 - Plex Music library fix for mobile — unresolved
 ---
-_Last updated: 2026-05-15_
+_Last updated: 2026-05-16_
 
