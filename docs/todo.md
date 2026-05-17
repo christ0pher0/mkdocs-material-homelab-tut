@@ -8,7 +8,7 @@ _Last updated: 2026-05-17_
 - [ ] Alert on: drive errors, disk >85%, service down, high temp, RAM pressure
 - [ ] sudoers drop-in for docker group auto-add script (per-user, NOPASSWD usermod)
 ### Backup Strategy (eld)
-- [x] Migrate eld to Ubuntu 26.04
+- [ ] Migrate eld to Ubuntu 26.04
 - [ ] Deploy Restic — automated backups from TrueNAS (Tier 1)
 - [ ] Configure 2x CRU bays on eld for rotating manual drives (Tier 2)
 - [ ] Establish offsite drive rotation schedule (Tier 3)
