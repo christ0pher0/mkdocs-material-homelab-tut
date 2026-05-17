@@ -80,3 +80,6 @@ nav:
     - Code Examples: code-examples.md
     - Concerts: concerts.md
 copyright: Copyright &copy; 2025 C. O'Shaughnessy as inspired by James Willett
+
+extra_javascript:
+  - javascripts/checkbox_persist.js

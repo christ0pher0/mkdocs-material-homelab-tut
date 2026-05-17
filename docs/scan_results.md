@@ -1,8 +1,8 @@
 # Network Scan Results
 
-_Last updated: 2026-05-17 08:00:29_
+_Last updated: 2026-05-17 10:00:12_
 
-_Hosts found: 24_
+_Hosts found: 22_
 
 ## Status
 
@@ -14,9 +14,8 @@ _Hosts found: 24_
 | 192.168.1.5 | freenas-bsd | FreeBSD | 80/http, 139/netbios, 443/https, 445/smb | 00:E0:4C:68:1C:1E |
 | 192.168.1.6 | netgate-net | Network Device | none detected | F0:AD:4E:1B:E7:62 |
 | 192.168.1.7 | maturin | Unknown | 22/ssh, 8006/proxmox | D8:9E:F3:0C:62:CC |
-| 192.168.1.20 | rocky-rpm | RHEL/Rocky/Alma Linux | 22/ssh | BC:24:11:0B:36:71 |
-| 192.168.1.26 | kasm-2404-deb | Debian/Ubuntu Linux | 22/ssh, 443/https, 8080/http-proxy, 9100/node-exporter | BC:24:11:D7:B3:48 |
-| 192.168.1.29 | monitor-deb | Debian/Ubuntu Linux | 22/ssh | BC:24:11:A7:F3:4F |
+| 192.168.1.26 | kasm-2404-deb | Debian/Ubuntu Linux | 22/ssh, 8080/http-proxy, 9100/node-exporter | BC:24:11:D7:B3:48 |
+| 192.168.1.29 | monitor-deb | Debian/Ubuntu Linux | 22/ssh, 3000/grafana, 8080/http-proxy, 9090/prometheus, 9100/node-exporter, 9221/pve-exporter | BC:24:11:A7:F3:4F |
 | 192.168.1.33 | pihole-book-deb | Debian/Ubuntu Linux | 22/ssh, 53/dns, 80/http, 443/https, 9100/node-exporter | BC:24:11:E8:54:9D |
 | 192.168.1.34 | docker-deb | Debian/Ubuntu Linux | 22/ssh, 80/http, 443/https, 8000/http-alt, 8080/http-proxy, 9100/node-exporter | BC:24:11:E3:70:53 |
 | 192.168.1.35 | 2404HV-deb | Debian/Ubuntu Linux | 22/ssh, 9100/node-exporter | 00:15:5D:00:B3:1E |
@@ -31,4 +30,3 @@ _Hosts found: 24_
 | 192.168.1.125 | ha-net | Network Device | 22/ssh, 111/rpcbind | E4:5F:01:65:56:EE |
 | 192.168.1.140 | tv1-media | Media Device | 3000/grafana | A8:23:FE:13:A9:D1 |
 | 192.168.1.141 | tv2-media | Media Device | none detected | 22:57:5A:A7:04:87 |
-| 192.168.1.201 | pixel8-droid | Android | none detected | EE:FC:9C:95:22:1B |
