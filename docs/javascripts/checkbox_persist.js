@@ -93,9 +93,21 @@ document.addEventListener('DOMContentLoaded', () => {
         const cb = item.querySelector('input[type="checkbox"]');
         if (!cb) return;
         item.style.cursor = 'pointer';
-        item.addEventListener('click', (e) => {
+
+        // Listen on the checkbox directly so preventDefault fires BEFORE
+        // the browser toggles cb.checked — otherwise !cb.checked reads
+        // the already-flipped state and newState is always wrong.
+        cb.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
+            const newState = !cb.checked;
+            handleCheckboxClick(cb, newState);
+        });
+
+        // Also handle clicks on the li text area (outside the checkbox)
+        item.addEventListener('click', (e) => {
+            if (e.target.type === 'checkbox') return;
+            e.preventDefault();
             const newState = !cb.checked;
             handleCheckboxClick(cb, newState);
         });
