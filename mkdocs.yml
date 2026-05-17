@@ -83,3 +83,6 @@ copyright: Copyright &copy; 2025 C. O'Shaughnessy as inspired by James Willett
 
 extra_javascript:
   - javascripts/checkbox_persist.js
+
+extra_css:
+  - stylesheets/extra.css

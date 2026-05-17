@@ -1,29 +1,23 @@
-/* 
+/*
  * Persistent Checkboxes via Gitea API
  * Intercepts MkDocs Material checkbox clicks and commits changes back to Gitea
- * Place in docs/javascripts/checkbox_persist.js
- * Add to mkdocs.yml: extra_javascript: [javascripts/checkbox_persist.js]
  */
 
 const GITEA_URL = 'http://192.168.1.3:3000';
 const GITEA_TOKEN = '0e5e0aed245d193f3d0701c40ab4b4ab01711312';
 const GITEA_OWNER = 'cos';
-const GITEA_REPO = 'mkdocs_dev_material'; // update if repo name differs
+const GITEA_REPO = 'mkdocs_dev_material';
 const DOCS_PATH = 'docs/';
+const WEBHOOK_URL = 'http://192.168.1.3:9999/webhook';
 
-// Get the current page's markdown file path from the URL
 function getMarkdownPath() {
     const path = window.location.pathname;
-    // Strip leading slash and trailing slash/index.html
     let page = path.replace(/^\//, '').replace(/\/$/, '').replace(/\/index$/, '');
-    // If empty, it's the index page
     if (!page) page = 'index';
-    // Remove any .html extension
     page = page.replace(/\.html$/, '');
     return DOCS_PATH + page + '.md';
 }
 
-// Fetch file content and SHA from Gitea
 async function getFileFromGitea(filePath) {
     const url = `${GITEA_URL}/api/v1/repos/${GITEA_OWNER}/${GITEA_REPO}/contents/${filePath}`;
     const resp = await fetch(url, {
@@ -37,7 +31,6 @@ async function getFileFromGitea(filePath) {
     };
 }
 
-// Commit updated content back to Gitea
 async function putFileToGitea(filePath, sha, content, message) {
     const url = `${GITEA_URL}/api/v1/repos/${GITEA_OWNER}/${GITEA_REPO}/contents/${filePath}`;
     const resp = await fetch(url, {
@@ -56,7 +49,6 @@ async function putFileToGitea(filePath, sha, content, message) {
     return resp.json();
 }
 
-// Toggle the nth checkbox in the markdown content
 function toggleCheckboxInMarkdown(content, index, checked) {
     let count = 0;
     return content.replace(/- \[(x| )\]/g, (match) => {
@@ -69,45 +61,48 @@ function toggleCheckboxInMarkdown(content, index, checked) {
     });
 }
 
-// Get the index of a checkbox element among all checkboxes on the page
 function getCheckboxIndex(checkbox) {
-    const all = document.querySelectorAll('.md-content input[type="checkbox"]');
+    const all = document.querySelectorAll('.md-typeset .task-list-item input[type="checkbox"]');
     return Array.from(all).indexOf(checkbox);
 }
 
-// Main handler
-async function handleCheckboxClick(event) {
-    const checkbox = event.target;
-    const checked = checkbox.checked;
+async function handleCheckboxClick(checkbox, newState) {
     const index = getCheckboxIndex(checkbox);
     const filePath = getMarkdownPath();
 
-    // Show a subtle saving indicator
     checkbox.disabled = true;
-    const label = checkbox.closest('li');
-    if (label) label.style.opacity = '0.6';
+    const li = checkbox.closest('li');
+    if (li) li.style.opacity = '0.5';
 
     try {
         const { sha, content } = await getFileFromGitea(filePath);
-        const updated = toggleCheckboxInMarkdown(content, index, checked);
-        const verb = checked ? 'Check' : 'Uncheck';
+        const updated = toggleCheckboxInMarkdown(content, index, newState);
+        const verb = newState ? 'Check' : 'Uncheck';
         await putFileToGitea(filePath, sha, updated, `${verb} todo item via MkDocs`);
-        // Success — re-enable
-        checkbox.disabled = false;
-        if (label) label.style.opacity = '1';
+        checkbox.checked = newState;
+
+        // Trigger webhook to pull latest and reload MkDocs
+        await fetch(WEBHOOK_URL, { method: 'POST' }).catch(() => {});
     } catch (err) {
         console.error('Failed to save checkbox state:', err);
-        // Revert the checkbox if save failed
-        checkbox.checked = !checked;
+        checkbox.checked = !newState;
+    } finally {
         checkbox.disabled = false;
-        if (label) label.style.opacity = '1';
+        if (li) li.style.opacity = '1';
     }
 }
 
-// Attach listeners after DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-    const checkboxes = document.querySelectorAll('.md-content input[type="checkbox"]');
-    checkboxes.forEach(cb => {
-        cb.addEventListener('change', handleCheckboxClick);
+    const items = document.querySelectorAll('.md-typeset .task-list-item');
+    items.forEach(item => {
+        const cb = item.querySelector('input[type="checkbox"]');
+        if (!cb) return;
+        item.style.cursor = 'pointer';
+        item.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const newState = !cb.checked;
+            handleCheckboxClick(cb, newState);
+        });
     });
 });
