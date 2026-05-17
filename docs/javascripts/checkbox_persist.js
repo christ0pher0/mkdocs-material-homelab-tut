@@ -1,6 +1,5 @@
 /*
  * Persistent Checkboxes via Gitea API
- * Intercepts MkDocs Material checkbox clicks and commits changes back to Gitea
  */
 const GITEA_URL = 'http://192.168.1.3:3000';
 const GITEA_TOKEN = 'e54707633fc7d1cfa47966a0e64496788715777e';
@@ -19,9 +18,7 @@ function getMarkdownPath() {
 
 async function getFileFromGitea(filePath) {
     const url = `${GITEA_URL}/api/v1/repos/${GITEA_OWNER}/${GITEA_REPO}/contents/${filePath}`;
-    const resp = await fetch(url, {
-        headers: { 'Authorization': `token ${GITEA_TOKEN}` }
-    });
+    const resp = await fetch(url, { headers: { 'Authorization': `token ${GITEA_TOKEN}` } });
     if (!resp.ok) throw new Error(`Gitea fetch failed: ${resp.status}`);
     const data = await resp.json();
     return {
@@ -34,10 +31,7 @@ async function putFileToGitea(filePath, sha, content, message) {
     const url = `${GITEA_URL}/api/v1/repos/${GITEA_OWNER}/${GITEA_REPO}/contents/${filePath}`;
     const resp = await fetch(url, {
         method: 'PUT',
-        headers: {
-            'Authorization': `token ${GITEA_TOKEN}`,
-            'Content-Type': 'application/json'
-        },
+        headers: { 'Authorization': `token ${GITEA_TOKEN}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({
             message,
             content: btoa(unescape(encodeURIComponent(content))),
@@ -51,10 +45,7 @@ async function putFileToGitea(filePath, sha, content, message) {
 function toggleCheckboxInMarkdown(content, index, checked) {
     let count = 0;
     return content.replace(/- \[(x| )\]/g, (match) => {
-        if (count === index) {
-            count++;
-            return checked ? '- [x]' : '- [ ]';
-        }
+        if (count === index) { count++; return checked ? '- [x]' : '- [ ]'; }
         count++;
         return match;
     });
@@ -68,6 +59,7 @@ function getCheckboxIndex(checkbox) {
 async function handleCheckboxClick(checkbox, newState) {
     const index = getCheckboxIndex(checkbox);
     const filePath = getMarkdownPath();
+    console.log(`[CB] index=${index} newState=${newState} filePath=${filePath}`);
     checkbox.disabled = true;
     const li = checkbox.closest('li');
     if (li) li.style.opacity = '0.5';
@@ -75,11 +67,13 @@ async function handleCheckboxClick(checkbox, newState) {
         const { sha, content } = await getFileFromGitea(filePath);
         const updated = toggleCheckboxInMarkdown(content, index, newState);
         const verb = newState ? 'Check' : 'Uncheck';
+        console.log(`[CB] committing: ${verb} index ${index}`);
         await putFileToGitea(filePath, sha, updated, `${verb} todo item via MkDocs`);
         checkbox.checked = newState;
-        await fetch(WEBHOOK_URL, { method: 'POST' }).catch(() => {});
+        console.log(`[CB] done — NOT calling webhook (debug mode)`);
+        // await fetch(WEBHOOK_URL, { method: 'POST' }).catch(() => {});  // DISABLED for debug
     } catch (err) {
-        console.error('Failed to save checkbox state:', err);
+        console.error('[CB] Failed:', err);
         checkbox.checked = !newState;
     } finally {
         checkbox.disabled = false;
@@ -89,25 +83,22 @@ async function handleCheckboxClick(checkbox, newState) {
 
 document.addEventListener('DOMContentLoaded', () => {
     const items = document.querySelectorAll('.md-typeset .task-list-item');
-    items.forEach(item => {
+    console.log(`[CB] DOMContentLoaded — found ${items.length} task items`);
+    items.forEach((item, i) => {
         const cb = item.querySelector('input[type="checkbox"]');
         if (!cb) return;
         item.style.cursor = 'pointer';
-
-        // Listen on the checkbox directly so preventDefault fires BEFORE
-        // the browser toggles cb.checked — otherwise !cb.checked reads
-        // the already-flipped state and newState is always wrong.
         cb.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
+            console.log(`[CB] checkbox click — cb.checked=${cb.checked} (before toggle)`);
             const newState = !cb.checked;
             handleCheckboxClick(cb, newState);
         });
-
-        // Also handle clicks on the li text area (outside the checkbox)
         item.addEventListener('click', (e) => {
             if (e.target.type === 'checkbox') return;
             e.preventDefault();
+            console.log(`[CB] li click — cb.checked=${cb.checked}`);
             const newState = !cb.checked;
             handleCheckboxClick(cb, newState);
         });
