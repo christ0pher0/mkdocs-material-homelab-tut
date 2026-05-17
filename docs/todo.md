@@ -2,29 +2,29 @@
 _Last updated: 2026-05-17_
 ---
 ## Critical / Security
-- [ ] ZFS plugin â monitor RAIDZ1 health, drive errors on TrueNAS â ï¸
-- [ ] Disk space alerts â eld D: (10%), amontillado D: (11%), pi1 SD (91%) â ï¸
-- [ ] **Telegram alerts** â bot notifications when something looks wrong
+- [ ] ZFS plugin Ã¢ÂÂ monitor RAIDZ1 health, drive errors on TrueNAS Ã¢ÂÂ Ã¯Â¸Â
+- [ ] Disk space alerts Ã¢ÂÂ eld D: (10%), amontillado D: (11%), pi1 SD (91%) Ã¢ÂÂ Ã¯Â¸Â
+- [ ] **Telegram alerts** Ã¢ÂÂ bot notifications when something looks wrong
 - [ ] Alert on: drive errors, disk >85%, service down, high temp, RAM pressure
 - [ ] sudoers drop-in for docker group auto-add script (per-user, NOPASSWD usermod)
 ### Backup Strategy (eld)
 - [ ] Migrate eld to Ubuntu 26.04
-- [ ] Deploy Restic â automated backups from TrueNAS (Tier 1)
+- [ ] Deploy Restic Ã¢ÂÂ automated backups from TrueNAS (Tier 1)
 - [ ] Configure 2x CRU bays on eld for rotating manual drives (Tier 2)
 - [ ] Establish offsite drive rotation schedule (Tier 3)
-- [ ] Expand backup coverage â currently only Patreon O-Z backed up, A-N missing
-- [ ] Expand eld storage â 3TB internal nearly full (10% free)
+- [ ] Expand backup coverage Ã¢ÂÂ currently only Patreon O-Z backed up, A-N missing
+- [ ] Expand eld storage Ã¢ÂÂ 3TB internal nearly full (10% free)
 - [ ] Upgrade eld RAM to 32GB DDR3 before migration
 ---
 ## In Progress
-- [ ] Inventory 5 remaining waiting systems â match hardware to roles
-- [ ] Inventory pve3 (ThinkStation offsite) â specs, storage, role
+- [ ] Inventory 5 remaining waiting systems Ã¢ÂÂ match hardware to roles
+- [ ] Inventory pve3 (ThinkStation offsite) Ã¢ÂÂ specs, storage, role
 - [ ] Purchase [Hologram.io](http://Hologram.io) SIM for argos-deb LTE
 - [ ] Purchase larger SD card for pi1-deb (3.8GB, 91% full)
-- [ ] Pi rack â 3D print or buy, house all 8 Pis cleanly
-- [ ] PoE switch + PoE HATs â single cable per Pi for power + network
+- [ ] Pi rack Ã¢ÂÂ 3D print or buy, house all 8 Pis cleanly
+- [ ] PoE switch + PoE HATs Ã¢ÂÂ single cable per Pi for power + network
 - [ ] Set up scheduled backup for maturin VMs to maturin nvme_store (local backup)
-- [ ] Shrink maturin pve-data pool â only cloudinit template remains on local-lvm
+- [ ] Shrink maturin pve-data pool Ã¢ÂÂ only cloudinit template remains on local-lvm
 ### Hardware Inventory Completion
 - [ ] Photo and dmidecode all 5 waiting systems
 - [ ] Photo pve3 (ThinkStation offsite)
@@ -38,8 +38,8 @@ _Last updated: 2026-05-17_
 - [ ] Push completed hw_inventory.md to MkDocs
 ---
 ## Planned Projects
-### PVE3 â temerant â Proxmox node 3
-- [ ] Check temerant-win 2x 3TB HDDs (Seagate ST3000DM001) for important data â ï¸
+### PVE3 Ã¢ÂÂ temerant Ã¢ÂÂ Proxmox node 3
+- [ ] Check temerant-win 2x 3TB HDDs (Seagate ST3000DM001) for important data Ã¢ÂÂ Ã¯Â¸Â
 - [ ] Pull drives, wipe Windows, install Proxmox VE
 - [ ] Add to wheel cluster (shardik + maturin)
 - [ ] Configure Tailscale on pve3
@@ -50,43 +50,43 @@ _Last updated: 2026-05-17_
 ### Monitoring Stack (monitor-deb 192.168.1.29)
 - [ ] Deploy node-exporter to non-Docker hosts (plow-rpm, pihole-book-deb, restic-deb)
 - [ ] Add Uptime Kuma to Homepage widget (fix slug)
-- [ ] Configure Zabbix â Telegram alerting
+- [ ] Configure Zabbix Ã¢ÂÂ Telegram alerting
 - [ ] Deploy Loki for log aggregation
 ### Portainer Fleet
-- [ ] Write portainer_sync.py scheduled task â detect Docker hosts, auto-register missing ones
+- [ ] Write portainer_sync.py scheduled task Ã¢ÂÂ detect Docker hosts, auto-register missing ones
 - [ ] Fix TLS registration API issue in portainer_sync.py
-### TrueNAS Hardware Rebuild â­
+### TrueNAS Hardware Rebuild Ã¢Â­Â
 - [ ] Check temerant-win 2x 3TB HDDs for important data before touching hardware
 - [ ] Pull mobo, Ryzen 5 1600X, 32GB DDR4, GTX 1080 Ti, 500GB SSD from temerant
 - [ ] Install into existing FreeNAS beige full tower
 - [ ] Order LSI 9207-8i or 9211-8i HBA card (~$20-40 eBay)
 - [ ] Order 2x SFF-8087 to SATA breakout cables (~$5-10 each eBay)
-- [ ] Install TrueNAS on 500GB SSD â no more USB boot drives
+- [ ] Install TrueNAS on 500GB SSD Ã¢ÂÂ no more USB boot drives
 - [ ] Boot TrueNAS, import TRYAGAIN pool
 - [ ] Reconfigure SMB shares, cifs1 user, services
 - [ ] Update mediastack-deb fstab if IP changes
-### TrueNAS â Current State
-- [ ] Set ue0 (USB NIC) to static 192.168.1.5 â survives reboots
+### TrueNAS Ã¢ÂÂ Current State
+- [ ] Set ue0 (USB NIC) to static 192.168.1.5 Ã¢ÂÂ survives reboots
 - [ ] Fix alc0 onboard NIC
 - [ ] Add second USB boot drive to freenas-boot mirror
-- [ ] Investigate ada4 bad sectors alert from February 2026 â ï¸
-- [ ] Delete iocage datasets â Weltgeist and Alea Iacta Est jails (91GB)
-- [ ] Dedupe/find duplicate filenames on TRYAGAIN pool â fdupes or rdfind
-- [ ] Explore LaunchBox ROM archive on NAS â migrate to RomM
+- [ ] Investigate ada4 bad sectors alert from February 2026 Ã¢ÂÂ Ã¯Â¸Â
+- [ ] Delete iocage datasets Ã¢ÂÂ Weltgeist and Alea Iacta Est jails (91GB)
+- [ ] Dedupe/find duplicate filenames on TRYAGAIN pool Ã¢ÂÂ fdupes or rdfind
+- [ ] Explore LaunchBox ROM archive on NAS Ã¢ÂÂ migrate to RomM
 ### RomM / Gaming
 - [ ] Complete tactical RPG collections across all supported platforms
 - [ ] Deduplicate DS ROMs (Fire Emblem Shadow Dragon appears 3x)
 ### Mediastack / Plex
-- [ ] Kometa â verify Trakt/MDBList working after next run
-- [ ] Add Tautulli â Plex analytics
-- [ ] Bazarr â subtitle automation
-- [ ] Tdarr â transcoding (needs GPU node first)
+- [ ] Kometa Ã¢ÂÂ verify Trakt/MDBList working after next run
+- [ ] Add Tautulli Ã¢ÂÂ Plex analytics
+- [ ] Bazarr Ã¢ÂÂ subtitle automation
+- [ ] Tdarr Ã¢ÂÂ transcoding (needs GPU node first)
 - [ ] Add Plex Music library fix for mobile (Plex Pass confirmed, unresolved)
 - [ ] Add Training and Photos libraries to Plex
 ### Proxmox Cluster
-- [ ] Add pve3 (temerant â ThinkStation) to cluster
+- [ ] Add pve3 (temerant Ã¢ÂÂ ThinkStation) to cluster
 - [ ] Configure Proxmox HA for automatic VM failover
-- [ ] Set up shared storage â NFS from TrueNAS
+- [ ] Set up shared storage Ã¢ÂÂ NFS from TrueNAS
 ### Local AI Assistant
 - [ ] Deploy Ollama on idee-deb (GPU node) with GTX 1080 Ti passthrough
 - [ ] Deploy Open WebUI
@@ -98,45 +98,45 @@ _Last updated: 2026-05-17_
 - [ ] Store all service credentials with full URL including port
 - [ ] Evaluate HashiCorp Vault for Ansible secrets management
 ### Home Assistant
-- [ ] Phase 1 â backup to TrueNAS, Tailscale
-- [ ] Phase 2 â Zigbee, MQTT, ESPHome, Frigate
-- [ ] Phase 3 â automations, Music Assistant, OctoPrint
-- [ ] Phase 4 â argos-deb wall kiosk
+- [ ] Phase 1 Ã¢ÂÂ backup to TrueNAS, Tailscale
+- [ ] Phase 2 Ã¢ÂÂ Zigbee, MQTT, ESPHome, Frigate
+- [ ] Phase 3 Ã¢ÂÂ automations, Music Assistant, OctoPrint
+- [ ] Phase 4 Ã¢ÂÂ argos-deb wall kiosk
 ### Documentation
 - [ ] Create Proxmox cluster diagram
 - [ ] Document monitoring stack architecture
 ### Network
 - [ ] Clarify Flint2 + Netgate topology
 - [ ] Evaluate VLANs for IoT/media/server segmentation
-- [ ] Unbound â local DNS resolver
-- [ ] Authelia â auth layer for exposed services
+- [ ] Unbound Ã¢ÂÂ local DNS resolver
+- [ ] Authelia Ã¢ÂÂ auth layer for exposed services
 ### Ansible
 - [ ] Pin ansible_python_interpreter per host in inventory_auto
 - [ ] Add fail2ban to homelab_baseline.yml
 - [ ] Add chrony LXC skip to sync_time.yml
 - [ ] Update check_services.yml to reflect current services
-- [ ] Update fail2ban.yml â add pause before verify task
+- [ ] Update fail2ban.yml Ã¢ÂÂ add pause before verify task
 ---
-## Mediastack â Current Stack
+## Mediastack Ã¢ÂÂ Current Stack
 | App            | Port  | Status      |
 |----------------|-------|-------------|
-| Sonarr         | 8989  | â Running  |
-| Radarr         | 7878  | â Running  |
-| Lidarr         | 8686  | â Running  |
-| Mylar3         | 8091  | â Running  |
-| SABnzbd        | 8090  | â Running  |
-| Prowlarr       | 9696  | â Running  |
-| Seerr          | 5055  | â Running  |
-| Komga          | 8085  | â Running  |
-| Audiobookshelf | 13378 | â Running  |
-| RomM           | 8998  | â Running  |
-| Kometa         | â     | â Running  |
-| Gluetun VPN    | â     | â Running  |
-| qBittorrent    | 8082  | â Running  |
-| Unpackerr      | â     | â Running  |
-| FlareSolverr   | 8191  | â Running  |
-| MariaDB        | â     | â Running  |
-| Plex           | 32400 | â Running  |
+| Sonarr         | 8989  | Ã¢ÂÂ Running  |
+| Radarr         | 7878  | Ã¢ÂÂ Running  |
+| Lidarr         | 8686  | Ã¢ÂÂ Running  |
+| Mylar3         | 8091  | Ã¢ÂÂ Running  |
+| SABnzbd        | 8090  | Ã¢ÂÂ Running  |
+| Prowlarr       | 9696  | Ã¢ÂÂ Running  |
+| Seerr          | 5055  | Ã¢ÂÂ Running  |
+| Komga          | 8085  | Ã¢ÂÂ Running  |
+| Audiobookshelf | 13378 | Ã¢ÂÂ Running  |
+| RomM           | 8998  | Ã¢ÂÂ Running  |
+| Kometa         | Ã¢ÂÂ     | Ã¢ÂÂ Running  |
+| Gluetun VPN    | Ã¢ÂÂ     | Ã¢ÂÂ Running  |
+| qBittorrent    | 8082  | Ã¢ÂÂ Running  |
+| Unpackerr      | Ã¢ÂÂ     | Ã¢ÂÂ Running  |
+| FlareSolverr   | 8191  | Ã¢ÂÂ Running  |
+| MariaDB        | Ã¢ÂÂ     | Ã¢ÂÂ Running  |
+| Plex           | 32400 | Ã¢ÂÂ Running  |
 ---
 ## Maintenance Backlog
 - [ ] Clarify MariaDB and nginx role on git-ansible-deb
@@ -150,5 +150,5 @@ _Last updated: 2026-05-17_
 - [ ] LSI 9207-8i or 9211-8i HBA card (~$20-40 eBay)
 - [ ] 2x SFF-8087 to SATA breakout cables (~$5-10 each eBay)
 - [ ] 2TB SSD for PVE3 VM storage
-- [ ] Replace sdd drive (Z4D2EJ31) â 24 pending/uncorrectable sectors â ï¸
+- [ ] Replace sdd drive (Z4D2EJ31) Ã¢ÂÂ 24 pending/uncorrectable sectors Ã¢ÂÂ Ã¯Â¸Â
 
