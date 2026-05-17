@@ -2,7 +2,6 @@
  * Persistent Checkboxes via Gitea API
  * Intercepts MkDocs Material checkbox clicks and commits changes back to Gitea
  */
-
 const GITEA_URL = 'http://192.168.1.3:3000';
 const GITEA_TOKEN = 'e54707633fc7d1cfa47966a0e64496788715777e';
 const GITEA_OWNER = 'cos';
@@ -27,7 +26,7 @@ async function getFileFromGitea(filePath) {
     const data = await resp.json();
     return {
         sha: data.sha,
-        content: atob(data.content.replace(/\n/g, ''))
+        content: decodeURIComponent(escape(atob(data.content.replace(/\n/g, ''))))
     };
 }
 
@@ -69,19 +68,15 @@ function getCheckboxIndex(checkbox) {
 async function handleCheckboxClick(checkbox, newState) {
     const index = getCheckboxIndex(checkbox);
     const filePath = getMarkdownPath();
-
     checkbox.disabled = true;
     const li = checkbox.closest('li');
     if (li) li.style.opacity = '0.5';
-
     try {
         const { sha, content } = await getFileFromGitea(filePath);
         const updated = toggleCheckboxInMarkdown(content, index, newState);
         const verb = newState ? 'Check' : 'Uncheck';
         await putFileToGitea(filePath, sha, updated, `${verb} todo item via MkDocs`);
         checkbox.checked = newState;
-
-        // Trigger webhook to pull latest and reload MkDocs
         await fetch(WEBHOOK_URL, { method: 'POST' }).catch(() => {});
     } catch (err) {
         console.error('Failed to save checkbox state:', err);
