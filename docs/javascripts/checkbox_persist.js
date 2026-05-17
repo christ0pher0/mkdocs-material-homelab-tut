@@ -56,25 +56,24 @@ function getCheckboxIndex(checkbox) {
     return Array.from(all).indexOf(checkbox);
 }
 
-async function handleCheckboxClick(checkbox, newState) {
+async function handleCheckboxClick(checkbox, markdownChecked) {
     const index = getCheckboxIndex(checkbox);
     const filePath = getMarkdownPath();
-    console.log(`[CB] index=${index} newState=${newState} filePath=${filePath}`);
+    console.log(`[CB] index=${index} markdownChecked=${markdownChecked} filePath=${filePath}`);
     checkbox.disabled = true;
     const li = checkbox.closest('li');
     if (li) li.style.opacity = '0.5';
     try {
         const { sha, content } = await getFileFromGitea(filePath);
-        const updated = toggleCheckboxInMarkdown(content, index, newState);
-        const verb = newState ? 'Check' : 'Uncheck';
+        const updated = toggleCheckboxInMarkdown(content, index, markdownChecked);
+        const verb = markdownChecked ? 'Check' : 'Uncheck';
         console.log(`[CB] committing: ${verb} index ${index}`);
         await putFileToGitea(filePath, sha, updated, `${verb} todo item via MkDocs`);
-        checkbox.checked = newState;
-        console.log(`[CB] done — NOT calling webhook (debug mode)`);
-        // await fetch(WEBHOOK_URL, { method: 'POST' }).catch(() => {});  // DISABLED for debug
+        // Material inverts checked: checked=false displays as done, checked=true as pending
+        checkbox.checked = !markdownChecked;
+        await fetch(WEBHOOK_URL, { method: 'POST' }).catch(() => {});
     } catch (err) {
         console.error('[CB] Failed:', err);
-        checkbox.checked = !newState;
     } finally {
         checkbox.disabled = false;
         if (li) li.style.opacity = '1';
@@ -84,23 +83,24 @@ async function handleCheckboxClick(checkbox, newState) {
 document.addEventListener('DOMContentLoaded', () => {
     const items = document.querySelectorAll('.md-typeset .task-list-item');
     console.log(`[CB] DOMContentLoaded — found ${items.length} task items`);
-    items.forEach((item, i) => {
+    items.forEach(item => {
         const cb = item.querySelector('input[type="checkbox"]');
         if (!cb) return;
         item.style.cursor = 'pointer';
         cb.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
-            console.log(`[CB] checkbox click — cb.checked=${cb.checked} (before toggle)`);
-            const newState = !cb.checked;
-            handleCheckboxClick(cb, newState);
+            // cb.checked=true means - [ ] (unchecked), cb.checked=false means - [x] (checked)
+            // So markdownChecked = cb.checked flips the logic correctly
+            const markdownChecked = cb.checked;
+            console.log(`[CB] click — cb.checked=${cb.checked} → markdownChecked=${markdownChecked}`);
+            handleCheckboxClick(cb, markdownChecked);
         });
         item.addEventListener('click', (e) => {
             if (e.target.type === 'checkbox') return;
             e.preventDefault();
-            console.log(`[CB] li click — cb.checked=${cb.checked}`);
-            const newState = !cb.checked;
-            handleCheckboxClick(cb, newState);
+            const markdownChecked = cb.checked;
+            handleCheckboxClick(cb, markdownChecked);
         });
     });
 });
