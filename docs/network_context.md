@@ -1,6 +1,6 @@
 # Network Context Document
 _Paste this at the start of any new Claude session to provide homelab context._
-_Last updated: 2026-05-16_
+_Last updated: 2026-05-17_
 ---
 ## Network Overview
 - **ISP:** FIOS (fiber ONT)
@@ -214,5 +214,15 @@ Swarm VIP: 192.168.1.250
 - Vaultwarden autofill port matching issue in browser extension
 - Plex Music library fix for mobile — unresolved
 ---
-_Last updated: 2026-05-16_
+_Last updated: 2026-05-17_
+
+## Backup Strategy
+
+| Source Node | VMs | Target Storage | Schedule | Retention |
+|-------------|-----|----------------|----------|-----------|
+| maturin | 101, 106, 107, 113 | shardik:SDC_store | 03:00 daily | 2 copies |
+| shardik | 108, 109, 110, 111 | shardik:SDB_store | 02:00 daily | 2 copies |
+
+Backup command (maturin VMs): `pvesh create /nodes/maturin/vzdump --vmid <id> --storage SDC_store --mode stop --compress zstd --tmpdir /mnt/nvme_store`
+
 

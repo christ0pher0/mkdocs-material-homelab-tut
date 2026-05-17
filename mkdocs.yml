@@ -24,6 +24,8 @@ theme:
       accent: deep orange
 markdown_extensions:
   - tables
+  - pymdownx.tasklist:
+      clickable_checkbox: true
   - attr_list
   - admonition
   - pymdownx.details
@@ -48,6 +50,7 @@ nav:
     - Welcome: index.md
     - Homelab: homelab.md
     - Todo: todo.md
+    - Completed: completed.md
   - Infrastructure:
     - Proxmox: proxmox.md
     - Network Schema: network-schema.md

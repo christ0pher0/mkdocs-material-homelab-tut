@@ -1,5 +1,5 @@
 # Homelab Todo & Roadmap
-_Last updated: 2026-05-16_
+_Last updated: 2026-05-17_
 ---
 ## Critical / Security
 - [ ] ZFS plugin — monitor RAIDZ1 health, drive errors on TrueNAS ⚠️
@@ -24,7 +24,9 @@ _Last updated: 2026-05-16_
 - [ ] Pi rack — 3D print or buy, house all 8 Pis cleanly
 - [ ] PoE switch + PoE HATs — single cable per Pi for power + network
 - [x] Verify swarm VM migration complete (102/104/105 → shardik SDA_store) ✅ 2026-05-16
-- [ ] Verify Kometa Trakt/MDBList working after next scheduled run
+- [x] Verify Kometa Trakt/MDBList working ✅ 2026-05-16
+- [ ] Set up scheduled backup for maturin VMs to maturin nvme_store (local backup)
+- [ ] Shrink maturin pve-data pool — only cloudinit template remains on local-lvm
 ### Hardware Inventory Completion
 - [ ] Photo and dmidecode all 5 waiting systems
 - [ ] Photo pve3 (ThinkStation offsite)
@@ -183,6 +185,7 @@ _Last updated: 2026-05-16_
 - [ ] LSI 9207-8i or 9211-8i HBA card (~$20-40 eBay)
 - [ ] 2x SFF-8087 to SATA breakout cables (~$5-10 each eBay)
 - [ ] 2TB SSD for PVE3 VM storage
+- [ ] Replace sdd drive (Z4D2EJ31) — 24 pending/uncorrectable sectors ⚠️
 - [x] Dirty Frag CVE-2026-43284/43500 mitigated fleet-wide — 2026-05-15
 - [x] FlareSolverr deployed, 1337x and KickassTorrents added to Prowlarr — 2026-05-15
 - [x] Unpackerr deployed and wired to Sonarr/Radarr/Lidarr — 2026-05-15
@@ -206,4 +209,14 @@ _Last updated: 2026-05-16_
 - [x] rocky-rpm rebuilt (VM 109) on maturin nvme_store — Rocky 9.7 — 2026-05-16
 - [x] rocky-rpm onboarded — baseline, EPEL, fail2ban, Dirty Frag, Zabbix agent — 2026-05-16
 - [x] rocky-rpm IP changed to 192.168.1.20 — 2026-05-16
+- [x] VM load balancing complete — maturin: monitor/docker/mediastack/git-ansible; shardik: alma/rocky/kasm/pihole/swarm — 2026-05-17
+- [x] Cross-node backup strategy implemented — maturin VMs → shardik SDC_store; shardik VMs → shardik SDB_store — 2026-05-17
+- [x] Scheduled backup jobs configured — shardik VMs @ 2am, maturin VMs @ 3am, maxfiles=2 — 2026-05-17
+- [x] SDB_store and SDC_store formatted and mounted on shardik — 2026-05-17
+- [x] SDD drive (Z4D2EJ31) condemned — 24 pending/uncorrectable sectors — 2026-05-17
+- [x] Old 2025 backup files purged from SDA_store and DIR_SDA — 2026-05-17
+- [x] Swarm VMs (102/104/105) onboot=0, kept stopped — 2026-05-17
+- [x] Kasm added to Homepage dashboard (Infrastructure section) — 2026-05-17
+- [x] vzdump.conf tmpdir set to /mnt/nvme_store on maturin — 2026-05-17
+- [x] Direct SSH backdoor confirmed to mediastack-deb (192.168.1.36) — 2026-05-17
 
