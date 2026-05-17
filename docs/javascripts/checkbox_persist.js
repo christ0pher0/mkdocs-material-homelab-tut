@@ -4,7 +4,7 @@
  */
 
 const GITEA_URL = 'http://192.168.1.3:3000';
-const GITEA_TOKEN = '0e5e0aed245d193f3d0701c40ab4b4ab01711312';
+const GITEA_TOKEN = 'e54707633fc7d1cfa47966a0e64496788715777e';
 const GITEA_OWNER = 'cos';
 const GITEA_REPO = 'mkdocs_dev_material';
 const DOCS_PATH = 'docs/';
