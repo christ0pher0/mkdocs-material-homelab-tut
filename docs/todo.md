@@ -68,7 +68,7 @@ _Last updated: 2026-05-17_
 ### TrueNAS — Current State
 - [x] Set ue0 (USB NIC) to static 192.168.1.5 — survives reboots
 - [ ] Fix alc0 onboard NIC
-- [ ] Add second USB boot drive to freenas-boot mirror
+- [x] Add second USB boot drive to freenas-boot mirror
 - [ ] Investigate ada4 bad sectors alert from February 2026 ⚠️
 - [ ] Delete iocage datasets — Weltgeist and Alea Iacta Est jails (91GB)
 - [ ] Dedupe/find duplicate filenames on TRYAGAIN pool — fdupes or rdfind
