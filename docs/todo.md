@@ -35,7 +35,7 @@ _Last updated: 2026-05-17_
 - [ ] Photo all laptops
 - [x] SCP all new photos to MkDocs docs/images/hw/
 - [ ] Import all hardware into Snipe-IT (192.168.1.53)
-- [ ] Push completed hw_inventory.md to MkDocs
+- [x] Push completed hw_inventory.md to MkDocs
 ---
 ## Planned Projects
 ### PVE3 — temerant → Proxmox node 3
