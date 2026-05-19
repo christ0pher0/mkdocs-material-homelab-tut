@@ -81,7 +81,7 @@ _Last updated: 2026-05-17_
 - [ ] Add Tautulli — Plex analytics
 - [ ] Bazarr — subtitle automation
 - [ ] Tdarr — transcoding (needs GPU node first)
-- [ ] Add Plex Music library fix for mobile (Plex Pass confirmed, unresolved)
+- [x] Add Plex Music library fix for mobile (Plex Pass confirmed, unresolved)
 - [x] Add Training and Photos libraries to Plex
 ### Proxmox Cluster
 - [ ] Add pve3 (temerant → ThinkStation) to cluster
