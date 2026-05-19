@@ -71,7 +71,7 @@ _Last updated: 2026-05-17_
 - [x] Add second USB boot drive to freenas-boot mirror
 - [ ] Investigate ada4 bad sectors alert from February 2026 ⚠️
 - [x] Delete iocage datasets — Weltgeist and Alea Iacta Est jails (91GB)
-- [ ] Dedupe/find duplicate filenames on TRYAGAIN pool — fdupes or rdfind
+- [x] Dedupe/find duplicate filenames on TRYAGAIN pool — fdupes or rdfind
 - [ ] Explore LaunchBox ROM archive on NAS — migrate to RomM
 ### RomM / Gaming
 - [ ] Complete tactical RPG collections across all supported platforms
