@@ -72,7 +72,7 @@ _Last updated: 2026-05-17_
 - [ ] Investigate ada4 bad sectors alert from February 2026 ⚠️
 - [x] Delete iocage datasets — Weltgeist and Alea Iacta Est jails (91GB)
 - [ ] Dedupe/find duplicate filenames on TRYAGAIN pool — fdupes or rdfind
-- [ ] Explore LaunchBox ROM archive on NAS — migrate to RomM
+- [x] Explore LaunchBox ROM archive on NAS — migrate to RomM
 ### RomM / Gaming
 - [ ] Complete tactical RPG collections across all supported platforms
 - [ ] Deduplicate DS ROMs (Fire Emblem Shadow Dragon appears 3x)
