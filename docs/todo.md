@@ -31,7 +31,7 @@ _Last updated: 2026-05-17_
 - [ ] Photo Elegoo Mars 3 resin printer
 - [x] Photo Creality Ender 3 V1
 - [ ] Photo Flashforge Dreamer
-- [ ] Photo GTX 1080 and GTX 1080 Ti cards
+- [x] Photo GTX 1080 and GTX 1080 Ti cards
 - [ ] Photo all laptops
 - [ ] SCP all new photos to MkDocs docs/images/hw/
 - [ ] Import all hardware into Snipe-IT (192.168.1.53)
