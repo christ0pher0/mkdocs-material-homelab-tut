@@ -53,7 +53,7 @@ _Last updated: 2026-05-17_
 - [ ] Configure Zabbix → Telegram alerting
 - [ ] Deploy Loki for log aggregation
 ### Portainer Fleet
-- [ ] Write portainer_sync.py scheduled task — detect Docker hosts, auto-register missing ones
+- [x] Write portainer_sync.py scheduled task — detect Docker hosts, auto-register missing ones
 - [ ] Fix TLS registration API issue in portainer_sync.py
 ### TrueNAS Hardware Rebuild ⭐
 - [ ] Check temerant-win 2x 3TB HDDs for important data before touching hardware
