@@ -115,7 +115,7 @@ _Last updated: 2026-05-17_
 - [x] Add fail2ban to homelab_baseline.yml
 - [ ] Add chrony LXC skip to sync_time.yml
 - [ ] Update check_services.yml to reflect current services
-- [ ] Update fail2ban.yml — add pause before verify task
+- [x] Update fail2ban.yml — add pause before verify task
 ---
 ## Mediastack — Current Stack
 | App            | Port  | Status      |
