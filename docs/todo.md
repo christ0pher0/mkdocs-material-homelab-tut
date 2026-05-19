@@ -3,7 +3,7 @@ _Last updated: 2026-05-17_
 ---
 ## Critical / Security
 - [x] ZFS plugin — monitor RAIDZ1 health, drive errors on TrueNAS ⚠️
-- [ ] Disk space alerts — eld D: (10%), amontillado D: (11%), pi1 SD (91%) ⚠️
+- [x] Disk space alerts — eld D: (10%), amontillado D: (11%), pi1 SD (91%) ⚠️
 - [ ] **Telegram alerts** — bot notifications when something looks wrong
 - [ ] Alert on: drive errors, disk >85%, service down, high temp, RAM pressure
 - [ ] sudoers drop-in for docker group auto-add script (per-user, NOPASSWD usermod)
