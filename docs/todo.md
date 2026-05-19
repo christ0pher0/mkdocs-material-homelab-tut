@@ -66,7 +66,7 @@ _Last updated: 2026-05-17_
 - [ ] Reconfigure SMB shares, cifs1 user, services
 - [ ] Update mediastack-deb fstab if IP changes
 ### TrueNAS — Current State
-- [ ] Set ue0 (USB NIC) to static 192.168.1.5 — survives reboots
+- [x] Set ue0 (USB NIC) to static 192.168.1.5 — survives reboots
 - [ ] Fix alc0 onboard NIC
 - [ ] Add second USB boot drive to freenas-boot mirror
 - [ ] Investigate ada4 bad sectors alert from February 2026 ⚠️
