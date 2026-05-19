@@ -30,7 +30,7 @@ _Last updated: 2026-05-17_
 - [ ] Photo pve3 (ThinkStation offsite)
 - [ ] Photo Elegoo Mars 3 resin printer
 - [x] Photo Creality Ender 3 V1
-- [ ] Photo Flashforge Dreamer
+- [x] Photo Flashforge Dreamer
 - [x] Photo GTX 1080 and GTX 1080 Ti cards
 - [ ] Photo all laptops
 - [ ] SCP all new photos to MkDocs docs/images/hw/
