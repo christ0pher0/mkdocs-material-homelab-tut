@@ -24,7 +24,7 @@ _Last updated: 2026-05-17_
 - [ ] Pi rack — 3D print or buy, house all 8 Pis cleanly
 - [ ] PoE switch + PoE HATs — single cable per Pi for power + network
 - [x] Set up scheduled backup for maturin VMs to maturin nvme_store (local backup)
-- [ ] Shrink maturin pve-data pool — only cloudinit template remains on local-lvm
+- [x] Shrink maturin pve-data pool — only cloudinit template remains on local-lvm
 ### Hardware Inventory Completion
 - [ ] Photo and dmidecode all 5 waiting systems
 - [ ] Photo pve3 (ThinkStation offsite)
