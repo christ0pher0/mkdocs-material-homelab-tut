@@ -180,7 +180,7 @@ _Last updated: 2026-05-18_
 
 ## Maintenance Backlog
 - [x] Clarify MariaDB and nginx role on git-ansible-deb
-- [ ] Confirm git-ansible physical host specs with dmidecode
+- [x] Confirm git-ansible physical host specs with dmidecode
 - [ ] Inventory offsite ThinkStation (pve3)
 - [ ] Add pve3 to Tailscale and Ansible inventory
 - [ ] Remove snipeit-deb from all docs (LXC destroyed 2026-05-10)
