@@ -6,7 +6,7 @@ _Last updated: 2026-05-17_
 - [x] Disk space alerts — eld D: (10%), amontillado D: (11%), pi1 SD (91%) ⚠️
 - [ ] **Telegram alerts** — bot notifications when something looks wrong
 - [ ] Alert on: drive errors, disk >85%, service down, high temp, RAM pressure
-- [ ] sudoers drop-in for docker group auto-add script (per-user, NOPASSWD usermod)
+- [x] sudoers drop-in for docker group auto-add script (per-user, NOPASSWD usermod)
 ### Backup Strategy (eld)
 - [x] Migrate eld to Ubuntu 26.04
 - [x] Deploy Restic — automated backups from TrueNAS (Tier 1)
