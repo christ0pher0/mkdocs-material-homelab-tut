@@ -43,7 +43,7 @@ _Last updated: 2026-05-17_
 - [ ] Pull drives, wipe Windows, install Proxmox VE
 - [ ] Add to wheel cluster (shardik + maturin)
 - [x] Configure Tailscale on pve3
-- [ ] Add to inventory_auto and MkDocs
+- [x] Add to inventory_auto and MkDocs
 - [ ] Eventually: GPU passthrough of GTX 1080 Ti for RPCS3/AI workloads
 - [ ] Check AB350 IOMMU groupings before passthrough attempt
 ### Maturin Hardware
