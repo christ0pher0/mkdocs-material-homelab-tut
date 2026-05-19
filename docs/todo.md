@@ -29,7 +29,7 @@ _Last updated: 2026-05-17_
 - [ ] Photo and dmidecode all 5 waiting systems
 - [ ] Photo pve3 (ThinkStation offsite)
 - [ ] Photo Elegoo Mars 3 resin printer
-- [ ] Photo Creality Ender 3 V1
+- [x] Photo Creality Ender 3 V1
 - [ ] Photo Flashforge Dreamer
 - [ ] Photo GTX 1080 and GTX 1080 Ti cards
 - [ ] Photo all laptops
