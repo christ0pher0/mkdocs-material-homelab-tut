@@ -82,7 +82,7 @@ _Last updated: 2026-05-17_
 - [ ] Bazarr — subtitle automation
 - [ ] Tdarr — transcoding (needs GPU node first)
 - [ ] Add Plex Music library fix for mobile (Plex Pass confirmed, unresolved)
-- [ ] Add Training and Photos libraries to Plex
+- [x] Add Training and Photos libraries to Plex
 ### Proxmox Cluster
 - [ ] Add pve3 (temerant → ThinkStation) to cluster
 - [ ] Configure Proxmox HA for automatic VM failover
