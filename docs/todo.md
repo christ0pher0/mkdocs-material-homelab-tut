@@ -49,7 +49,7 @@ _Last updated: 2026-05-17_
 ### Maturin Hardware
 ### Monitoring Stack (monitor-deb 192.168.1.29)
 - [x] Deploy node-exporter to non-Docker hosts (plow-rpm, pihole-book-deb, restic-deb)
-- [ ] Add Uptime Kuma to Homepage widget (fix slug)
+- [x] Add Uptime Kuma to Homepage widget (fix slug)
 - [ ] Configure Zabbix → Telegram alerting
 - [ ] Deploy Loki for log aggregation
 ### Portainer Fleet
