@@ -23,7 +23,7 @@ _Last updated: 2026-05-17_
 - [ ] Purchase larger SD card for pi1-deb (3.8GB, 91% full)
 - [ ] Pi rack — 3D print or buy, house all 8 Pis cleanly
 - [ ] PoE switch + PoE HATs — single cable per Pi for power + network
-- [ ] Set up scheduled backup for maturin VMs to maturin nvme_store (local backup)
+- [x] Set up scheduled backup for maturin VMs to maturin nvme_store (local backup)
 - [ ] Shrink maturin pve-data pool — only cloudinit template remains on local-lvm
 ### Hardware Inventory Completion
 - [ ] Photo and dmidecode all 5 waiting systems
