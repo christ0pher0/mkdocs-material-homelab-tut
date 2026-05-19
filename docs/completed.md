@@ -149,3 +149,62 @@ _Sorted by date and node/area_
 - Kasm added to Homepage dashboard (Infrastructure section) — 2026-05-17
 - Direct SSH backdoor confirmed to mediastack-deb (cos@192.168.1.36) — 2026-05-17
 - SMART health audit of all shardik drives completed — 2026-05-17
+
+### 2026-05-18 — PBS, Backups, Fleet, Monitoring, Shardik
+
+#### Proxmox Backup Server
+- PBS 4.2 VM (115) deployed on shardik — 192.168.1.4 — 2026-05-18
+- SDD datastore (5.65TB, ST6000DX000 Z4D07FQ5) configured on PBS — 2026-05-18
+- PBS added as datacenter-level storage to both Proxmox nodes — 2026-05-18
+- qemu-guest-agent installed on all VMs fleet-wide (101,106,107,108,109,110,111,113) — 2026-05-18
+- Proxmox backup mode changed from stop → snapshot on all jobs — 2026-05-18
+- Maturin backup job migrated to PBS (101,106,107,113) @ 03:00 — 2026-05-18
+- Shardik backup job migrated to PBS (102,104,105,108,109,110,111) @ 02:00 — 2026-05-18
+- Manual backup of all 11 VMs/containers completed — 182GB, 0 failures — 2026-05-18
+- Prune policy set: 3 daily, 1 weekly, 1 monthly, 1 yearly — 2026-05-18
+- SDD /mnt/SDD added to /etc/fstab on pbs-deb — persistent across reboots — 2026-05-18
+- Old vzdump jobs deleted, SDC_store cleared — 2026-05-18
+- Enterprise repo disabled on pbs-deb, no-subscription repo enabled — 2026-05-18
+- pbs-deb onboarded to Ansible inventory (debian group, 192.168.1.4) — 2026-05-18
+
+#### Proxmox Config Backup
+- proxmox-metal-configs Gitea repo created (private) — 2026-05-18
+- proxmox_config_backup.yml Ansible playbook deployed to shardik, maturin, pbs-deb — 2026-05-18
+- Daily config backup timer @ 04:00 — commits /etc/pve, interfaces, hosts, fstab to Gitea — 2026-05-18
+
+#### Fleet / Monitoring
+- Fleet timezone set to America/New_York via set_timezone.yml — 2026-05-18
+- node-exporter deployed to pihole-book-deb and restic-deb — 2026-05-18
+- portainer_sync.py written — auto-registers Docker hosts in Portainer daily @ 06:00 — 2026-05-18
+- Portainer API token regenerated (ptr_0AHPtJ...) — 2026-05-18
+- onboard_host.yml updated — qemu-guest-agent for KVM VMs (Debian + RedHat) — 2026-05-18
+- set_timezone.yml playbook added to ansible_dev — 2026-05-18
+
+#### Shardik / Drives
+- shardik RAM instability resolved — XMP/DOCP disabled, running at 2133MHz stock — 2026-05-18
+- BIOS confirmed latest (P10.43, June 2025) on ASRock AB350M Pro4 — 2026-05-18
+- ST6000DX000 Z4D07FQ5 installed, formatted, used as PBS SDD datastore — 2026-05-18
+- ST6000VN0001 Z4D2EJ31 (72 bad sectors) retired and removed — 2026-05-18
+- Toshiba 96S1KBE2F56D ICRC errors persist — backplane connector suspected — 2026-05-18
+
+#### TrueNAS
+- ada4 (OOS20000G 00013AJR) identified as FAULTED — 57 read errors, 3 pending sectors — 2026-05-18
+- TRYAGAIN scrub completed — repaired 1.11M, 0 data errors — 2026-05-18
+- Boot pool DEGRADED — da0 USB boot drive confirmed dead — 2026-05-18
+
+#### MkDocs / Checkbox Persistence
+- UTF-8 triple-encoding bug fixed in todo.md — 2026-05-18
+- checkbox_persist.js fixed: UTF-8 safe base64, correct MkDocs Material inverted checkbox logic, preventDefault on checkbox click — 2026-05-18
+- webhook.py systemd service deployed on git-ansible (port 9999) — 2026-05-18
+
+#### Restic-deb
+- restic-deb confirmed at 192.168.1.40 (Ubuntu 26.04, formerly eld/Windows) — 2026-05-18
+- node-exporter deployed — 2026-05-18
+- RAM confirmed 16GB DDR3 (4x4GB) — upgrade to 32GB pending parts — 2026-05-18
+
+#### Migrated from todo (completed)
+- Migrate eld to Ubuntu 26.04 ✅
+- Deploy Restic — automated backups from TrueNAS (Tier 1) ✅
+- Deploy node-exporter to non-Docker hosts (plow-rpm, pihole-book-deb, restic-deb) ✅
+- Write portainer_sync.py scheduled task ✅
+- Fix TLS registration API issue in portainer_sync.py ✅
