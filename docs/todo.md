@@ -33,7 +33,7 @@ _Last updated: 2026-05-17_
 - [x] Photo Flashforge Dreamer
 - [x] Photo GTX 1080 and GTX 1080 Ti cards
 - [ ] Photo all laptops
-- [ ] SCP all new photos to MkDocs docs/images/hw/
+- [x] SCP all new photos to MkDocs docs/images/hw/
 - [ ] Import all hardware into Snipe-IT (192.168.1.53)
 - [ ] Push completed hw_inventory.md to MkDocs
 ---
