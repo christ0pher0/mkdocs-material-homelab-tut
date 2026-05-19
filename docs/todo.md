@@ -77,7 +77,7 @@ _Last updated: 2026-05-17_
 - [ ] Complete tactical RPG collections across all supported platforms
 - [ ] Deduplicate DS ROMs (Fire Emblem Shadow Dragon appears 3x)
 ### Mediastack / Plex
-- [ ] Kometa — verify Trakt/MDBList working after next run
+- [x] Kometa — verify Trakt/MDBList working after next run
 - [ ] Add Tautulli — Plex analytics
 - [ ] Bazarr — subtitle automation
 - [ ] Tdarr — transcoding (needs GPU node first)
