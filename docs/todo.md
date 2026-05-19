@@ -111,7 +111,7 @@ _Last updated: 2026-05-17_
 - [ ] Unbound — local DNS resolver
 - [ ] Authelia — auth layer for exposed services
 ### Ansible
-- [ ] Pin ansible_python_interpreter per host in inventory_auto
+- [x] Pin ansible_python_interpreter per host in inventory_auto
 - [ ] Add fail2ban to homelab_baseline.yml
 - [ ] Add chrony LXC skip to sync_time.yml
 - [ ] Update check_services.yml to reflect current services
