@@ -42,7 +42,7 @@ _Last updated: 2026-05-17_
 - [ ] Check temerant-win 2x 3TB HDDs (Seagate ST3000DM001) for important data ⚠️
 - [ ] Pull drives, wipe Windows, install Proxmox VE
 - [ ] Add to wheel cluster (shardik + maturin)
-- [ ] Configure Tailscale on pve3
+- [x] Configure Tailscale on pve3
 - [ ] Add to inventory_auto and MkDocs
 - [ ] Eventually: GPU passthrough of GTX 1080 Ti for RPCS3/AI workloads
 - [ ] Check AB350 IOMMU groupings before passthrough attempt
