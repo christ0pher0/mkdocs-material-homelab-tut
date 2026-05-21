@@ -64,6 +64,7 @@ nav:
     - Hardware Inventory: hw_inv.md
     - Docker Inventory: docker_inv.md
     - Software Inventory: software_inventory.md
+    - Upgrade Radar: upgrade_radar.md
   - Monitoring & Reports:
     - Scan Results: scan_results.md
     - Disk Space: disk_space.md
