@@ -1,6 +1,6 @@
 # Network Diagram
 
-_Last update: 2026-05-17 12:10:08_
+_Last update: 2026-05-20 20:10:02_
 
 ```mermaid
 graph LR
@@ -24,6 +24,8 @@ graph LR
 
     git_ansible_deb["git-ansible-deb<br/>192.168.1.3<br/>Debian/Ubuntu"]
     Switch --> git_ansible_deb
+    pbs_deb["pbs-deb<br/>192.168.1.4<br/>Debian/Ubuntu"]
+    Switch --> pbs_deb
     rocky_rpm["rocky-rpm<br/>192.168.1.20<br/>RHEL/Rocky"]
     Switch --> rocky_rpm
     kasm_2404_deb["kasm-2404-deb<br/>192.168.1.26<br/>Debian/Ubuntu"]
@@ -102,6 +104,7 @@ graph LR
     class shardik proxmox
     class maturin proxmox
     class git_ansible_deb linux
+    class pbs_deb linux
     class rocky_rpm linux
     class kasm_2404_deb linux
     class urnst_deb linux

@@ -195,3 +195,5 @@ _Last updated: 2026-05-18_
 - [ ] 20TB CMR drive to replace ada4 in TRYAGAIN pool ⚠️
 - [ ] 4x 8GB DDR3 sticks for restic-deb RAM upgrade
 - [ ] Inventory all spare/removable hard drives — identify reusable drives for restic-deb CRU bays
+- [ ] Physical inventory of hardware reserves — hard drives, RAM, graphics cards, NICs, HBAs — build hw_reserve.md
+- [ ] Physical inventory of hardware reserves — hard drives, RAM, graphics cards, NICs, HBAs — build hw_reserve.md
