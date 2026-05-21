@@ -16,10 +16,31 @@ _Inventory in progress — updated as items are found_
 
 ## SSDs
 
+### 1TB+
 | Item | Qty | Interface | Notes |
 |------|-----|-----------|-------|
-| Samsung 860 EVO 1TB | 4 | SATA 2.5" | Immediately deployable — lee-deb boot, restic-deb CRU bays, maturin 2.5" bay |
-| Samsung PM9A3 1.92TB | 1 | NVMe PCIe Gen4 U.2 | Enterprise drive — needs U.2 to PCIe adapter to use in desktop |
+| Samsung 860 EVO 1TB | 6 | SATA 2.5" | Best in reserve — lee-deb, restic-deb CRU bays, maturin 2.5" bay |
+| Crucial MX200 1TB | 1 | SATA 2.5" | Solid mid-range — good for any SATA slot |
+| Samsung PM9A3 1.92TB | 1 | NVMe PCIe Gen4 U.2 | Enterprise — needs U.2 to PCIe adapter |
+
+### 480-512GB
+| Item | Qty | Interface | Notes |
+|------|-----|-----------|-------|
+| Edge SE B47 512GB | 1 | SATA 3 | Budget — OS drives, light duty |
+| Edge SE B47 500GB | 3 | SATA 3 | Budget — OS drives, light duty |
+| Edge SE B47 480GB | 2 | SATA 3 | Budget — OS drives, light duty |
+
+### 256GB
+| Item | Qty | Interface | Notes |
+|------|-----|-----------|-------|
+| SK Hynix SH920 256GB | 2 | SATA 2.5" | Decent — OS drives |
+| Edge SE B47 256GB | 3 | SATA 3 | Budget — OS drives only |
+
+### 128GB
+| Item | Qty | Interface | Notes |
+|------|-----|-----------|-------|
+| Crucial BX300 128GB | 2 | SATA 2.5" | Borderline for modern OS — Pi or embedded use |
+| Transcend SSD370S 128GB | 1 | SATA 2.5" | Borderline for modern OS — Pi or embedded use |
 
 ---
 
