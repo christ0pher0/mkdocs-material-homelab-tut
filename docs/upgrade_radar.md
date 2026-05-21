@@ -10,24 +10,24 @@ _Physical hosts only — grouped by board family, least to most capable within e
 
 | Host | Current RAM | Type | Max RAM | Headroom | Notes |
 |------|------------|------|---------|----------|-------|
-| restic-deb | 16GB (4×4GB) | DDR3-1600 | 32GB | +16GB | Easy upgrade — DDR3 kits are cheap |
-| truenas | 24GB (mixed) | DDR3-1600 | 32GB now → 32GB DDR4 post-rebuild | +8GB now | 32GB DDR4 arriving via temerant rebuild |
+| restic-deb | 16GB (4×4GB) | DDR3-1600 | 32GB | +16GB | Free upgrade — sticks in reserve |
+| truenas | 24GB (2×4GB Hynix + 2×8GB Samsung, mixed) | DDR3-1600 | 32GB | +8GB | Free upgrade — sticks in reserve |
 
 ### AMD AM4 — Gigabyte AB350 Family
 
 | Host | Board | Current RAM | Type | Max RAM | Headroom | Notes |
 |------|-------|------------|------|---------|----------|-------|
-| urnst-deb | AB350-Gaming-CF | 8GB (1×8GB) | DDR4-2133 | 16GB | +8GB (3 slots empty) | Test bench — 3 slots sitting empty |
-| temerant-win | AB350-Gaming | 32GB (4×8GB) | DDR4-2133 | 64GB | +32GB | Active system — check drives before any changes |
-| idee-deb | AB350-Gaming 3-CF | 16GB (2×8GB) | DDR4-2133 | 128GB | +112GB | AI node candidate — GPU upgrade matters more first |
-| shardik | AB350M Pro4 | 56GB (16+16+16+8GB) | DDR4-2667 | 64GB | +8GB (replace 8GB Micron) | Mixed kit — instability risk; one stick swap fixes both |
+| urnst-deb | AB350-Gaming-CF | 8GB (1×8GB) | DDR4-2133 | 16GB | +8GB (3 slots empty) | Pending stick identification |
+| temerant-win | AB350-Gaming | 32GB (4×8GB G.Skill) | DDR4-2133 | 64GB | +32GB | Moving to TrueNAS rebuild |
+| idee-deb | AB350-Gaming 3-CF | 16GB (2×8GB G.Skill) | DDR4-2133 | 128GB | +16GB (2 slots empty) | Free upgrade — 2× Samsung 8GB DDR4-2133 from reserve |
+| shardik | AB350M Pro4 | 64GB (4×16GB mixed kit) | DDR4-2133 | 64GB | None — maxed | Clocked down for stability — matched pair swap planned |
 
 ### Other Physical Hosts
 
 | Host | Board | Current RAM | Type | Max RAM | Headroom | Notes |
 |------|-------|------------|------|---------|----------|-------|
 | lee-deb | Dell Inspiron 3647 (H81) | Unknown | DDR3 | 16GB | Unknown | Pending setup |
-| maturin | Dell OptiPlex 7050 SFF | 32GB (4×8GB, mixed Micron+Samsung) | DDR4-2133 | 64GB | +32GB (swap to 4×16GB) | Proxmox node — memory-pressured at 25GB used |
+| maturin | Dell OptiPlex 7050 SFF | 32GB (4×8GB, mixed Micron+Samsung) | DDR4-2133 | 64GB | +32GB (swap to 4×16GB) | Memory-pressured — 25GB used |
 | amontillado-win | MSI PRO Z690-A WIFI | 128GB (4×32GB) | DDR5-4000 | 128GB | None | Maxed out |
 
 ### RAM Priority Flags
@@ -36,22 +36,25 @@ _Physical hosts only — grouped by board family, least to most capable within e
     32GB installed (4×8GB mixed Micron+Samsung) but already at 25GB used with swap touched — memory-pressured now. mediastack-deb alone is allocated 16GB. Swap all four sticks to a matched 4×16GB DDR4-2133 kit (~$40-60 used) to reach the 64GB max.
 
 !!! warning "Medium — shardik"
-    Running a mixed kit (16+16+16+8GB) — the lone 8GB Micron is the odd one out and the likely contributor to the recent instability. Replace it with a matching 16GB DDR4-2667 stick (~$20-25) to hit 64GB max and eliminate the mismatch. If shardik gets rebuilt Sunday this is the time to do it.
+    64GB installed but a mixed kit of 4 different sticks clocked down to 2133 for stability. Plan: swap to 2× PNY XLR8 16GB DDR4-3200 matched pair (1 in shardik, 1 in reserve) = 32GB running at full speed. Revisit after pulling unknown sticks and physically identifying them — may change the plan. Do during Sunday rebuild if it happens. If PNY pair doesn't resolve instability, fall back to 4× 8GB DDR4-2133 (2× Samsung + 2× Micron from reserve).
+
+!!! tip "Low — truenas"
+    Free upgrade available from reserve. Pull 2× Hynix 4GB sticks, replace with 2× Crucial Ballistix 8GB DDR3-1600 + 2× Crucial UDIMM 8GB DDR3-1600 = 32GB. Do before the temerant hardware rebuild. After rebuild, move the 2× Samsung 8GB pulled from truenas to restic-deb.
 
 !!! tip "Low — restic-deb"
-    Backup server works fine at 16GB. DDR3-1600 4×8GB kits are extremely cheap (~$15-20). Not urgent but an easy win if a kit turns up.
-
-!!! tip "Low — urnst-deb"
-    Three DDR4 slots empty. 8GB is adequate for the current test bench role. If promoted to Proxmox node 3, add 3×4GB DDR4 to reach 16GB max — slots are right there.
+    Free upgrade available from reserve. After truenas swap, install 2× Samsung 8GB DDR3-1600 (pulled from truenas) + 2× Timetec 8GB DDR3-1333 = 32GB. Backup server — 16GB is fine for now, no urgency.
 
 !!! tip "Low — idee-deb"
-    AI node candidate but GPU comes first. Once a GTX 1080 Ti is installed, RAM becomes the next lever. The board supports up to 128GB DDR4 which is unusually high for a B350 platform.
+    Free upgrade from reserve — install 2× Samsung 8GB DDR4-2133 in 2 empty slots = 32GB total. GPU upgrade (GTX 1080 Ti from stock) matters more first. Do both at the same time.
 
-!!! info "Skip — truenas"
-    32GB DDR4 arriving as part of the temerant hardware donor rebuild. No action needed before that.
+!!! tip "Low — urnst-deb"
+    Test bench — 8GB adequate for current role. Identify existing stick with dmidecode first, then match from reserve. Max is only 16GB so one stick needed.
 
 !!! info "Skip — amontillado"
     128GB DDR5 — already maxed. No upgrade path on this platform.
+
+!!! info "Skip — temerant-win"
+    RAM moving to TrueNAS rebuild. No action needed here.
 
 ---
 
@@ -62,7 +65,7 @@ _Physical hosts only — grouped by board family, least to most capable within e
 | Host | Current BIOS | Latest BIOS | Up to Date? | Notes |
 |------|-------------|-------------|-------------|-------|
 | restic-deb | F8 (2012-08-20) | F11 | No | 3 versions behind |
-| truenas | F9 (2012-09-19) | F11 | No | 2 versions behind |
+| truenas | F9 (2012-09-19) | F11 | No | 2 versions behind — moot after temerant rebuild |
 
 ### AMD AM4 — Gigabyte AB350 Family
 
@@ -78,23 +81,19 @@ _Physical hosts only — grouped by board family, least to most capable within e
 | Host | Board | Current BIOS | Latest BIOS | Up to Date? | Notes |
 |------|-------|-------------|-------------|-------------|-------|
 | lee-deb | Dell Inspiron 3647 (H81) | Unknown | Check Dell support | Unknown | Pending setup |
-| maturin | Dell OptiPlex 7050 SFF | 1.11.0 (2018) | 1.27.0 (Sep 2023) | No | 16 versions behind |
-| amontillado-win | MSI PRO Z690-A WIFI | A.F0 (Nov 2023) | 7D25vAN (Apr 2026) | No | **Critical** — i7-13700K degradation microcode + GOP/ME updates |
+| maturin | Dell OptiPlex 7050 SFF | 1.27.0 (Nov 2023) | 1.27.0 (Nov 2023) | ✅ Current | Flashed 2026-05-20 via USB |
+| amontillado-win | MSI PRO Z690-A WIFI | 7D25vAN (Apr 2026) | 7D25vAN (Apr 2026) | ✅ Current | Flashed 2026-05-20 via MSI Center |
 
 ### BIOS Priority Flags
 
-!!! danger "Critical — amontillado-win"
-    Running BIOS A.F0 from November 2023 on an i7-13700K. Latest MSI BIOS (7D25vAN, Apr 2026) includes microcode updates addressing the 13th gen Intel processor voltage and degradation issue, plus GOP update and ME firmware 16.1.40.2765. Without the updated microcode, the CPU may be running elevated voltages during idle and accelerating wear. Flash from Windows via MSI Center or USB boot.
+!!! success "Done — amontillado-win"
+    Flashed to 7D25vAN (Apr 2026) on 2026-05-20. Includes i7-13700K degradation microcode fix, GOP update, and ME firmware 16.1.40.2765.
 
-    **Download:** [MSI PRO Z690-A WIFI support page](https://www.msi.com/Motherboard/PRO-Z690-A/support)
-
-!!! warning "High — maturin"
-    Dell OptiPlex 7050 SFF on BIOS 1.11.0 from 2018 — 16 versions behind current (1.27.0). Straightforward Dell USB flash (F12 at boot → BIOS Flash Update). Includes multiple security advisories.
-
-    **Download:** [Dell OptiPlex 7050 BIOS support page](https://www.dell.com/support/product-details/en-us/product/optiplex-7050-sff/drivers)
+!!! success "Done — maturin"
+    Flashed to 1.27.0 (Nov 2023) on 2026-05-20 via USB. 16 versions of security updates applied.
 
 !!! warning "Medium — Gigabyte AB350 family (urnst-deb / temerant-win / idee-deb)"
-    All three boards are running first-gen AGESA and likely well behind on BIOS. The AB350-Gaming and AB350-Gaming 3 have a required update path — must go through F31 → F40 (with EC FW Update Tool) → latest. Skipping bridge versions will fail. Check current versions first, then plan accordingly.
+    All three boards are likely well behind on BIOS. Required update path — must go through F31 → F40 (with EC FW Update Tool) → latest. Skipping bridge versions will fail. Check current versions first.
 
     - AB350-Gaming (temerant-win): latest **F50d**
     - AB350-Gaming 3-CF (idee-deb): latest **F52**
@@ -110,7 +109,7 @@ _Physical hosts only — grouped by board family, least to most capable within e
     ```
 
 !!! tip "Low — restic-deb / truenas"
-    Both Z77-DS3H boards are on old Sandy Bridge-era BIOS (F8 and F9 respectively), latest is F11. Systems are stable and the CPUs are fully supported — no new hardware to unlock. Flash via USB Q-Flash if convenient, but not urgent.
+    Both Z77-DS3H boards on Sandy Bridge-era BIOS (F8/F9), latest is F11. Stable, no new hardware to unlock. Flash via USB Q-Flash if convenient. truenas is moot after temerant rebuild.
 
 !!! info "Current — shardik"
     Already on P10.43 — latest available as of September 2025. No action needed.
