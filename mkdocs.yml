@@ -62,6 +62,7 @@ nav:
     - Host: host.md
     - Hosts: hosts.md
     - Hardware Inventory: hw_inv.md
+    - Hardware Reserve: hw_reserve.md
     - Docker Inventory: docker_inv.md
     - Software Inventory: software_inventory.md
     - Upgrade Radar: upgrade_radar.md

@@ -1,8 +1,8 @@
 # Network Scan Results
 
-_Last updated: 2026-05-20 22:00:13_
+_Last updated: 2026-05-20 23:00:18_
 
-_Hosts found: 25_
+_Hosts found: 26_
 
 ## Status
 
@@ -32,4 +32,5 @@ _Hosts found: 25_
 | 192.168.1.122 | octopi-deb | Debian/Ubuntu Linux | 22/ssh, 80/http, 443/https, 9100/node-exporter | DC:A6:32:5E:04:08 |
 | 192.168.1.125 | ha-net | Network Device | 22/ssh, 111/rpcbind | E4:5F:01:65:56:EE |
 | 192.168.1.141 | tv2-media | Media Device | none detected | 22:57:5A:A7:04:87 |
+| 192.168.1.145 | firetv-media.lan | Unknown | none detected | 74:E2:0C:D6:71:DD |
 | 192.168.1.202 | alexa-droid | Android | none detected | B0:FC:0D:51:8F:78 |
