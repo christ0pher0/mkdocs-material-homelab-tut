@@ -197,3 +197,7 @@ _Last updated: 2026-05-18_
 - [ ] Inventory all spare/removable hard drives — identify reusable drives for restic-deb CRU bays
 - [ ] Physical inventory of hardware reserves — hard drives, RAM, graphics cards, NICs, HBAs — build hw_reserve.md
 - [ ] Physical inventory of hardware reserves — hard drives, RAM, graphics cards, NICs, HBAs — build hw_reserve.md
+- [ ] RAM upgrades — free, no purchases needed:
+  - truenas: replace 2x Hynix 4GB with 2x Crucial Ballistix 8GB DDR3-1600 + 2x Crucial UDIMM 8GB DDR3-1600 = 32GB
+  - restic-deb: replace 4x 4GB with 2x Samsung 8GB DDR3-1600 (pulled from truenas) + 2x Timetec 8GB DDR3-1333 = 32GB
+  - Do truenas first, move pulled Samsung sticks directly to restic
