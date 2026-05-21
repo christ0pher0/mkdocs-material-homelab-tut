@@ -203,3 +203,4 @@ _Last updated: 2026-05-18_
   - Do truenas first, move pulled Samsung sticks directly to restic
 - [ ] Shardik RAM — pull 3 unknown sticks, identify them, install 2x PNY XLR8 16GB DDR4-3200 matched pair (1 in shardik, 1 in reserve). If instability persists try 4x 8GB DDR4-2133 (2x Samsung + 2x Micron from reserve). Do during Sunday rebuild if it happens.
 - [ ] idee-deb RAM — install 2x Samsung 8GB DDR4-2133 in empty slots = 32GB total (matches existing Samsung stick)
+- [ ] urnst-deb RAM — identify existing 8GB stick (dmidecode), fill remaining slots to 16GB max from reserve
