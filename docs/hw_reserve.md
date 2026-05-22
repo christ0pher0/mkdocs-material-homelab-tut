@@ -194,6 +194,9 @@ _Inventory in progress — updated as items are found_
 | 24 | D&D GAMING | Seagate Desktop HDD ST3000DM001 | 3TB | Z5011ZMP | SATA 6Gb/s | Feb 2024 | D&D/Gaming archive |
 | 25 | MUSIC 10-21-2018 | Seagate Desktop HDD ST3000DM001 | 3TB | Z5011NMK | SATA 6Gb/s | Feb 2024 | Music archive — date on label is old backup date |
 | 26 | TV 0-B / 4TB WDGREEN | WD Green WD40EZRX | 4TB | HARNNY2C48 | SATA 6Gb/s | Jan 2024 | TV archive 0-B |
+| 27 | 3WD MOVIES R-Z | Seagate Desktop HDD ST3000DM001 | 3TB | Z50102NP | SATA 6Gb/s | Jan 2024 | Movie archive R-Z |
+| 28 | MOVIES H-Q | Seagate | 3TB | B31412046N | SATA 6Gb/s | Jan 2024 | Movie archive H-Q |
+| 29 | 3TBSEA MOVIES O-G | Hitachi 0F12450 | 3TB | YHG777BNA | SATA 6Gb/s | Jan 2024 | Movie archive O-G |
 
 ### Reserve / Surplus Drives
 | # | Label | Model | Capacity | Serial | Interface | Notes |
