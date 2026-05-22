@@ -22,13 +22,10 @@ _Inventory in progress — updated as items are found_
 | Samsung 860 EVO 1TB | 6 | SATA 2.5" | Best in reserve — lee-deb, restic-deb CRU bays, maturin 2.5" bay |
 | Crucial MX200 1TB | 1 | SATA 2.5" | Solid mid-range — good for any SATA slot |
 | Samsung PM9A3 1.92TB | 1 | NVMe PCIe Gen4 U.2 | Enterprise — needs U.2 to PCIe adapter |
-| Orico Y-20M 2TB | 1 | M.2 NVMe | New in box ⭐ — best NVMe in reserve |
 
 ### 480-512GB
 | Item | Qty | Interface | Notes |
 |------|-----|-----------|-------|
-| SK Hynix PC600 512GB | 1 | M.2 NVMe | Good NVMe — maturin, idee-deb, urnst-deb candidate |
-| Crucial P1 500GB | 1 | M.2 NVMe PCIe Gen3 | Good mid-range NVMe |
 | Edge SE B47 512GB | 1 | SATA 3 | Budget — OS drives, light duty |
 | Edge SE B47 500GB | 3 | SATA 3 | Budget — OS drives, light duty |
 | Edge SE B47 480GB | 2 | SATA 3 | Budget — OS drives, light duty |
@@ -36,36 +33,14 @@ _Inventory in progress — updated as items are found_
 ### 256GB
 | Item | Qty | Interface | Notes |
 |------|-----|-----------|-------|
-| Samsung PM951 256GB | 1 | M.2 NVMe | Older NVMe — still usable for OS drives |
-| Intel M.2 NVMe 256GB | 1 | M.2 NVMe | OS drive candidate |
-| Toshiba M.2 256GB | 1 | M.2 SATA | OS drive candidate |
-| SK Hynix SC300 256GB | 1 | M.2 SATA | OS drive candidate |
 | SK Hynix SH920 256GB | 2 | SATA 2.5" | Decent — OS drives |
 | Edge SE B47 256GB | 3 | SATA 3 | Budget — OS drives only |
 
 ### 128GB
 | Item | Qty | Interface | Notes |
 |------|-----|-----------|-------|
-| Intel SSD 600P 128GB | 1 | M.2 NVMe | Older NVMe — light OS use only |
-| SK Hynix SC300 128GB | 1 | M.2 SATA | Light OS use |
-| WD Blue 128GB | 1 | M.2 SATA | Light OS use |
 | Crucial BX300 128GB | 2 | SATA 2.5" | Borderline for modern OS — Pi or embedded use |
 | Transcend SSD370S 128GB | 1 | SATA 2.5" | Borderline for modern OS — Pi or embedded use |
-| 128GB NVMe in mSATA caddy | 1 | mSATA caddy | Confirm form factor before use |
-
-### 64GB and under
-| Item | Qty | Interface | Notes |
-|------|-----|-----------|-------|
-| SanDisk 64GB | 1 | mSATA | Too small for modern OS — embedded only |
-
----
-
-## External Storage
-
-| Item | Qty | Interface | Notes |
-|------|-----|-----------|-------|
-| WD My Passport 1TB (black) | 1 | USB 3.0 | Portable backup / data transfer |
-| WD My Passport 1TB (red) | 1 | USB 3.0 | Portable backup / data transfer |
 
 ---
 
@@ -143,20 +118,3 @@ _Inventory in progress — updated as items are found_
 | Micron 8GB MT36JSF1G72PZ | 2 | DDR3-1600 | RDIMM |
 | Crucial 8GB CT102472BB160B | 1 | DDR3-1600 | RDIMM |
 | SK Hynix 16GB HMT42GR7BFR4A | 1 | DDR3L-1600 | RDIMM — largest single stick |
-
----
-
-## Development Boards
-
-| Item | Qty | Notes |
-|------|-----|-------|
-| Avnet ZUBoard 1CG | 2 | Xilinx/AMD Zynq UltraScale+ FPGA — not homelab hardware, worth keeping for ML/FPGA work |
-
----
-
-## Ewaste / Misc
-
-| Item | Notes |
-|------|-------|
-| Dell SanDisk CompactFlash (Version 4.1.4) | Dell server BIOS flash card — no matching hardware, ewaste |
-| 2× mSATA caddies (empty) | Spare hardware caddies |
