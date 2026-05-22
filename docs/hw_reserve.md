@@ -188,6 +188,12 @@ _Inventory in progress — updated as items are found_
 | 18 | 3TB TV M-O | Seagate Barracuda ST3000DM001 | 3TB | Z1FKZ6JM | SATA 6Gb/s | Jan 2024 | TV archive M-O |
 | 19 | 3TB TV K-L | WD Caviar Green WD30EZRS | 3TB | WMAWZ0J24370 | SATA 6Gb/s | Sep 2022 | TV archive K-L |
 | 20 | 3TB TV P-SNOFALL | Seagate Constellation ES.2 SED ST3000051NS | 3TB | Z292M282 | SATA 6Gb/s | Jan 2024 | TV archive P-Snowfall |
+| 21 | 3TB SEA TV C-D | Seagate Constellation ES.2 SED ST3000051NS | 3TB | Z2926W97 | SATA 6Gb/s | Jan 2024 | TV archive C-D |
+| 22 | 3TB TV E-F GOT | WD Caviar Green WD30EZRS | 3TB | WMAWZ0028623 | SATA 6Gb/s | Jan 2024 | TV archive E-F incl GOT |
+| 23 | 3TB TV G-J | WD Caviar Green WD30EZRS | 3TB | WMAWZ036055 | SATA 6Gb/s | Sep 2022 | TV archive G-J |
+| 24 | D&D GAMING | Seagate Desktop HDD ST3000DM001 | 3TB | Z5011ZMP | SATA 6Gb/s | Feb 2024 | D&D/Gaming archive |
+| 25 | MUSIC 10-21-2018 | Seagate Desktop HDD ST3000DM001 | 3TB | Z5011NMK | SATA 6Gb/s | Feb 2024 | Music archive — date on label is old backup date |
+| 26 | TV 0-B / 4TB WDGREEN | WD Green WD40EZRX | 4TB | HARNNY2C48 | SATA 6Gb/s | Jan 2024 | TV archive 0-B |
 
 ### Reserve / Surplus Drives
 | # | Label | Model | Capacity | Serial | Interface | Notes |
