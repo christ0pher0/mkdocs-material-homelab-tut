@@ -185,8 +185,8 @@ _Inventory in progress — updated as items are found_
 | 2 | 3TB (unlabeled) | Seagate Constellation ES.2 SED ST3000051NS | 3TB | TBD | SATA 6Gb/s | Enterprise SED — update serial when installed |
 | 3 | (unlabeled) | Seagate Constellation ES.2 SED ST3000051NS | 3TB | Z292K11M | SATA 6Gb/s | DOM 05/2012 — enterprise SED |
 | 4 | (unlabeled) | Seagate Constellation ES.3 | 3TB | Z1Y38A01 | SATA 6Gb/s | DOM 01/2015 |
-| 5 | 2WD CLASS EE | WD Caviar Green WD20EARX | 2TB | WCAZAF839739 | SATA 6Gb/s | Aug 2012 — check for data before use |
-| 6 | GOODWIM CENTOS | Seagate Barracuda ST500DM002 | 500GB | TBD | SATA 6Gb/s | Check for data before use |
+| 5 | *** 2WD CLASS EE | WD Caviar Green WD20EARX | 2TB | WCAZAF839739 | SATA 6Gb/s | *** dispose — check for data first |
+| 6 | *** GOODWIM CENTOS | Seagate Barracuda ST500DM002 | 500GB | TBD | SATA 6Gb/s | *** dispose after P2V — convert CentOS install to Proxmox VM first |
 
 ### Needs Data Check Before Use
 | # | Label | Notes |

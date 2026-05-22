@@ -205,3 +205,4 @@ _Last updated: 2026-05-18_
 - [ ] idee-deb RAM — install 2x Samsung 8GB DDR4-2133 in empty slots = 32GB total (matches existing Samsung stick)
 - [ ] urnst-deb RAM — identify existing 8GB stick (dmidecode), fill remaining slots to 16GB max from reserve
 - [ ] Verify M.2 slot status on urnst-deb, lee-deb, and amontillado — update hw_inv with NVMe/SSD slot info for all machines
+- [ ] P2V Goodwim CentOS drive — image to Proxmox VM before disposing of drive
