@@ -182,6 +182,12 @@ _Inventory in progress — updated as items are found_
 | 12 | MUSIC+ MUSIC NOT PLEX | Toshiba DT01ACA300 | 3TB | Y5GM81UGS | SATA 6Gb/s | Feb 2024 | Nov 2015 |
 | 13 | TROVE BOOKS | Toshiba DT01ACA300 | 3TB | Y5GM22NGS | SATA 6Gb/s | Feb 2024 | Nov 2015 |
 | 14 | PLEX ETC | Toshiba DT01ACA300 | 3TB | Y5GM755GS | SATA 6Gb/s | Feb 2024 | Nov 2015 |
+| 15 | 3TB TV SONS-T | Hitachi 0F12450 | 3TB | YHG4ZPSA | SATA 6Gb/s | Jan 2024 | TV archive S |
+| 16 | 3T TVU-Z | Hitachi 3TB | 3TB | YHG80M8A | SATA 6Gb/s | Jan 2024 | TV archive U-Z |
+| 17 | 3T HIT EVERTHING | Seagate Enterprise NAS ST3000VN0001 | 3TB | Z4F95VN8 | SATA 6Gb/s | Feb 2024 | TV archive misc |
+| 18 | 3TB TV M-O | Seagate Barracuda ST3000DM001 | 3TB | Z1FKZ6JM | SATA 6Gb/s | Jan 2024 | TV archive M-O |
+| 19 | 3TB TV K-L | WD Caviar Green WD30EZRS | 3TB | WMAWZ0J24370 | SATA 6Gb/s | Sep 2022 | TV archive K-L |
+| 20 | 3TB TV P-SNOFALL | Seagate Constellation ES.2 SED ST3000051NS | 3TB | Z292M282 | SATA 6Gb/s | Jan 2024 | TV archive P-Snowfall |
 
 ### Reserve / Surplus Drives
 | # | Label | Model | Capacity | Serial | Interface | Notes |
