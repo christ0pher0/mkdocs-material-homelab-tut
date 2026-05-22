@@ -166,17 +166,22 @@ _Inventory in progress — updated as items are found_
 ## Hard Drives (3.5" HDD)
 
 ### Production Drives
-| # | Label | Model | Capacity | Serial | Interface | Notes |
-|---|-------|-------|----------|--------|-----------|-------|
-| 1 | 4TB KICKSTARTER | WD/HGST HC310 HUS726T4ALE6L4 | 4TB | V6KAG1VR | SATA 6Gb/s | Dec 2019 |
-| 2 | 3D / 4TB | WD Green WD40EZRX | 4TB | TBD | SATA 6Gb/s | Apr 2015 — update serial when installed |
-| 3 | PATREON #-B | Toshiba DT01ACA300 | 3TB | Y5FM2SEGS | SATA 6Gb/s | Patreon archive #-B — Nov 2015 |
-| 4 | PATREON C-D | Toshiba DT01ACA300 | 3TB | Y5GMAEAGS | SATA 6Gb/s | Patreon archive C-D — Nov 2015 |
-| 5 | PATREON E-K | Seagate Constellation ES.2 SED ST3000051NS | 3TB | Z2928YTG | SATA 6Gb/s | Patreon archive E-K — enterprise SED, May 2012 |
-| 6 | PATREON L-O | Seagate Barracuda ST3000DM001 | 3TB | W1F0BALQ | SATA 6Gb/s | Patreon archive L-O |
-| 7 | PATREON O-Z | WD WD30EZRS | 3TB | WD-WMAWZ0009936 | SATA 6Gb/s | Currently in restic-deb bay |
-| 8 | TROVE 24-08 | Seagate Enterprise NAS ST6000VN0001 | 6TB | Z401Z7A5 | SATA 6Gb/s | DOM 05/2015 |
-| 9 | 6 TB SEAGATE 7200 | Seagate Enterprise NAS ST6000VN0001 | 6TB | Z40Z2HT9 | SATA 6Gb/s | DOM 05/2015 |
+| # | Label | Model | Capacity | Serial | Interface | Last Backed Up | Notes |
+|---|-------|-------|----------|--------|-----------|----------------|-------|
+| 1 | 3D / 4TB | WD Green WD40EZRX | 4TB | TBD | SATA 6Gb/s | Aug 2022 | Update serial when installed |
+| 2 | 4TB KICKSTARTER | WD/HGST HC310 HUS726T4ALE6L4 | 4TB | V6KAG1VR | SATA 6Gb/s | Jan 2024 | Dec 2019 |
+| 3 | PATREON #-B | Toshiba DT01ACA300 | 3TB | Y5FM2SEGS | SATA 6Gb/s | Jan 2024 | Patreon archive #-B — Nov 2015 |
+| 4 | PATREON C-D | Toshiba DT01ACA300 | 3TB | Y5GMAEAGS | SATA 6Gb/s | Feb 2025 | Patreon archive C-D — Nov 2015 |
+| 5 | PATREON E-K | Seagate Constellation ES.2 SED ST3000051NS | 3TB | Z2928YTG | SATA 6Gb/s | Feb 2025 | Patreon archive E-K — enterprise SED |
+| 6 | PATREON L-O | Seagate Barracuda ST3000DM001 | 3TB | W1F0BALQ | SATA 6Gb/s | Feb 2025 | Patreon archive L-O |
+| 7 | PATREON O-Z | WD WD30EZRS | 3TB | WD-WMAWZ0009936 | SATA 6Gb/s | — | Currently in restic-deb bay |
+| 8 | TROVE 24-08 | Seagate Enterprise NAS ST6000VN0001 | 6TB | Z401Z7A5 | SATA 6Gb/s | Aug 2024 | DOM 05/2015 |
+| 9 | 6 TB SEAGATE 7200 | Seagate Enterprise NAS ST6000VN0001 | 6TB | Z40Z2HT9 | SATA 6Gb/s | — | DOM 05/2015 |
+| 10 | READING | Seagate Constellation ES.3 ST3000NM0033 | 3TB | Z1Y32KTB | SATA 6Gb/s | Feb 2025 | DOM 01/2015 |
+| 11 | AUDIOBOOKS 3TB | WD Caviar Green WD30EZRS | 3TB | WMAW20629019 | SATA 6Gb/s | Feb 2024 | Nov 2014 |
+| 12 | MUSIC+ MUSIC NOT PLEX | Toshiba DT01ACA300 | 3TB | Y5GM81UGS | SATA 6Gb/s | Feb 2024 | Nov 2015 |
+| 13 | TROVE BOOKS | Toshiba DT01ACA300 | 3TB | Y5GM22NGS | SATA 6Gb/s | Feb 2024 | Nov 2015 |
+| 14 | PLEX ETC | Toshiba DT01ACA300 | 3TB | Y5GM755GS | SATA 6Gb/s | Feb 2024 | Nov 2015 |
 
 ### Reserve / Surplus Drives
 | # | Label | Model | Capacity | Serial | Interface | Notes |
@@ -185,8 +190,9 @@ _Inventory in progress — updated as items are found_
 | 2 | 3TB (unlabeled) | Seagate Constellation ES.2 SED ST3000051NS | 3TB | TBD | SATA 6Gb/s | Enterprise SED — update serial when installed |
 | 3 | (unlabeled) | Seagate Constellation ES.2 SED ST3000051NS | 3TB | Z292K11M | SATA 6Gb/s | DOM 05/2012 — enterprise SED |
 | 4 | (unlabeled) | Seagate Constellation ES.3 | 3TB | Z1Y38A01 | SATA 6Gb/s | DOM 01/2015 |
-| 5 | *** 2WD CLASS EE | WD Caviar Green WD20EARX | 2TB | WCAZAF839739 | SATA 6Gb/s | *** dispose — check for data first |
-| 6 | *** GOODWIM CENTOS | Seagate Barracuda ST500DM002 | 500GB | TBD | SATA 6Gb/s | *** dispose after P2V — convert CentOS install to Proxmox VM first |
+| 5 | (unlabeled) | Seagate Constellation ES.2 SED ST3000051N0 | 3TB | Z2923YYH | SATA 6Gb/s | DOM 05/2012 — enterprise SED |
+| 6 | *** 2WD CLASS EE | WD Caviar Green WD20EARX | 2TB | WCAZAF839739 | SATA 6Gb/s | *** dispose — check for data first |
+| 7 | *** GOODWIM CENTOS | Seagate Barracuda ST500DM002 | 500GB | TBD | SATA 6Gb/s | *** dispose after P2V — convert CentOS install to Proxmox VM first |
 
 ### Needs Data Check Before Use
 | # | Label | Notes |
