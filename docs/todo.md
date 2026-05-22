@@ -206,3 +206,5 @@ _Last updated: 2026-05-18_
 - [ ] urnst-deb RAM — identify existing 8GB stick (dmidecode), fill remaining slots to 16GB max from reserve
 - [ ] Verify M.2 slot status on urnst-deb, lee-deb, and amontillado — update hw_inv with NVMe/SSD slot info for all machines
 - [ ] P2V Goodwim CentOS drive — image to Proxmox VM before disposing of drive
+- [ ] Create backup_policy.md — document disk rotation schedule, Restic strategy, Patreon archive policy, and 3-2-1 approach
+- [ ] Diff 3D/4TB drive contents against TrueNAS — rsync --dry-run to identify what needs migrating before retiring Aug 2022 backup
