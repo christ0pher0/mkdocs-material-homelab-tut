@@ -1,0 +1,4292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vinyl Collection</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --groove: #111111;
+    --vinyl: #1a1a1a;
+    --label-red: #c0392b;
+    --label-yellow: #f39c12;
+    --label-blue: #2980b9;
+    --label-green: #27ae60;
+    --cream: #f5f0e8;
+    --warm-white: #e8e0d0;
+    --mid: #888880;
+    --dim: #444440;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--black);
+    color: var(--warm-white);
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--groove);
+    border-bottom: 3px solid var(--label-red);
+    padding: 2rem 2rem 1.5rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    letter-spacing: 0.08em;
+    color: var(--cream);
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+
+  .header h1 span {
+    color: var(--label-red);
+  }
+
+  .stats-bar {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--dim);
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    color: var(--label-yellow);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.7rem;
+    color: var(--mid);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* CONTROLS */
+  .controls {
+    padding: 1rem 2rem;
+    background: var(--vinyl);
+    border-bottom: 1px solid var(--dim);
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .search-wrap {
+    flex: 1;
+    min-width: 200px;
+    position: relative;
+  }
+
+  .search-wrap::before {
+    content: '▶';
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--label-red);
+    font-size: 0.7rem;
+  }
+
+  input[type=text] {
+    width: 100%;
+    background: var(--black);
+    border: 1px solid var(--dim);
+    border-radius: 2px;
+    color: var(--warm-white);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    padding: 0.5rem 0.75rem 0.5rem 2rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  input[type=text]:focus {
+    border-color: var(--label-red);
+  }
+
+  input[type=text]::placeholder {
+    color: var(--dim);
+  }
+
+  select {
+    background: var(--black);
+    border: 1px solid var(--dim);
+    border-radius: 2px;
+    color: var(--warm-white);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    padding: 0.5rem 0.75rem;
+    outline: none;
+    cursor: pointer;
+  }
+
+  select:focus { border-color: var(--label-red); }
+
+  .result-count {
+    color: var(--mid);
+    font-size: 0.75rem;
+    white-space: nowrap;
+  }
+
+  .result-count span {
+    color: var(--label-yellow);
+    font-weight: bold;
+  }
+
+  /* ALPHA NAV */
+  .alpha-nav {
+    padding: 0.5rem 2rem;
+    background: var(--groove);
+    border-bottom: 1px solid var(--dim);
+    display: flex;
+    gap: 0.25rem;
+    flex-wrap: wrap;
+  }
+
+  .alpha-nav a {
+    color: var(--mid);
+    text-decoration: none;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+    padding: 0.1rem 0.3rem;
+    transition: color 0.15s;
+  }
+
+  .alpha-nav a:hover { color: var(--label-yellow); }
+
+  /* SECTIONS */
+  .section {
+    margin: 0;
+    border-bottom: 1px solid var(--dim);
+  }
+
+  .section-header {
+    background: var(--vinyl);
+    padding: 0.6rem 2rem;
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    cursor: pointer;
+    user-select: none;
+    border-left: 4px solid transparent;
+    transition: border-color 0.15s, background 0.15s;
+  }
+
+  .section-header:hover {
+    background: #222;
+    border-left-color: var(--label-red);
+  }
+
+  .section-letter {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: var(--label-red);
+    line-height: 1;
+    min-width: 1.5rem;
+  }
+
+  .section-count {
+    color: var(--mid);
+    font-size: 0.7rem;
+  }
+
+  .section-toggle {
+    margin-left: auto;
+    color: var(--dim);
+    font-size: 0.7rem;
+    transition: transform 0.2s;
+  }
+
+  .section.open .section-toggle { transform: rotate(90deg); }
+
+  .section-body {
+    display: none;
+    overflow-x: auto;
+  }
+
+  .section.open .section-body { display: block; }
+
+  /* TABLE */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.78rem;
+  }
+
+  thead th {
+    background: #0f0f0f;
+    color: var(--mid);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.65rem;
+    padding: 0.5rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--dim);
+    position: sticky;
+    top: 0;
+  }
+
+  tbody tr {
+    border-bottom: 1px solid #1a1a1a;
+    transition: background 0.1s;
+  }
+
+  tbody tr:hover {
+    background: #161616;
+  }
+
+  tbody td {
+    padding: 0.5rem 1rem;
+    color: var(--warm-white);
+    vertical-align: middle;
+  }
+
+  .td-artist {
+    color: var(--cream);
+    font-weight: bold;
+    min-width: 160px;
+  }
+
+  .td-title {
+    font-style: italic;
+    color: #ccc8be;
+    min-width: 200px;
+  }
+
+  .td-year {
+    color: var(--label-yellow);
+    min-width: 50px;
+    text-align: center;
+  }
+
+  .fmt-badge {
+    display: inline-block;
+    padding: 0.1rem 0.4rem;
+    border-radius: 2px;
+    font-size: 0.65rem;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
+
+  .fmt-LP { background: #1a3a1a; color: #4caf50; border: 1px solid #2d5a2d; }
+  .fmt-2xLP { background: #1a2a3a; color: #64b5f6; border: 1px solid #2d4a6a; }
+  .fmt-3xLP { background: #2a1a3a; color: #ce93d8; border: 1px solid #4a2d6a; }
+  .fmt-12 { background: #3a1a1a; color: #ef9a9a; border: 1px solid #6a2d2d; }
+  .fmt-other { background: #2a2a1a; color: #fff176; border: 1px solid #5a5a2d; }
+
+  .td-label {
+    color: var(--mid);
+    font-size: 0.72rem;
+    min-width: 120px;
+  }
+
+  .td-catalog {
+    color: var(--dim);
+    font-size: 0.7rem;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .cond-badge {
+    font-size: 0.65rem;
+    color: var(--label-green);
+  }
+
+  /* NO RESULTS */
+  .no-results {
+    text-align: center;
+    padding: 3rem;
+    color: var(--dim);
+    display: none;
+  }
+
+  .no-results.show { display: block; }
+
+  /* HIDDEN ROW */
+  tr.hidden { display: none; }
+  .section.all-hidden { display: none; }
+
+  /* FOOTER */
+  .footer {
+    padding: 2rem;
+    text-align: center;
+    color: var(--dim);
+    font-size: 0.7rem;
+    border-top: 1px solid var(--dim);
+    margin-top: 2rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>VINYL<span>.</span>COLLECTION</h1>
+  <div class="stats-bar">
+    <div class="stat"><span class="stat-num">385</span><span class="stat-label">Records</span></div>
+    <div class="stat"><span class="stat-num">233</span><span class="stat-label">Artists</span></div>
+    <div class="stat"><span class="stat-num">319</span><span class="stat-label">LPs</span></div>
+    <div class="stat"><span class="stat-num">23</span><span class="stat-label">2×LPs</span></div>
+    <div class="stat"><span class="stat-num">34</span><span class="stat-label">12″ Singles</span></div>
+  </div>
+</div>
+
+<div class="controls">
+  <div class="search-wrap">
+    <input type="text" id="search" placeholder="Search artist, title, label..." oninput="filterRecords()">
+  </div>
+  <select id="fmtFilter" onchange="filterRecords()">
+    <option value="">All formats</option>
+    <option value="LP">LP</option>
+    <option value="2xLP">2xLP</option>
+    <option value="12&quot;">12″</option>
+  </select>
+  <div class="result-count">Showing <span id="count">385</span> records</div>
+</div>
+
+<div class="alpha-nav">
+  <a href="#sec-A">A</a>
+  <a href="#sec-B">B</a>
+  <a href="#sec-C">C</a>
+  <a href="#sec-D">D</a>
+  <a href="#sec-E">E</a>
+  <a href="#sec-F">F</a>
+  <a href="#sec-G">G</a>
+  <a href="#sec-H">H</a>
+  <a href="#sec-I">I</a>
+  <a href="#sec-J">J</a>
+  <a href="#sec-K">K</a>
+  <a href="#sec-L">L</a>
+  <a href="#sec-M">M</a>
+  <a href="#sec-N">N</a>
+  <a href="#sec-O">O</a>
+  <a href="#sec-P">P</a>
+  <a href="#sec-Q">Q</a>
+  <a href="#sec-R">R</a>
+  <a href="#sec-S">S</a>
+  <a href="#sec-T">T</a>
+  <a href="#sec-U">U</a>
+  <a href="#sec-V">V</a>
+  <a href="#sec-W">W</a>
+  <a href="#sec-X">X</a>
+  <a href="#sec-Y">Y</a>
+</div>
+
+<div class="section open" id="sec-#">
+  <div class="section-header" onclick="toggleSection(this)">
+    <span class="section-letter">#</span>
+    <span class="section-count">3 records</span>
+    <span class="section-toggle">▶</span>
+  </div>
+  <div class="section-body">
+    <table>
+      <thead><tr><th>Artist</th><th>Title</th><th>Year</th><th>Format</th><th>Label</th><th>Catalog#</th><th>Condition</th></tr></thead>
+      <tbody>
+      <tr data-artist="10cc" data-title="10cc" data-label="uk records" data-format="LP">
+        <td class="td-artist">10cc</td>
+        <td class="td-title">10cc</td>
+        <td class="td-year">1973</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">UK Records</td>
+        <td class="td-catalog">UKS 53105</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="10cc" data-title="bloody tourists" data-label="polydor" data-format="LP">
+        <td class="td-artist">10cc</td>
+        <td class="td-title">Bloody Tourists</td>
+        <td class="td-year">1978</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Polydor</td>
+        <td class="td-catalog">PD-1-6161</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="10cc" data-title="the original soundtrack" data-label="mercury" data-format="LP">
+        <td class="td-artist">10cc</td>
+        <td class="td-title">The Original Soundtrack</td>
+        <td class="td-year">1975</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Mercury</td>
+        <td class="td-catalog">SRM-1-1029</td>
+        <td>—</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section open" id="sec-A">
+  <div class="section-header" onclick="toggleSection(this)">
+    <span class="section-letter">A</span>
+    <span class="section-count">15 records</span>
+    <span class="section-toggle">▶</span>
+  </div>
+  <div class="section-body">
+    <table>
+      <thead><tr><th>Artist</th><th>Title</th><th>Year</th><th>Format</th><th>Label</th><th>Catalog#</th><th>Condition</th></tr></thead>
+      <tbody>
+      <tr data-artist="ac/dc" data-title="dirty deeds done dirt cheap" data-label="atlantic" data-format="LP">
+        <td class="td-artist">AC/DC</td>
+        <td class="td-title">Dirty Deeds Done Dirt Cheap</td>
+        <td class="td-year">1981</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Atlantic</td>
+        <td class="td-catalog">XSD 16033</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="ac/dc" data-title="powerage" data-label="atlantic" data-format="LP">
+        <td class="td-artist">AC/DC</td>
+        <td class="td-title">Powerage</td>
+        <td class="td-year">1978</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Atlantic</td>
+        <td class="td-catalog">SD 19180</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="adam and the ants" data-title="kings of the wild frontier" data-label="epic" data-format="LP">
+        <td class="td-artist">Adam And The Ants</td>
+        <td class="td-title">Kings Of The Wild Frontier</td>
+        <td class="td-year">1981</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Epic</td>
+        <td class="td-catalog">NJE 37033</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="adam and the ants" data-title="prince charming" data-label="epic" data-format="LP">
+        <td class="td-artist">Adam And The Ants</td>
+        <td class="td-title">Prince Charming</td>
+        <td class="td-year">1981</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Epic</td>
+        <td class="td-catalog">ARE 37615</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="adam ant" data-title="friend or foe" data-label="epic" data-format="LP">
+        <td class="td-artist">Adam Ant</td>
+        <td class="td-title">Friend Or Foe</td>
+        <td class="td-year">1982</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Epic</td>
+        <td class="td-catalog">FE 38370</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="aerosmith" data-title="live! bootleg" data-label="columbia" data-format="2xLP">
+        <td class="td-artist">Aerosmith</td>
+        <td class="td-title">Live! Bootleg</td>
+        <td class="td-year">1978</td>
+        <td><span class="fmt-badge fmt-2xLP">2×LP</span></td>
+        <td class="td-label">Columbia</td>
+        <td class="td-catalog">PC2 35564</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="afflicted man" data-title="i'm off me 'ead" data-label="human records (2)" data-format="LP">
+        <td class="td-artist">Afflicted Man</td>
+        <td class="td-title">I'm Off Me 'ead</td>
+        <td class="td-year">1980</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Human Records (2)</td>
+        <td class="td-catalog">MAN 1</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="afraid of mice" data-title="afraid of mice" data-label="charisma" data-format="LP">
+        <td class="td-artist">Afraid Of Mice</td>
+        <td class="td-title">Afraid Of Mice</td>
+        <td class="td-year">1981</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Charisma</td>
+        <td class="td-catalog">CAS 1155</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the alan parsons project" data-title="i robot" data-label="arista" data-format="LP">
+        <td class="td-artist">The Alan Parsons Project</td>
+        <td class="td-title">I Robot</td>
+        <td class="td-year">1977</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Arista</td>
+        <td class="td-catalog">AL 7002</td>
+        <td><span class="cond-badge">Good Plus (G+)</span></td>
+      </tr>
+      <tr data-artist="alice cooper (2)" data-title="welcome to my nightmare" data-label="atlantic" data-format="LP">
+        <td class="td-artist">Alice Cooper (2)</td>
+        <td class="td-title">Welcome To My Nightmare</td>
+        <td class="td-year">1975</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Atlantic</td>
+        <td class="td-catalog">SD 18130</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="allen swift, pat bright & herb duncan" data-title="mad magazine presents gall in the family fare" data-label="mad magazine" data-format="Flexi">
+        <td class="td-artist">Allen Swift, Pat Bright & Herb Duncan</td>
+        <td class="td-title">Mad Magazine Presents Gall In The Family Fare</td>
+        <td class="td-year">1973</td>
+        <td><span class="fmt-badge fmt-other">Flexi</span></td>
+        <td class="td-label">Mad Magazine</td>
+        <td class="td-catalog">none</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="anthrax" data-title="state of euphoria" data-label="island records" data-format="LP">
+        <td class="td-artist">Anthrax</td>
+        <td class="td-title">State Of Euphoria</td>
+        <td class="td-year">1988</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Island Records</td>
+        <td class="td-catalog">91004-1</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="any trouble" data-title="wrong end of the race" data-label="emi america" data-format="LP">
+        <td class="td-artist">Any Trouble</td>
+        <td class="td-title">Wrong End Of The Race</td>
+        <td class="td-year">1984</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">EMI America</td>
+        <td class="td-catalog">ST-17119</td>
+        <td><span class="cond-badge">Good Plus (G+)</span></td>
+      </tr>
+      <tr data-artist="argent" data-title="all together now" data-label="epic" data-format="LP">
+        <td class="td-artist">Argent</td>
+        <td class="td-title">All Together Now</td>
+        <td class="td-year">1972</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Epic</td>
+        <td class="td-catalog">KE 31556</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="articles of faith" data-title="give thanks" data-label="reflex records (5)" data-format="LP">
+        <td class="td-artist">Articles Of Faith</td>
+        <td class="td-title">Give Thanks</td>
+        <td class="td-year">1984</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Reflex Records (5)</td>
+        <td class="td-catalog">REFLEX J</td>
+        <td>—</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section open" id="sec-B">
+  <div class="section-header" onclick="toggleSection(this)">
+    <span class="section-letter">B</span>
+    <span class="section-count">41 records</span>
+    <span class="section-toggle">▶</span>
+  </div>
+  <div class="section-body">
+    <table>
+      <thead><tr><th>Artist</th><th>Title</th><th>Year</th><th>Format</th><th>Label</th><th>Catalog#</th><th>Condition</th></tr></thead>
+      <tbody>
+      <tr data-artist="the b-52's" data-title="the b-52's" data-label="warner bros. records" data-format="LP">
+        <td class="td-artist">The B-52's</td>
+        <td class="td-title">The B-52's</td>
+        <td class="td-year">1979</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Warner Bros. Records</td>
+        <td class="td-catalog">BSK 3355</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the b-52's" data-title="wild planet" data-label="warner bros. records" data-format="LP">
+        <td class="td-artist">The B-52's</td>
+        <td class="td-title">Wild Planet</td>
+        <td class="td-year">1980</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Warner Bros. Records</td>
+        <td class="td-catalog">BSK 3471</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="b-movie" data-title="nowhere girl" data-label="some bizzare" data-format="12"">
+        <td class="td-artist">B-Movie</td>
+        <td class="td-title">Nowhere Girl</td>
+        <td class="td-year">1982</td>
+        <td><span class="fmt-badge fmt-12">12″</span></td>
+        <td class="td-label">Some Bizzare</td>
+        <td class="td-catalog">BZZX 8</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="bad brains" data-title="rock for light" data-label="pvc records" data-format="LP">
+        <td class="td-artist">Bad Brains</td>
+        <td class="td-title">Rock For Light</td>
+        <td class="td-year">1983</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">PVC Records</td>
+        <td class="td-catalog">PVC 8917</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="bad religion" data-title="back to the known" data-label="epitaph" data-format="12"">
+        <td class="td-artist">Bad Religion</td>
+        <td class="td-title">Back To The Known</td>
+        <td class="td-year">1985</td>
+        <td><span class="fmt-badge fmt-12">12″</span></td>
+        <td class="td-label">Epitaph</td>
+        <td class="td-catalog">EPI-BREP-2</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="bad religion" data-title="how could hell be any worse?" data-label="epitaph" data-format="LP">
+        <td class="td-artist">Bad Religion</td>
+        <td class="td-title">How Could Hell Be Any Worse?</td>
+        <td class="td-year">1982</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Epitaph</td>
+        <td class="td-catalog">EPI-BRLP1</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the beat (2)" data-title="special beat service" data-label="i.r.s. records" data-format="LP">
+        <td class="td-artist">The Beat (2)</td>
+        <td class="td-title">Special Beat Service</td>
+        <td class="td-year">1982</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">I.R.S. Records</td>
+        <td class="td-catalog">SP 70032</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the beat (2)" data-title="wha'ppen" data-label="sire" data-format="LP">
+        <td class="td-artist">The Beat (2)</td>
+        <td class="td-title">Wha'ppen</td>
+        <td class="td-year">1981</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Sire</td>
+        <td class="td-catalog">SRK 3567</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the beatles" data-title="1967-1970" data-label="capitol records" data-format="2xLP">
+        <td class="td-artist">The Beatles</td>
+        <td class="td-title">1967-1970</td>
+        <td class="td-year">1978</td>
+        <td><span class="fmt-badge fmt-2xLP">2×LP</span></td>
+        <td class="td-label">Capitol Records</td>
+        <td class="td-catalog">SEBX-11843</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the beatles" data-title="introducing... the beatles" data-label="vee jay records (2)" data-format="LP">
+        <td class="td-artist">The Beatles</td>
+        <td class="td-title">Introducing... The Beatles</td>
+        <td class="td-year">—</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Vee Jay Records (2)</td>
+        <td class="td-catalog">VJLP-1062</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the beatles" data-title="magical mystery tour" data-label="capitol records" data-format="LP">
+        <td class="td-artist">The Beatles</td>
+        <td class="td-title">Magical Mystery Tour</td>
+        <td class="td-year">1967</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Capitol Records</td>
+        <td class="td-catalog">SMAL-2835</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the beatles" data-title="revolver" data-label="capitol records" data-format="LP">
+        <td class="td-artist">The Beatles</td>
+        <td class="td-title">Revolver</td>
+        <td class="td-year">1966</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Capitol Records</td>
+        <td class="td-catalog">ST 2576</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the beatles" data-title="rubber soul" data-label="capitol records" data-format="LP">
+        <td class="td-artist">The Beatles</td>
+        <td class="td-title">Rubber Soul</td>
+        <td class="td-year">1976</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Capitol Records</td>
+        <td class="td-catalog">SW-2442</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the beatles" data-title="sgt. pepper's lonely hearts club band" data-label="capitol records" data-format="LP">
+        <td class="td-artist">The Beatles</td>
+        <td class="td-title">Sgt. Pepper's Lonely Hearts Club Band</td>
+        <td class="td-year">1968</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Capitol Records</td>
+        <td class="td-catalog">SMAS 2653</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the beatles" data-title="the beatles" data-label="apple records" data-format="2xLP">
+        <td class="td-artist">The Beatles</td>
+        <td class="td-title">The Beatles</td>
+        <td class="td-year">1968</td>
+        <td><span class="fmt-badge fmt-2xLP">2×LP</span></td>
+        <td class="td-label">Apple Records</td>
+        <td class="td-catalog">SWBO 101</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the beatles" data-title="yesterday and today" data-label="capitol records" data-format="LP">
+        <td class="td-artist">The Beatles</td>
+        <td class="td-title">Yesterday And Today</td>
+        <td class="td-year">1983</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Capitol Records</td>
+        <td class="td-catalog">ST-2553</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the belle stars" data-title="the belle stars" data-label="warner bros. records" data-format="LP">
+        <td class="td-artist">The Belle Stars</td>
+        <td class="td-title">The Belle Stars</td>
+        <td class="td-year">1983</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Warner Bros. Records</td>
+        <td class="td-catalog">1-23866</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="berlin" data-title="pleasure victim" data-label="geffen records" data-format="LP">
+        <td class="td-artist">Berlin</td>
+        <td class="td-title">Pleasure Victim</td>
+        <td class="td-year">1983</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Geffen Records</td>
+        <td class="td-catalog">GHS 2036</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="big black" data-title="racer-x" data-label="homestead records" data-format="12"">
+        <td class="td-artist">Big Black</td>
+        <td class="td-title">Racer-X</td>
+        <td class="td-year">1985</td>
+        <td><span class="fmt-badge fmt-12">12″</span></td>
+        <td class="td-label">Homestead Records</td>
+        <td class="td-catalog">HMS 007</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="billy squier" data-title="don't say no" data-label="capitol records" data-format="LP">
+        <td class="td-artist">Billy Squier</td>
+        <td class="td-title">Don't Say No</td>
+        <td class="td-year">1981</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Capitol Records</td>
+        <td class="td-catalog">ST-12146</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="billy squier" data-title="emotions in motion" data-label="capitol records" data-format="LP">
+        <td class="td-artist">Billy Squier</td>
+        <td class="td-title">Emotions In Motion</td>
+        <td class="td-year">1982</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Capitol Records</td>
+        <td class="td-catalog">ST-12217</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="black flag" data-title="damaged" data-label="unicorn records" data-format="LP">
+        <td class="td-artist">Black Flag</td>
+        <td class="td-title">Damaged</td>
+        <td class="td-year">1981</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Unicorn Records</td>
+        <td class="td-catalog">9502</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="black flag" data-title="jealous again" data-label="sst records" data-format="12"">
+        <td class="td-artist">Black Flag</td>
+        <td class="td-title">Jealous Again</td>
+        <td class="td-year">1980</td>
+        <td><span class="fmt-badge fmt-12">12″</span></td>
+        <td class="td-label">SST Records</td>
+        <td class="td-catalog">SST 003</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="black flag" data-title="my war" data-label="sst records" data-format="LP">
+        <td class="td-artist">Black Flag</td>
+        <td class="td-title">My War</td>
+        <td class="td-year">1984</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">SST Records</td>
+        <td class="td-catalog">SST 023</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="black flag" data-title="slip it in" data-label="sst records" data-format="LP">
+        <td class="td-artist">Black Flag</td>
+        <td class="td-title">Slip It In</td>
+        <td class="td-year">—</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">SST Records</td>
+        <td class="td-catalog">SST 029</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="black sabbath" data-title="master of reality" data-label="warner bros. records" data-format="LP">
+        <td class="td-artist">Black Sabbath</td>
+        <td class="td-title">Master Of Reality</td>
+        <td class="td-year">1971</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Warner Bros. Records</td>
+        <td class="td-catalog">BS 2562</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="black sabbath" data-title="paranoid" data-label="warner bros. records" data-format="LP">
+        <td class="td-artist">Black Sabbath</td>
+        <td class="td-title">Paranoid</td>
+        <td class="td-year">1979</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Warner Bros. Records</td>
+        <td class="td-catalog">BSK 3104</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="blondie" data-title="autoamerican" data-label="chrysalis" data-format="LP">
+        <td class="td-artist">Blondie</td>
+        <td class="td-title">Autoamerican</td>
+        <td class="td-year">1980</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Chrysalis</td>
+        <td class="td-catalog">CHE 1290</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="blondie" data-title="eat to the beat" data-label="chrysalis" data-format="LP">
+        <td class="td-artist">Blondie</td>
+        <td class="td-title">Eat To The Beat</td>
+        <td class="td-year">1979</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Chrysalis</td>
+        <td class="td-catalog">CHE-1225</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="blondie" data-title="plastic letters" data-label="chrysalis" data-format="LP">
+        <td class="td-artist">Blondie</td>
+        <td class="td-title">Plastic Letters</td>
+        <td class="td-year">1978</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Chrysalis</td>
+        <td class="td-catalog">CHR 1166</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="bob & doug mckenzie" data-title="great white north" data-label="mercury" data-format="LP">
+        <td class="td-artist">Bob & Doug McKenzie</td>
+        <td class="td-title">Great White North</td>
+        <td class="td-year">1981</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Mercury</td>
+        <td class="td-catalog">SRM-1-4034</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="bob marley & the wailers" data-title="bob marley and the wailers" data-label="all round trading" data-format="LP">
+        <td class="td-artist">Bob Marley & The Wailers</td>
+        <td class="td-title">Bob Marley And The Wailers</td>
+        <td class="td-year">—</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">All Round Trading</td>
+        <td class="td-catalog">AR 30004</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="bob marley & the wailers" data-title="natty dread" data-label="island records" data-format="LP">
+        <td class="td-artist">Bob Marley & The Wailers</td>
+        <td class="td-title">Natty Dread</td>
+        <td class="td-year">—</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Island Records</td>
+        <td class="td-catalog">7 90037-1</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="bob marley & the wailers" data-title="soul captives" data-label="ala" data-format="LP">
+        <td class="td-artist">Bob Marley & The Wailers</td>
+        <td class="td-title">Soul Captives</td>
+        <td class="td-year">1986</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">ALA</td>
+        <td class="td-catalog">ALA 1986</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="bob marley & the wailers" data-title="uprising" data-label="island records" data-format="LP">
+        <td class="td-artist">Bob Marley & The Wailers</td>
+        <td class="td-title">Uprising</td>
+        <td class="td-year">1986</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Island Records</td>
+        <td class="td-catalog">7 90036-1</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the boomtown rats" data-title="a tonic for the troops" data-label="columbia" data-format="LP">
+        <td class="td-artist">The Boomtown Rats</td>
+        <td class="td-title">A Tonic For The Troops</td>
+        <td class="td-year">1979</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Columbia</td>
+        <td class="td-catalog">JC 35750</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="brian eno" data-title="ambient 1 (music for airports)" data-label="editions eg" data-format="LP">
+        <td class="td-artist">Brian Eno</td>
+        <td class="td-title">Ambient 1 (Music For Airports)</td>
+        <td class="td-year">1982</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Editions EG</td>
+        <td class="td-catalog">EGS 201</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="broken bones" data-title="bonecrusher" data-label="combat core" data-format="LP">
+        <td class="td-artist">Broken Bones</td>
+        <td class="td-title">Bonecrusher</td>
+        <td class="td-year">1986</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Combat Core</td>
+        <td class="td-catalog">CC 8077</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="buffalo springfield" data-title="last time around" data-label="atco records" data-format="LP">
+        <td class="td-artist">Buffalo Springfield</td>
+        <td class="td-title">Last Time Around</td>
+        <td class="td-year">1968</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">ATCO Records</td>
+        <td class="td-catalog">33-256</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="buffalo springfield" data-title="last time around" data-label="atco records" data-format="LP">
+        <td class="td-artist">Buffalo Springfield</td>
+        <td class="td-title">Last Time Around</td>
+        <td class="td-year">1968</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">ATCO Records</td>
+        <td class="td-catalog">SD 33-256</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="burundi black" data-title="burundi black" data-label="cachalot records" data-format="12"">
+        <td class="td-artist">Burundi Black</td>
+        <td class="td-title">Burundi Black</td>
+        <td class="td-year">1981</td>
+        <td><span class="fmt-badge fmt-12">12″</span></td>
+        <td class="td-label">Cachalot Records</td>
+        <td class="td-catalog">BIG 3</td>
+        <td>—</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section open" id="sec-C">
+  <div class="section-header" onclick="toggleSection(this)">
+    <span class="section-letter">C</span>
+    <span class="section-count">22 records</span>
+    <span class="section-toggle">▶</span>
+  </div>
+  <div class="section-body">
+    <table>
+      <thead><tr><th>Artist</th><th>Title</th><th>Year</th><th>Format</th><th>Label</th><th>Catalog#</th><th>Condition</th></tr></thead>
+      <tbody>
+      <tr data-artist="the call" data-title="modern romans" data-label="mercury" data-format="LP">
+        <td class="td-artist">The Call</td>
+        <td class="td-title">Modern Romans</td>
+        <td class="td-year">1983</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Mercury</td>
+        <td class="td-catalog">422-810 307-1 M-1</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the cars" data-title="candy-o" data-label="elektra" data-format="LP">
+        <td class="td-artist">The Cars</td>
+        <td class="td-title">Candy-O</td>
+        <td class="td-year">1979</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Elektra</td>
+        <td class="td-catalog">5E-507</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the cars" data-title="panorama" data-label="elektra" data-format="LP">
+        <td class="td-artist">The Cars</td>
+        <td class="td-title">Panorama</td>
+        <td class="td-year">1980</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Elektra</td>
+        <td class="td-catalog">5E-514</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the cars" data-title="shake it up" data-label="elektra" data-format="LP">
+        <td class="td-artist">The Cars</td>
+        <td class="td-title">Shake It Up</td>
+        <td class="td-year">1981</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Elektra</td>
+        <td class="td-catalog">5E-567</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the cars" data-title="the cars" data-label="elektra" data-format="LP">
+        <td class="td-artist">The Cars</td>
+        <td class="td-title">The Cars</td>
+        <td class="td-year">1978</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Elektra</td>
+        <td class="td-catalog">6E-135</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="channel 3 (2)" data-title="fear of life" data-label="posh boy" data-format="LP">
+        <td class="td-artist">Channel 3 (2)</td>
+        <td class="td-title">Fear Of Life</td>
+        <td class="td-year">1982</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Posh Boy</td>
+        <td class="td-catalog">PBS 128</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="cinderella (3)" data-title="night songs" data-label="mercury" data-format="LP">
+        <td class="td-artist">Cinderella (3)</td>
+        <td class="td-title">Night Songs</td>
+        <td class="td-year">1986</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Mercury</td>
+        <td class="td-catalog">830076-1 M-1</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="circle jerks" data-title="golden shower of hits" data-label="lax records" data-format="LP">
+        <td class="td-artist">Circle Jerks</td>
+        <td class="td-title">Golden Shower Of Hits</td>
+        <td class="td-year">1983</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">LAX Records</td>
+        <td class="td-catalog">LAX 1051</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="circle jerks" data-title="group sex" data-label="frontier records" data-format="LP">
+        <td class="td-artist">Circle Jerks</td>
+        <td class="td-title">Group Sex</td>
+        <td class="td-year">1980</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Frontier Records</td>
+        <td class="td-catalog">FLP 1002</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the clash" data-title="black market clash" data-label="epic" data-format="10"">
+        <td class="td-artist">The Clash</td>
+        <td class="td-title">Black Market Clash</td>
+        <td class="td-year">1980</td>
+        <td><span class="fmt-badge fmt-other">10"</span></td>
+        <td class="td-label">Epic</td>
+        <td class="td-catalog">4E 36846</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the clash" data-title="london calling" data-label="epic" data-format="2xLP">
+        <td class="td-artist">The Clash</td>
+        <td class="td-title">London Calling</td>
+        <td class="td-year">1980</td>
+        <td><span class="fmt-badge fmt-2xLP">2×LP</span></td>
+        <td class="td-label">Epic</td>
+        <td class="td-catalog">E2 36328</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the clash" data-title="rock the casbah" data-label="epic" data-format="12"">
+        <td class="td-artist">The Clash</td>
+        <td class="td-title">Rock The Casbah</td>
+        <td class="td-year">1982</td>
+        <td><span class="fmt-badge fmt-12">12″</span></td>
+        <td class="td-label">Epic</td>
+        <td class="td-catalog">49-03144</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the clash" data-title="sandinista!" data-label="epic" data-format="3xLP">
+        <td class="td-artist">The Clash</td>
+        <td class="td-title">Sandinista!</td>
+        <td class="td-year">1980</td>
+        <td><span class="fmt-badge fmt-3xLP">3×LP</span></td>
+        <td class="td-label">Epic</td>
+        <td class="td-catalog">E3X 37037</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="corrosion of conformity" data-title="animosity" data-label="death records (3)" data-format="LP">
+        <td class="td-artist">Corrosion Of Conformity</td>
+        <td class="td-title">Animosity</td>
+        <td class="td-year">1985</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Death Records (3)</td>
+        <td class="td-catalog">Death 002</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="corrosion of conformity" data-title="eye for an eye" data-label="toxic shock" data-format="LP">
+        <td class="td-artist">Corrosion Of Conformity</td>
+        <td class="td-title">Eye For An Eye</td>
+        <td class="td-year">1985</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Toxic Shock</td>
+        <td class="td-catalog">TXLP04</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="corrosion of conformity" data-title="technocracy" data-label="death records (3)" data-format="12"">
+        <td class="td-artist">Corrosion Of Conformity</td>
+        <td class="td-title">Technocracy</td>
+        <td class="td-year">1987</td>
+        <td><span class="fmt-badge fmt-12">12″</span></td>
+        <td class="td-label">Death Records (3)</td>
+        <td class="td-catalog">88561-8153-1</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="creedence clearwater revival" data-title="creedence clearwater revival" data-label="fantasy" data-format="LP">
+        <td class="td-artist">Creedence Clearwater Revival</td>
+        <td class="td-title">Creedence Clearwater Revival</td>
+        <td class="td-year">1977</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Fantasy</td>
+        <td class="td-catalog">8382</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="cro-mags" data-title="the age of quarrel" data-label="profile records" data-format="LP">
+        <td class="td-artist">Cro-Mags</td>
+        <td class="td-title">The Age Of Quarrel</td>
+        <td class="td-year">1986</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Profile Records</td>
+        <td class="td-catalog">PRO-1218</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="crosby, stills, nash & young / dallas taylor & greg reeves" data-title="déjà vu" data-label="atlantic" data-format="LP">
+        <td class="td-artist">Crosby, Stills, Nash & Young / Dallas Taylor & Greg Reeves</td>
+        <td class="td-title">Déjà Vu</td>
+        <td class="td-year">—</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Atlantic</td>
+        <td class="td-catalog">KSD-19118</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="culture club" data-title="colour by numbers" data-label="epic" data-format="LP">
+        <td class="td-artist">Culture Club</td>
+        <td class="td-title">Colour By Numbers</td>
+        <td class="td-year">1983</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Epic</td>
+        <td class="td-catalog">QE 39107</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="culture club" data-title="kissing to be clever" data-label="epic" data-format="LP">
+        <td class="td-artist">Culture Club</td>
+        <td class="td-title">Kissing To Be Clever</td>
+        <td class="td-year">1982</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Epic</td>
+        <td class="td-catalog">FE 38398</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the cure" data-title="the walk" data-label="sire" data-format="LP">
+        <td class="td-artist">The Cure</td>
+        <td class="td-title">The Walk</td>
+        <td class="td-year">1983</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Sire</td>
+        <td class="td-catalog">1-23928</td>
+        <td>—</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section open" id="sec-D">
+  <div class="section-header" onclick="toggleSection(this)">
+    <span class="section-letter">D</span>
+    <span class="section-count">24 records</span>
+    <span class="section-toggle">▶</span>
+  </div>
+  <div class="section-body">
+    <table>
+      <thead><tr><th>Artist</th><th>Title</th><th>Year</th><th>Format</th><th>Label</th><th>Catalog#</th><th>Condition</th></tr></thead>
+      <tbody>
+      <tr data-artist="d.o.a. (2)" data-title="war on 45" data-label="alternative tentacles" data-format="12"">
+        <td class="td-artist">D.O.A. (2)</td>
+        <td class="td-title">War On 45</td>
+        <td class="td-year">1982</td>
+        <td><span class="fmt-badge fmt-12">12″</span></td>
+        <td class="td-label">Alternative Tentacles</td>
+        <td class="td-catalog">VIRUS 24</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the damned" data-title="phantasmagoria" data-label="mca records" data-format="LP">
+        <td class="td-artist">The Damned</td>
+        <td class="td-title">Phantasmagoria</td>
+        <td class="td-year">1985</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">MCA Records</td>
+        <td class="td-catalog">MCA-39039</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="dave edmunds" data-title="twangin..." data-label="swan song" data-format="LP">
+        <td class="td-artist">Dave Edmunds</td>
+        <td class="td-title">Twangin...</td>
+        <td class="td-year">1981</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Swan Song</td>
+        <td class="td-catalog">XSS 16034</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="david bowie" data-title="the rise and fall of ziggy stardust and the spiders from mars" data-label="rca victor" data-format="LP">
+        <td class="td-artist">David Bowie</td>
+        <td class="td-title">The Rise And Fall Of Ziggy Stardust And The Spiders From Mars</td>
+        <td class="td-year">1972</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">RCA Victor</td>
+        <td class="td-catalog">LSP 4702</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="dead kennedys" data-title="bleed for me" data-label="statik records" data-format="12"">
+        <td class="td-artist">Dead Kennedys</td>
+        <td class="td-title">Bleed For Me</td>
+        <td class="td-year">1982</td>
+        <td><span class="fmt-badge fmt-12">12″</span></td>
+        <td class="td-label">Statik Records</td>
+        <td class="td-catalog">STAT 2212</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="dead kennedys" data-title="fresh fruit for rotting vegetables" data-label="faulty products" data-format="LP">
+        <td class="td-artist">Dead Kennedys</td>
+        <td class="td-title">Fresh Fruit For Rotting Vegetables</td>
+        <td class="td-year">1981</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Faulty Products</td>
+        <td class="td-catalog">SP 70014</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="dead kennedys" data-title="in god we trust, inc." data-label="statik records" data-format="12"">
+        <td class="td-artist">Dead Kennedys</td>
+        <td class="td-title">In God We Trust, Inc.</td>
+        <td class="td-year">1982</td>
+        <td><span class="fmt-badge fmt-12">12″</span></td>
+        <td class="td-label">Statik Records</td>
+        <td class="td-catalog">STAT EP2</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="dead kennedys" data-title="plastic surgery disasters" data-label="statik records" data-format="LP">
+        <td class="td-artist">Dead Kennedys</td>
+        <td class="td-title">Plastic Surgery Disasters</td>
+        <td class="td-year">1982</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Statik Records</td>
+        <td class="td-catalog">STAT LP 11</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the dead milkmen" data-title="big lizard in my backyard" data-label="enigma (4)" data-format="LP">
+        <td class="td-artist">The Dead Milkmen</td>
+        <td class="td-title">Big Lizard In My Backyard</td>
+        <td class="td-year">1985</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Enigma (4)</td>
+        <td class="td-catalog">72054-1</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="deborah harry" data-title="kookoo" data-label="chrysalis" data-format="LP">
+        <td class="td-artist">Deborah Harry</td>
+        <td class="td-title">KooKoo</td>
+        <td class="td-year">1981</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Chrysalis</td>
+        <td class="td-catalog">CHR 1347</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="deep purple" data-title="machine head" data-label="warner bros. records" data-format="LP">
+        <td class="td-artist">Deep Purple</td>
+        <td class="td-title">Machine Head</td>
+        <td class="td-year">1972</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Warner Bros. Records</td>
+        <td class="td-catalog">BS 2607</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="descendents" data-title="bonus fat" data-label="new alliance records" data-format="12"">
+        <td class="td-artist">Descendents</td>
+        <td class="td-title">Bonus Fat</td>
+        <td class="td-year">1985</td>
+        <td><span class="fmt-badge fmt-12">12″</span></td>
+        <td class="td-label">New Alliance Records</td>
+        <td class="td-catalog">NAR-025</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="desmond dekker" data-title="black and dekker" data-label="stiff records" data-format="LP">
+        <td class="td-artist">Desmond Dekker</td>
+        <td class="td-title">Black And Dekker</td>
+        <td class="td-year">1980</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Stiff Records</td>
+        <td class="td-catalog">USE 7</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="devo" data-title="duty now for the future" data-label="warner bros. records" data-format="LP">
+        <td class="td-artist">Devo</td>
+        <td class="td-title">Duty Now For The Future</td>
+        <td class="td-year">1979</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Warner Bros. Records</td>
+        <td class="td-catalog">BSK 3337</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="devo" data-title="freedom of choice" data-label="warner bros. records" data-format="LP">
+        <td class="td-artist">Devo</td>
+        <td class="td-title">Freedom Of Choice</td>
+        <td class="td-year">1980</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Warner Bros. Records</td>
+        <td class="td-catalog">BSK 3435</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="devo" data-title="q: are we not men? a: we are devo!" data-label="warner bros. records" data-format="LP">
+        <td class="td-artist">Devo</td>
+        <td class="td-title">Q: Are We Not Men? A: We Are Devo!</td>
+        <td class="td-year">1978</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Warner Bros. Records</td>
+        <td class="td-catalog">BSK 3239</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="dicks" data-title="these people" data-label="alternative tentacles" data-format="LP">
+        <td class="td-artist">Dicks</td>
+        <td class="td-title">These People</td>
+        <td class="td-year">1985</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Alternative Tentacles</td>
+        <td class="td-catalog">VIRUS 43</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="die kreuzen" data-title="die kreuzen" data-label="touch and go" data-format="LP">
+        <td class="td-artist">Die Kreuzen</td>
+        <td class="td-title">Die Kreuzen</td>
+        <td class="td-year">1984</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Touch And Go</td>
+        <td class="td-catalog">T&GLP #4</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="dirty rotten imbeciles" data-title="dirty rotten lp" data-label="dirty rotten records" data-format="LP">
+        <td class="td-artist">Dirty Rotten Imbeciles</td>
+        <td class="td-title">Dirty Rotten LP</td>
+        <td class="td-year">1983</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Dirty Rotten Records</td>
+        <td class="td-catalog">1983 DRR</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="divinyls" data-title="desperate" data-label="chrysalis" data-format="LP">
+        <td class="td-artist">Divinyls</td>
+        <td class="td-title">Desperate</td>
+        <td class="td-year">1983</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Chrysalis</td>
+        <td class="td-catalog">BFV 41404</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the doors" data-title="l.a. woman" data-label="elektra" data-format="LP">
+        <td class="td-artist">The Doors</td>
+        <td class="td-title">L.A. Woman</td>
+        <td class="td-year">1971</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Elektra</td>
+        <td class="td-catalog">EKS-75011</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the doors" data-title="strange days" data-label="elektra" data-format="LP">
+        <td class="td-artist">The Doors</td>
+        <td class="td-title">Strange Days</td>
+        <td class="td-year">1967</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Elektra</td>
+        <td class="td-catalog">EKS-74014</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the doors" data-title="the soft parade" data-label="elektra" data-format="LP">
+        <td class="td-artist">The Doors</td>
+        <td class="td-title">The Soft Parade</td>
+        <td class="td-year">1969</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Elektra</td>
+        <td class="td-catalog">EKS-75005</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="duran duran" data-title="rio" data-label="harvest" data-format="LP">
+        <td class="td-artist">Duran Duran</td>
+        <td class="td-title">Rio</td>
+        <td class="td-year">1982</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Harvest</td>
+        <td class="td-catalog">ST-12211</td>
+        <td>—</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section open" id="sec-E">
+  <div class="section-header" onclick="toggleSection(this)">
+    <span class="section-letter">E</span>
+    <span class="section-count">14 records</span>
+    <span class="section-toggle">▶</span>
+  </div>
+  <div class="section-body">
+    <table>
+      <thead><tr><th>Artist</th><th>Title</th><th>Year</th><th>Format</th><th>Label</th><th>Catalog#</th><th>Condition</th></tr></thead>
+      <tbody>
+      <tr data-artist="echo & the bunnymen" data-title="crocodiles" data-label="sire" data-format="LP">
+        <td class="td-artist">Echo & The Bunnymen</td>
+        <td class="td-title">Crocodiles</td>
+        <td class="td-year">1980</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Sire</td>
+        <td class="td-catalog">SRK 6096</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="elvis costello" data-title="my aim is true" data-label="columbia" data-format="LP">
+        <td class="td-artist">Elvis Costello</td>
+        <td class="td-title">My Aim Is True</td>
+        <td class="td-year">1978</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Columbia</td>
+        <td class="td-catalog">JC 35037</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="elvis costello" data-title="taking liberties" data-label="columbia" data-format="LP">
+        <td class="td-artist">Elvis Costello</td>
+        <td class="td-title">Taking Liberties</td>
+        <td class="td-year">1980</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Columbia</td>
+        <td class="td-catalog">JC 36839</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="elvis costello" data-title="this year's model" data-label="columbia" data-format="LP">
+        <td class="td-artist">Elvis Costello</td>
+        <td class="td-title">This Year's Model</td>
+        <td class="td-year">1978</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Columbia</td>
+        <td class="td-catalog">JC 35331</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="elvis costello & the attractions" data-title="almost blue" data-label="columbia" data-format="LP">
+        <td class="td-artist">Elvis Costello & The Attractions</td>
+        <td class="td-title">Almost Blue</td>
+        <td class="td-year">1981</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Columbia</td>
+        <td class="td-catalog">FC 37562</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="elvis costello & the attractions" data-title="armed forces" data-label="radar records (5)" data-format="LP">
+        <td class="td-artist">Elvis Costello & The Attractions</td>
+        <td class="td-title">Armed Forces</td>
+        <td class="td-year">1979</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Radar Records (5)</td>
+        <td class="td-catalog">RAD 56 597</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="elvis costello & the attractions" data-title="from head to toe" data-label="f-beat" data-format="7"">
+        <td class="td-artist">Elvis Costello & The Attractions</td>
+        <td class="td-title">From Head To Toe</td>
+        <td class="td-year">1982</td>
+        <td><span class="fmt-badge fmt-other">7"</span></td>
+        <td class="td-label">F-Beat</td>
+        <td class="td-catalog">XX 30</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="elvis costello & the attractions" data-title="from head to toe" data-label="f-beat" data-format="7"">
+        <td class="td-artist">Elvis Costello & The Attractions</td>
+        <td class="td-title">From Head To Toe</td>
+        <td class="td-year">1982</td>
+        <td><span class="fmt-badge fmt-other">7"</span></td>
+        <td class="td-label">F-Beat</td>
+        <td class="td-catalog">XX 30</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="elvis costello & the attractions" data-title="get happy!!" data-label="columbia" data-format="LP">
+        <td class="td-artist">Elvis Costello & The Attractions</td>
+        <td class="td-title">Get Happy!!</td>
+        <td class="td-year">1980</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Columbia</td>
+        <td class="td-catalog">JC 36347</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="elvis costello & the attractions" data-title="imperial bedroom" data-label="columbia" data-format="LP">
+        <td class="td-artist">Elvis Costello & The Attractions</td>
+        <td class="td-title">Imperial Bedroom</td>
+        <td class="td-year">1982</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Columbia</td>
+        <td class="td-catalog">FC 38157</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="elvis presley" data-title="elvis as recorded at madison square garden" data-label="rca victor" data-format="LP">
+        <td class="td-artist">Elvis Presley</td>
+        <td class="td-title">Elvis As Recorded At Madison Square Garden</td>
+        <td class="td-year">1972</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">RCA Victor</td>
+        <td class="td-catalog">LSP-4776</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the equators" data-title="hot" data-label="stiff records" data-format="LP">
+        <td class="td-artist">The Equators</td>
+        <td class="td-title">Hot</td>
+        <td class="td-year">1981</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Stiff Records</td>
+        <td class="td-catalog">CHEAP ONE</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="eugene chadbourne" data-title="country protest" data-label="fundamental" data-format="LP">
+        <td class="td-artist">Eugene Chadbourne</td>
+        <td class="td-title">Country Protest</td>
+        <td class="td-year">1985</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Fundamental</td>
+        <td class="td-catalog">SAVE 7</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the exploited" data-title="live at the whitehouse" data-label="combat core" data-format="LP">
+        <td class="td-artist">The Exploited</td>
+        <td class="td-title">Live At The Whitehouse</td>
+        <td class="td-year">1985</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Combat Core</td>
+        <td class="td-catalog">CC 8064</td>
+        <td>—</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section open" id="sec-F">
+  <div class="section-header" onclick="toggleSection(this)">
+    <span class="section-letter">F</span>
+    <span class="section-count">16 records</span>
+    <span class="section-toggle">▶</span>
+  </div>
+  <div class="section-body">
+    <table>
+      <thead><tr><th>Artist</th><th>Title</th><th>Year</th><th>Format</th><th>Label</th><th>Catalog#</th><th>Condition</th></tr></thead>
+      <tbody>
+      <tr data-artist="falco" data-title="der kommissar = the commissioner" data-label="a&m records" data-format="12"">
+        <td class="td-artist">Falco</td>
+        <td class="td-title">Der Kommissar = The Commissioner</td>
+        <td class="td-year">1983</td>
+        <td><span class="fmt-badge fmt-12">12″</span></td>
+        <td class="td-label">A&M Records</td>
+        <td class="td-catalog">SP-12053</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="fang (2)" data-title="a mi ga sfafas?" data-label="boner records" data-format="LP">
+        <td class="td-artist">Fang (2)</td>
+        <td class="td-title">A Mi Ga Sfafas?</td>
+        <td class="td-year">1987</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Boner Records</td>
+        <td class="td-catalog">BR09</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="fang (2)" data-title="landshark!" data-label="boner records" data-format="12"">
+        <td class="td-artist">Fang (2)</td>
+        <td class="td-title">Landshark!</td>
+        <td class="td-year">1983</td>
+        <td><span class="fmt-badge fmt-12">12″</span></td>
+        <td class="td-label">Boner Records</td>
+        <td class="td-catalog">FANG 1</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="fang (2)" data-title="where the wild things are" data-label="boner records" data-format="12"">
+        <td class="td-artist">Fang (2)</td>
+        <td class="td-title">Where The Wild Things Are</td>
+        <td class="td-year">1984</td>
+        <td><span class="fmt-badge fmt-12">12″</span></td>
+        <td class="td-label">Boner Records</td>
+        <td class="td-catalog">FANG 2</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="fashion" data-title="fabrique" data-label="arista" data-format="LP">
+        <td class="td-artist">Fashion</td>
+        <td class="td-title">Fabrique</td>
+        <td class="td-year">1982</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Arista</td>
+        <td class="td-catalog">AL 6604</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="fat boys" data-title="the twist" data-label="tin pan apple" data-format="12"">
+        <td class="td-artist">Fat Boys</td>
+        <td class="td-title">The Twist</td>
+        <td class="td-year">1988</td>
+        <td><span class="fmt-badge fmt-12">12″</span></td>
+        <td class="td-label">Tin Pan Apple</td>
+        <td class="td-catalog">887 571-1</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="fear (3)" data-title="the record" data-label="slash" data-format="LP">
+        <td class="td-artist">Fear (3)</td>
+        <td class="td-title">The Record</td>
+        <td class="td-year">—</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Slash</td>
+        <td class="td-catalog">9 23933-1</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the fiends (6)" data-title="we've come for your beer" data-label="bemisbrain records" data-format="LP">
+        <td class="td-artist">The Fiends (6)</td>
+        <td class="td-title">We've Come For Your Beer</td>
+        <td class="td-year">1984</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Bemisbrain Records</td>
+        <td class="td-catalog">E1073</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="fingerprintz (2)" data-title="distinguishing marks" data-label="virgin" data-format="LP">
+        <td class="td-artist">Fingerprintz (2)</td>
+        <td class="td-title">Distinguishing Marks</td>
+        <td class="td-year">1980</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Virgin</td>
+        <td class="td-catalog">VA 13136</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="fishbone" data-title="truth and soul" data-label="columbia" data-format="LP">
+        <td class="td-artist">Fishbone</td>
+        <td class="td-title">Truth And Soul</td>
+        <td class="td-year">1988</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Columbia</td>
+        <td class="td-catalog">C 40891</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the flying lizards" data-title="the flying lizards" data-label="virgin" data-format="LP">
+        <td class="td-artist">The Flying Lizards</td>
+        <td class="td-title">The Flying Lizards</td>
+        <td class="td-year">1979</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Virgin</td>
+        <td class="td-catalog">VA 13137</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="foghat" data-title="live" data-label="bearsville" data-format="LP">
+        <td class="td-artist">Foghat</td>
+        <td class="td-title">Live</td>
+        <td class="td-year">1977</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Bearsville</td>
+        <td class="td-catalog">BRK 6971</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="follow fashion monkeys" data-title="follow fashion monkeys" data-label="clymer records" data-format="LP">
+        <td class="td-artist">Follow Fashion Monkeys</td>
+        <td class="td-title">Follow Fashion Monkeys</td>
+        <td class="td-year">1986</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Clymer Records</td>
+        <td class="td-catalog">CLY 001</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="frank zappa" data-title="hot rats" data-label="bizarre records" data-format="LP">
+        <td class="td-artist">Frank Zappa</td>
+        <td class="td-title">Hot Rats</td>
+        <td class="td-year">1969</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Bizarre Records</td>
+        <td class="td-catalog">RS 6356</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the fugs" data-title="virgin fugs" data-label="esp-disk'" data-format="LP">
+        <td class="td-artist">The Fugs</td>
+        <td class="td-title">Virgin Fugs</td>
+        <td class="td-year">1967</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">ESP-Disk'</td>
+        <td class="td-catalog">ESP 1038</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="fun boy three" data-title="the fun boy three" data-label="chrysalis" data-format="LP">
+        <td class="td-artist">Fun Boy Three</td>
+        <td class="td-title">The Fun Boy Three</td>
+        <td class="td-year">1982</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Chrysalis</td>
+        <td class="td-catalog">CHR 1383</td>
+        <td>—</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section open" id="sec-G">
+  <div class="section-header" onclick="toggleSection(this)">
+    <span class="section-letter">G</span>
+    <span class="section-count">7 records</span>
+    <span class="section-toggle">▶</span>
+  </div>
+  <div class="section-body">
+    <table>
+      <thead><tr><th>Artist</th><th>Title</th><th>Year</th><th>Format</th><th>Label</th><th>Catalog#</th><th>Condition</th></tr></thead>
+      <tbody>
+      <tr data-artist="go-go's" data-title="beauty and the beat" data-label="i.r.s. records" data-format="LP">
+        <td class="td-artist">Go-Go's</td>
+        <td class="td-title">Beauty And The Beat</td>
+        <td class="td-year">1981</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">I.R.S. Records</td>
+        <td class="td-catalog">SP 70021</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="grandmaster flash & melle mel" data-title="white lines (don't don't do it)" data-label="sugar hill records" data-format="12"">
+        <td class="td-artist">Grandmaster Flash & Melle Mel</td>
+        <td class="td-title">White Lines (Don't Don't Do It)</td>
+        <td class="td-year">1983</td>
+        <td><span class="fmt-badge fmt-12">12″</span></td>
+        <td class="td-label">Sugar Hill Records</td>
+        <td class="td-catalog">SH 465</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="grandmaster flash & the furious five" data-title="the message" data-label="sugar hill records" data-format="LP">
+        <td class="td-artist">Grandmaster Flash & The Furious Five</td>
+        <td class="td-title">The Message</td>
+        <td class="td-year">2010</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Sugar Hill Records</td>
+        <td class="td-catalog">SH 268</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the grateful dead" data-title="american beauty" data-label="warner bros. records" data-format="LP">
+        <td class="td-artist">The Grateful Dead</td>
+        <td class="td-title">American Beauty</td>
+        <td class="td-year">1970</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Warner Bros. Records</td>
+        <td class="td-catalog">WS 1893</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="greg ginn, chuck dukowski, dez cadena, robo (3), chavo pederast, johnny 'bob' goldstein" data-title="everything went black" data-label="sst records" data-format="2xLP">
+        <td class="td-artist">Greg Ginn, Chuck Dukowski, Dez Cadena, Robo (3), Chavo Pederast, Johnny 'Bob' Goldstein</td>
+        <td class="td-title">Everything Went Black</td>
+        <td class="td-year">1983</td>
+        <td><span class="fmt-badge fmt-2xLP">2×LP</span></td>
+        <td class="td-label">SST Records</td>
+        <td class="td-catalog">SST 015</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="gregory abbott" data-title="i'll prove it to you" data-label="columbia" data-format="LP">
+        <td class="td-artist">Gregory Abbott</td>
+        <td class="td-title">I'll Prove It To You</td>
+        <td class="td-year">1988</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Columbia</td>
+        <td class="td-catalog">FC 44087</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the gun club" data-title="two sides of the beast" data-label="dojo" data-format="LP">
+        <td class="td-artist">The Gun Club</td>
+        <td class="td-title">Two Sides Of The Beast</td>
+        <td class="td-year">1985</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Dojo</td>
+        <td class="td-catalog">DOJO LP8</td>
+        <td>—</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section open" id="sec-H">
+  <div class="section-header" onclick="toggleSection(this)">
+    <span class="section-letter">H</span>
+    <span class="section-count">8 records</span>
+    <span class="section-toggle">▶</span>
+  </div>
+  <div class="section-body">
+    <table>
+      <thead><tr><th>Artist</th><th>Title</th><th>Year</th><th>Format</th><th>Label</th><th>Catalog#</th><th>Condition</th></tr></thead>
+      <tbody>
+      <tr data-artist="heaven 17" data-title="the luxury gap" data-label="arista" data-format="LP">
+        <td class="td-artist">Heaven 17</td>
+        <td class="td-title">The Luxury Gap</td>
+        <td class="td-year">1983</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Arista</td>
+        <td class="td-catalog">AL 9628</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="herbie hancock" data-title="perfect machine" data-label="columbia" data-format="LP">
+        <td class="td-artist">Herbie Hancock</td>
+        <td class="td-title">Perfect Machine</td>
+        <td class="td-year">1988</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Columbia</td>
+        <td class="td-catalog">FC 40025</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="huey lewis & the news" data-title="huey lewis and the news" data-label="chrysalis" data-format="LP">
+        <td class="td-artist">Huey Lewis & The News</td>
+        <td class="td-title">Huey Lewis And The News</td>
+        <td class="td-year">1980</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Chrysalis</td>
+        <td class="td-catalog">CHR 1292</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the human league" data-title="dare" data-label="a&m records" data-format="LP">
+        <td class="td-artist">The Human League</td>
+        <td class="td-title">Dare</td>
+        <td class="td-year">1982</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">A&M Records</td>
+        <td class="td-catalog">SP-6-4892</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="hüsker dü" data-title="eight miles high" data-label="sst records" data-format="7"">
+        <td class="td-artist">Hüsker Dü</td>
+        <td class="td-title">Eight Miles High</td>
+        <td class="td-year">1984</td>
+        <td><span class="fmt-badge fmt-other">7"</span></td>
+        <td class="td-label">SST Records</td>
+        <td class="td-catalog">SST 025</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="hüsker dü" data-title="land speed record" data-label="new alliance records" data-format="LP">
+        <td class="td-artist">Hüsker Dü</td>
+        <td class="td-title">Land Speed Record</td>
+        <td class="td-year">1982</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">New Alliance Records</td>
+        <td class="td-catalog">NAR-007</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="hüsker dü" data-title="metal circus" data-label="sst records" data-format="12"">
+        <td class="td-artist">Hüsker Dü</td>
+        <td class="td-title">Metal Circus</td>
+        <td class="td-year">1983</td>
+        <td><span class="fmt-badge fmt-12">12″</span></td>
+        <td class="td-label">SST Records</td>
+        <td class="td-catalog">SST 020</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="hüsker dü" data-title="zen arcade" data-label="sst records" data-format="2xLP">
+        <td class="td-artist">Hüsker Dü</td>
+        <td class="td-title">Zen Arcade</td>
+        <td class="td-year">1984</td>
+        <td><span class="fmt-badge fmt-2xLP">2×LP</span></td>
+        <td class="td-label">SST Records</td>
+        <td class="td-catalog">SST 027</td>
+        <td>—</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section open" id="sec-I">
+  <div class="section-header" onclick="toggleSection(this)">
+    <span class="section-letter">I</span>
+    <span class="section-count">6 records</span>
+    <span class="section-toggle">▶</span>
+  </div>
+  <div class="section-body">
+    <table>
+      <thead><tr><th>Artist</th><th>Title</th><th>Year</th><th>Format</th><th>Label</th><th>Catalog#</th><th>Condition</th></tr></thead>
+      <tbody>
+      <tr data-artist="ian dury" data-title="new boots and panties!!" data-label="stiff america" data-format="LP">
+        <td class="td-artist">Ian Dury</td>
+        <td class="td-title">New Boots And Panties!!</td>
+        <td class="td-year">1980</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Stiff America</td>
+        <td class="td-catalog">USE 2</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="ian dury and the blockheads" data-title="do it yourself" data-label="stiff records" data-format="LP">
+        <td class="td-artist">Ian Dury And The Blockheads</td>
+        <td class="td-title">Do It Yourself</td>
+        <td class="td-year">1979</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Stiff Records</td>
+        <td class="td-catalog">SEEZ 14</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="ian north" data-title="my girlfriend's dead" data-label="cachalot records" data-format="LP">
+        <td class="td-artist">Ian North</td>
+        <td class="td-title">My Girlfriend's Dead</td>
+        <td class="td-year">1980</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Cachalot Records</td>
+        <td class="td-catalog">CA 000</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="iggy pop" data-title="party" data-label="arista" data-format="LP">
+        <td class="td-artist">Iggy Pop</td>
+        <td class="td-title">Party</td>
+        <td class="td-year">1981</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Arista</td>
+        <td class="td-catalog">AL 9572</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="iggy pop & james williamson" data-title="kill city" data-label="bomp!" data-format="LP">
+        <td class="td-artist">Iggy Pop & James Williamson</td>
+        <td class="td-title">Kill City</td>
+        <td class="td-year">1977</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">BOMP!</td>
+        <td class="td-catalog">BLP 4001</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="insanity defense" data-title="pilgrim state" data-label="unsound music" data-format="LP">
+        <td class="td-artist">Insanity Defense</td>
+        <td class="td-title">Pilgrim State</td>
+        <td class="td-year">1985</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Unsound Music</td>
+        <td class="td-catalog">RAP 1032</td>
+        <td>—</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section open" id="sec-J">
+  <div class="section-header" onclick="toggleSection(this)">
+    <span class="section-letter">J</span>
+    <span class="section-count">24 records</span>
+    <span class="section-toggle">▶</span>
+  </div>
+  <div class="section-body">
+    <table>
+      <thead><tr><th>Artist</th><th>Title</th><th>Year</th><th>Format</th><th>Label</th><th>Catalog#</th><th>Condition</th></tr></thead>
+      <tbody>
+      <tr data-artist="j.r.r. tolkien" data-title="reads and sings his the hobbit and the fellowship of the ring" data-label="caedmon records" data-format="LP">
+        <td class="td-artist">J.R.R. Tolkien</td>
+        <td class="td-title">Reads And Sings His The Hobbit And The Fellowship Of The Ring</td>
+        <td class="td-year">1975</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Caedmon Records</td>
+        <td class="td-catalog">TC 1477</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="jackson browne" data-title="hold out" data-label="asylum records" data-format="LP">
+        <td class="td-artist">Jackson Browne</td>
+        <td class="td-title">Hold Out</td>
+        <td class="td-year">1980</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Asylum Records</td>
+        <td class="td-catalog">5E-511</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="jackson browne" data-title="late for the sky" data-label="asylum records" data-format="LP">
+        <td class="td-artist">Jackson Browne</td>
+        <td class="td-title">Late For The Sky</td>
+        <td class="td-year">1974</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Asylum Records</td>
+        <td class="td-catalog">7E-1017</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="jackson browne" data-title="running on empty" data-label="asylum records" data-format="LP">
+        <td class="td-artist">Jackson Browne</td>
+        <td class="td-title">Running On Empty</td>
+        <td class="td-year">1977</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Asylum Records</td>
+        <td class="td-catalog">6E-113</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="jackson browne" data-title="the pretender" data-label="asylum records" data-format="LP">
+        <td class="td-artist">Jackson Browne</td>
+        <td class="td-title">The Pretender</td>
+        <td class="td-year">1977</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Asylum Records</td>
+        <td class="td-catalog">6E-107</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the jam" data-title="beat surrender" data-label="polydor" data-format="12"">
+        <td class="td-artist">The Jam</td>
+        <td class="td-title">Beat Surrender</td>
+        <td class="td-year">1983</td>
+        <td><span class="fmt-badge fmt-12">12″</span></td>
+        <td class="td-label">Polydor</td>
+        <td class="td-catalog">810 751-1 Y-1</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the jam" data-title="beat surrender" data-label="polydor" data-format="12"">
+        <td class="td-artist">The Jam</td>
+        <td class="td-title">Beat Surrender</td>
+        <td class="td-year">1983</td>
+        <td><span class="fmt-badge fmt-12">12″</span></td>
+        <td class="td-label">Polydor</td>
+        <td class="td-catalog">810 751-1 Y-1</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the jam" data-title="snap!" data-label="polydor" data-format="2xLP">
+        <td class="td-artist">The Jam</td>
+        <td class="td-title">Snap!</td>
+        <td class="td-year">1983</td>
+        <td><span class="fmt-badge fmt-2xLP">2×LP</span></td>
+        <td class="td-label">Polydor</td>
+        <td class="td-catalog">422-815 537-1 Y-2</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the jam" data-title="snap!" data-label="polydor" data-format="2xLP">
+        <td class="td-artist">The Jam</td>
+        <td class="td-title">Snap!</td>
+        <td class="td-year">1983</td>
+        <td><span class="fmt-badge fmt-2xLP">2×LP</span></td>
+        <td class="td-label">Polydor</td>
+        <td class="td-catalog">422-815 537-1 Y-2</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="james taylor (2)" data-title="greatest hits" data-label="warner bros. records" data-format="LP">
+        <td class="td-artist">James Taylor (2)</td>
+        <td class="td-title">Greatest Hits</td>
+        <td class="td-year">1977</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Warner Bros. Records</td>
+        <td class="td-catalog">BSK 3113</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="jefferson airplane" data-title="surrealistic pillow" data-label="rca victor" data-format="LP">
+        <td class="td-artist">Jefferson Airplane</td>
+        <td class="td-title">Surrealistic Pillow</td>
+        <td class="td-year">1980</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">RCA Victor</td>
+        <td class="td-catalog">AYL1-3738</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the jesus and mary chain" data-title="psychocandy" data-label="reprise records" data-format="LP">
+        <td class="td-artist">The Jesus And Mary Chain</td>
+        <td class="td-title">Psychocandy</td>
+        <td class="td-year">1985</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Reprise Records</td>
+        <td class="td-catalog">9 25383-1</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="jethro tull" data-title="aqualung" data-label="chrysalis" data-format="LP">
+        <td class="td-artist">Jethro Tull</td>
+        <td class="td-title">Aqualung</td>
+        <td class="td-year">1973</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Chrysalis</td>
+        <td class="td-catalog">CHR 1044</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="jethro tull" data-title="thick as a brick" data-label="chrysalis" data-format="LP">
+        <td class="td-artist">Jethro Tull</td>
+        <td class="td-title">Thick As A Brick</td>
+        <td class="td-year">1972</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Chrysalis</td>
+        <td class="td-catalog">CHR 1003</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="jimi hendrix" data-title="nine to the universe" data-label="reprise records" data-format="LP">
+        <td class="td-artist">Jimi Hendrix</td>
+        <td class="td-title">Nine To The Universe</td>
+        <td class="td-year">1980</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Reprise Records</td>
+        <td class="td-catalog">HS 2299</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the jimi hendrix experience" data-title="are you experienced?" data-label="reprise records" data-format="LP">
+        <td class="td-artist">The Jimi Hendrix Experience</td>
+        <td class="td-title">Are You Experienced?</td>
+        <td class="td-year">1967</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Reprise Records</td>
+        <td class="td-catalog">RS 6261</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="joboxers" data-title="like gangbusters" data-label="rca" data-format="LP">
+        <td class="td-artist">JoBoxers</td>
+        <td class="td-title">Like Gangbusters</td>
+        <td class="td-year">1983</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">RCA</td>
+        <td class="td-catalog">AFL1-4847</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="joe jackson" data-title="i'm the man" data-label="a&m records" data-format="LP">
+        <td class="td-artist">Joe Jackson</td>
+        <td class="td-title">I'm The Man</td>
+        <td class="td-year">1979</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">A&M Records</td>
+        <td class="td-catalog">SP-4794</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="joe jackson band" data-title="beat crazy" data-label="a&m records" data-format="LP">
+        <td class="td-artist">Joe Jackson Band</td>
+        <td class="td-title">Beat Crazy</td>
+        <td class="td-year">1980</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">A&M Records</td>
+        <td class="td-catalog">SP-4837</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="john lennon" data-title="mind games" data-label="capitol records" data-format="LP">
+        <td class="td-artist">John Lennon</td>
+        <td class="td-title">Mind Games</td>
+        <td class="td-year">1980</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Capitol Records</td>
+        <td class="td-catalog">SN-16068</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="joni mitchell" data-title="blue" data-label="reprise records" data-format="LP">
+        <td class="td-artist">Joni Mitchell</td>
+        <td class="td-title">Blue</td>
+        <td class="td-year">1971</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Reprise Records</td>
+        <td class="td-catalog">MS 2038</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="joni mitchell" data-title="court and spark" data-label="asylum records" data-format="LP">
+        <td class="td-artist">Joni Mitchell</td>
+        <td class="td-title">Court And Spark</td>
+        <td class="td-year">1974</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Asylum Records</td>
+        <td class="td-catalog">7E-1001</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="joni mitchell" data-title="ladies of the canyon" data-label="reprise records" data-format="LP">
+        <td class="td-artist">Joni Mitchell</td>
+        <td class="td-title">Ladies Of The Canyon</td>
+        <td class="td-year">1970</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Reprise Records</td>
+        <td class="td-catalog">RS 6376</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="julio iglesias" data-title="non stop" data-label="columbia" data-format="LP">
+        <td class="td-artist">Julio Iglesias</td>
+        <td class="td-title">Non Stop</td>
+        <td class="td-year">1988</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Columbia</td>
+        <td class="td-catalog">OC 40995</td>
+        <td>—</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section open" id="sec-K">
+  <div class="section-header" onclick="toggleSection(this)">
+    <span class="section-letter">K</span>
+    <span class="section-count">14 records</span>
+    <span class="section-toggle">▶</span>
+  </div>
+  <div class="section-body">
+    <table>
+      <thead><tr><th>Artist</th><th>Title</th><th>Year</th><th>Format</th><th>Label</th><th>Catalog#</th><th>Condition</th></tr></thead>
+      <tbody>
+      <tr data-artist="kansas (2)" data-title="leftoverture" data-label="kirshner" data-format="LP">
+        <td class="td-artist">Kansas (2)</td>
+        <td class="td-title">Leftoverture</td>
+        <td class="td-year">1976</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Kirshner</td>
+        <td class="td-catalog">34224</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="kansas (2)" data-title="masque" data-label="kirshner" data-format="LP">
+        <td class="td-artist">Kansas (2)</td>
+        <td class="td-title">Masque</td>
+        <td class="td-year">1975</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Kirshner</td>
+        <td class="td-catalog">PZ 33806</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="kansas (2)" data-title="point of know return" data-label="kirshner" data-format="LP">
+        <td class="td-artist">Kansas (2)</td>
+        <td class="td-title">Point Of Know Return</td>
+        <td class="td-year">1977</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Kirshner</td>
+        <td class="td-catalog">JZ 34929</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="kenny rogers" data-title="christmas" data-label="liberty" data-format="LP">
+        <td class="td-artist">Kenny Rogers</td>
+        <td class="td-title">Christmas</td>
+        <td class="td-year">1981</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Liberty</td>
+        <td class="td-catalog">LOO-551115</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="kid creole and the coconuts" data-title="wise guy" data-label="sire" data-format="LP">
+        <td class="td-artist">Kid Creole And The Coconuts</td>
+        <td class="td-title">Wise Guy</td>
+        <td class="td-year">1982</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Sire</td>
+        <td class="td-catalog">SRK 3681</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="killing joke" data-title="killing joke" data-label="editions eg" data-format="LP">
+        <td class="td-artist">Killing Joke</td>
+        <td class="td-title">Killing Joke</td>
+        <td class="td-year">1980</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Editions EG</td>
+        <td class="td-catalog">EGS 109</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the kingbees" data-title="the big rock" data-label="rso" data-format="LP">
+        <td class="td-artist">The Kingbees</td>
+        <td class="td-title">The Big Rock</td>
+        <td class="td-year">1981</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">RSO</td>
+        <td class="td-catalog">RS-1-3097</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the kinks" data-title="arthur or the decline and fall of the british empire" data-label="reprise records" data-format="LP">
+        <td class="td-artist">The Kinks</td>
+        <td class="td-title">Arthur Or The Decline And Fall Of The British Empire</td>
+        <td class="td-year">1969</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Reprise Records</td>
+        <td class="td-catalog">RS 6366</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the kinks" data-title="celluloid heroes - the kinks' greatest" data-label="rca victor" data-format="LP">
+        <td class="td-artist">The Kinks</td>
+        <td class="td-title">Celluloid Heroes - The Kinks' Greatest</td>
+        <td class="td-year">1976</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">RCA Victor</td>
+        <td class="td-catalog">APL1-1743</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the kinks" data-title="kinda kinks" data-label="marble arch" data-format="LP">
+        <td class="td-artist">The Kinks</td>
+        <td class="td-title">Kinda Kinks</td>
+        <td class="td-year">—</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Marble Arch</td>
+        <td class="td-catalog">MALS 1100</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the kinks" data-title="low budget" data-label="arista" data-format="LP">
+        <td class="td-artist">The Kinks</td>
+        <td class="td-title">Low Budget</td>
+        <td class="td-year">1979</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Arista</td>
+        <td class="td-catalog">AB 4240</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the kinks" data-title="misfits" data-label="arista" data-format="LP">
+        <td class="td-artist">The Kinks</td>
+        <td class="td-title">Misfits</td>
+        <td class="td-year">1978</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Arista</td>
+        <td class="td-catalog">AB-4167</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the kinks" data-title="the kink kronikles" data-label="reprise records" data-format="2xLP">
+        <td class="td-artist">The Kinks</td>
+        <td class="td-title">The Kink Kronikles</td>
+        <td class="td-year">1972</td>
+        <td><span class="fmt-badge fmt-2xLP">2×LP</span></td>
+        <td class="td-label">Reprise Records</td>
+        <td class="td-catalog">2XS 6454</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the kinks" data-title="the kinks are the village green preservation society" data-label="pye records" data-format="LP">
+        <td class="td-artist">The Kinks</td>
+        <td class="td-title">The Kinks Are The Village Green Preservation Society</td>
+        <td class="td-year">1968</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Pye Records</td>
+        <td class="td-catalog">NSPL 18233</td>
+        <td>—</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section open" id="sec-L">
+  <div class="section-header" onclick="toggleSection(this)">
+    <span class="section-letter">L</span>
+    <span class="section-count">12 records</span>
+    <span class="section-toggle">▶</span>
+  </div>
+  <div class="section-body">
+    <table>
+      <thead><tr><th>Artist</th><th>Title</th><th>Year</th><th>Format</th><th>Label</th><th>Catalog#</th><th>Condition</th></tr></thead>
+      <tbody>
+      <tr data-artist="led zeppelin" data-title="houses of the holy" data-label="atlantic" data-format="LP">
+        <td class="td-artist">Led Zeppelin</td>
+        <td class="td-title">Houses Of The Holy</td>
+        <td class="td-year">1977</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Atlantic</td>
+        <td class="td-catalog">SD 19130</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="led zeppelin" data-title="led zeppelin" data-label="classic records" data-format="LP">
+        <td class="td-artist">Led Zeppelin</td>
+        <td class="td-title">Led Zeppelin</td>
+        <td class="td-year">2003</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Classic Records</td>
+        <td class="td-catalog">SD 8216</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="led zeppelin" data-title="led zeppelin ii" data-label="atlantic" data-format="LP">
+        <td class="td-artist">Led Zeppelin</td>
+        <td class="td-title">Led Zeppelin II</td>
+        <td class="td-year">1977</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Atlantic</td>
+        <td class="td-catalog">KSD 19127</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="led zeppelin" data-title="physical graffiti" data-label="swan song" data-format="2xLP">
+        <td class="td-artist">Led Zeppelin</td>
+        <td class="td-title">Physical Graffiti</td>
+        <td class="td-year">1975</td>
+        <td><span class="fmt-badge fmt-2xLP">2×LP</span></td>
+        <td class="td-label">Swan Song</td>
+        <td class="td-catalog">SSK 89400</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="led zeppelin" data-title="untitled" data-label="atlantic" data-format="LP">
+        <td class="td-artist">Led Zeppelin</td>
+        <td class="td-title">Untitled</td>
+        <td class="td-year">2003</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Atlantic</td>
+        <td class="td-catalog">SD 7208</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="lene lovich" data-title="new toy" data-label="stiff-epic" data-format="12"">
+        <td class="td-artist">Lene Lovich</td>
+        <td class="td-title">New Toy</td>
+        <td class="td-year">1981</td>
+        <td><span class="fmt-badge fmt-12">12″</span></td>
+        <td class="td-label">Stiff-Epic</td>
+        <td class="td-catalog">5E 37452</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="lene lovich" data-title="no-man's-land" data-label="stiff-epic" data-format="LP">
+        <td class="td-artist">Lene Lovich</td>
+        <td class="td-title">No-Man's-Land</td>
+        <td class="td-year">1982</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Stiff-Epic</td>
+        <td class="td-catalog">ARE 38399</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="linda ronstadt" data-title="living in the usa" data-label="asylum records" data-format="LP">
+        <td class="td-artist">Linda Ronstadt</td>
+        <td class="td-title">Living In The USA</td>
+        <td class="td-year">1978</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Asylum Records</td>
+        <td class="td-catalog">DP 401</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="little feat" data-title="hoy-hoy!" data-label="warner bros. records" data-format="2xLP">
+        <td class="td-artist">Little Feat</td>
+        <td class="td-title">Hoy-Hoy!</td>
+        <td class="td-year">1981</td>
+        <td><span class="fmt-badge fmt-2xLP">2×LP</span></td>
+        <td class="td-label">Warner Bros. Records</td>
+        <td class="td-catalog">2BSK 3538</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="loverboy" data-title="get lucky" data-label="columbia" data-format="LP">
+        <td class="td-artist">Loverboy</td>
+        <td class="td-title">Get Lucky</td>
+        <td class="td-year">1981</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Columbia</td>
+        <td class="td-catalog">FC-37638</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="loverboy" data-title="loverboy" data-label="columbia" data-format="LP">
+        <td class="td-artist">Loverboy</td>
+        <td class="td-title">Loverboy</td>
+        <td class="td-year">1980</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Columbia</td>
+        <td class="td-catalog">JC 36762</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="lynyrd skynyrd" data-title="street survivors" data-label="mca records" data-format="LP">
+        <td class="td-artist">Lynyrd Skynyrd</td>
+        <td class="td-title">Street Survivors</td>
+        <td class="td-year">1979</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">MCA Records</td>
+        <td class="td-catalog">MCA-3029</td>
+        <td>—</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section open" id="sec-M">
+  <div class="section-header" onclick="toggleSection(this)">
+    <span class="section-letter">M</span>
+    <span class="section-count">31 records</span>
+    <span class="section-toggle">▶</span>
+  </div>
+  <div class="section-body">
+    <table>
+      <thead><tr><th>Artist</th><th>Title</th><th>Year</th><th>Format</th><th>Label</th><th>Catalog#</th><th>Condition</th></tr></thead>
+      <tbody>
+      <tr data-artist="madness" data-title="absolutely" data-label="stiff records" data-format="LP">
+        <td class="td-artist">Madness</td>
+        <td class="td-title">Absolutely</td>
+        <td class="td-year">1980</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Stiff Records</td>
+        <td class="td-catalog">SEEZ 29 NP</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="madness" data-title="madness" data-label="geffen records" data-format="LP">
+        <td class="td-artist">Madness</td>
+        <td class="td-title">Madness</td>
+        <td class="td-year">1983</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Geffen Records</td>
+        <td class="td-catalog">GHS 4003</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="marc and the mambas" data-title="untitled" data-label="some bizzare" data-format="LP">
+        <td class="td-artist">Marc And The Mambas</td>
+        <td class="td-title">Untitled</td>
+        <td class="td-year">1982</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Some Bizzare</td>
+        <td class="td-catalog">BZS 13</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="marginal man" data-title="identity" data-label="dischord records" data-format="LP">
+        <td class="td-artist">Marginal Man</td>
+        <td class="td-title">Identity</td>
+        <td class="td-year">1984</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Dischord Records</td>
+        <td class="td-catalog">Dischord 13</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="mcrad" data-title="dominant force" data-label="red music" data-format="12"">
+        <td class="td-artist">McRad</td>
+        <td class="td-title">Dominant Force</td>
+        <td class="td-year">1984</td>
+        <td><span class="fmt-badge fmt-12">12″</span></td>
+        <td class="td-label">Red Music</td>
+        <td class="td-catalog">EP 007</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="mdc (2)" data-title="millions of dead cops" data-label="r radical records" data-format="LP">
+        <td class="td-artist">MDC (2)</td>
+        <td class="td-title">Millions Of Dead Cops</td>
+        <td class="td-year">1982</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">R Radical Records</td>
+        <td class="td-catalog">MDC 1</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="meat puppets" data-title="meat puppets" data-label="sst records" data-format="12"">
+        <td class="td-artist">Meat Puppets</td>
+        <td class="td-title">Meat Puppets</td>
+        <td class="td-year">1982</td>
+        <td><span class="fmt-badge fmt-12">12″</span></td>
+        <td class="td-label">SST Records</td>
+        <td class="td-catalog">SST 009</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="meatmen" data-title="we're the meatmen and you suck" data-label="touch and go" data-format="LP">
+        <td class="td-artist">Meatmen</td>
+        <td class="td-title">We're The Meatmen And You Suck</td>
+        <td class="td-year">—</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Touch And Go</td>
+        <td class="td-catalog">TGRLP001</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="megadeth" data-title="peace sells... but who's buying?" data-label="capitol records" data-format="LP">
+        <td class="td-artist">Megadeth</td>
+        <td class="td-title">Peace Sells... But Who's Buying?</td>
+        <td class="td-year">1986</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Capitol Records</td>
+        <td class="td-catalog">ST-12526</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="men at work" data-title="business as usual" data-label="columbia" data-format="LP">
+        <td class="td-artist">Men At Work</td>
+        <td class="td-title">Business As Usual</td>
+        <td class="td-year">1982</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Columbia</td>
+        <td class="td-catalog">FC 37978</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="metallica" data-title="...and justice for all" data-label="elektra" data-format="2xLP">
+        <td class="td-artist">Metallica</td>
+        <td class="td-title">...And Justice For All</td>
+        <td class="td-year">1988</td>
+        <td><span class="fmt-badge fmt-2xLP">2×LP</span></td>
+        <td class="td-label">Elektra</td>
+        <td class="td-catalog">96 08121</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="michael jackson" data-title="off the wall" data-label="epic" data-format="LP">
+        <td class="td-artist">Michael Jackson</td>
+        <td class="td-title">Off The Wall</td>
+        <td class="td-year">1979</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Epic</td>
+        <td class="td-catalog">FE 35745</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="ministry" data-title="with sympathy" data-label="arista" data-format="LP">
+        <td class="td-artist">Ministry</td>
+        <td class="td-title">With Sympathy</td>
+        <td class="td-year">1983</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Arista</td>
+        <td class="td-catalog">AL 6608</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="minor threat" data-title="minor threat" data-label="dischord records" data-format="LP">
+        <td class="td-artist">Minor Threat</td>
+        <td class="td-title">Minor Threat</td>
+        <td class="td-year">1984</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Dischord Records</td>
+        <td class="td-catalog">DISCHORD № 12</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="minutemen" data-title="3-way tie (for last)" data-label="sst records" data-format="LP">
+        <td class="td-artist">Minutemen</td>
+        <td class="td-title">3-Way Tie (For Last)</td>
+        <td class="td-year">1985</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">SST Records</td>
+        <td class="td-catalog">SST 058</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="minutemen" data-title="project: mersh" data-label="sst records" data-format="12"">
+        <td class="td-artist">Minutemen</td>
+        <td class="td-title">Project: Mersh</td>
+        <td class="td-year">1985</td>
+        <td><span class="fmt-badge fmt-12">12″</span></td>
+        <td class="td-label">SST Records</td>
+        <td class="td-catalog">SST 034</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="minutemen" data-title="the politics of time" data-label="new alliance records" data-format="LP">
+        <td class="td-artist">Minutemen</td>
+        <td class="td-title">The Politics Of Time</td>
+        <td class="td-year">1984</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">New Alliance Records</td>
+        <td class="td-catalog">NAR-017</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="misfits" data-title="earth a.d. / wolfs blood" data-label="plan 9" data-format="LP">
+        <td class="td-artist">Misfits</td>
+        <td class="td-title">Earth A.D. / Wolfs Blood</td>
+        <td class="td-year">1983</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Plan 9</td>
+        <td class="td-catalog">PL9-02</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="misfits" data-title="legacy of brutality" data-label="plan 9" data-format="LP">
+        <td class="td-artist">Misfits</td>
+        <td class="td-title">Legacy Of Brutality</td>
+        <td class="td-year">1985</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Plan 9</td>
+        <td class="td-catalog">PL9-06</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="misfits" data-title="walk among us" data-label="ruby records" data-format="LP">
+        <td class="td-artist">Misfits</td>
+        <td class="td-title">Walk Among Us</td>
+        <td class="td-year">1988</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Ruby Records</td>
+        <td class="td-catalog">9 25756-1</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="missing persons" data-title="spring session m" data-label="capitol records" data-format="LP">
+        <td class="td-artist">Missing Persons</td>
+        <td class="td-title">Spring Session M</td>
+        <td class="td-year">1982</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Capitol Records</td>
+        <td class="td-catalog">ST-12228</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the moody blues" data-title="a question of balance" data-label="threshold (5)" data-format="LP">
+        <td class="td-artist">The Moody Blues</td>
+        <td class="td-title">A Question Of Balance</td>
+        <td class="td-year">1986</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Threshold (5)</td>
+        <td class="td-catalog">THS 3</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the moody blues" data-title="long distance voyager" data-label="threshold (5)" data-format="LP">
+        <td class="td-artist">The Moody Blues</td>
+        <td class="td-title">Long Distance Voyager</td>
+        <td class="td-year">1981</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Threshold (5)</td>
+        <td class="td-catalog">TRL-1-2901</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the motels" data-title="motels" data-label="capitol records" data-format="LP">
+        <td class="td-artist">The Motels</td>
+        <td class="td-title">Motels</td>
+        <td class="td-year">1979</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Capitol Records</td>
+        <td class="td-catalog">ST-511996</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the motels" data-title="motels" data-label="capitol records" data-format="LP">
+        <td class="td-artist">The Motels</td>
+        <td class="td-title">Motels</td>
+        <td class="td-year">1979</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Capitol Records</td>
+        <td class="td-catalog">ST-511996</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the mothers" data-title="absolutely free" data-label="verve records" data-format="LP">
+        <td class="td-artist">The Mothers</td>
+        <td class="td-title">Absolutely Free</td>
+        <td class="td-year">1967</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Verve Records</td>
+        <td class="td-catalog">V6/5013</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the mothers" data-title="over-nite sensation" data-label="discreet" data-format="LP">
+        <td class="td-artist">The Mothers</td>
+        <td class="td-title">Over-Nite Sensation</td>
+        <td class="td-year">1977</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Discreet</td>
+        <td class="td-catalog">DSK 2288</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="motörhead" data-title="another perfect day" data-label="mercury" data-format="LP">
+        <td class="td-artist">Motörhead</td>
+        <td class="td-title">Another Perfect Day</td>
+        <td class="td-year">1983</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Mercury</td>
+        <td class="td-catalog">811 365-1 M-1</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="motörhead" data-title="no remorse" data-label="bronze" data-format="2xLP">
+        <td class="td-artist">Motörhead</td>
+        <td class="td-title">No Remorse</td>
+        <td class="td-year">1984</td>
+        <td><span class="fmt-badge fmt-2xLP">2×LP</span></td>
+        <td class="td-label">Bronze</td>
+        <td class="td-catalog">7 90233-1-H</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="motörhead" data-title="orgasmatron" data-label="gwr records" data-format="LP">
+        <td class="td-artist">Motörhead</td>
+        <td class="td-title">Orgasmatron</td>
+        <td class="td-year">1986</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">GWR Records</td>
+        <td class="td-catalog">PAL-1223</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="motörhead" data-title="what's words worth? (recorded live)" data-label="astan" data-format="LP">
+        <td class="td-artist">Motörhead</td>
+        <td class="td-title">What's Words Worth? (Recorded Live)</td>
+        <td class="td-year">1983</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Astan</td>
+        <td class="td-catalog">20041</td>
+        <td>—</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section open" id="sec-N">
+  <div class="section-header" onclick="toggleSection(this)">
+    <span class="section-letter">N</span>
+    <span class="section-count">2 records</span>
+    <span class="section-toggle">▶</span>
+  </div>
+  <div class="section-body">
+    <table>
+      <thead><tr><th>Artist</th><th>Title</th><th>Year</th><th>Format</th><th>Label</th><th>Catalog#</th><th>Condition</th></tr></thead>
+      <tbody>
+      <tr data-artist="national lampoon" data-title="the missing white house tapes" data-label="banana records (4)" data-format="LP">
+        <td class="td-artist">National Lampoon</td>
+        <td class="td-title">The Missing White House Tapes</td>
+        <td class="td-year">1974</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Banana Records (4)</td>
+        <td class="td-catalog">BTS 6008</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the nils" data-title="the nils" data-label="profile records" data-format="LP">
+        <td class="td-artist">The Nils</td>
+        <td class="td-title">The Nils</td>
+        <td class="td-year">1987</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Profile Records</td>
+        <td class="td-catalog">PRO-1245</td>
+        <td>—</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section open" id="sec-O">
+  <div class="section-header" onclick="toggleSection(this)">
+    <span class="section-letter">O</span>
+    <span class="section-count">3 records</span>
+    <span class="section-toggle">▶</span>
+  </div>
+  <div class="section-body">
+    <table>
+      <thead><tr><th>Artist</th><th>Title</th><th>Year</th><th>Format</th><th>Label</th><th>Catalog#</th><th>Condition</th></tr></thead>
+      <tbody>
+      <tr data-artist="oingo boingo" data-title="only a lad" data-label="a&m records" data-format="LP">
+        <td class="td-artist">Oingo Boingo</td>
+        <td class="td-title">Only A Lad</td>
+        <td class="td-year">1982</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">A&M Records</td>
+        <td class="td-catalog">SP-3250</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="ozzy osbourne" data-title="blizzard of ozz" data-label="jet records" data-format="LP">
+        <td class="td-artist">Ozzy Osbourne</td>
+        <td class="td-title">Blizzard Of Ozz</td>
+        <td class="td-year">1981</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Jet Records</td>
+        <td class="td-catalog">JZ 36812</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="ozzy osbourne" data-title="diary of a madman" data-label="jet records" data-format="LP">
+        <td class="td-artist">Ozzy Osbourne</td>
+        <td class="td-title">Diary Of A Madman</td>
+        <td class="td-year">1981</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Jet Records</td>
+        <td class="td-catalog">FZ 37492</td>
+        <td>—</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section open" id="sec-P">
+  <div class="section-header" onclick="toggleSection(this)">
+    <span class="section-letter">P</span>
+    <span class="section-count">20 records</span>
+    <span class="section-toggle">▶</span>
+  </div>
+  <div class="section-body">
+    <table>
+      <thead><tr><th>Artist</th><th>Title</th><th>Year</th><th>Format</th><th>Label</th><th>Catalog#</th><th>Condition</th></tr></thead>
+      <tbody>
+      <tr data-artist="the partridge family" data-title="the partridge family sound magazine" data-label="bell records" data-format="LP">
+        <td class="td-artist">The Partridge Family</td>
+        <td class="td-title">The Partridge Family Sound Magazine</td>
+        <td class="td-year">1971</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Bell Records</td>
+        <td class="td-catalog">BELL 6064</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="pat benatar" data-title="precious time" data-label="chrysalis" data-format="LP">
+        <td class="td-artist">Pat Benatar</td>
+        <td class="td-title">Precious Time</td>
+        <td class="td-year">1981</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Chrysalis</td>
+        <td class="td-catalog">CHR 1346</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="pat wilson (2)" data-title="bop girl" data-label="warner bros. records" data-format="12"">
+        <td class="td-artist">Pat Wilson (2)</td>
+        <td class="td-title">Bop Girl</td>
+        <td class="td-year">1984</td>
+        <td><span class="fmt-badge fmt-12">12″</span></td>
+        <td class="td-label">Warner Bros. Records</td>
+        <td class="td-catalog">1-25072</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="pete shelley" data-title="xl•1" data-label="arista" data-format="LP">
+        <td class="td-artist">Pete Shelley</td>
+        <td class="td-title">XL•1</td>
+        <td class="td-year">1983</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Arista</td>
+        <td class="td-catalog">AL 6 8017</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="peter murphy" data-title="love hysteria" data-label="beggars banquet" data-format="LP">
+        <td class="td-artist">Peter Murphy</td>
+        <td class="td-title">Love Hysteria</td>
+        <td class="td-year">1988</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Beggars Banquet</td>
+        <td class="td-catalog">7634-1-H</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="peter tosh" data-title="mama africa" data-label="emi america" data-format="LP">
+        <td class="td-artist">Peter Tosh</td>
+        <td class="td-title">Mama Africa</td>
+        <td class="td-year">1983</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">EMI America</td>
+        <td class="td-catalog">SO-17095</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="philadelphia flyers - gene hart (2), don earle (2)" data-title="god bless the flyers" data-label="fleetwood records (2)" data-format="LP">
+        <td class="td-artist">Philadelphia Flyers - Gene Hart (2), Don Earle (2)</td>
+        <td class="td-title">God Bless The Flyers</td>
+        <td class="td-year">1974</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Fleetwood Records (2)</td>
+        <td class="td-catalog">fclp3083</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="pieces of a dream" data-title="makes you wanna" data-label="emi-manhattan records" data-format="LP">
+        <td class="td-artist">Pieces Of A Dream</td>
+        <td class="td-title">Makes You Wanna</td>
+        <td class="td-year">1988</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">EMI-Manhattan Records</td>
+        <td class="td-catalog">E1-48740</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="pink floyd" data-title="the wall" data-label="columbia" data-format="2xLP">
+        <td class="td-artist">Pink Floyd</td>
+        <td class="td-title">The Wall</td>
+        <td class="td-year">1979</td>
+        <td><span class="fmt-badge fmt-2xLP">2×LP</span></td>
+        <td class="td-label">Columbia</td>
+        <td class="td-catalog">PC2 36183</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="plasmatics (2)" data-title="beyond the valley of 1984" data-label="stiff america" data-format="LP">
+        <td class="td-artist">Plasmatics (2)</td>
+        <td class="td-title">Beyond The Valley Of 1984</td>
+        <td class="td-year">1981</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Stiff America</td>
+        <td class="td-catalog">WOW II</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the police" data-title="ghost in the machine" data-label="a&m records" data-format="LP">
+        <td class="td-artist">The Police</td>
+        <td class="td-title">Ghost In The Machine</td>
+        <td class="td-year">1981</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">A&M Records</td>
+        <td class="td-catalog">SP-3730</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the police" data-title="zenyatta mondatta" data-label="a&m records" data-format="LP">
+        <td class="td-artist">The Police</td>
+        <td class="td-title">Zenyatta Mondatta</td>
+        <td class="td-year">1981</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">A&M Records</td>
+        <td class="td-catalog">SP-3720</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the pretenders" data-title="pretenders" data-label="sire" data-format="LP">
+        <td class="td-artist">The Pretenders</td>
+        <td class="td-title">Pretenders</td>
+        <td class="td-year">1980</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Sire</td>
+        <td class="td-catalog">SRK 6083</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the pretenders" data-title="pretenders ii" data-label="real records (2)" data-format="LP">
+        <td class="td-artist">The Pretenders</td>
+        <td class="td-title">Pretenders II</td>
+        <td class="td-year">1981</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Real Records (2)</td>
+        <td class="td-catalog">SRK 3572</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="pretty poison" data-title="nightime" data-label="svengali records" data-format="12"">
+        <td class="td-artist">Pretty Poison</td>
+        <td class="td-title">Nightime</td>
+        <td class="td-year">1984</td>
+        <td><span class="fmt-badge fmt-12">12″</span></td>
+        <td class="td-label">Svengali Records</td>
+        <td class="td-catalog">SR8403</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="prince" data-title="controversy" data-label="warner bros. records" data-format="LP">
+        <td class="td-artist">Prince</td>
+        <td class="td-title">Controversy</td>
+        <td class="td-year">1981</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Warner Bros. Records</td>
+        <td class="td-catalog">BSK 3601</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="prince" data-title="dirty mind" data-label="warner bros. records" data-format="LP">
+        <td class="td-artist">Prince</td>
+        <td class="td-title">Dirty Mind</td>
+        <td class="td-year">1980</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Warner Bros. Records</td>
+        <td class="td-catalog">BSK 3478</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the psychedelic furs" data-title="talk talk talk" data-label="columbia" data-format="LP">
+        <td class="td-artist">The Psychedelic Furs</td>
+        <td class="td-title">Talk Talk Talk</td>
+        <td class="td-year">1981</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Columbia</td>
+        <td class="td-catalog">NFC 37339</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the psychedelic furs" data-title="the psychedelic furs" data-label="columbia" data-format="LP">
+        <td class="td-artist">The Psychedelic Furs</td>
+        <td class="td-title">The Psychedelic Furs</td>
+        <td class="td-year">1980</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Columbia</td>
+        <td class="td-catalog">NJC 36791</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="public image limited" data-title="the flowers of romance" data-label="warner bros. records" data-format="LP">
+        <td class="td-artist">Public Image Limited</td>
+        <td class="td-title">The Flowers Of Romance</td>
+        <td class="td-year">1981</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Warner Bros. Records</td>
+        <td class="td-catalog">BSK 3536</td>
+        <td>—</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section open" id="sec-Q">
+  <div class="section-header" onclick="toggleSection(this)">
+    <span class="section-letter">Q</span>
+    <span class="section-count">2 records</span>
+    <span class="section-toggle">▶</span>
+  </div>
+  <div class="section-body">
+    <table>
+      <thead><tr><th>Artist</th><th>Title</th><th>Year</th><th>Format</th><th>Label</th><th>Catalog#</th><th>Condition</th></tr></thead>
+      <tbody>
+      <tr data-artist="quincy jones" data-title="mellow madness" data-label="a&m records" data-format="LP">
+        <td class="td-artist">Quincy Jones</td>
+        <td class="td-title">Mellow Madness</td>
+        <td class="td-year">1975</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">A&M Records</td>
+        <td class="td-catalog">SP-4526</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="quincy jones" data-title="sounds...and stuff like that!!" data-label="a&m records" data-format="LP">
+        <td class="td-artist">Quincy Jones</td>
+        <td class="td-title">Sounds...And Stuff Like That!!</td>
+        <td class="td-year">1978</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">A&M Records</td>
+        <td class="td-catalog">SP 4685</td>
+        <td>—</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section open" id="sec-R">
+  <div class="section-header" onclick="toggleSection(this)">
+    <span class="section-letter">R</span>
+    <span class="section-count">21 records</span>
+    <span class="section-toggle">▶</span>
+  </div>
+  <div class="section-body">
+    <table>
+      <thead><tr><th>Artist</th><th>Title</th><th>Year</th><th>Format</th><th>Label</th><th>Catalog#</th><th>Condition</th></tr></thead>
+      <tbody>
+      <tr data-artist="ramones" data-title="it's alive" data-label="sire" data-format="2xLP">
+        <td class="td-artist">Ramones</td>
+        <td class="td-title">It's Alive</td>
+        <td class="td-year">1979</td>
+        <td><span class="fmt-badge fmt-2xLP">2×LP</span></td>
+        <td class="td-label">Sire</td>
+        <td class="td-catalog">SRK2 6074</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="ramones" data-title="leave home" data-label="sire" data-format="LP">
+        <td class="td-artist">Ramones</td>
+        <td class="td-title">Leave Home</td>
+        <td class="td-year">1980</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Sire</td>
+        <td class="td-catalog">SR 6031</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="ramones" data-title="pleasant dreams" data-label="sire" data-format="LP">
+        <td class="td-artist">Ramones</td>
+        <td class="td-title">Pleasant Dreams</td>
+        <td class="td-year">—</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Sire</td>
+        <td class="td-catalog">SRK 3571</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="ramones" data-title="ramones" data-label="sire" data-format="LP">
+        <td class="td-artist">Ramones</td>
+        <td class="td-title">Ramones</td>
+        <td class="td-year">—</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Sire</td>
+        <td class="td-catalog">SR 6020</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="ramones" data-title="road to ruin" data-label="sire" data-format="LP">
+        <td class="td-artist">Ramones</td>
+        <td class="td-title">Road To Ruin</td>
+        <td class="td-year">1978</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Sire</td>
+        <td class="td-catalog">SRK 6063</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="ramones" data-title="too tough to die" data-label="sire" data-format="LP">
+        <td class="td-artist">Ramones</td>
+        <td class="td-title">Too Tough To Die</td>
+        <td class="td-year">1984</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Sire</td>
+        <td class="td-catalog">92 51871</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="raw power (2)" data-title="after your brain" data-label="toxic shock" data-format="LP">
+        <td class="td-artist">Raw Power (2)</td>
+        <td class="td-title">After Your Brain</td>
+        <td class="td-year">1986</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Toxic Shock</td>
+        <td class="td-catalog">TXLP08</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="reagan youth" data-title="youth anthems for the new order" data-label="r radical records" data-format="LP">
+        <td class="td-artist">Reagan Youth</td>
+        <td class="td-title">Youth Anthems For The New Order</td>
+        <td class="td-year">1984</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">R Radical Records</td>
+        <td class="td-catalog">RYR 831</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="ric ocasek" data-title="beatitude" data-label="geffen records" data-format="LP">
+        <td class="td-artist">Ric Ocasek</td>
+        <td class="td-title">Beatitude</td>
+        <td class="td-year">1982</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Geffen Records</td>
+        <td class="td-catalog">GHS 2022</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="rick james" data-title="street songs" data-label="gordy" data-format="LP">
+        <td class="td-artist">Rick James</td>
+        <td class="td-title">Street Songs</td>
+        <td class="td-year">1981</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Gordy</td>
+        <td class="td-catalog">G8-1002M1</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="rigor mortis (2)" data-title="rigor mortis" data-label="capitol records" data-format="LP">
+        <td class="td-artist">Rigor Mortis (2)</td>
+        <td class="td-title">Rigor Mortis</td>
+        <td class="td-year">1988</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Capitol Records</td>
+        <td class="td-catalog">C1-48909</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="robert gordon (2) w/ link wray" data-title="fresh fish special" data-label="private stock" data-format="LP">
+        <td class="td-artist">Robert Gordon (2) W/ Link Wray</td>
+        <td class="td-title">Fresh Fish Special</td>
+        <td class="td-year">1978</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Private Stock</td>
+        <td class="td-catalog">PS 7008</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="rod stewart" data-title="blondes have more fun" data-label="warner bros. records" data-format="LP">
+        <td class="td-artist">Rod Stewart</td>
+        <td class="td-title">Blondes Have More Fun</td>
+        <td class="td-year">1978</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Warner Bros. Records</td>
+        <td class="td-catalog">BSP 3276</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the rolling stones" data-title="beggars banquet" data-label="london records" data-format="LP">
+        <td class="td-artist">The Rolling Stones</td>
+        <td class="td-title">Beggars Banquet</td>
+        <td class="td-year">—</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">London Records</td>
+        <td class="td-catalog">PS 539</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the rolling stones" data-title="emotional rescue" data-label="rolling stones records" data-format="LP">
+        <td class="td-artist">The Rolling Stones</td>
+        <td class="td-title">Emotional Rescue</td>
+        <td class="td-year">1980</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Rolling Stones Records</td>
+        <td class="td-catalog">COC 16015</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the rolling stones" data-title="tattoo you" data-label="rolling stones records" data-format="LP">
+        <td class="td-artist">The Rolling Stones</td>
+        <td class="td-title">Tattoo You</td>
+        <td class="td-year">1981</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Rolling Stones Records</td>
+        <td class="td-catalog">XCOC 16052</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the rolling stones" data-title="tattoo you" data-label="rolling stones records" data-format="LP">
+        <td class="td-artist">The Rolling Stones</td>
+        <td class="td-title">Tattoo You</td>
+        <td class="td-year">1981</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Rolling Stones Records</td>
+        <td class="td-catalog">XCOC 16052</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="ruben blades" data-title="nothing but the truth" data-label="elektra" data-format="LP">
+        <td class="td-artist">Ruben Blades</td>
+        <td class="td-title">Nothing But The Truth</td>
+        <td class="td-year">1988</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Elektra</td>
+        <td class="td-catalog">60754-1</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="ruin..." data-title="he-ho" data-label="red music" data-format="LP">
+        <td class="td-artist">Ruin...</td>
+        <td class="td-title">He-Ho</td>
+        <td class="td-year">1984</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Red Music</td>
+        <td class="td-catalog">006</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="rush" data-title="all the world's a stage" data-label="mercury" data-format="2xLP">
+        <td class="td-artist">Rush</td>
+        <td class="td-title">All The World's A Stage</td>
+        <td class="td-year">1976</td>
+        <td><span class="fmt-badge fmt-2xLP">2×LP</span></td>
+        <td class="td-label">Mercury</td>
+        <td class="td-catalog">SRM-2-7508</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="rush" data-title="all the world's a stage" data-label="mercury" data-format="2xLP">
+        <td class="td-artist">Rush</td>
+        <td class="td-title">All The World's A Stage</td>
+        <td class="td-year">1976</td>
+        <td><span class="fmt-badge fmt-2xLP">2×LP</span></td>
+        <td class="td-label">Mercury</td>
+        <td class="td-catalog">SRM-2-7508</td>
+        <td>—</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section open" id="sec-S">
+  <div class="section-header" onclick="toggleSection(this)">
+    <span class="section-letter">S</span>
+    <span class="section-count">35 records</span>
+    <span class="section-toggle">▶</span>
+  </div>
+  <div class="section-body">
+    <table>
+      <thead><tr><th>Artist</th><th>Title</th><th>Year</th><th>Format</th><th>Label</th><th>Catalog#</th><th>Condition</th></tr></thead>
+      <tbody>
+      <tr data-artist="schoolly d" data-title="smoke some kill" data-label="jive" data-format="LP">
+        <td class="td-artist">Schoolly D</td>
+        <td class="td-title">Smoke Some Kill</td>
+        <td class="td-year">1988</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Jive</td>
+        <td class="td-catalog">1101-1-J</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="scream (2)" data-title="still screaming" data-label="dischord records" data-format="LP">
+        <td class="td-artist">Scream (2)</td>
+        <td class="td-title">Still Screaming</td>
+        <td class="td-year">—</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Dischord Records</td>
+        <td class="td-catalog">DISCHORD № 9</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the selecter" data-title="celebrate the bullet" data-label="chrysalis" data-format="LP">
+        <td class="td-artist">The Selecter</td>
+        <td class="td-title">Celebrate The Bullet</td>
+        <td class="td-year">1981</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Chrysalis</td>
+        <td class="td-catalog">CHR 1306</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the selecter" data-title="too much pressure" data-label="chrysalis" data-format="LP">
+        <td class="td-artist">The Selecter</td>
+        <td class="td-title">Too Much Pressure</td>
+        <td class="td-year">1980</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Chrysalis</td>
+        <td class="td-catalog">CHR 1274</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="serial killers (2)" data-title="roadside rendezvous" data-label="plus records (2)" data-format="LP">
+        <td class="td-artist">Serial Killers (2)</td>
+        <td class="td-title">Roadside Rendezvous</td>
+        <td class="td-year">1987</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Plus Records (2)</td>
+        <td class="td-catalog">Plus-004</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="sex pistols" data-title="never mind the bollocks here's the sex pistols" data-label="warner bros. records" data-format="LP">
+        <td class="td-artist">Sex Pistols</td>
+        <td class="td-title">Never Mind The Bollocks Here's The Sex Pistols</td>
+        <td class="td-year">1977</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Warner Bros. Records</td>
+        <td class="td-catalog">BSK 3147</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="sex pistols" data-title="we've cum for your children (wanted: the goodman tapes)" data-label="skyclad records" data-format="LP">
+        <td class="td-artist">Sex Pistols</td>
+        <td class="td-title">We've Cum For Your Children (Wanted: The Goodman Tapes)</td>
+        <td class="td-year">1988</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Skyclad Records</td>
+        <td class="td-catalog">(sick) SEX 6</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="shockabilly" data-title="vietnam" data-label="fundamental" data-format="LP">
+        <td class="td-artist">Shockabilly</td>
+        <td class="td-title">Vietnam</td>
+        <td class="td-year">1984</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Fundamental</td>
+        <td class="td-catalog">SAVE-1</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="shockabilly" data-title="vietnam" data-label="fundamental" data-format="LP">
+        <td class="td-artist">Shockabilly</td>
+        <td class="td-title">Vietnam</td>
+        <td class="td-year">1984</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Fundamental</td>
+        <td class="td-catalog">SAVE-1</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="siouxsie & the banshees" data-title="juju" data-label="pvc records" data-format="LP">
+        <td class="td-artist">Siouxsie & The Banshees</td>
+        <td class="td-title">Juju</td>
+        <td class="td-year">1981</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">PVC Records</td>
+        <td class="td-catalog">PVC 8903</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="siouxsie & the banshees" data-title="kaleidoscope" data-label="pvc records" data-format="LP">
+        <td class="td-artist">Siouxsie & The Banshees</td>
+        <td class="td-title">Kaleidoscope</td>
+        <td class="td-year">1982</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">PVC Records</td>
+        <td class="td-catalog">PVC 7921</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="soft cell" data-title="what / insecure...me?" data-label="sire" data-format="12"">
+        <td class="td-artist">Soft Cell</td>
+        <td class="td-title">What / Insecure...Me?</td>
+        <td class="td-year">1982</td>
+        <td><span class="fmt-badge fmt-12">12″</span></td>
+        <td class="td-label">Sire</td>
+        <td class="td-catalog">PRO-A-1037</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="split enz" data-title="time and tide" data-label="a&m records" data-format="LP">
+        <td class="td-artist">Split Enz</td>
+        <td class="td-title">Time And Tide</td>
+        <td class="td-year">—</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">A&M Records</td>
+        <td class="td-catalog">SP 1891</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the stalin" data-title="go go スターリン" data-label="climax records (5)" data-format="12"">
+        <td class="td-artist">The Stalin</td>
+        <td class="td-title">Go Go スターリン</td>
+        <td class="td-year">1983</td>
+        <td><span class="fmt-badge fmt-12">12″</span></td>
+        <td class="td-label">Climax Records (5)</td>
+        <td class="td-catalog">CMC-1</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the stalin = the stalin" data-title="go go スターリン" data-label="climax records (5)" data-format="12"">
+        <td class="td-artist">The Stalin = The Stalin</td>
+        <td class="td-title">Go Go スターリン</td>
+        <td class="td-year">1983</td>
+        <td><span class="fmt-badge fmt-12">12″</span></td>
+        <td class="td-label">Climax Records (5)</td>
+        <td class="td-catalog">CMC-1</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="steely dan" data-title="aja" data-label="abc records" data-format="LP">
+        <td class="td-artist">Steely Dan</td>
+        <td class="td-title">Aja</td>
+        <td class="td-year">1977</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">ABC Records</td>
+        <td class="td-catalog">AA-1006</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="steely dan" data-title="can't buy a thrill" data-label="abc records" data-format="LP">
+        <td class="td-artist">Steely Dan</td>
+        <td class="td-title">Can't Buy A Thrill</td>
+        <td class="td-year">1972</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">ABC Records</td>
+        <td class="td-catalog">ABCX 758</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="steely dan" data-title="countdown to ecstasy" data-label="abc records" data-format="LP">
+        <td class="td-artist">Steely Dan</td>
+        <td class="td-title">Countdown To Ecstasy</td>
+        <td class="td-year">1973</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">ABC Records</td>
+        <td class="td-catalog">ABCX-779</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="steely dan" data-title="katy lied" data-label="mca records" data-format="LP">
+        <td class="td-artist">Steely Dan</td>
+        <td class="td-title">Katy Lied</td>
+        <td class="td-year">1980</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">MCA Records</td>
+        <td class="td-catalog">MCA-37043</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="stevie wonder" data-title="fulfillingness' first finale" data-label="tamla" data-format="LP">
+        <td class="td-artist">Stevie Wonder</td>
+        <td class="td-title">Fulfillingness' First Finale</td>
+        <td class="td-year">1974</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Tamla</td>
+        <td class="td-catalog">T6-332S1</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="stevie wonder" data-title="hotter than july" data-label="motown" data-format="LP">
+        <td class="td-artist">Stevie Wonder</td>
+        <td class="td-title">Hotter Than July</td>
+        <td class="td-year">1980</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Motown</td>
+        <td class="td-catalog">LPS 99333</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="stevie wonder" data-title="songs in the key of life" data-label="tamla" data-format="2xLP">
+        <td class="td-artist">Stevie Wonder</td>
+        <td class="td-title">Songs In The Key Of Life</td>
+        <td class="td-year">1976</td>
+        <td><span class="fmt-badge fmt-2xLP">2×LP</span></td>
+        <td class="td-label">Tamla</td>
+        <td class="td-catalog">T13-340C2</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="stevie wonder" data-title="talking book" data-label="tamla" data-format="LP">
+        <td class="td-artist">Stevie Wonder</td>
+        <td class="td-title">Talking Book</td>
+        <td class="td-year">1972</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Tamla</td>
+        <td class="td-catalog">T 319L</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the stick men" data-title="get on board" data-label="red music" data-format="12"">
+        <td class="td-artist">The Stick Men</td>
+        <td class="td-title">Get On Board</td>
+        <td class="td-year">1983</td>
+        <td><span class="fmt-badge fmt-12">12″</span></td>
+        <td class="td-label">Red Music</td>
+        <td class="td-catalog">EP 004</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the stooges" data-title="fun house" data-label="elektra" data-format="LP">
+        <td class="td-artist">The Stooges</td>
+        <td class="td-title">Fun House</td>
+        <td class="td-year">1983</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Elektra</td>
+        <td class="td-catalog">EKS-74071</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the stooges" data-title="metallic 'ko" data-label="import records" data-format="LP">
+        <td class="td-artist">The Stooges</td>
+        <td class="td-title">Metallic 'KO</td>
+        <td class="td-year">1977</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Import Records</td>
+        <td class="td-catalog">IMP 1015</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the stooges" data-title="raw power" data-label="columbia" data-format="LP">
+        <td class="td-artist">The Stooges</td>
+        <td class="td-title">Raw Power</td>
+        <td class="td-year">1976</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Columbia</td>
+        <td class="td-catalog">32111</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="stranger to stranger" data-title="the child in me" data-label="s.m.i. records" data-format="12"">
+        <td class="td-artist">Stranger To Stranger</td>
+        <td class="td-title">The Child In Me</td>
+        <td class="td-year">1985</td>
+        <td><span class="fmt-badge fmt-12">12″</span></td>
+        <td class="td-label">S.M.I. Records</td>
+        <td class="td-catalog">S.M.I. EP 10</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="stray cats" data-title="stray cats" data-label="arista" data-format="LP">
+        <td class="td-artist">Stray Cats</td>
+        <td class="td-title">Stray Cats</td>
+        <td class="td-year">1981</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Arista</td>
+        <td class="td-catalog">STRAY 1</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="stray cats" data-title="stray cats" data-label="arista" data-format="LP">
+        <td class="td-artist">Stray Cats</td>
+        <td class="td-title">Stray Cats</td>
+        <td class="td-year">1981</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Arista</td>
+        <td class="td-catalog">STRAY 1</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the style council" data-title="my ever changing moods" data-label="geffen records" data-format="LP">
+        <td class="td-artist">The Style Council</td>
+        <td class="td-title">My Ever Changing Moods</td>
+        <td class="td-year">1984</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Geffen Records</td>
+        <td class="td-catalog">GHS 4029</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="subhumans" data-title="worlds apart" data-label="bluurg records" data-format="LP">
+        <td class="td-artist">Subhumans</td>
+        <td class="td-title">Worlds Apart</td>
+        <td class="td-year">1985</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Bluurg Records</td>
+        <td class="td-catalog">Fish 12</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="suicidal tendencies" data-title="suicidal tendencies" data-label="frontier records" data-format="LP">
+        <td class="td-artist">Suicidal Tendencies</td>
+        <td class="td-title">Suicidal Tendencies</td>
+        <td class="td-year">1983</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Frontier Records</td>
+        <td class="td-catalog">FLP 1011</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the supremes" data-title="a' go-go" data-label="motown" data-format="LP">
+        <td class="td-artist">The Supremes</td>
+        <td class="td-title">A' Go-Go</td>
+        <td class="td-year">1966</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Motown</td>
+        <td class="td-catalog">M 649</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="surf punks" data-title="my beach" data-label="epic" data-format="LP">
+        <td class="td-artist">Surf Punks</td>
+        <td class="td-title">My Beach</td>
+        <td class="td-year">—</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Epic</td>
+        <td class="td-catalog">PE 36500</td>
+        <td>—</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section open" id="sec-T">
+  <div class="section-header" onclick="toggleSection(this)">
+    <span class="section-letter">T</span>
+    <span class="section-count">15 records</span>
+    <span class="section-toggle">▶</span>
+  </div>
+  <div class="section-body">
+    <table>
+      <thead><tr><th>Artist</th><th>Title</th><th>Year</th><th>Format</th><th>Label</th><th>Catalog#</th><th>Condition</th></tr></thead>
+      <tbody>
+      <tr data-artist="t.s.o.l." data-title="change today?" data-label="enigma (4)" data-format="LP">
+        <td class="td-artist">T.S.O.L.</td>
+        <td class="td-title">Change Today?</td>
+        <td class="td-year">1984</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Enigma (4)</td>
+        <td class="td-catalog">E-1076</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="talking heads" data-title="fear of music" data-label="sire" data-format="LP">
+        <td class="td-artist">Talking Heads</td>
+        <td class="td-title">Fear Of Music</td>
+        <td class="td-year">1979</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Sire</td>
+        <td class="td-catalog">SRK 6076</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="talking heads" data-title="talking heads: 77" data-label="sire" data-format="LP">
+        <td class="td-artist">Talking Heads</td>
+        <td class="td-title">Talking Heads: 77</td>
+        <td class="td-year">1977</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Sire</td>
+        <td class="td-catalog">SR 6036</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="third world" data-title="you've got the power" data-label="columbia" data-format="LP">
+        <td class="td-artist">Third World</td>
+        <td class="td-title">You've Got The Power</td>
+        <td class="td-year">1982</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Columbia</td>
+        <td class="td-catalog">FC 37744</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="thomas dolby" data-title="the golden age of wireless" data-label="capitol records" data-format="LP">
+        <td class="td-artist">Thomas Dolby</td>
+        <td class="td-title">The Golden Age Of Wireless</td>
+        <td class="td-year">1983</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Capitol Records</td>
+        <td class="td-catalog">ST-12271</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the time" data-title="the time" data-label="warner bros. records" data-format="LP">
+        <td class="td-artist">The Time</td>
+        <td class="td-title">The Time</td>
+        <td class="td-year">1981</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Warner Bros. Records</td>
+        <td class="td-catalog">BSK 3598</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the time" data-title="what time is it?" data-label="warner bros. records" data-format="LP">
+        <td class="td-artist">The Time</td>
+        <td class="td-title">What Time Is It?</td>
+        <td class="td-year">1982</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Warner Bros. Records</td>
+        <td class="td-catalog">92 37011</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="todd rundgren" data-title="back to the bars" data-label="bearsville" data-format="2xLP">
+        <td class="td-artist">Todd Rundgren</td>
+        <td class="td-title">Back To The Bars</td>
+        <td class="td-year">1978</td>
+        <td><span class="fmt-badge fmt-2xLP">2×LP</span></td>
+        <td class="td-label">Bearsville</td>
+        <td class="td-catalog">2BRX 6986</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="todd rundgren" data-title="runt" data-label="bearsville" data-format="LP">
+        <td class="td-artist">Todd Rundgren</td>
+        <td class="td-title">Runt</td>
+        <td class="td-year">1971</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Bearsville</td>
+        <td class="td-catalog">A10105</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="tom petty and the heartbreakers" data-title="damn the torpedoes" data-label="backstreet records" data-format="LP">
+        <td class="td-artist">Tom Petty And The Heartbreakers</td>
+        <td class="td-title">Damn The Torpedoes</td>
+        <td class="td-year">1979</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Backstreet Records</td>
+        <td class="td-catalog">MCA-5105</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="tom petty and the heartbreakers" data-title="tom petty and the heartbreakers" data-label="shelter records" data-format="LP">
+        <td class="td-artist">Tom Petty And The Heartbreakers</td>
+        <td class="td-title">Tom Petty And The Heartbreakers</td>
+        <td class="td-year">1976</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Shelter Records</td>
+        <td class="td-catalog">SRL 52006</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="tommy conwell and the young rumblers" data-title="i'm not your man" data-label="columbia" data-format="12"">
+        <td class="td-artist">Tommy Conwell And The Young Rumblers</td>
+        <td class="td-title">I'm Not Your Man</td>
+        <td class="td-year">1988</td>
+        <td><span class="fmt-badge fmt-12">12″</span></td>
+        <td class="td-label">Columbia</td>
+        <td class="td-catalog">CAS 1207</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="translator (3)" data-title="heartbeats and triggers" data-label="columbia" data-format="LP">
+        <td class="td-artist">Translator (3)</td>
+        <td class="td-title">Heartbeats And Triggers</td>
+        <td class="td-year">1982</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Columbia</td>
+        <td class="td-catalog">ARC 38162</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="treat her right" data-title="tied to the tracks" data-label="rca" data-format="LP">
+        <td class="td-artist">Treat Her Right</td>
+        <td class="td-title">Tied To The Tracks</td>
+        <td class="td-year">1989</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">RCA</td>
+        <td class="td-catalog">9596-1-R</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="treat her right" data-title="tied to the tracks" data-label="rca victor" data-format="LP">
+        <td class="td-artist">Treat Her Right</td>
+        <td class="td-title">Tied To The Tracks</td>
+        <td class="td-year">1989</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">RCA Victor</td>
+        <td class="td-catalog">9596-1-R</td>
+        <td><span class="cond-badge">Very Good Plus (VG+)</span></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section open" id="sec-U">
+  <div class="section-header" onclick="toggleSection(this)">
+    <span class="section-letter">U</span>
+    <span class="section-count">7 records</span>
+    <span class="section-toggle">▶</span>
+  </div>
+  <div class="section-body">
+    <table>
+      <thead><tr><th>Artist</th><th>Title</th><th>Year</th><th>Format</th><th>Label</th><th>Catalog#</th><th>Condition</th></tr></thead>
+      <tbody>
+      <tr data-artist="u2" data-title="boy" data-label="island records" data-format="LP">
+        <td class="td-artist">U2</td>
+        <td class="td-title">Boy</td>
+        <td class="td-year">1983</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Island Records</td>
+        <td class="td-catalog">90040-1</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="u2" data-title="war" data-label="island records" data-format="LP">
+        <td class="td-artist">U2</td>
+        <td class="td-title">War</td>
+        <td class="td-year">1983</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Island Records</td>
+        <td class="td-catalog">79 00671</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="u2" data-title="war" data-label="island records" data-format="Cass">
+        <td class="td-artist">U2</td>
+        <td class="td-title">War</td>
+        <td class="td-year">1983</td>
+        <td><span class="fmt-badge fmt-other">Cass</span></td>
+        <td class="td-label">Island Records</td>
+        <td class="td-catalog">A4-90067</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="ub40" data-title="labour of love" data-label="a&m records" data-format="LP">
+        <td class="td-artist">UB40</td>
+        <td class="td-title">Labour Of Love</td>
+        <td class="td-year">1983</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">A&M Records</td>
+        <td class="td-catalog">SP-6-4980</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="ub40" data-title="labour of love" data-label="a&m records" data-format="LP">
+        <td class="td-artist">UB40</td>
+        <td class="td-title">Labour Of Love</td>
+        <td class="td-year">1983</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">A&M Records</td>
+        <td class="td-catalog">SP-6-4980</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="ub40" data-title="little baggariddim" data-label="a&m records" data-format="12"">
+        <td class="td-artist">UB40</td>
+        <td class="td-title">Little Baggariddim</td>
+        <td class="td-year">1985</td>
+        <td><span class="fmt-badge fmt-12">12″</span></td>
+        <td class="td-label">A&M Records</td>
+        <td class="td-catalog">SP 6-5090</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="ub40" data-title="little baggariddim" data-label="a&m records" data-format="12"">
+        <td class="td-artist">UB40</td>
+        <td class="td-title">Little Baggariddim</td>
+        <td class="td-year">1985</td>
+        <td><span class="fmt-badge fmt-12">12″</span></td>
+        <td class="td-label">A&M Records</td>
+        <td class="td-catalog">SP6-5090</td>
+        <td>—</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section open" id="sec-V">
+  <div class="section-header" onclick="toggleSection(this)">
+    <span class="section-letter">V</span>
+    <span class="section-count">26 records</span>
+    <span class="section-toggle">▶</span>
+  </div>
+  <div class="section-body">
+    <table>
+      <thead><tr><th>Artist</th><th>Title</th><th>Year</th><th>Format</th><th>Label</th><th>Catalog#</th><th>Condition</th></tr></thead>
+      <tbody>
+      <tr data-artist="van halen" data-title="van halen" data-label="warner bros. records" data-format="LP">
+        <td class="td-artist">Van Halen</td>
+        <td class="td-title">Van Halen</td>
+        <td class="td-year">1978</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Warner Bros. Records</td>
+        <td class="td-catalog">BSK 3075</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="vanity 6" data-title="vanity 6" data-label="warner bros. records" data-format="LP">
+        <td class="td-artist">Vanity 6</td>
+        <td class="td-title">Vanity 6</td>
+        <td class="td-year">1982</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Warner Bros. Records</td>
+        <td class="td-catalog">92 37161</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the vapors" data-title="new clear days" data-label="united artists records" data-format="LP">
+        <td class="td-artist">The Vapors</td>
+        <td class="td-title">New Clear Days</td>
+        <td class="td-year">1980</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">United Artists Records</td>
+        <td class="td-catalog">LT 1049</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="various" data-title="concerts for the people of kampuchea" data-label="atlantic" data-format="2xLP">
+        <td class="td-artist">Various</td>
+        <td class="td-title">Concerts For The People Of Kampuchea</td>
+        <td class="td-year">1981</td>
+        <td><span class="fmt-badge fmt-2xLP">2×LP</span></td>
+        <td class="td-label">Atlantic</td>
+        <td class="td-catalog">SD 27005</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="various" data-title="eastern front" data-label="enigma (4)" data-format="LP">
+        <td class="td-artist">Various</td>
+        <td class="td-title">Eastern Front</td>
+        <td class="td-year">1983</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Enigma (4)</td>
+        <td class="td-catalog">E1015</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="various" data-title="eastern front" data-label="ici sanoblast" data-format="LP">
+        <td class="td-artist">Various</td>
+        <td class="td-title">Eastern Front</td>
+        <td class="td-year">1982</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">ICI Sanoblast</td>
+        <td class="td-catalog">CF3000</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="various" data-title="international p.e.a.c.e. benefit compilation" data-label="r radical records" data-format="2xLP">
+        <td class="td-artist">Various</td>
+        <td class="td-title">International P.E.A.C.E. Benefit Compilation</td>
+        <td class="td-year">1984</td>
+        <td><span class="fmt-badge fmt-2xLP">2×LP</span></td>
+        <td class="td-label">R Radical Records</td>
+        <td class="td-catalog">R.R.R. 1984</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="various" data-title="let them eat jellybeans!" data-label="alternative tentacles" data-format="LP">
+        <td class="td-artist">Various</td>
+        <td class="td-title">Let Them Eat Jellybeans!</td>
+        <td class="td-year">1981</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Alternative Tentacles</td>
+        <td class="td-catalog">VIRUS 4</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="various" data-title="live stiffs" data-label="music for pleasure" data-format="LP">
+        <td class="td-artist">Various</td>
+        <td class="td-title">Live Stiffs</td>
+        <td class="td-year">1979</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Music For Pleasure</td>
+        <td class="td-catalog">MFP 50445</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="various" data-title="mystic sampler #1" data-label="mystic records (8)" data-format="LP">
+        <td class="td-artist">Various</td>
+        <td class="td-title">Mystic Sampler #1</td>
+        <td class="td-year">1984</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Mystic Records (8)</td>
+        <td class="td-catalog">MLP 33126</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="various" data-title="mystic sampler #2" data-label="mystic records (8)" data-format="LP">
+        <td class="td-artist">Various</td>
+        <td class="td-title">Mystic Sampler #2</td>
+        <td class="td-year">1985</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Mystic Records (8)</td>
+        <td class="td-catalog">MLP33127</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="various" data-title="no nukes - from the muse concerts for a non-nuclear future - madison square garden - september 19-23, 1979" data-label="asylum records" data-format="3xLP">
+        <td class="td-artist">Various</td>
+        <td class="td-title">No Nukes - From The Muse Concerts For A Non-Nuclear Future - Madison Square Garden - September 19-23, 1979</td>
+        <td class="td-year">1979</td>
+        <td><span class="fmt-badge fmt-3xLP">3×LP</span></td>
+        <td class="td-label">Asylum Records</td>
+        <td class="td-catalog">ML-801</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="various" data-title="not so quiet on the western front" data-label="alternative tentacles" data-format="2xLP">
+        <td class="td-artist">Various</td>
+        <td class="td-title">Not So Quiet On The Western Front</td>
+        <td class="td-year">1982</td>
+        <td><span class="fmt-badge fmt-2xLP">2×LP</span></td>
+        <td class="td-label">Alternative Tentacles</td>
+        <td class="td-catalog">VIRUS 14</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="various" data-title="party animal" data-label="mystic records (8)" data-format="LP">
+        <td class="td-artist">Various</td>
+        <td class="td-title">Party Animal</td>
+        <td class="td-year">1984</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Mystic Records (8)</td>
+        <td class="td-catalog">MLP 33137</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="various" data-title="philly hardcore compilation - get off my back (we're doing it ourselves)" data-label="red music" data-format="LP">
+        <td class="td-artist">Various</td>
+        <td class="td-title">Philly Hardcore Compilation - Get Off My Back (We're Doing It Ourselves)</td>
+        <td class="td-year">1983</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Red Music</td>
+        <td class="td-catalog">PHC 004</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="various" data-title="philly hardcore compilation - get off my back (we're doing it ourselves)" data-label="red music" data-format="LP">
+        <td class="td-artist">Various</td>
+        <td class="td-title">Philly Hardcore Compilation - Get Off My Back (We're Doing It Ourselves)</td>
+        <td class="td-year">1983</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Red Music</td>
+        <td class="td-catalog">PHC 004</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="various" data-title="quadrophenia" data-label="polydor" data-format="2xLP">
+        <td class="td-artist">Various</td>
+        <td class="td-title">Quadrophenia</td>
+        <td class="td-year">1979</td>
+        <td><span class="fmt-badge fmt-2xLP">2×LP</span></td>
+        <td class="td-label">Polydor</td>
+        <td class="td-catalog">PD-2-6235</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="various" data-title="skate rock volume 3 - wild riders of boards" data-label="thrasher magazine" data-format="LP">
+        <td class="td-artist">Various</td>
+        <td class="td-title">Skate Rock Volume 3 - Wild Riders Of Boards</td>
+        <td class="td-year">1985</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Thrasher Magazine</td>
+        <td class="td-catalog">06662000</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="various" data-title="something to believe in" data-label="better youth organization" data-format="LP">
+        <td class="td-artist">Various</td>
+        <td class="td-title">Something To Believe In</td>
+        <td class="td-year">1984</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Better Youth Organization</td>
+        <td class="td-catalog">BYO 004</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="various" data-title="the blasting concept" data-label="sst records" data-format="LP">
+        <td class="td-artist">Various</td>
+        <td class="td-title">The Blasting Concept</td>
+        <td class="td-year">1983</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">SST Records</td>
+        <td class="td-catalog">SST 013</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="various" data-title="the blasting concept volume ii" data-label="sst records" data-format="LP">
+        <td class="td-artist">Various</td>
+        <td class="td-title">The Blasting Concept Volume II</td>
+        <td class="td-year">1986</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">SST Records</td>
+        <td class="td-catalog">SST 043</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="various" data-title="this is boston not l.a." data-label="modern method records" data-format="LP">
+        <td class="td-artist">Various</td>
+        <td class="td-title">This Is Boston Not L.A.</td>
+        <td class="td-year">1982</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Modern Method Records</td>
+        <td class="td-catalog">MM012</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="various" data-title="this is phoenix, not the circle jerks" data-label="placebo records" data-format="LP">
+        <td class="td-artist">Various</td>
+        <td class="td-title">This Is Phoenix, Not The Circle Jerks</td>
+        <td class="td-year">1984</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Placebo Records</td>
+        <td class="td-catalog">PLA 501</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="various" data-title="this is the central coast" data-label="bopp n' skin records" data-format="LP">
+        <td class="td-artist">Various</td>
+        <td class="td-title">This Is The Central Coast</td>
+        <td class="td-year">1984</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Bopp N' Skin Records</td>
+        <td class="td-catalog">001</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="various" data-title="we got power (party or go home)" data-label="mystic records (8)" data-format="LP">
+        <td class="td-artist">Various</td>
+        <td class="td-title">We Got Power (Party Or Go Home)</td>
+        <td class="td-year">1983</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Mystic Records (8)</td>
+        <td class="td-catalog">MLP 33125</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="various" data-title="woodstock - music from the original soundtrack and more" data-label="cotillion" data-format="3xLP">
+        <td class="td-artist">Various</td>
+        <td class="td-title">Woodstock - Music From The Original Soundtrack And More</td>
+        <td class="td-year">1970</td>
+        <td><span class="fmt-badge fmt-3xLP">3×LP</span></td>
+        <td class="td-label">Cotillion</td>
+        <td class="td-catalog">SD 3-500</td>
+        <td>—</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section open" id="sec-W">
+  <div class="section-header" onclick="toggleSection(this)">
+    <span class="section-letter">W</span>
+    <span class="section-count">9 records</span>
+    <span class="section-toggle">▶</span>
+  </div>
+  <div class="section-body">
+    <table>
+      <thead><tr><th>Artist</th><th>Title</th><th>Year</th><th>Format</th><th>Label</th><th>Catalog#</th><th>Condition</th></tr></thead>
+      <tbody>
+      <tr data-artist="wall of voodoo" data-title="call of the west" data-label="i.r.s. records" data-format="LP">
+        <td class="td-artist">Wall Of Voodoo</td>
+        <td class="td-title">Call Of The West</td>
+        <td class="td-year">1982</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">I.R.S. Records</td>
+        <td class="td-catalog">SP-70026</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="wall of voodoo" data-title="call of the west" data-label="i.r.s. records" data-format="LP">
+        <td class="td-artist">Wall Of Voodoo</td>
+        <td class="td-title">Call Of The West</td>
+        <td class="td-year">1982</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">I.R.S. Records</td>
+        <td class="td-catalog">SP-70026</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="walter salas-humara" data-title="lagartija" data-label="record collect" data-format="LP">
+        <td class="td-artist">Walter Salas-Humara</td>
+        <td class="td-title">Lagartija</td>
+        <td class="td-year">1988</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Record Collect</td>
+        <td class="td-catalog">RC-51</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="warren zevon" data-title="bad luck streak in dancing school" data-label="asylum records" data-format="LP">
+        <td class="td-artist">Warren Zevon</td>
+        <td class="td-title">Bad Luck Streak In Dancing School</td>
+        <td class="td-year">1980</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Asylum Records</td>
+        <td class="td-catalog">5E-509</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="what is this" data-title="squeezed" data-label="san andreas records" data-format="12"">
+        <td class="td-artist">What Is This</td>
+        <td class="td-title">Squeezed</td>
+        <td class="td-year">1984</td>
+        <td><span class="fmt-badge fmt-12">12″</span></td>
+        <td class="td-label">San Andreas Records</td>
+        <td class="td-catalog">SAR-36011</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the who" data-title="who are you" data-label="mca records" data-format="LP">
+        <td class="td-artist">The Who</td>
+        <td class="td-title">Who Are You</td>
+        <td class="td-year">1978</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">MCA Records</td>
+        <td class="td-catalog">MCA-3050</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="the who" data-title="who's next" data-label="mca records" data-format="LP">
+        <td class="td-artist">The Who</td>
+        <td class="td-title">Who's Next</td>
+        <td class="td-year">1980</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">MCA Records</td>
+        <td class="td-catalog">MCA-3024</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="wide boy awake" data-title="wide boy awake" data-label="rca" data-format="LP">
+        <td class="td-artist">Wide Boy Awake</td>
+        <td class="td-title">Wide Boy Awake</td>
+        <td class="td-year">1983</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">RCA</td>
+        <td class="td-catalog">MFL1-8511</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="wings (2)" data-title="band on the run" data-label="apple records" data-format="LP">
+        <td class="td-artist">Wings (2)</td>
+        <td class="td-title">Band On The Run</td>
+        <td class="td-year">1973</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Apple Records</td>
+        <td class="td-catalog">SO-3415</td>
+        <td>—</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section open" id="sec-X">
+  <div class="section-header" onclick="toggleSection(this)">
+    <span class="section-letter">X</span>
+    <span class="section-count">2 records</span>
+    <span class="section-toggle">▶</span>
+  </div>
+  <div class="section-body">
+    <table>
+      <thead><tr><th>Artist</th><th>Title</th><th>Year</th><th>Format</th><th>Label</th><th>Catalog#</th><th>Condition</th></tr></thead>
+      <tbody>
+      <tr data-artist="x (5)" data-title="under the big black sun" data-label="elektra" data-format="LP">
+        <td class="td-artist">X (5)</td>
+        <td class="td-title">Under The Big Black Sun</td>
+        <td class="td-year">1982</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Elektra</td>
+        <td class="td-catalog">9 60150-1</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="xtc" data-title="english settlement" data-label="epic" data-format="LP">
+        <td class="td-artist">XTC</td>
+        <td class="td-title">English Settlement</td>
+        <td class="td-year">1982</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Epic</td>
+        <td class="td-catalog">ARE 37943</td>
+        <td>—</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section open" id="sec-Y">
+  <div class="section-header" onclick="toggleSection(this)">
+    <span class="section-letter">Y</span>
+    <span class="section-count">6 records</span>
+    <span class="section-toggle">▶</span>
+  </div>
+  <div class="section-body">
+    <table>
+      <thead><tr><th>Artist</th><th>Title</th><th>Year</th><th>Format</th><th>Label</th><th>Catalog#</th><th>Condition</th></tr></thead>
+      <tbody>
+      <tr data-artist="yazoo" data-title="upstairs at eric's" data-label="sire" data-format="LP">
+        <td class="td-artist">Yazoo</td>
+        <td class="td-title">Upstairs At Eric's</td>
+        <td class="td-year">1982</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Sire</td>
+        <td class="td-catalog">1-23737</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="ydi" data-title="black dust" data-label="blood bubble records" data-format="LP">
+        <td class="td-artist">YDI</td>
+        <td class="td-title">Black Dust</td>
+        <td class="td-year">1985</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Blood Bubble Records</td>
+        <td class="td-catalog">DM-85063</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="yellowman & fathead, purpleman, sister nancy" data-title="the yellow, the purple, the nancy" data-label="greensleeves records" data-format="LP">
+        <td class="td-artist">Yellowman & Fathead, Purpleman, Sister Nancy</td>
+        <td class="td-title">The Yellow, The Purple, The Nancy</td>
+        <td class="td-year">1982</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Greensleeves Records</td>
+        <td class="td-catalog">GREL 49</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="yes" data-title="going for the one" data-label="atlantic" data-format="LP">
+        <td class="td-artist">Yes</td>
+        <td class="td-title">Going For The One</td>
+        <td class="td-year">1977</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Atlantic</td>
+        <td class="td-catalog">SD 19106</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="yes" data-title="the yes album" data-label="atlantic" data-format="LP">
+        <td class="td-artist">Yes</td>
+        <td class="td-title">The Yes Album</td>
+        <td class="td-year">1977</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Atlantic</td>
+        <td class="td-catalog">SD 19131</td>
+        <td>—</td>
+      </tr>
+      <tr data-artist="yes" data-title="tormato" data-label="atlantic" data-format="LP">
+        <td class="td-artist">Yes</td>
+        <td class="td-title">Tormato</td>
+        <td class="td-year">1978</td>
+        <td><span class="fmt-badge fmt-LP">LP</span></td>
+        <td class="td-label">Atlantic</td>
+        <td class="td-catalog">KSD-19202</td>
+        <td>—</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="no-results" id="noResults">No records match your search.</div>
+
+<div class="footer">mouserr vinyl collection &mdash; 385 records &mdash; exported from discogs</div>
+
+<script>
+function toggleSection(header) {
+  header.parentElement.classList.toggle('open');
+}
+
+function filterRecords() {
+  const q = document.getElementById('search').value.toLowerCase().trim();
+  const fmt = document.getElementById('fmtFilter').value;
+  let count = 0;
+
+  document.querySelectorAll('.section').forEach(sec => {
+    let secVisible = false;
+    sec.querySelectorAll('tbody tr').forEach(row => {
+      const artist = row.dataset.artist || '';
+      const title = row.dataset.title || '';
+      const label = row.dataset.label || '';
+      const format = row.dataset.format || '';
+      const matchQ = !q || artist.includes(q) || title.includes(q) || label.includes(q);
+      const matchFmt = !fmt || format.startsWith(fmt);
+      if (matchQ && matchFmt) {
+        row.classList.remove('hidden');
+        secVisible = true;
+        count++;
+      } else {
+        row.classList.add('hidden');
+      }
+    });
+    sec.classList.toggle('all-hidden', !secVisible);
+    if (secVisible && (q || fmt)) sec.classList.add('open');
+  });
+
+  document.getElementById('count').textContent = count;
+  document.getElementById('noResults').classList.toggle('show', count === 0);
+}
+</script>
+</body>
+</html>
