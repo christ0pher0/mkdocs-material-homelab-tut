@@ -22,10 +22,13 @@ _Inventory in progress — updated as items are found_
 | Samsung 860 EVO 1TB | 6 | SATA 2.5" | Best in reserve — lee-deb, restic-deb CRU bays, maturin 2.5" bay |
 | Crucial MX200 1TB | 1 | SATA 2.5" | Solid mid-range — good for any SATA slot |
 | Samsung PM9A3 1.92TB | 1 | NVMe PCIe Gen4 U.2 | Enterprise — needs U.2 to PCIe adapter |
+| Orico Y-20M 2TB | 1 | M.2 NVMe | New in box ⭐ — best NVMe in reserve |
 
 ### 480-512GB
 | Item | Qty | Interface | Notes |
 |------|-----|-----------|-------|
+| SK Hynix PC600 512GB | 1 | M.2 NVMe | Good NVMe — maturin, idee-deb, urnst-deb candidate |
+| Crucial P1 500GB | 1 | M.2 NVMe PCIe Gen3 | Good mid-range NVMe |
 | Edge SE B47 512GB | 1 | SATA 3 | Budget — OS drives, light duty |
 | Edge SE B47 500GB | 3 | SATA 3 | Budget — OS drives, light duty |
 | Edge SE B47 480GB | 2 | SATA 3 | Budget — OS drives, light duty |
@@ -33,14 +36,36 @@ _Inventory in progress — updated as items are found_
 ### 256GB
 | Item | Qty | Interface | Notes |
 |------|-----|-----------|-------|
+| Samsung PM951 256GB | 1 | M.2 NVMe | Older NVMe — still usable for OS drives |
+| Intel M.2 NVMe 256GB | 1 | M.2 NVMe | OS drive candidate |
+| Toshiba M.2 256GB | 1 | M.2 SATA | OS drive candidate |
+| SK Hynix SC300 256GB | 1 | M.2 SATA | OS drive candidate |
 | SK Hynix SH920 256GB | 2 | SATA 2.5" | Decent — OS drives |
 | Edge SE B47 256GB | 3 | SATA 3 | Budget — OS drives only |
 
 ### 128GB
 | Item | Qty | Interface | Notes |
 |------|-----|-----------|-------|
+| Intel SSD 600P 128GB | 1 | M.2 NVMe | Older NVMe — light OS use only |
+| SK Hynix SC300 128GB | 1 | M.2 SATA | Light OS use |
+| WD Blue 128GB | 1 | M.2 SATA | Light OS use |
 | Crucial BX300 128GB | 2 | SATA 2.5" | Borderline for modern OS — Pi or embedded use |
 | Transcend SSD370S 128GB | 1 | SATA 2.5" | Borderline for modern OS — Pi or embedded use |
+| 128GB NVMe in mSATA caddy | 1 | mSATA caddy | Confirm form factor before use |
+
+### 64GB and under
+| Item | Qty | Interface | Notes |
+|------|-----|-----------|-------|
+| SanDisk 64GB | 1 | mSATA | Too small for modern OS — embedded only |
+
+---
+
+## External Storage
+
+| Item | Qty | Interface | Notes |
+|------|-----|-----------|-------|
+| WD My Passport 1TB (black) | 1 | USB 3.0 | Portable backup / data transfer |
+| WD My Passport 1TB (red) | 1 | USB 3.0 | Portable backup / data transfer |
 
 ---
 
@@ -118,3 +143,59 @@ _Inventory in progress — updated as items are found_
 | Micron 8GB MT36JSF1G72PZ | 2 | DDR3-1600 | RDIMM |
 | Crucial 8GB CT102472BB160B | 1 | DDR3-1600 | RDIMM |
 | SK Hynix 16GB HMT42GR7BFR4A | 1 | DDR3L-1600 | RDIMM — largest single stick |
+
+---
+
+## Development Boards
+
+| Item | Qty | Notes |
+|------|-----|-------|
+| Avnet ZUBoard 1CG | 2 | Xilinx/AMD Zynq UltraScale+ FPGA — not homelab hardware, worth keeping for ML/FPGA work |
+
+---
+
+## Ewaste / Misc
+
+| Item | Notes |
+|------|-------|
+| Dell SanDisk CompactFlash (Version 4.1.4) | Dell server BIOS flash card — no matching hardware, ewaste |
+| 2× mSATA caddies (empty) | Spare hardware caddies |
+
+---
+
+## Hard Drives (3.5" HDD)
+
+### Production Drives
+| # | Label | Model | Capacity | Serial | Interface | Notes |
+|---|-------|-------|----------|--------|-----------|-------|
+| 1 | 4TB KICKSTARTER | WD/HGST HC310 HUS726T4ALE6L4 | 4TB | V6KAG1VR | SATA 6Gb/s | Dec 2019 |
+| 2 | 3D / 4TB | WD Green WD40EZRX | 4TB | TBD | SATA 6Gb/s | Apr 2015 — update serial when installed |
+| 3 | PATREON #-B | Toshiba DT01ACA300 | 3TB | Y5FM2SEGS | SATA 6Gb/s | Patreon archive #-B — Nov 2015 |
+| 4 | PATREON C-D | Toshiba DT01ACA300 | 3TB | Y5GMAEAGS | SATA 6Gb/s | Patreon archive C-D — Nov 2015 |
+| 5 | PATREON E-K | Seagate Constellation ES.2 SED ST3000051NS | 3TB | Z2928YTG | SATA 6Gb/s | Patreon archive E-K — enterprise SED, May 2012 |
+| 6 | PATREON L-O | Seagate Barracuda ST3000DM001 | 3TB | W1F0BALQ | SATA 6Gb/s | Patreon archive L-O |
+| 7 | PATREON O-Z | WD WD30EZRS | 3TB | WD-WMAWZ0009936 | SATA 6Gb/s | Currently in restic-deb bay |
+| 8 | TROVE 24-08 | Seagate Enterprise NAS ST6000VN0001 | 6TB | Z401Z7A5 | SATA 6Gb/s | DOM 05/2015 |
+| 9 | 6 TB SEAGATE 7200 | Seagate Enterprise NAS ST6000VN0001 | 6TB | Z40Z2HT9 | SATA 6Gb/s | DOM 05/2015 |
+
+### Reserve / Surplus Drives
+| # | Label | Model | Capacity | Serial | Interface | Notes |
+|---|-------|-------|----------|--------|-----------|-------|
+| 1 | Hitachi bare | Hitachi 0F12450 | 3TB | THG3LSNA | SATA 6Gb/s | Dec 2010 — run SMART before trusting |
+| 2 | 3TB (unlabeled) | Seagate Constellation ES.2 SED ST3000051NS | 3TB | TBD | SATA 6Gb/s | Enterprise SED — update serial when installed |
+| 3 | (unlabeled) | Seagate Constellation ES.2 SED ST3000051NS | 3TB | Z292K11M | SATA 6Gb/s | DOM 05/2012 — enterprise SED |
+| 4 | (unlabeled) | Seagate Constellation ES.3 | 3TB | Z1Y38A01 | SATA 6Gb/s | DOM 01/2015 |
+| 5 | 2WD CLASS EE | WD Caviar Green WD20EARX | 2TB | WCAZAF839739 | SATA 6Gb/s | Aug 2012 — check for data before use |
+| 6 | GOODWIM CENTOS | Seagate Barracuda ST500DM002 | 500GB | TBD | SATA 6Gb/s | Check for data before use |
+
+### Needs Data Check Before Use
+| # | Label | Notes |
+|---|-------|-------|
+| 1 | 2WD CLASS EE | WD 2TB — unknown contents |
+| 2 | GOODWIM CENTOS | Seagate 500GB — unknown contents |
+
+### External HDDs
+| Label | Capacity | Notes |
+|-------|----------|-------|
+| WD My Passport (black) | 1TB | USB 3.0 portable |
+| WD My Passport (red) | 1TB | USB 3.0 portable |
