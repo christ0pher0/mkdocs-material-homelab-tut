@@ -1,5 +1,5 @@
 # Hosts
-_Last update: 2026-05-23 14:05:01_
+_Last update: 2026-05-23 15:05:01_
 
 | # | Hostname | IP Address | MAC Address | OS | Status | Notes |
 |---|----------|------------|------------|----|--------|-------|
@@ -27,5 +27,5 @@ _Last update: 2026-05-23 14:05:01_
 | 22 | octopi-deb | 192.168.1.122 | DC:A6:32:5E:04:08 | Debian/Ubuntu Linux | Online | ------ |
 | 23 | ha-net | 192.168.1.125 | E4:5F:01:65:56:EE | Network Device | Online | ------ |
 | 24 | tv2-media | 192.168.1.141 | 22:57:5A:A7:04:87 | Media Device | Online | ------ |
-| 25 | pixel8-droid | 192.168.1.201 | EE:FC:9C:95:22:1B | Android | Online | ------ |
+| 25 | unknown-192.168.1.145 | 192.168.1.145 | 74:E2:0C:D6:71:DD | Unknown | Online | ------ |
 | 26 | alexa-droid | 192.168.1.202 | B0:FC:0D:51:8F:78 | Android | Online | ------ |
