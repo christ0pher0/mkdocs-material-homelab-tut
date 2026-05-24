@@ -174,7 +174,7 @@ _Inventory in progress — updated as items are found_
 | 4 | PATREON C-D | Toshiba DT01ACA300 | 3TB | Y5GMAEAGS | SATA 6Gb/s | Feb 2025 | Patreon archive C-D — Nov 2015 |
 | 5 | PATREON E-K | Seagate Constellation ES.2 SED ST3000051NS | 3TB | Z2928YTG | SATA 6Gb/s | Feb 2025 | Patreon archive E-K — enterprise SED |
 | 6 | PATREON L-O | Seagate Barracuda ST3000DM001 | 3TB | W1F0BALQ | SATA 6Gb/s | Feb 2025 | Patreon archive L-O |
-| 7 | PATREON O-Z | WD WD30EZRS | 3TB | WD-WMAWZ0009936 | SATA 6Gb/s | — | Currently in restic-deb bay |
+| 7 | PATREON O-S | WD WD30EZRS | 3TB | WD-WMAWZ0009936 | SATA 6Gb/s | — | Currently in restic-deb bay |
 | 8 | TROVE 24-08 | Seagate Enterprise NAS ST6000VN0001 | 6TB | Z401Z7A5 | SATA 6Gb/s | Aug 2024 | DOM 05/2015 |
 | 9 | 6 TB SEAGATE 7200 | Seagate Enterprise NAS ST6000VN0001 | 6TB | Z40Z2HT9 | SATA 6Gb/s | — | DOM 05/2015 |
 | 10 | READING | Seagate Constellation ES.3 ST3000NM0033 | 3TB | Z1Y32KTB | SATA 6Gb/s | Feb 2025 | DOM 01/2015 |
