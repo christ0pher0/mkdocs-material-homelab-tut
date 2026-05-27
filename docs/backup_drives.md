@@ -1,5 +1,5 @@
 # Backup Drive Inventory
-_Last updated: 2026-05-24_
+_Last updated: 2026-05-26_
 _Physical removable backup drives — rotated through restic-deb CRU bays_
 _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 
@@ -53,7 +53,7 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 | 3 | PATREON E-K | Seagate ST3000051NS SED | 3TB | — | — | Z2928YTG | Feb 2025 | Patreon E-K | Enterprise SED |
 | 4 | PATREON L-O | Seagate ST3000DM001 | 3TB | — | — | W1F0BALQ | Feb 2025 | Patreon L-O | |
 | 5 | PATREON O-S | WD WD30EZRS | 3TB | — | — | WD-WMAWZ0009936 | May 2026 | Patreon O-S | |
-| 6 | MZ4250 | WD WD40EZRX | 4TB | 1.5T | 2.3T | TBD | May 2026 | MZ4250 3D Patreon archive | Scanned 2026-05-24. mz4250 remixes also on drive (11GB). |
+| 6 | MZ4250 | WD WD40EZRX | 4TB | 1.5T | / | TBD | May 2026 | MZ4250 3D Patreon archive | Scanned 2026-05-24. mz4250 remixes also on drive (11GB). |
 
 ---
 
