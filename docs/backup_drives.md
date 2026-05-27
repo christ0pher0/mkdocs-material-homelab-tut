@@ -24,7 +24,7 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 | 1 | TV 0-B / 4TB WDGREEN | WD Green WD40EZRX | 4TB | — | — | HARNNY2C48 | Jan 2024 | TV 0-B | |
 | 2 | 3TB SEA TV C-D | Seagate ST3000051NS SED | 3TB | — | — | Z2926W97 | Jan 2024 | TV C-D | Enterprise SED |
 | 3 | 3TB TV E-F GOT | WD Caviar Green WD30EZRS | 3TB | — | — | WMAWZ0028623 | Jan 2024 | TV E-F incl GOT | |
-| 4 | 3TB TV G-J | WD Caviar Green WD30EZRS | 3TB | 2.5T | 276G | WMAWZ036055 | Sep 2022 | TV G-J | Scanned 2026-05-24 |
+| 4 | 3WD_TV_G-J | WD Caviar Green WD30EZRS | 3TB | 2.5T | 2.8T | WMAWZ036055 | Sep 2022 | TV G-J | Scanned 2026-05-24 |
 | 5 | 3TB TV K-L | WD Caviar Green WD30EZRS | 3TB | — | — | WMAWZ0J24370 | Sep 2022 | TV K-L | ⚠️ SUSPECTED DEAD — 0.0GB in BIOS 2026-05-24 |
 | 6 | 3TB TV M-O | Seagate Barracuda ST3000DM001 | 3TB | — | — | Z1FKZ6JM | Jan 2024 | TV M-O | |
 | 7 | 3TB TV P-SNOFALL | Seagate ST3000051NS SED | 3TB | — | — | Z292M282 | Jan 2024 | TV P-Snowfall | Enterprise SED |
