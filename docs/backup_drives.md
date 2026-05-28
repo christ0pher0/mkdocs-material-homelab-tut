@@ -72,7 +72,6 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 
 | # | Label | Model | Capacity | Used | Free | Serial | Last Backed Up | Content | Notes |
 |---|-------|-------|----------|------|------|--------|----------------|---------|-------|
-| 1 | 3D / 4TB | WD Green WD40EZRX | 4TB | — | — | TBD | Aug 2022 | 3D files | Update serial |
 | 2 | 4TB KICKSTARTER | WD/HGST HC310 | 4TB | — | — | V6KAG1VR | Jan 2024 | Kickstarter | Dec 2019 |
 | 3 | 6 TB SEAGATE 7200 | Seagate ST6000VN0001 | 6TB | — | — | Z40Z2HT9 | — | — | DOM 05/2015 |
 | 4 | D&D GAMING | Seagate ST3000DM001 | 3TB | — | — | Z5011ZMP | Feb 2024 | D&D/Gaming | |
