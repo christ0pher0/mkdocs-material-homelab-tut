@@ -22,7 +22,7 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 | # | Label | Model | Capacity | Used | Free | Serial | Last Backed Up | Content | Notes |
 |---|-------|-------|----------|------|------|--------|----------------|---------|-------|
 | 1 | TV_0-A | WD Green WD40EZRX | 4TB | 2.3T | 3.7T | HARNNY2C48 | Jan 2024 | TV 0-A | |
-| 2 | 3TB SEA TV C-D | Seagate ST3000051NS SED | 3TB | — | — | Z2926W97 | Jan 2024 | TV C-D | Enterprise SED |
+| 2 | 3TBSEA TV C-D | Seagate ST3000051NS SED | 3TB | 2.4T | 2.8T | Z2926W97 | Jan 2024 | TV C-D | Enterprise SED |
 | 3 | TV_E-F | WD Caviar Green WD30EZRS | 3TB | 2.1T | 2.8T | WMAWZ0028623 | Jan 2024 | TV E-F incl GOT | |
 | 4 | TV_G-J | WD Caviar Green WD30EZRS | 3TB | 2.5T | 2.8T | WMAWZ036055 | Sep 2022 | TV G-J | Scanned 2026-05-24 |
 | 5 | 3TB TV K-L | WD Caviar Green WD30EZRS | 3TB | — | — | WMAWZ0J24370 | Sep 2022 | TV K-L | ⚠️ SUSPECTED DEAD — 0.0GB in BIOS 2026-05-24 |
@@ -31,6 +31,8 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 | 8 | 3TB TV SONS-T | Hitachi 0F12450 | 3TB | — | — | YHG4ZPSA | Jan 2024 | TV S | |
 | 9 | 3T HIT EVERTHING | Seagate ST3000VN0001 | 3TB | — | — | Z4F95VN8 | Feb 2024 | TV misc | |
 | 10 | 3T TVU-Z | Hitachi 3TB | 3TB | — | — | YHG80M8A | Jan 2024 | TV U-Z | |
+| 11 | TV_B-D | Seagate ST6000VN0001 | 6TB | 2.6T | 5.5T | Z4D2DHT9 | May 2026 | TV B-D | 6TB archive drive |
+| 11 | TV_B-D | Seagate ST6000VN0001 | 6TB | 2.6T | 5.5T | Z4D2DHT9 | May 2026 | TV B-D | 6TB archive drive |
 
 ---
 
