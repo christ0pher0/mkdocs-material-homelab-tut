@@ -32,7 +32,6 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 | 9 | 3T HIT EVERTHING | Seagate ST3000VN0001 | 3TB | — | — | Z4F95VN8 | Feb 2024 | TV misc | |
 | 10 | 3T TVU-Z | Hitachi 3TB | 3TB | — | — | YHG80M8A | Jan 2024 | TV U-Z | |
 | 11 | TV_B-D | Seagate ST6000VN0001 | 6TB | 2.6T | 5.5T | Z4D2DHT9 | May 2026 | TV B-D | 6TB archive drive |
-| 11 | TV_B-D | Seagate ST6000VN0001 | 6TB | 2.6T | 5.5T | Z4D2DHT9 | May 2026 | TV B-D | 6TB archive drive |
 
 ---
 
