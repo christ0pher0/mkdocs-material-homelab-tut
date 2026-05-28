@@ -21,7 +21,7 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 
 | # | Label | Model | Capacity | Used | Free | Serial | Last Backed Up | Content | Notes |
 |---|-------|-------|----------|------|------|--------|----------------|---------|-------|
-| 1 | TV 0-B / 4TB WDGREEN | WD Green WD40EZRX | 4TB | — | — | HARNNY2C48 | Jan 2024 | TV 0-B | |
+| 1 | TV_0-A | WD Green WD40EZRX | 4TB | 2.3T | 3.7T | HARNNY2C48 | Jan 2024 | TV 0-A | |
 | 2 | 3TB SEA TV C-D | Seagate ST3000051NS SED | 3TB | — | — | Z2926W97 | Jan 2024 | TV C-D | Enterprise SED |
 | 3 | TV_E-F | WD Caviar Green WD30EZRS | 3TB | 2.1T | 2.8T | WMAWZ0028623 | Jan 2024 | TV E-F incl GOT | |
 | 4 | TV_G-J | WD Caviar Green WD30EZRS | 3TB | 2.5T | 2.8T | WMAWZ036055 | Sep 2022 | TV G-J | Scanned 2026-05-24 |
