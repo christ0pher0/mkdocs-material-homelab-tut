@@ -27,7 +27,12 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 | 3TB TV M-O | Seagate Barracuda ST3000DM001 | 3TB | — | — | Z1FKZ6JM | Jan 2024 — |
 | 3TB TV P-SNOFALL | Seagate ST3000051NS SED | 3TB | — | — | Z292M282 | Jan 2024 — |
 | 3TB TV SONS-T | Hitachi 0F12450 | 3TB | — | — | YHG4ZPSA | Jan 2024 — |
-| TV_0-A | WD Green WD40EZRX | 4TB | 2.3T | 3.7T | HARNNY2C48 | Jan 2024 — | — | TV_3TB_SEA | Seagate ST3000051NS SED | 3TB | 152M | 2.8T | Z2926W97 | Jan 2024 — | ✅ | TV_B-D | Seagate ST6000VN0001 | 6TB | 4.6T | 5.5T | Z4D2DHT9 | May 2026 — | ✅ | TV_E-F | WD Caviar Green WD30EZRS | 3TB | 2.1T | 2.8T | WMAWZ0028623 | Jan 2024 — | — | TV_G-J | WD Caviar Green WD30EZRS | 3TB | 2.5T | 2.8T | WMAWZ036055 | Sep 2022 — | — 
+| TV_0-A | WD Green WD40EZRX | 4TB | 2.3T | 3.7T | HARNNY2C48 | Jan 2024 — |
+| TV_3TB_SEA | Seagate ST3000051NS SED | 3TB | 152M | 2.8T | Z2926W97 | Jan 2024 — |
+| TV_B-D | Seagate ST6000VN0001 | 6TB | 4.6T | 5.5T | Z4D2DHT9 | May 2026 — |
+| TV_E-F | WD Caviar Green WD30EZRS | 3TB | 2.1T | 2.8T | WMAWZ0028623 | Jan 2024 — |
+| TV_G-J | WD Caviar Green WD30EZRS | 3TB | 2.5T | 2.8T | WMAWZ036055 | Sep 2022 — |
+
 ---
 
 ## Movie Archive Drives
@@ -44,7 +49,8 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 
 | Label | Model | Size | Used | Free | Serial | Backup | SMART |
 |-------|-------|------|------|------|--------|--------|-------|
-| MZ4250 | WD WD40EZRX | 4TB | 1.5T | 3.7T | WD-WCC4E6KA88HE | May 2026 — | — | PATREON #-B | Toshiba DT01ACA300 | 3TB | — | — | Y5FM2SEGS | Jan 2024 — |
+| MZ4250 | WD WD40EZRX | 4TB | 1.5T | 3.7T | WD-WCC4E6KA88HE | May 2026 — |
+| PATREON #-B | Toshiba DT01ACA300 | 3TB | — | — | Y5FM2SEGS | Jan 2024 — |
 | PATREON C-D | Toshiba DT01ACA300 | 3TB | — | — | Y5GMAEAGS | Feb 2025 — |
 | PATREON E-K | Seagate ST3000051NS SED | 3TB | — | — | Z2928YTG | Feb 2025 — |
 | PATREON L-O | Seagate ST3000DM001 | 3TB | — | — | W1F0BALQ | Feb 2025 — |
@@ -57,8 +63,8 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 | Label | Model | Size | Used | Free | Serial | Backup | SMART |
 |-------|-------|------|------|------|--------|--------|-------|
 | AUDIOBOOKS 3TB | WD Caviar Green WD30EZRS | 3TB | — | — | WMAW20629019 | Feb 2024 — |
-| MUSIC 10-21-2018 | Seagate ST3000DM001 | 3TB | — | — | Z5011NMK | Feb 2024 — |
 | MUSIC+ MUSIC NOT PLEX | Toshiba DT01ACA300 | 3TB | — | — | Y5GM81UGS | Feb 2024 — |
+| MUSIC 10-21-2018 | Seagate ST3000DM001 | 3TB | — | — | Z5011NMK | Feb 2024 — |
 
 ---
 
