@@ -20,7 +20,7 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 ## TV Archive Drives
 
 | # | Label | Model | Size | Used | Free | Serial | Backup | Content |
-|---|-------|-------|----------|------|------|--------|----------------|---------|-------|
+|---|-------|-------|------|------|------|--------|---------|---------|
 | 1 | 3T HIT EVERTHING | Seagate ST3000VN0001 | 3TB | — | — | Z4F95VN8 | Feb 2024 | TV misc | |
 | 2 | 3T TVU-Z | Hitachi 3TB | 3TB | — | — | YHG80M8A | Jan 2024 | TV U-Z | |
 | 3 | 3TB TV K-L | WD Caviar Green WD30EZRS | 3TB | — | — | WMAWZ0J24370 | Sep 2022 | TV K-L | ⚠️ SUSPECTED DEAD — 0.0GB in BIOS 2026-05-24 |
@@ -38,7 +38,7 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 ## Movie Archive Drives
 
 | # | Label | Model | Size | Used | Free | Serial | Backup | Content |
-|---|-------|-------|----------|------|------|--------|----------------|---------|-------|
+|---|-------|-------|------|------|------|--------|---------|---------|
 | 1 | 3TBSEA MOVIES O-G | Hitachi 0F12450 | 3TB | — | — | YHG777BNA | Jan 2024 | Movies A-G | |
 | 2 | 3WD MOVIES R-Z | Seagate ST3000DM001 | 3TB | — | — | Z50102NP | Jan 2024 | Movies R-Z | |
 | 3 | MOVIES H-Q | Seagate | 3TB | — | — | B31412046N | Jan 2024 | Movies H-Q | |
@@ -48,7 +48,7 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 ## Patreon Archive Drives
 
 | # | Label | Model | Size | Used | Free | Serial | Backup | Content |
-|---|-------|-------|----------|------|------|--------|----------------|---------|-------|
+|---|-------|-------|------|------|------|--------|---------|---------|
 | 1 | MZ4250 | WD WD40EZRX | 4TB | 1.5T | 3.7T | TBD | May 2026 | MZ4250 3D Patreon archive | Scanned 2026-05-24. mz4250 remixes also on drive (11GB). |
 | 2 | PATREON #-B | Toshiba DT01ACA300 | 3TB | — | — | Y5FM2SEGS | Jan 2024 | Patreon #-B | Nov 2015 |
 | 3 | PATREON C-D | Toshiba DT01ACA300 | 3TB | — | — | Y5GMAEAGS | Feb 2025 | Patreon C-D | Nov 2015 |
@@ -61,7 +61,7 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 ## Music / Audiobook Archive Drives
 
 | # | Label | Model | Size | Used | Free | Serial | Backup | Content |
-|---|-------|-------|----------|------|------|--------|----------------|---------|-------|
+|---|-------|-------|------|------|------|--------|---------|---------|
 | 3 | MUSIC 10-21-2018 | Seagate ST3000DM001 | 3TB | — | — | Z5011NMK | Feb 2024 | Music archive | Label date is old backup date |
 | 1 | AUDIOBOOKS 3TB | WD Caviar Green WD30EZRS | 3TB | — | — | WMAW20629019 | Feb 2024 | Audiobooks | Nov 2014 |
 | 2 | MUSIC+ MUSIC NOT PLEX | Toshiba DT01ACA300 | 3TB | — | — | Y5GM81UGS | Feb 2024 | Music | Nov 2015 |
@@ -71,7 +71,7 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 ## Other Archive Drives
 
 | # | Label | Model | Size | Used | Free | Serial | Backup | Content |
-|---|-------|-------|----------|------|------|--------|----------------|---------|-------|
+|---|-------|-------|------|------|------|--------|---------|---------|
 | 1 | 4TB KICKSTARTER | WD/HGST HC310 | 4TB | — | — | V6KAG1VR | Jan 2024 | Kickstarter | Dec 2019 |
 | 2 | 6 TB SEAGATE 7200 | Seagate ST6000VN0001 | 6TB | — | — | Z40Z2HT9 | — | — | DOM 05/2015 |
 | 3 | D&D GAMING | Seagate ST3000DM001 | 3TB | — | — | Z5011ZMP | Feb 2024 | D&D/Gaming | |
