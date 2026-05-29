@@ -1,5 +1,5 @@
 # Backup Drive Inventory
-_Last updated: 2026-05-28_
+_Last updated: 2026-05-29_
 _Physical removable backup drives — rotated through restic-deb CRU bays_
 _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 
@@ -29,7 +29,7 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 | 6 | 3TB TV SONS-T | Hitachi 0F12450 | 3TB | — | — | YHG4ZPSA | Jan 2024 | TV S | |
 | 7 | TV_0-A | WD Green WD40EZRX | 4TB | 2.3T | 3.7T | HARNNY2C48 | Jan 2024 | TV 0-A | |
 | 8 | TV_3TB_SEA | Seagate ST3000051NS SED | 3TB | 152M | 2.8T | Z2926W97 | Jan 2024 | TV C-D | Enterprise SED |
-| 9 | TV_B-D | Seagate ST6000VN0001 | 6TB | 3.3T | 5.5T | Z4D2DHT9 | May 2026 | TV B-D | 6TB archive drive |
+| 9 | TV_B-D | Seagate ST6000VN0001 | 6TB | 4.1T | 5.5T | Z4D2DHT9 | May 2026 | TV B-D | 6TB archive drive |
 | 10 | TV_E-F | WD Caviar Green WD30EZRS | 3TB | 2.1T | 2.8T | WMAWZ0028623 | Jan 2024 | TV E-F incl GOT | |
 | 11 | TV_G-J | WD Caviar Green WD30EZRS | 3TB | 2.5T | 2.8T | WMAWZ036055 | Sep 2022 | TV G-J | Scanned 2026-05-24 |
 
@@ -72,13 +72,13 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 
 | # | Label | Model | Capacity | Used | Free | Serial | Last Backed Up | Content | Notes |
 |---|-------|-------|----------|------|------|--------|----------------|---------|-------|
-| 2 | 4TB KICKSTARTER | WD/HGST HC310 | 4TB | — | — | V6KAG1VR | Jan 2024 | Kickstarter | Dec 2019 |
-| 3 | 6 TB SEAGATE 7200 | Seagate ST6000VN0001 | 6TB | — | — | Z40Z2HT9 | — | — | DOM 05/2015 |
-| 4 | D&D GAMING | Seagate ST3000DM001 | 3TB | — | — | Z5011ZMP | Feb 2024 | D&D/Gaming | |
-| 5 | PLEX ETC | Toshiba DT01ACA300 | 3TB | — | — | Y5GM755GS | Feb 2024 | Plex misc | Nov 2015 |
-| 6 | READING | Seagate ST3000NM0033 | 3TB | — | — | Z1Y32KTB | Feb 2025 | Reading | DOM 01/2015 |
-| 7 | TROVE 24-08 | Seagate ST6000VN0001 | 6TB | — | — | Z401Z7A5 | Aug 2024 | Trove | DOM 05/2015 |
-| 8 | TROVE BOOKS | Toshiba DT01ACA300 | 3TB | — | — | Y5GM22NGS | Feb 2024 | Books | Nov 2015 |
+| 1 | 4TB KICKSTARTER | WD/HGST HC310 | 4TB | — | — | V6KAG1VR | Jan 2024 | Kickstarter | Dec 2019 |
+| 2 | 6 TB SEAGATE 7200 | Seagate ST6000VN0001 | 6TB | — | — | Z40Z2HT9 | — | — | DOM 05/2015 |
+| 3 | D&D GAMING | Seagate ST3000DM001 | 3TB | — | — | Z5011ZMP | Feb 2024 | D&D/Gaming | |
+| 4 | PLEX ETC | Toshiba DT01ACA300 | 3TB | — | — | Y5GM755GS | Feb 2024 | Plex misc | Nov 2015 |
+| 5 | READING | Seagate ST3000NM0033 | 3TB | — | — | Z1Y32KTB | Feb 2025 | Reading | DOM 01/2015 |
+| 6 | TROVE 24-08 | Seagate ST6000VN0001 | 6TB | — | — | Z401Z7A5 | Aug 2024 | Trove | DOM 05/2015 |
+| 7 | TROVE BOOKS | Toshiba DT01ACA300 | 3TB | — | — | Y5GM22NGS | Feb 2024 | Books | Nov 2015 |
 
 ---
 
