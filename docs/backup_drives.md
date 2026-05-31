@@ -29,9 +29,9 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 | 3TB TV SONS-T | Hitachi 0F12450 | 3TB | — | — | YHG4ZPSA | Jan 2024 | — |
 | TV_0-A | WD Green WD40EZRX | 4TB | — | — | HARNNY2C48 | May 2026 | — |
 | TV_B-D | Seagate ST6000VN0001 | 6TB | 4.6T | 886G | Z4D2DHT9 | May 2026 | ✅ |
-| TV_E-F | Seagate ST3000051NS SED | 3TB | 2.3T | 500G | Z2926W97 | Jan 2024 | ✅ |
+| TV_E-F | Seagate ST3000051NS SED | 3TB | 2.3T | 462G | Z2926W97 | Jan 2024 | ✅ |
 | TV_G-H | WD Caviar Green WD30EZRS | 3TB | 2.7T | 119G | WMAWZ036055 | Sep 2022 | ✅ |
-| TV_I-K | Seagate ST3000651NS | 3TB | 704G | 2.1T | Z292SW9T | — | — |
+| TV_I-K | Seagate ST3000651NS | 3TB | 704G | 2.1T | Z292SW9T | — | ✅ |
 
 ---
 
