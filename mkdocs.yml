@@ -63,6 +63,8 @@ nav:
     - Hosts: hosts.md
     - Hardware Inventory: hw_inv.md
     - Hardware Reserve: hw_reserve.md
+    - Backup Drive Rotation: backup_drives.md
+    - Wishlist: wishlist.md
     - Docker Inventory: docker_inv.md
     - Software Inventory: software_inventory.md
     - Upgrade Radar: upgrade_radar.md
