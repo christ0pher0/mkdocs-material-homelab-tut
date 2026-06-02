@@ -208,3 +208,24 @@ _Sorted by date and node/area_
 - Deploy node-exporter to non-Docker hosts (plow-rpm, pihole-book-deb, restic-deb) ✅
 - Write portainer_sync.py scheduled task ✅
 - Fix TLS registration API issue in portainer_sync.py ✅
+## June 2026
+
+### 2026-06-01 — Plex Media / Live From Daryl's House
+
+#### TV Archive Drive Workflow (restic-deb)
+- Update backup date: `~/scripts/update_backup_date.sh LABEL`
+- Update stats + docs: `~/scripts/cru_stats.sh && ~/scripts/backup_drives_update.sh`
+- Relabel: umount → `ntfslabel --force` → remount via `cru_mount.sh`
+- Fix table mismatches on git-ansible via `sed` in `~/material/mkdocs_dev_material/docs/backup_drives.md`
+- TV_H-L drive label: `h-l`
+
+#### Live From Daryl's House — Plex Rebuild
+- All 41 segmented episode directories (FLV/MOV) converted to single MKV files — Season 01
+- Single-file non-MKV episodes (FLV/MOV/MP4/TS) remuxed to MKV — Season 01
+- Season 04 (2023 YouTube episodes E85-E91) downloaded, segmented, and concatted
+- Season 02 and Season 03 folders created and populated
+- Missing Season 01 episodes (E03-E74, E83-E84) downloaded from official YouTube channel
+- All episodes forced to H.264 via yt-dlp format filter
+- `all2mkv.sh` — batch FLV/MOV/MP4 concat script (restic-deb: `~/scripts/`)
+- `lfdh_missing.sh` — YouTube download + concat script with skip-check (mediastack-deb: `~/mediastack/scripts/`)
+- CRU TV_H-L drive synced via `rsync --delete` — 57GB
