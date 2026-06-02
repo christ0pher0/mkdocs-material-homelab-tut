@@ -24,13 +24,13 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 | 3T HIT EVERTHING | Seagate ST3000VN0001 | 3TB | — | — | Z4F95VN8 | Feb 2024 | — |
 | 3T TVU-Z | Hitachi 3TB | 3TB | — | — | YHG80M8A | Jan 2024 | — |
 | 3TB TV K-L | WD Caviar Green WD30EZRS | 3TB | — | — | WMAWZ0J24370 | Sep 2022 | — |
-| 3TB TV M-O | Seagate Barracuda ST3000DM001 | 3TB | — | — | Z1FKZ6JM | Jan 2024 | — |
+| TV_M-0 | Seagate Barracuda ST3000DM001 | 3TB | — | — | Z1FKZ6JM | Jan 2024 | — |
 | 3TB TV P-SNOFALL | Seagate ST3000051NS SED | 3TB | — | — | Z292M282 | Jan 2024 | — |
 | 3TB TV SONS-T | Hitachi 0F12450 | 3TB | — | — | YHG4ZPSA | Jan 2024 | — |
 | TV_0-A | WD Green WD40EZRX | 4TB | — | — | HARNNY2C48 | May 2026 | — |
 | TV_B-D | Seagate ST6000VN0001 | 6TB | 4.6T | 886G | Z4D2DHT9 | May 2026 | ✅ |
 | TV_E-F | Seagate ST3000051NS SED | 3TB | 2.3T | 462G | Z2926W97 | Jan 2024 | ✅ |
-| TV_G-H | WD Caviar Green WD30EZRS | 3TB | 2.7T | 119G | WMAWZ036055 | Sep 2022 | ✅ |
+| TV_G | WD Caviar Green WD30EZRS | 3TB | 2.7T | 119G | WMAWZ036055 | Sep 2022 | ✅ |
 | TV_H-J | Seagate ST3000651NS | 3TB | 2.4T | 391G | Z292SW9T | Jun 2026 | ✅ |
 
 ---
