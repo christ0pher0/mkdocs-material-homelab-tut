@@ -31,7 +31,7 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 | TV_E-F | Seagate ST3000051NS SED | 3TB | 2.3T | 462G | Z2926W97 | Jun 2026 | ✅ |
 | TV_G | WD Caviar Green WD30EZRS | 3TB | 1.9T | 908G | WMAWZ036055 | Jun 2026 | ✅ |
 | TV_H-L | Seagate ST3000651NS | 3TB | 2.4T | 391G | Z292SW9T | Jun 2026 | ✅ |
-| TV_M-N | Seagate Barracuda ST3000DM001 | 3TB | 2.1T | 718G | Z1FKZ6JM | Jan 2024 | ✅ |
+| TV_M-N | Seagate Barracuda ST3000DM001 | 3TB | 2.1T | 718G | Z1FKZ6JM | Jun 2026 | ✅ |
 
 ---
 
