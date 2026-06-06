@@ -22,7 +22,7 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 | Label | Model | Size | Used | Free | Serial | Backup | SMART |
 |-------|-------|------|------|------|--------|--------|-------|
 | 3T HIT EVERTHING | Seagate ST3000VN0001 | 3TB | — | — | Z4F95VN8 | Feb 2024 | — |
-| 3T TVU-Z | Hitachi 3TB | 3TB | — | — | YHG80M8A | Jan 2024 | — |
+| TV_U-Z | Hitachi 3TB | 3TB | — | — | YHG80M8A | Jan 2024 | — |
 | 3TB TV K-L | WD Caviar Green WD30EZRS | 3TB | — | — | WMAWZ0J24370 | Sep 2022 | — |
 | TV_0-A | WD Green WD40EZRX | 4TB | — | — | HARNNY2C48 | May 2026 | — |
 | TV_B-D | Seagate ST6000VN0001 | 6TB | 4.6T | 886G | Z4D2DHT9 | May 2026 | ✅ |
@@ -33,8 +33,8 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 | TV_Next | Seagate Constellation ES.2 ST33000651NS | 3TB | 152M | 2.8T | TBD | — | ✅ |
 | TV_O-R | Seagate Constellation ES.2 ST33000651NS | 3TB | 1.8T | 977G | Z292K11M | Jun 2026 | ✅ |
 | TV_S | Seagate BarraCuda ST4000DM005 (SMR) | 4TB | 3.5T | 158G | ZGY0LAWW | Jun 2026 | ✅ |
-| TV_T-Z | Hitachi 0F12450 | 3TB | 724G | 2.1T | YHG4ZPSA | Jun 2026 | ✅ |
-
+| TV_T | Hitachi 0F12450 | 3TB | 1018G | 1.8T | YHG4ZPSA | Jun 2026 | — |
+| TV_U-Z | Hitachi HDS723030ALA640 | 3TB | — | — | MK0331YHG80M8A | Jun 2026 | — |
 ---
 
 ## Movie Archive Drives
