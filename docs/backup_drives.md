@@ -33,7 +33,7 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 | TV_O-R | Seagate Constellation ES.2 ST33000651NS | 3TB | 1.8T | 977G | Z292K11M | Jun 2026 | ✅ |
 | TV_S | Seagate BarraCuda ST4000DM005 (SMR) | 4TB | 3.5T | 158G | ZGY0LAWW | Jun 2026 | ✅ |
 | TV_T | Hitachi 0F12450 | 3TB | 1020G | 1.8T | YHG4ZPSA | Jun 2026 | ✅ |
-| TV_U-Z | Hitachi 3TB | 3TB | 1.6T | 1.2T | YHG80M8A | Jun 2026 | ✅ |
+| TV_U-Z | Hitachi 3TB | 3TB | 1.8T | 984G | YHG80M8A | Jun 2026 | ✅ |
 ---
 
 ## Movie Archive Drives
