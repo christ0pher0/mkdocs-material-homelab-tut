@@ -29,7 +29,7 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 | TV_G | WD Caviar Green WD30EZRS | 3TB | 1.9T | 908G | WMAWZ036055 | Jun 2026 | ✅ |
 | TV_H-L | Seagate ST3000651NS | 3TB | 2.4T | 391G | Z292SW9T | Jun 2026 | ✅ |
 | TV_M-N | Seagate Barracuda ST3000DM001 | 3TB | 2.4T | 394G | Z1FKZ6JM | Jun 2026 | ✅ |
-| TV_Next | Seagate Constellation ES.2 ST33000651NS | 3TB | 152M | 2.8T | TBD | — | ✅ |
+| Next | Seagate Constellation ES.2 ST33000651NS | 3TB | 152M | 2.8T | TBD | — | ✅ |
 | TV_O-R | Seagate Constellation ES.2 ST33000651NS | 3TB | 1.8T | 977G | Z292K11M | Jun 2026 | ✅ |
 | TV_S | Seagate BarraCuda ST4000DM005 (SMR) | 4TB | 3.5T | 158G | ZGY0LAWW | Jun 2026 | ✅ |
 | TV_T | Hitachi 0F12450 | 3TB | 1020G | 1.8T | YHG4ZPSA | Jun 2026 | ✅ |
@@ -40,8 +40,8 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 
 | Label | Model | Size | Used | Free | Serial | Backup | SMART |
 |-------|-------|------|------|------|--------|--------|-------|
-| 3WD MOVIES R-Z | Seagate ST3000DM001 | 3TB | — | — | Z50102NP | Jan 2024 | — |
-| MOVIES H-Q | Seagate | 3TB | — | — | B31412046N | Jan 2024 | — |
+| Movies_R-Z | Seagate ST3000DM001 | 3TB | — | — | Z50102NP | Jan 2024 | — |
+| Movies_G-Q | Seagate | 3TB | — | — | B31412046N | Jan 2024 | — |
 | Movies_0-F | Hitachi HDS723030ALA640 | 3TB | 2.6T | 232G | MK0311YHG77BNA | Jun 2026 | ✅ |
 
 ---
