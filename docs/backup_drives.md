@@ -40,7 +40,7 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 
 | Label | Model | Size | Used | Free | Serial | Backup | SMART |
 |-------|-------|------|------|------|--------|--------|-------|
-| 3TBSEA MOVIES O-G | Hitachi 0F12450 | 3TB | — | — | YHG777BNA | Jan 2024 | — |
+| Movies_0-F | Hitachi HDS723030ALA640 | 3TB | 2.6T | 232G | MK0311YHG77BNA | Jun 2026 | ✅ |
 | 3WD MOVIES R-Z | Seagate ST3000DM001 | 3TB | — | — | Z50102NP | Jan 2024 | — |
 | MOVIES H-Q | Seagate | 3TB | — | — | B31412046N | Jan 2024 | — |
 
