@@ -42,6 +42,7 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 |-------|-------|------|------|------|--------|--------|-------|
 | Movies_0-F | Hitachi HDS723030ALA640 | 3TB | 2.6T | 232G | MK0311YHG77BNA | Jun 2026 | ✅ |
 | Movies_G-O | Seagate ST3000NM0033 | 3TB | 2.5T | 280G | Z1Y31WC0 | Jun 2026 | ✅ |
+| Movies_P-S | Seagate ST33000651NS | 3TB | 1.5T | 1.3T | Z292M2B2 | Jun 2026 | ✅ |
 | Movies_T-Z | Seagate ST3000DM001 | 3TB | 1.9T | 900G | Z50152NP | Jun 2026 | ✅ |
 | Movies_P-S | Seagate ST33000651NS | 3TB | 1.5T | 1.3T | Z292M2B2 | Jun 2026 | ✅ |
 
