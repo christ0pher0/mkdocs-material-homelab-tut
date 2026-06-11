@@ -6,7 +6,6 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 ---
 
 ## Overview
-
 | Stat | Value |
 |------|-------|
 | Total drives | 30 |
@@ -18,7 +17,6 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 ---
 
 ## TV Archive Drives
-
 | Label | Model | Size | Used | Free | Serial | Backup | SMART |
 |-------|-------|------|------|------|--------|--------|-------|
 | 3T HIT EVERTHING | Seagate ST3000VN0001 | 3TB | — | — | Z4F95VN8 | Feb 2024 | — |
@@ -34,10 +32,10 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 | TV_S | Seagate BarraCuda ST4000DM005 (SMR) | 4TB | 3.5T | 158G | ZGY0LAWW | Jun 2026 | ✅ |
 | TV_T | Hitachi 0F12450 | 3TB | 1020G | 1.8T | YHG4ZPSA | Jun 2026 | ✅ |
 | TV_U-Z | Hitachi 3TB | 3TB | 1.8T | 984G | YHG80M8A | Jun 2026 | ✅ |
+
 ---
 
 ## Movie Archive Drives
-
 | Label | Model | Size | Used | Free | Serial | Backup | SMART |
 |-------|-------|------|------|------|--------|--------|-------|
 | Movies_0-F | Hitachi HDS723030ALA640 | 3TB | 2.6T | 232G | MK0311YHG77BNA | Jun 2026 | ✅ |
@@ -47,21 +45,19 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 
 ---
 
-## Patreon Archive Drives
-
+## STL Archive Drives
 | Label | Model | Size | Used | Free | Serial | Backup | SMART |
 |-------|-------|------|------|------|--------|--------|-------|
 | MZ4250 | WD WD40EZRX | 4TB | — | — | WD-WCC4E6KA88HE | May 2026 | — |
-| PATREON #-B | Toshiba DT01ACA300 | 3TB | — | — | Y5FM2SEGS | Jan 2024 | — |
-| PATREON C-D | Toshiba DT01ACA300 | 3TB | — | — | Y5GMAEAGS | Feb 2025 | — |
-| PATREON E-K | Seagate ST3000051NS SED | 3TB | — | — | Z2928YTG | Feb 2025 | — |
+| STL_#-B | Toshiba DT01ACA300 | 3TB | — | — | Y5FM2SEGS | Jan 2024 | — |
+| STL_C-D | Toshiba DT01ACA300 | 3TB | — | — | Y5GMAEAGS | Feb 2025 | — |
+| STL_E-H | Seagate ST3000051NS SED | 3TB | — | — | Z2928YTG | Feb 2025 | — |
 | PATREON L-O | Seagate ST3000DM001 | 3TB | — | — | W1F0BALQ | Feb 2025 | — |
 | PATREON O-S | WD WD30EZRS | 3TB | — | — | WD-WMAWZ0009936 | May 2026 | — |
 
 ---
 
 ## Music / Audiobook Archive Drives
-
 | Label | Model | Size | Used | Free | Serial | Backup | SMART |
 |-------|-------|------|------|------|--------|--------|-------|
 | AUDIOBOOKS 3TB | WD Caviar Green WD30EZRS | 3TB | — | — | WMAW20629019 | Feb 2024 | — |
@@ -71,7 +67,6 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 ---
 
 ## Other Archive Drives
-
 | Label | Model | Size | Used | Free | Serial | Backup | SMART |
 |-------|-------|------|------|------|--------|--------|-------|
 | 4TB KICKSTARTER | WD/HGST HC310 | 4TB | — | — | V6KAG1VR | Jan 2024 | — |
@@ -86,19 +81,16 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 ---
 
 ## Backup Strategy
-
 | Tier | Method | Target | Status |
 |------|--------|--------|--------|
 | Tier 1 | Restic automated | TrueNAS → restic-deb | ✅ Active |
 | Tier 2 | Manual rsync (additive) | TrueNAS → CRU drives | ⚠️ In progress |
 | Tier 3 | Offsite cold storage | CRU drives rotated offsite | 📋 Planned |
-
 ### Rsync Rules
 - **Never use `--delete`** on archive drives — these are historical archives
 - Source is always TrueNAS (`/mnt/plex/`)
 - Run `cru_stats.sh` after each session to update usage stats
 - Update **Backup** date in this file after each sync
-
 ### TV Drive Reorganization Plan
 - Current drives are fragmented by letter range
 - Plan: consolidate onto larger drives organized A-Z sequentially
