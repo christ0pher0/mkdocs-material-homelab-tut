@@ -49,11 +49,11 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 | Label | Model | Size | Used | Free | Serial | Backup | SMART |
 |-------|-------|------|------|------|--------|--------|-------|
 | MZ4250 | WD WD40EZRX | 4TB | — | — | WD-WCC4E6KA88HE | May 2026 | — |
-| STL_#-B | Toshiba DT01ACA300 | 3TB | — | — | Y5FM2SEGS | Jan 2024 | — |
-| STL_C-D | Toshiba DT01ACA300 | 3TB | — | — | Y5GMAEAGS | Feb 2025 | — |
-| STL_E-H | Seagate ST3000051NS SED | 3TB | — | — | Z2928YTG | Feb 2025 | — |
 | PATREON L-O | Seagate ST3000DM001 | 3TB | — | — | W1F0BALQ | Feb 2025 | — |
 | PATREON O-S | WD WD30EZRS | 3TB | — | — | WD-WMAWZ0009936 | May 2026 | — |
+| STL_#-B | Toshiba DT01ACA300 | 3TB | 2.7T | 70G | Y5FM2SEGS | Jan 2024 | ✅ |
+| STL_C-D | Toshiba DT01ACA300 | 3TB | 2.4T | 357G | Y5GMAEAGS | Feb 2025 | ✅ |
+| STL_E-H | Seagate ST3000051NS SED | 3TB | 2.7T | 120G | Z2928YTG | Feb 2025 | ✅ |
 
 ---
 
