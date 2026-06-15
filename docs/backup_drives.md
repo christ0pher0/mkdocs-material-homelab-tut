@@ -48,7 +48,7 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 ## STL Archive Drives
 | Label | Model | Size | Used | Free | Serial | Backup | SMART |
 |-------|-------|------|------|------|--------|--------|-------|
-| MZ4250 | WD WD40EZRX | 4TB | — | — | WD-WCC4E6KA88HE | May 2026 | — |
+| MZ4250 | WD WD40EZRX | 4TB | 1.5T | 2.3T | WD-WCC4E6KA88HE | May 2026 | ✅ |
 | PATREON L-O | Seagate ST3000DM001 | 3TB | — | — | W1F0BALQ | Feb 2025 | — |
 | STL_#-B | Toshiba DT01ACA300 | 3TB | 2.7T | 70G | Y5FM2SEGS | Jan 2024 | ✅ |
 | STL_C-D | Toshiba DT01ACA300 | 3TB | 2.4T | 357G | Y5GMAEAGS | Feb 2025 | ✅ |
@@ -70,11 +70,11 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 ## Other Archive Drives
 | Label | Model | Size | Used | Free | Serial | Backup | SMART |
 |-------|-------|------|------|------|--------|--------|-------|
-| STL_Non-Fantasy | HGST HUS726T4TALE6L4 | 4TB | 3.4T | 300G | V6KAGYVR | Jun 2026 | — |
 | 6 TB SEAGATE 7200 | Seagate ST6000VN0001 | 6TB | — | — | Z40Z2HT9 | — | — |
 | D&D GAMING | Seagate ST3000DM001 | 3TB | — | — | Z5011ZMP | Feb 2024 | — |
 | PLEX ETC | Toshiba DT01ACA300 | 3TB | — | — | Y5GM755GS | Feb 2024 | — |
 | READING | Seagate ST3000NM0033 | 3TB | — | — | Z1Y32KTB | Feb 2025 | — |
+| STL_Non-Fantasy | HGST HUS726T4TALE6L4 | 4TB | 3.4T | 332G | V6KAGYVR | Jun 2026 | ✅ |
 | TROVE 24-08 | Seagate ST6000VN0001 | 6TB | — | — | Z401Z7A5 | Aug 2024 | — |
 | TROVE BOOKS | Toshiba DT01ACA300 | 3TB | — | — | Y5GM22NGS | Feb 2024 | — |
 | WAITING_FOR_DATA | Seagate ST3000651NS | 3TB | — | — | Z292SW9T | — | — |
