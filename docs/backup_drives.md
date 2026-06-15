@@ -70,7 +70,7 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 ## Other Archive Drives
 | Label | Model | Size | Used | Free | Serial | Backup | SMART |
 |-------|-------|------|------|------|--------|--------|-------|
-| 4TB KICKSTARTER | WD/HGST HC310 | 4TB | — | — | V6KAG1VR | Jan 2024 | — |
+| STL_Non-Fantasy | HGST HUS726T4TALE6L4 | 4TB | 3.4T | 300G | V6KAGYVR | Jun 2026 | — |
 | 6 TB SEAGATE 7200 | Seagate ST6000VN0001 | 6TB | — | — | Z40Z2HT9 | — | — |
 | D&D GAMING | Seagate ST3000DM001 | 3TB | — | — | Z5011ZMP | Feb 2024 | — |
 | PLEX ETC | Toshiba DT01ACA300 | 3TB | — | — | Y5GM755GS | Feb 2024 | — |
