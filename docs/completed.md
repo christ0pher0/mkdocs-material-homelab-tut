@@ -229,3 +229,32 @@ _Sorted by date and node/area_
 - `all2mkv.sh` — batch FLV/MOV/MP4 concat script (restic-deb: `~/scripts/`)
 - `lfdh_missing.sh` — YouTube download + concat script with skip-check (mediastack-deb: `~/mediastack/scripts/`)
 - CRU TV_H-L drive synced via `rsync --delete` — 57GB
+
+## 2026-06-19 — Physical Rebuild, Aslan Recovery & Storage Audit
+
+### Physical / Workstation
+- Workstation area torn down and rewired — 2026-06-19
+- Cables consolidated and cleaned up — 2026-06-19
+- Aslan and maturin repositioned at desk — 2026-06-19
+- Rakdos rack (3D printed red Pi rack) deployed on desk — 2026-06-19
+- pi2-deb (192.168.1.121, RPi Model B, DietPi, MQTT broker) confirmed up in Rakdos rack — 2026-06-19
+
+### Proxmox / Fleet
+- Maturin web UI login resolved — 2026-06-19
+- Shardik down (non-critical, left for later) — 2026-06-19
+- Ping sweep confirmed 20 hosts up — 2026-06-19
+
+### Aslan — Storage & VM Audit
+- Full storage audit of aslan completed — 2026-06-19
+- sdb (12TB WD WD120EMAZ) has 141 ATA UNC errors at LBA 0x003a5970, 12 reallocated sectors, 22 offline uncorrectable — 2026-06-19
+- Decision: docker-deb scsi1 (2TB YouTube downloads) left on sdb as canary — expendable data — 2026-06-19
+- Long SMART test queued on sdb — check results 2026-06-20 — 2026-06-19
+- nvme_store on aslan is NOT a real mount — just a folder on pve-root (ORICO SSD). Samsung 980 Pro NVMe is on maturin, not aslan — 2026-06-19
+- kasm-2404-deb (VM 111) local-lvm disk was at 99.99% full — moved scsi0 to hdd3tb, thinpool freed from 2% to 0.17% — 2026-06-19
+
+### Aslan VM Layout (current)
+- 102/104/105 swarm01-03 — stopped, SDA_store
+- 107 docker-deb — running, boot: nvme_store (pve-root/ORICO), data: hdd12tb (2TB canary)
+- 108 alma-rpm, 109 rocky-rpm — running, SDA_store
+- 111 kasm-2404-deb — stopped, hdd3tb
+- 115 pbs — running, SDA_store

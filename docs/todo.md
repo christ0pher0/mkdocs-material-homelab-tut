@@ -209,3 +209,4 @@ _Large multi-step tasks requiring a 4-hour focused block_
 - [ ] Diff 3D/4TB drive contents against TrueNAS — rsync --dry-run before retiring Aug 2022 backup
 - [ ] Add second USB boot drive to freenas-boot mirror (da0 dead) — or replace via rebuild
 - [ ] Set ue0 (USB NIC) to static 192.168.1.5 — survives reboots (or fix via rebuild)
+- Deploy Home Assistant on tools-deb (SD card swap) — Sunday project
