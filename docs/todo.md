@@ -1,9 +1,9 @@
 # Homelab Todo & Roadmap
-_Last updated: 2026-06-11_
+_Last updated: 2026-06-20_
 ---
 
 ## Critical / Security
-- [ ] **Shardik PSU** — suspected failure, primary hypervisor — monitor uptime, plan Sunday replacement
+- [ ] **Shardik PSU** — suspected failure, primary hypervisor — Sunday replacement planned
 - [ ] docker-deb static IP or confirmed DHCP reservation — hosts Vaultwarden, Traefik, Portainer ⚠️
 - [ ] Disk space alerts — amontillado D: (11%), pi1 SD (91%) ⚠️
 - [ ] **Telegram alerts** — bot notifications when something looks wrong
@@ -11,11 +11,12 @@ _Last updated: 2026-06-11_
 - [ ] sudoers drop-in for docker group auto-add script (per-user, NOPASSWD usermod)
 - [ ] Investigate amontillado D: (2.79TB, 11% free) — audit VMs and junk, clear or expand
 
-### Backup Strategy (restic-deb)
-- [ ] STL drive rotation — in progress: TV ✅ Movies ✅ STL E-H ✅ currently mid E-K (at H), I-K drive pending, L-O and O-S remaining
-- [ ] Configure 2x CRU bays on restic-deb for rotating manual drives (Tier 2)
+### Backup Strategy
+- [ ] STL Non-Fantasy — cru3 botched (drive filled mid-transfer), all batches need redo from scratch
+- [ ] STL T-Z — no backup exists, cru2 reformat to STL_T-Z planned
 - [ ] Establish offsite drive rotation schedule (Tier 3)
-- [ ] Expand restic-deb storage — 3TB internal nearly full (10% free)
+- [ ] Evaluate PBS tape backup to CRU bays (blaine-pve post-install)
+- [ ] cru_stats.sh saves to /root/scripts/cru_stats/ (sudo) but backup_drives_update.sh reads ~/scripts/cru_stats/ — fix path mismatch
 
 ---
 
@@ -28,6 +29,7 @@ _Last updated: 2026-06-11_
 - [ ] Investigate orphaned Docker network br-ca523ef71531 on docker-deb — prune if safe
 - [ ] Remove snipeit-deb from all docs (LXC destroyed 2026-05-10)
 - [ ] Remove grafana-docker-deb, ubuntu-ansible-deb, apache-deb from all docs
+- [ ] MkDocs update on git-ansible — post every session
 
 ---
 
@@ -41,6 +43,10 @@ _Last updated: 2026-06-11_
 - [ ] Investigate maturin VM 112 leftover disk on shardik NVMe (164GB orphan)
 - [ ] P2V GOODWIM CENTOS drive (Seagate 500GB) — convert CentOS install to Proxmox VM before disposing
 - [ ] Audit offline hosts from router — confirm which are inactive vs decommissioned (eld-win, work-win, tahoe-mac, etc.)
+- [ ] swarm01 (102) — pending migration from shardik to aslan
+- [ ] KASM (111) — move disk from SDA_store to local-lvm NVMe on aslan for performance
+- [ ] onboard pbs-deb via Ansible (onboard_host.yml not yet run — passwordless sudo added manually)
+- [ ] Manyfold — creators not populating correctly on docker-deb
 
 ### Hardware Inventory Completion
 - [ ] Photo and dmidecode all 5 waiting systems
@@ -58,7 +64,34 @@ _Last updated: 2026-06-11_
 ## Sunday Projects
 _Large multi-step tasks requiring a 4-hour focused block_
 
-### 1. TrueNAS Hardware Rebuild ⭐
+### 1. restic-deb → blaine-pve ⭐
+**Goal:** Wipe Ubuntu 26.04, install Proxmox VE, add to cluster as blaine-pve
+**Pre-work done:** CRU scripts committed to Gitea (192.168.1.3:3000/cos/scripts-restic-deb, commit 4ad5a94)
+- [ ] Install Proxmox VE on sdd (238.5GB — only wipe target; CRU drives sda/sdb/sdc untouched)
+- [ ] Set hostname: blaine-pve
+- [ ] Assign static IP (restic was 192.168.1.40 — reuse or pick new)
+- [ ] Copy CRU scripts from Gitea to /root/scripts/ on blaine-pve
+- [ ] Verify CRU drives (sda=cru1 3.6TB, sdb=cru3 3.6TB, sdc=cru2 2.7TB NTFS) mount correctly on PVE host
+- [ ] Add to Proxmox cluster (wheel)
+- [ ] Add to Ansible inventory_auto on git-ansible
+- [ ] Run onboard_host.yml --ask-vault-pass
+- [ ] Add to MkDocs hosts.md and hw_inv.md
+
+### 2. Pi 2B — Flash DietPi
+**Goal:** Get Pi 2B (quad-core, 1GB RAM) online, decide on role via first-run installer
+- [ ] Download DietPi ARMv7-Bookworm image from dietpi.com/downloads
+- [ ] Flash SD card (`dd if=DietPi_RPi-ARMv7-Bookworm.img of=/dev/sdX bs=4M status=progress`)
+- [ ] Boot, run first-run installer, pick role
+- [ ] Assign hostname and static IP, add to Ansible inventory
+
+### 3. Shardik PSU Replacement
+**Goal:** Replace suspected failing PSU — 1-month uptime target
+- [x] Upgrade CPU: Ryzen 7 2700X — ✅ COMPLETE 2026-06
+- [x] Upgrade RAM to 64GB DDR4 — ✅ COMPLETE 2026-06
+- [ ] **Replace PSU** — suspected failure ⚠️
+- [ ] Verify all VMs stable after swap
+
+### 4. TrueNAS Hardware Rebuild ⭐
 **Goal:** Replace aging Z77/i5-3570K with temerant hardware (Ryzen 5 1600X, 32GB DDR4, GTX 1080 Ti)
 **Blocker:** LSI HBA not yet found — order now if not located
 - [ ] Check temerant-win 2x 3TB HDDs (Seagate ST3000DM001) for important data ⚠️
@@ -74,34 +107,35 @@ _Large multi-step tasks requiring a 4-hour focused block_
 - [ ] Dedupe/find duplicate filenames on TRYAGAIN — fdupes or rdfind (post-rebuild)
 - [ ] Delete iocage datasets — Weltgeist and Alea Iacta Est jails (91GB)
 
-### 2. Shardik Hardware Upgrade
-**Goal:** Replace PSU, upgrade CPU to Ryzen 7 2700X, max RAM to 64GB
-- [ ] Replace PSU — suspected failure, 1-month uptime target ⚠️
-- [ ] Upgrade CPU: Ryzen 7 2700X (~$30-50 eBay, drop-in AM4, BIOS supports it)
-- [ ] Replace 8GB RAM stick with 16GB DDR4 2667 to reach 64GB max
-- [ ] Verify ZFS mask still appropriate post-rebuild
-- [ ] Confirm all VMs stable after hardware swap
+### 5. Physical Tidy
+- [ ] Tidy desk wires — full shutdown and rewire
+- [ ] Sort hardware / find HBA
+- [ ] Clean off shelves
 
-### 3. 192.168.1.8 Router → Access Point Conversion
-**Goal:** Repurpose existing router hardware at .1.8 as a wireless access point
-- [ ] Identify hardware at 192.168.1.8
-- [ ] Plan AP placement and coverage
-- [ ] Configure as AP (disable DHCP, bridge mode)
-- [ ] Test coverage and handoff with main router (GL-MT6000)
+### 6. Pi Day
+- [ ] 3D print rack, mount all Pis, cable management
+
+### Completed Sunday Projects
+- [x] Shardik hardware upgrade (CPU 2700X, RAM to 64GB) — complete 2026-06
+- [x] Router/AP rewire — complete
+- [x] Beryl AP setup — GL-MT3000 configured in AP mode, 192.168.1.10, extending Greyhawk WiFi (2026-06-15)
+- [x] idee-deb → aslan Proxmox hypervisor — complete 2026-06-16
 
 ---
 
 ## Planned Projects
 
-### PVE3 — Add to Proxmox Cluster
+### PVE Cluster — blaine-pve + pve3
+- [ ] Add blaine-pve to cluster after Proxmox install (Sunday)
 - [ ] Configure Tailscale on pve3
-- [ ] Full hardware inventory (dmidecode, photos)
-- [ ] Add to Proxmox cluster (shardik + maturin + pve3 = proper 3-node quorum)
-- [ ] Add to inventory_auto and MkDocs
-- [ ] Eventually: GPU passthrough of GTX 1080 Ti for RPCS3/AI workloads
-- [ ] Check AB350 IOMMU groupings before passthrough attempt
+- [ ] Full hardware inventory pve3 (dmidecode, photos)
+- [ ] Add pve3 to Proxmox cluster (shardik + maturin + aslan + blaine + pve3)
+- [ ] Add pve3 to inventory_auto and MkDocs
+- [ ] Configure Proxmox HA for automatic VM failover
+- [ ] Set up shared storage — NFS from TrueNAS
 
 ### Docker Swarm
+- [ ] Migrate swarm01 (102) from shardik to aslan
 - [ ] Rebuild swarm01/02/03 (currently stopped)
 - [ ] Deploy Traefik in Swarm mode — cluster-wide reverse proxy
 - [ ] Deploy Uptime Kuma in Swarm
@@ -115,26 +149,20 @@ _Large multi-step tasks requiring a 4-hour focused block_
 - [ ] Deploy Loki for log aggregation
 - [ ] Uptime Kuma monitoring of mediastack-deb containers
 
-### Local AI Assistant (idee-deb)
-- [ ] Install GTX 1080 Ti from stock into idee-deb (drop-in, biggest single upgrade)
-- [ ] Deploy Ollama with GPU passthrough
+### Local AI Assistant (aslan)
+- [ ] Deploy Ollama with GTX 1080 Ti GPU passthrough (GPU already bound to vfio-pci on aslan)
 - [ ] Deploy Open WebUI
 - [ ] Create sysadmin / homelab / casual assistant personalities
 - [ ] Add Whisper (STT) and Piper (TTS)
 - [ ] Feed MkDocs docs as RAG knowledge base
 
-### Proxmox Cluster
-- [ ] Configure Proxmox HA for automatic VM failover
-- [ ] Set up shared storage — NFS from TrueNAS
-
 ### PBS — Next Steps
-- [ ] Mirror PBS backups to restic-deb
-- [ ] Evaluate PBS tape backup to CRU bays
+- [ ] Evaluate PBS tape backup to CRU bays on blaine-pve (post-install)
 
 ### Mediastack / Plex
 - [ ] Add Tautulli — Plex analytics
 - [ ] Bazarr — subtitle automation
-- [ ] Tdarr — transcoding (needs GPU node first — idee-deb)
+- [ ] Tdarr — transcoding (needs GPU node first — aslan)
 - [ ] Kometa — verify Trakt/MDBList working after next run
 - [ ] Add Plex Music library fix for mobile (Plex Pass confirmed, unresolved)
 - [ ] Add Training and Photos libraries to Plex
@@ -167,6 +195,7 @@ _Large multi-step tasks requiring a 4-hour focused block_
 - [ ] Document monitoring stack architecture
 - [ ] Create backup_policy.md — 3-2-1 approach, rotation schedule, STL archive policy
 - [ ] hw_inv.md — document ST6000VN0001 Z4D2EJ31 retired, ST6000DX000 Z4D07FQ5 added
+- [ ] Update hosts.md with aslan and Beryl AP (192.168.1.10)
 
 ### Ansible
 - [ ] Pin ansible_python_interpreter per host in inventory_auto
@@ -204,9 +233,14 @@ _Large multi-step tasks requiring a 4-hour focused block_
 - [x] Order 20TB CMR replacement drive for ada4 — DONE
 - [x] Replace ada4 in TRYAGAIN RAIDZ1 pool — DONE, resilvering complete, pool HEALTHY
 - [x] RAM upgrades — truenas (32GB DDR3), restic-deb (32GB DDR3), urnst-deb (16GB DDR4), idee-deb (32GB DDR4) — ALL COMPLETE
+- [x] Shardik CPU upgrade — Ryzen 7 2700X installed 2026-06
+- [x] Shardik RAM upgrade — 64GB DDR4 2026-06
+- [x] Beryl AP (GL-MT3000) — configured AP mode, 192.168.1.10, 2026-06-15
+- [x] idee-deb repurposed as aslan (Proxmox node 3) — 2026-06-16
+- [x] ada4 replaced with WD HC560, TRYAGAIN resilver complete — 2026-06
+- [x] PBS (115) migrated from shardik to aslan — 2026-06-16
 - [ ] Inventory offsite ThinkStation (pve3)
 - [ ] Add pve3 to Tailscale and Ansible inventory
 - [ ] Diff 3D/4TB drive contents against TrueNAS — rsync --dry-run before retiring Aug 2022 backup
 - [ ] Add second USB boot drive to freenas-boot mirror (da0 dead) — or replace via rebuild
 - [ ] Set ue0 (USB NIC) to static 192.168.1.5 — survives reboots (or fix via rebuild)
-- Deploy Home Assistant on tools-deb (SD card swap) — Sunday project

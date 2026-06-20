@@ -1,5 +1,5 @@
 # Hardware Inventory
-_Last updated: 2026-06-11_
+_Last updated: 2026-06-20_
 _Physical hosts only — VMs/containers documented in network_context.md_
 _Ordered by utility — least capable first, most capable last_
 !!! tip "Adding Photos"
@@ -15,15 +15,17 @@ _Ordered by utility — least capable first, most capable last_
 |--|--|
 | ![lee](images/hw/lee-deb.jpg){ width=300 } | **Role:** Immich photo server — memorial machine<br>**Make:** Dell Inspiron 3647 (Small Form Factor)<br>**Chipset:** Intel H81 (Haswell, 2013)<br>**CPU:** Unknown — up to i7-4790 (4th gen)<br>**RAM:** Unknown — max 16GB DDR3<br>**Storage:** Samsung 870 EVO 1TB SSD (pending install)<br>**OS:** Ubuntu Server 26.04 LTS (pending install)<br>**IP:** Not yet assigned<br>**PSU:** 220W — low-profile GPU only<br>**Name:** lee — personal/memorial<br>**Best uses:** Immich photo server, lightweight Linux utility box, PiHole<br>**Easy upgrades:** SSD already planned. RAM cheap if needed.<br>**Notes:** Sentimental machine — belongs to family. Original HDD preserved as-is. |
 ---
-## restic-deb (192.168.1.40)
+## restic-deb → blaine-pve (192.168.1.40)
 | | |
 |--|--|
-| ![eld](images/hw/eld.jpg){ width=300 } | **Role:** Restic backup server<br>**Motherboard:** Gigabyte Z77-DS3H (Intel Z77, LGA1155)<br>**CPU:** Intel Core i5-2500K @ 3.30GHz (Sandy Bridge 2011)<br>**RAM:** 32GB DDR3 (2x Samsung 8GB DDR3-1600 + 2x Timetec 8GB DDR3-1333) — upgraded 2026-06<br>**RAM max:** 32GB DDR3 — maxed<br>**BIOS:** AMI F8 (2012-08-20)<br>**OS:** Ubuntu 26.04 LTS — kernel 7.0.0-15-generic<br>**Form factor:** Thermaltake white full tower — 2x CRU hot-swap bays, USB 3.0 front panel<br>**IP:** 192.168.1.40<br>**Name:** restic-deb — Greyhawk<br>**Best uses:** Restic backup server, manual CRU drive rotation, offsite cold storage<br>**Backup role:** Tier 1 — Restic automated. Tier 2 — 2x CRU bays rotating drives. Tier 3 — offsite cold storage. |
+| ![eld](images/hw/eld.jpg){ width=300 } | **Role:** ⚠️ Planned repurpose — Proxmox VE node (blaine-pve). Currently Ubuntu 26.04 LTS.<br>**Motherboard:** Gigabyte Z77-DS3H (Intel Z77, LGA1155)<br>**CPU:** Intel Core i5-2500K @ 3.30GHz (Sandy Bridge 2011, 4c/4t)<br>**RAM:** 32GB DDR3 (2x Samsung 8GB DDR3-1600 + 2x Timetec 8GB DDR3-1333) — upgraded 2026-06<br>**RAM max:** 32GB DDR3 — maxed<br>**BIOS:** AMI F8 (2012-08-20)<br>**OS:** Ubuntu 26.04 LTS (kernel 7.0.0-22-generic) → Proxmox VE (planned)<br>**Form factor:** Thermaltake white full tower — 2x CRU hot-swap bays, USB 3.0 front panel<br>**IP:** 192.168.1.40<br>**Name (current):** restic-deb — Greyhawk. **Planned name:** blaine-pve — Dark Tower (Blaine the Mono)<br>**CRU scripts:** Committed to Gitea pre-wipe (192.168.1.3:3000/cos/scripts-restic-deb, commit 4ad5a94)<br>**Best uses:** Proxmox node, CRU drive rotation (drives stay connected to PVE host), PBS mirror candidate |
 ### Storage
-| Device | Type | Size | Model | Notes |
-|--------|------|------|-------|-------|
-| sdb | mSATA SSD | 238.5GB | SK Hynix SC210 256GB | OS drive |
-| sda | HDD | 2.7TB | WD WD30EZRS-11J99B0 | Data drive |
+| Device | Type | Size | Filesystem | Mount | Notes |
+|--------|------|------|------------|-------|-------|
+| sdd | SSD | 238.5GB | ext4 | / | OS drive — Proxmox install target |
+| sda | HDD (external) | 3.6TB | NTFS | /mnt/cru1 | CRU drive — stays connected post-Proxmox |
+| sdb | HDD (external) | 3.6TB | NTFS | /mnt/cru3 | CRU drive — stays connected post-Proxmox |
+| sdc | HDD (external) | 2.7TB | NTFS | /mnt/cru2 | CRU drive — stays connected post-Proxmox |
 ---
 ## truenas (192.168.1.5) — NAS Primary Storage
 | | |
@@ -59,7 +61,8 @@ _Ordered by utility — least capable first, most capable last_
 |-------|----------|----|-------|-----|-----|---------|----------|--------|
 | ![pi3](images/hw/pi3-deb.jpg){ width=100 } | pi3-deb | 192.168.1.124 | RPi Model B Rev 2 (BCM2835) Rev 000e — 256MB — clear RetroPie case | ARM 1-core | 239MB | 15GB SD | RetroPie/Buster — legacy, Python 3.7, cannot Ansible manage. Keep as NES/SNES/GB only. | Online |
 | ![pi1](images/hw/pi1-deb.jpg){ width=100 } | pi1-deb | 192.168.1.120 | RPi Model B Rev 2 (BCM2835) Rev 000f — 512MB — blue-green case | ARM 1-core | 427MB | 3.8GB SD (91% full ⚠️) | Raspbian Bookworm — onboarded ✅ — Secondary PiHole or MQTT broker. Needs larger SD card. | Online |
-| ![pi2](images/hw/pi2-deb.jpg){ width=100 } | pi2-deb | 192.168.1.121 | RPi Model B Rev 2 (BCM2835) Rev 000f — 512MB — bare board | ARM 1-core | 475MB | 7.2GB SD | DietPi — onboarded ✅ — MQTT broker for HA IoT | Online |
+| ![pi2](images/hw/pi2-deb.jpg){ width=100 } | pi2-deb | 192.168.1.121 | RPi Model B Rev 2 (BCM2835) Rev 000f — 512MB | ARM 1-core | 475MB | 7.2GB SD | Role TBD | Online |
+| — | pi2b (unassigned) | TBD | Raspberry Pi 2 Model B (BCM2836) — 1GB | ARM 4-core | 1GB | — | DietPi flash planned (Sunday). Role TBD via first-run installer. | Not yet flashed |
 | ![pi4](images/hw/pi4-deb.jpg){ width=100 } | pi4-deb | 192.168.1.126 | RPi 2 Model B Rev 1.1 (BCM2836) — 1GB — official white case | ARM 4-core | 762MB | 29GB SD | DietPi v10.2.3 — onboarded ✅ — Zigbee coordinator + MQTT broker | Online |
 | ![octopi](images/hw/octopi-deb.jpg){ width=100 } | octopi-deb | 192.168.1.122 | RPi 4 Model B Rev 1.1 (BCM2711) — CanaKit clear case | ARMv7 4-core | 3.7GB | 29GB SD | OctoPrint — controls Creality Ender 3 V2 | Online |
 | ![ha](images/hw/ha-net.jpg){ width=100 } | ha-net | 192.168.1.125 | RPi 4 Model B Rev 1.4 — CanaKit black case | ARM 4-core | 3.7GB | 28.6GB | Home Assistant OS 17.2 / Core 2026.4.2 | Online |
@@ -83,12 +86,12 @@ _Ordered by utility — least capable first, most capable last_
 | Photo | Item | Qty | VRAM | Notes |
 |-------|------|-----|------|-------|
 | ![1080](images/hw/gtx1080.jpg){ width=100 } | GTX 1080 | 4 (undeployed) | 8GB each | Pascal NVENC — 1 transcode stream, no AV1 |
-| ![1080ti](images/hw/gtx1080ti.jpg){ width=100 } | GTX 1080 Ti | 4-5 total (1 in amontillado, 1 earmarked for truenas rebuild, 2-3 undeployed) | 11GB VRAM | Best choice for AI/Ollama node — more VRAM than 1080 |
+| ![1080ti](images/hw/gtx1080ti.jpg){ width=100 } | GTX 1080 Ti | 4-5 total (1 in amontillado, 1 in aslan vfio, 1 earmarked for truenas rebuild, 1-2 undeployed) | 11GB VRAM | Best choice for AI/Ollama node — more VRAM than 1080 |
 ---
 ## pve3 (offsite — ThinkStation)
 | | |
 |--|--|
-| ![thinkstation](images/hw/thinkstation.jpg){ width=300 } | **Role:** Proxmox VE node 3 — offsite<br>**Make:** Lenovo ThinkStation (model unknown)<br>**CPU:** Unknown<br>**RAM:** Unknown<br>**Storage:** Unknown<br>**OS:** Proxmox VE<br>**Location:** Offsite<br>**Tailscale:** Not yet configured<br>**Best uses:** Proxmox node 3 — proper 3-node quorum, offsite DR<br>**Notes:** Needs full inventory, Tailscale, and documentation |
+| ![thinkstation](images/hw/thinkstation.jpg){ width=300 } | **Role:** Proxmox VE node 4 — offsite<br>**Make:** Lenovo ThinkStation (model unknown)<br>**CPU:** Unknown<br>**RAM:** Unknown<br>**Storage:** Unknown<br>**OS:** Proxmox VE<br>**Location:** Offsite<br>**Tailscale:** Not yet configured<br>**Best uses:** Proxmox node 4 — offsite DR<br>**Notes:** Needs full inventory, Tailscale, and documentation |
 ---
 ## Unknown Waiting System
 | Photo | # | Notes |
@@ -98,7 +101,7 @@ _Ordered by utility — least capable first, most capable last_
 ## urnst-deb (192.168.1.27)
 | | |
 |--|--|
-| ![urnst](images/hw/urnst-deb.jpg){ width=300 } | **Role:** Hardware diagnostics + TBD — Proxmox node 3 or PBS candidate<br>**Motherboard:** Gigabyte AB350-Gaming-CF (AMD B350, AM4)<br>**CPU:** AMD Ryzen 5 1600X (6c/12t, 3.6GHz)<br>**RAM:** 16GB DDR4 2133 — upgraded 2026-06 (filled remaining slots from reserve)<br>**RAM max:** 16GB DDR4 (4x 4GB) — maxed<br>**GPU:** AMD Radeon HD 7450 — display only<br>**OS:** Debian 13 (Trixie) — fresh install 2026-04-13<br>**Form factor:** Thermaltake white full tower — 2x 5.25" bays, front USB<br>**IP:** 192.168.1.27<br>**Name:** Urnst — County of Urnst, Greyhawk<br>**Best uses:** Proxmox node 3, PBS backup server, general Linux server, CPU swap test bench<br>**Easy upgrades:** Replace HD 7450 with GTX 1080/1080 Ti from stock. |
+| ![urnst](images/hw/urnst-deb.jpg){ width=300 } | **Role:** Hardware diagnostics + TBD — Proxmox node candidate<br>**Motherboard:** Gigabyte AB350-Gaming-CF (AMD B350, AM4)<br>**CPU:** AMD Ryzen 5 1600X (6c/12t, 3.6GHz)<br>**RAM:** 16GB DDR4 2133 — upgraded 2026-06 (filled remaining slots from reserve)<br>**RAM max:** 16GB DDR4 (4x 4GB) — maxed<br>**GPU:** AMD Radeon HD 7450 — display only<br>**OS:** Debian 13 (Trixie) — fresh install 2026-04-13<br>**Form factor:** Thermaltake white full tower — 2x 5.25" bays, front USB<br>**IP:** 192.168.1.27<br>**Name:** Urnst — County of Urnst, Greyhawk<br>**Best uses:** Proxmox node candidate, PBS backup server, general Linux server, CPU swap test bench<br>**Easy upgrades:** Replace HD 7450 with GTX 1080/1080 Ti from stock. |
 ### Storage
 | Device | Type | Size | Notes |
 |--------|------|------|-------|
@@ -123,14 +126,27 @@ _Ordered by utility — least capable first, most capable last_
 | 113 | mediastack-deb | VM | running | 4 | 16GB | 150GB |
 | 900 | ubuntu-24.04-template | template | stopped | 1 | 1GB | 32GB |
 ---
-## idee-deb (192.168.1.28)
+## aslan (192.168.1.9) — Proxmox node 3
 | | |
 |--|--|
-| ![idee](images/hw/idee-deb.jpg){ width=300 } | **Role:** TBD — AI node or Proxmox node 3 candidate<br>**Motherboard:** Gigabyte AB350-Gaming 3-CF (AMD B350, AM4)<br>**CPU:** AMD Ryzen 5 1600X (6c/12t, 3.6GHz)<br>**RAM:** 32GB DDR4 2133 — upgraded 2026-06 (2x Samsung 8GB added, 4 slots total)<br>**RAM max:** 128GB DDR4<br>**Storage:** Samsung 970 EVO Plus 500GB NVMe<br>**GPU:** AMD Radeon HD 7450 (placeholder — display only) — replace with GTX 1080 Ti from stock<br>**OS:** Debian 13 (Trixie) + GNOME — fresh install 2026-04-13<br>**Form factor:** Mid-tower, tempered glass side panel, full RGB<br>**IP:** 192.168.1.28<br>**Name:** Idee — Duchy of Idee, Greyhawk<br>**Best uses:** AI/Ollama node with GTX 1080 Ti passthrough, Proxmox node 3, GPU transcoding server<br>**Easy upgrades:** GTX 1080 Ti from stock (biggest single improvement — 11GB VRAM for AI/Ollama). RAM upgradeable to 128GB DDR4. |
-### Storage
-| Device | Type | Size | Model | Notes |
-|--------|------|------|-------|-------|
-| nvme0n1 | NVMe | 465.8GB | Samsung 970 EVO Plus 500GB | OS drive |
+| ![idee](images/hw/idee-deb.jpg){ width=300 } | **Role:** Proxmox VE node 3 — GPU passthrough host<br>**Motherboard:** Gigabyte AB350-Gaming 3-CF (AMD B350, AM4)<br>**CPU:** AMD Ryzen 5 1600X (6c/12t, 3.6GHz)<br>**RAM:** 32GB DDR4 2133 (4 slots)<br>**RAM max:** 128GB DDR4<br>**Storage:** Samsung 970 EVO Plus 500GB NVMe (sdc — LVM root + thin pool), 3TB HDD (sda → /mnt/hdd3tb = SDA_store), 12TB HDD (sdb → /mnt/hdd12tb, 22 uncorrectable errors — non-critical only)<br>**GPU:** GTX 1080 Ti — bound to vfio-pci (10de:1b06, 10de:10ef), IOMMU group 2<br>**OS:** Proxmox VE 9.2.3<br>**IP:** 192.168.1.9<br>**Name:** Aslan — Guardian of the Beam, Dark Tower<br>**History:** Was idee-deb (Greyhawk). Repurposed as Proxmox node 3 — 2026-06-16.<br>**Notes:** No physical console — Ryzen has no iGPU and GPU is vfio. Manage via SSH/web UI only. |
+### Storage Layout
+| Store | Path | Device | Size | Notes |
+|-------|------|--------|------|-------|
+| local | / | sdc LVM | ~96GB ext4 | root filesystem |
+| local-lvm | thin pool | sdc LVM | 1.71TB | fast VM storage — 16GB free PE |
+| SDA_store | /mnt/pve/SDA_store | /dev/sda | 3TB | VM images + PBS backup data |
+| hdd12tb | /mnt/hdd12tb | /dev/sdb | 12TB | bulk only — 22 uncorrectable sectors |
+### VMs & LXC on aslan
+| VMID | Name | Type | Status | vCPUs | RAM | Disk | Notes |
+|------|------|------|--------|-------|-----|------|-------|
+| 104 | swarm02-worker | VM | stopped | 4 | 2GB | 64GB | migrated from shardik 2026-06-16 |
+| 105 | swarm03-worker | VM | stopped | 4 | 2GB | 64GB | migrated from shardik 2026-06-16 |
+| 108 | alma-rpm | VM | running | 1 | 2GB | 32GB | migrated from shardik 2026-06-16 |
+| 109 | rocky-rpm | VM | running | 1 | 2GB | 32GB | migrated from shardik 2026-06-16 |
+| 110 | pihole-book-deb | LXC | running | 1 | 512MB | 7.78GB | migrated from shardik 2026-06-16 |
+| 111 | kasm-2404-deb | VM | running | 2 | 4GB | 32GB | disk on SDA_store — move to local-lvm pending |
+| 115 | pbs | VM | running | 2 | 4GB | 32GB | PBS datastore on SDA_store (600GB virtual, 317GB used) |
 ---
 ## temerant-win (192.168.1.105) — ⭐ Donor system for TrueNAS rebuild
 | | |
@@ -146,7 +162,7 @@ _Ordered by utility — least capable first, most capable last_
 ## shardik (192.168.1.2) — Proxmox node 1
 | | |
 |--|--|
-| ![proxmox-deb](images/hw/proxmox-deb.jpg){ width=300 } | **Role:** Proxmox VE node 1 — primary hypervisor<br>**Motherboard:** ASRock AB350M Pro4<br>**CPU:** AMD Ryzen 5 1600 (6c/12t) — upgrade candidate: Ryzen 7 2700X (~$30-50 used, drop-in)<br>**RAM:** 56GB DDR4 2667MHz — 4x DIMM: 16GB+16GB+16GB+8GB (mixed kit)<br>**RAM max:** 64GB — replace 8GB stick to max out<br>**BIOS:** AMI P10.43 (supports Ryzen 7 2700X natively)<br>**OS:** Proxmox VE / Debian 12<br>**Form factor:** Cooler Master full tower — 5x CRU hot-swap bays, LG optical<br>**IP:** 192.168.1.2<br>**ZFS:** Masked off (systemd.mask=zfs-mount.service) — ZFS recovery failed 2026-05, node rebuilt<br>**⚠️ PSU:** Suspected failure — Sunday project to replace. 1-month uptime target.<br>**Best uses:** Primary hypervisor — runs kasm-2404-deb, pbs, alma-rpm, rocky-rpm, pihole-book-deb<br>**Easy upgrades:** Ryzen 7 2700X (~$30-50 eBay) — 8c/16t, same socket, BIOS already supports it. Replace 8GB stick with matching 16GB DDR4 2667 to reach 64GB. |
+| ![proxmox-deb](images/hw/proxmox-deb.jpg){ width=300 } | **Role:** Proxmox VE node 1 — primary hypervisor<br>**Motherboard:** ASRock AB350M Pro4<br>**CPU:** ✅ AMD Ryzen 7 2700X (8c/16t, 3.7GHz) — upgraded 2026-06<br>**RAM:** ✅ 64GB DDR4 2667MHz — upgraded 2026-06<br>**RAM max:** 64GB — maxed<br>**BIOS:** AMI P10.43<br>**OS:** Proxmox VE / Debian 12<br>**Form factor:** Cooler Master full tower — 5x CRU hot-swap bays, LG optical<br>**IP:** 192.168.1.2<br>**ZFS:** Masked off (systemd.mask=zfs-mount.service) — ZFS recovery failed 2026-05, node rebuilt<br>**⚠️ PSU:** Suspected failure — Sunday project to replace.<br>**Best uses:** Primary hypervisor<br>**Easy upgrades:** Replace PSU ⚠️ |
 ### Storage
 | Device | Type | Size | Model | FS |
 |--------|------|------|-------|----|
@@ -158,14 +174,7 @@ _Ordered by utility — least capable first, most capable last_
 ### VMs & LXC on shardik
 | VMID | Name | Type | Status | vCPUs | RAM | Disk |
 |------|------|------|--------|-------|-----|------|
-| 102 | swarm01-manager | VM | stopped | 4 | 2GB | 64GB |
-| 104 | swarm02-worker | VM | stopped | 4 | 2GB | 64GB |
-| 105 | swarm03-worker | VM | stopped | 4 | 2GB | 64GB |
-| 108 | alma-rpm | VM | running | 1 | 2GB | 32GB |
-| 109 | rocky-rpm | VM | running | 1 | 2GB | 32GB |
-| 110 | pihole-book-deb | LXC | running | 1 | 512MB | 7.78GB |
-| 111 | kasm-2404-deb | VM | running | 2 | 4GB | 32GB |
-| 115 | pbs | VM | running | 2 | 4GB | 32GB |
+| 102 | swarm01-manager | VM | stopped | 4 | 2GB | 64GB | ⏳ pending migration to aslan |
 ---
 ## amontillado-win (192.168.1.100) ⭐ Best System
 | | |
