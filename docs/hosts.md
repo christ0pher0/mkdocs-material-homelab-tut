@@ -30,9 +30,9 @@ _Router: GL-MT6000 (Flint 2) running OpenWrt — 192.168.1.1_
 | 20 | amontillado-win | 192.168.1.100 | 04:7C:16:C1:44:8E | Windows 11 + Hyper-V | Online | ⭐ Best system — primary workstation + Hyper-V host |
 | 21 | todash-win | 192.168.1.103 | 00:15:5D:00:B3:08 | Windows | Online | Hyper-V VM (amontillado) |
 | 22 | fortunato-win | 192.168.1.106 | 00:15:5D:00:B3:1A | Windows | Online | Hyper-V VM (amontillado) — Poe |
-| 23 | octopi-deb | 192.168.1.122 | DC:A6:32:5E:04:08 | Debian/Ubuntu Linux | Online | RPi 4 — OctoPrint (Ender 3 V2) |
-| 24 | ha-net | 192.168.1.125 | E4:5F:01:65:56:EE | Home Assistant OS 17.2 | Online | RPi 4 — Home Assistant. ⚠️ Shares IP with tools-deb (alternate SD card — not simultaneously active) |
-| 24b | tools-deb | 192.168.1.125 | E4:5F:01:65:56:EE | Raspberry Pi OS | Offline* | RPi 4 — Jellyfin + utilities. ⚠️ Shares IP with ha-net (alternate SD card). Emergency/utility only — do not SSH casually. Baseline deployed 2026-06-21 |
+| 23 | octopi-pi4-deb | 192.168.1.122 | DC:A6:32:5E:04:08 | Debian/Ubuntu Linux | Online | RPi 4 — OctoPrint (Ender 3 V2). Onboarded 2026-06-21 |
+| 24 | ha-pi4-net | 192.168.1.125 | E4:5F:01:65:56:EE | Home Assistant OS 17.2 | Online | RPi 4 — Home Assistant. ⚠️ Shares IP with tools-deb (alternate SD card — not simultaneously active) |
+| 24b | tools-deb | 192.168.1.125 | E4:5F:01:65:56:EE | Raspberry Pi OS | Offline* | RPi 4 — Jellyfin + utilities. ⚠️ Shares IP with ha-pi4-net (alternate SD card). Emergency/utility only — do not SSH casually. Baseline deployed 2026-06-21 |
 | 25 | tv1-media | 192.168.1.140 | A8:23:FE:13:A9:D1 | Media Device | Online | — |
 | 26 | tv2-media | 192.168.1.141 | 22:57:5A:A7:04:87 | Media Device | Online | — |
 | 27 | pixel8-droid | 192.168.1.201 | EE:FC:9C:95:22:1B | Android | Online | Pixel 8 |
@@ -53,12 +53,13 @@ _Not currently active — known from router hosts file and prior inventory_
 | work-win | 192.168.1.104 | Windows | Offline — needs inventory |
 | temerant-win | 192.168.1.105 | Windows 10 | Donor system for TrueNAS rebuild |
 | tahoe-mac | 192.168.1.200 | macOS | Offline — not yet inventoried |
-| pi1-deb | 192.168.1.120 | Raspbian | RPi Model B — ⚠️ SD 91% full |
-| pi2-deb | 192.168.1.121 | — | RPi Model B Rev 2 (512MB) — role TBD |
-| pi3-deb | 192.168.1.124 | RetroPie | RPi Model B — legacy NES/SNES/GB |
-| pi4-deb | 192.168.1.126 | DietPi | RPi 2 — Zigbee + MQTT |
-| batocera-deb | 192.168.1.123 | Batocera | RPi 5 — retro gaming |
-| argos-deb | 192.168.1.127 | Raspberry Pi OS | RPi 4 — IoT field station |
+| pihole-pi1-deb | 192.168.1.120 | Raspbian | RPi Model B — Pi-hole. Onboarded 2026-06-21 |
+| blank-dietpi1-deb | 192.168.1.121 | DietPi | RPi Model B Rev 2 (512MB) — backup/role TBD. Onboarded 2026-06-21 |
+| retropi-pi1-deb | 192.168.1.124 | RetroPie | RPi Model B — legacy NES/SNES/GB |
+| backup-dietpi-deb | 192.168.1.126 | DietPi | RPi 2B — backup (Gitea mirror, Vaultwarden). Onboarded 2026-06-21 |
+| batocera-pi5-deb | 192.168.1.123 | Batocera 43.1 | RPi 5 — retro gaming. Updated 2026-06-21 |
+| argos-pi4-deb | 192.168.1.127 | Raspberry Pi OS | RPi 4 — IoT field station |
+| argos-pi4-wifi-deb | 192.168.1.128 | Raspberry Pi OS | RPi 4 — IoT field station (WiFi interface) |
 | pve3 | offsite | Proxmox VE | ThinkStation — PVE node 4, needs inventory + Tailscale |
 | lee-deb | TBD | Ubuntu Server (pending) | Dell Inspiron 3647 — Immich, memorial machine |
 
@@ -70,7 +71,8 @@ _Not currently active — known from router hosts file and prior inventory_
 | router-net | 192.168.1.1 | GL-MT6000 Flint 2, OpenWrt |
 | beryl-ap | 192.168.1.10 | GL-MT3000 Beryl AX — AP mode, extends Greyhawk WiFi (configured 2026-06-15) |
 | netgate-net | 192.168.1.6 | Netgate — topology vs Flint2 to be clarified |
-| ha-net | 192.168.1.125 | Home Assistant (RPi 4) |
+| ha-pi4-net | 192.168.1.125 | Home Assistant (RPi 4) |
+| homeassistant-wifi | 192.168.1.135 | Home Assistant WiFi interface (RPi 4) |
 | lg-media | 192.168.1.142 | LG TV |
 | firetv-media | 192.168.1.145 | Amazon Fire TV |
 | dell-printer-net | 192.168.1.162 | Dell printer |
