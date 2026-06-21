@@ -1,5 +1,5 @@
 # Hosts
-_Last updated: 2026-06-21_
+_Last updated: 2026-06-21 (Vaultwarden fix on backup-dietpi-deb)_
 _Live hosts from network scan + known offline hosts from router DHCP/hosts file_
 _Router: GL-MT6000 (Flint 2) running OpenWrt — 192.168.1.1_
 
@@ -56,7 +56,7 @@ _Not currently active — known from router hosts file and prior inventory_
 | pihole-pi1-deb | 192.168.1.120 | Raspbian | RPi Model B — Pi-hole. Onboarded 2026-06-21 |
 | blank-dietpi1-deb | 192.168.1.121 | DietPi | RPi Model B Rev 2 (512MB) — backup/role TBD. Onboarded 2026-06-21 |
 | retropi-pi1-deb | 192.168.1.124 | RetroPie | RPi Model B — legacy NES/SNES/GB |
-| backup-dietpi-deb | 192.168.1.126 | DietPi | RPi 2B — backup (Gitea mirror, Vaultwarden). Onboarded 2026-06-21 |
+| backup-dietpi-deb | 192.168.1.126 | DietPi | RPi 2B — Gitea mirror + Vaultwarden backup. Onboarded 2026-06-21. Vaultwarden fixed 2026-06-21 (db ownership + self-signed cert). https://192.168.1.126:8001 |
 | batocera-pi5-deb | 192.168.1.123 | Batocera 43.1 | RPi 5 — retro gaming. Updated 2026-06-21 |
 | argos-pi4-deb | 192.168.1.127 | Raspberry Pi OS | RPi 4 — IoT field station |
 | argos-pi4-wifi-deb | 192.168.1.128 | Raspberry Pi OS | RPi 4 — IoT field station (WiFi interface) |
@@ -84,7 +84,7 @@ _Not currently active — known from router hosts file and prior inventory_
 ## Local DNS Overrides (GL-MT6000)
 | Hostname | Resolves To | Notes |
 |----------|-------------|-------|
-| vaultwarden.lan | 192.168.1.34 | docker-deb — Caddy proxies to Vaultwarden |
+| vaultwarden.lan | 192.168.1.34 | docker-deb — Traefik proxies to Vaultwarden (primary). Backup: https://192.168.1.126:8001 (self-signed) |
 
 ---
 
