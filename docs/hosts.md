@@ -31,7 +31,8 @@ _Router: GL-MT6000 (Flint 2) running OpenWrt — 192.168.1.1_
 | 21 | todash-win | 192.168.1.103 | 00:15:5D:00:B3:08 | Windows | Online | Hyper-V VM (amontillado) |
 | 22 | fortunato-win | 192.168.1.106 | 00:15:5D:00:B3:1A | Windows | Online | Hyper-V VM (amontillado) — Poe |
 | 23 | octopi-deb | 192.168.1.122 | DC:A6:32:5E:04:08 | Debian/Ubuntu Linux | Online | RPi 4 — OctoPrint (Ender 3 V2) |
-| 24 | ha-net | 192.168.1.125 | E4:5F:01:65:56:EE | Home Assistant OS 17.2 | Online | RPi 4 — Home Assistant |
+| 24 | ha-net | 192.168.1.125 | E4:5F:01:65:56:EE | Home Assistant OS 17.2 | Online | RPi 4 — Home Assistant. ⚠️ Shares IP with tools-deb (alternate SD card — not simultaneously active) |
+| 24b | tools-deb | 192.168.1.125 | E4:5F:01:65:56:EE | Raspberry Pi OS | Offline* | RPi 4 — Jellyfin + utilities. ⚠️ Shares IP with ha-net (alternate SD card). Emergency/utility only — do not SSH casually. Baseline deployed 2026-06-21 |
 | 25 | tv1-media | 192.168.1.140 | A8:23:FE:13:A9:D1 | Media Device | Online | — |
 | 26 | tv2-media | 192.168.1.141 | 22:57:5A:A7:04:87 | Media Device | Online | — |
 | 27 | pixel8-droid | 192.168.1.201 | EE:FC:9C:95:22:1B | Android | Online | Pixel 8 |
