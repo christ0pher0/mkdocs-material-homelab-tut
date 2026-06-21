@@ -1,5 +1,5 @@
 # Hosts
-_Last updated: 2026-06-20_
+_Last updated: 2026-06-21_
 _Live hosts from network scan + known offline hosts from router DHCP/hosts file_
 _Router: GL-MT6000 (Flint 2) running OpenWrt — 192.168.1.1_
 
