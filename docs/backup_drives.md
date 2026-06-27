@@ -74,7 +74,7 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 | D&D GAMING | Seagate ST3000DM001 | 3TB | — | — | Z5011ZMP | Feb 2024 | — |
 | PLEX ETC | Toshiba DT01ACA300 | 3TB | — | — | Y5GM755GS | Feb 2024 | — |
 | READING | Seagate ST3000NM0033 | 3TB | — | — | Z1Y32KTB | Feb 2025 | — |
-| STL_Non-Fantasy | HGST HUS726T4TALE6L4 | 4TB | 3.4T | 332G | V6KAGYVR | Jun 2026 | ✅ |
+| STL_#FIGURES | HGST HUS726T4TALE6L4 | 4TB | 3.4T | 332G | V6KAGYVR | Jun 2026 | ✅ |
 | TROVE 24-08 | Seagate ST6000VN0001 | 6TB | — | — | Z401Z7A5 | Aug 2024 | — |
 | TROVE BOOKS | Toshiba DT01ACA300 | 3TB | — | — | Y5GM22NGS | Feb 2024 | — |
 | WAITING_FOR_DATA | Seagate ST3000651NS | 3TB | — | — | Z292SW9T | — | — |
