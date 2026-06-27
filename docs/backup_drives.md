@@ -48,14 +48,14 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 ## STL Archive Drives
 | Label | Model | Size | Used | Free | Serial | Backup | SMART |
 |-------|-------|------|------|------|--------|--------|-------|
-| STL_MZ4250 | WD WD40EZRX | 4TB | 1.5T | 2.3T | WD-WCC4E6KA88HE | May 2026 | ✅ |
-| STL_L-N | Seagate ST3000DM001 | 3TB | — | — | W1F0BALQ | Feb 2025 | — |
 | STL_#-B | Toshiba DT01ACA300 | 3TB | 2.7T | 70G | Y5FM2SEGS | Jan 2024 | ✅ |
 | STL_C-D | Toshiba DT01ACA300 | 3TB | 2.4T | 357G | Y5GMAEAGS | Feb 2025 | ✅ |
 | STL_E-H | Seagate ST3000051NS SED | 3TB | 2.7T | 120G | Z2928YTG | Feb 2025 | ✅ |
-| STL_I-N | Seagate ST33000651NS | 3TB | 2.4T | 428G | Z292SYTG | Jun 2026 | ✅ |
-| STL_O-S | WD WD30EZRS | 3TB | 2.1T | 677G | WD-WMAWZ0009936 | Jun 2026 | ✅ |
 | STL_FIGURES | HGST HUS726T4TALE6L4 | 4TB | 2.9T | 800G | V6KAGYVR | Jun 2026 | ✅ |
+| STL_I-N | Seagate ST33000651NS | 3TB | 2.4T | 428G | Z292SYTG | Jun 2026 | ✅ |
+| STL_L-N | Seagate ST3000DM001 | 3TB | — | — | W1F0BALQ | Feb 2025 | — |
+| STL_MZ4250 | WD WD40EZRX | 4TB | 1.5T | 2.3T | WD-WCC4E6KA88HE | May 2026 | ✅ |
+| STL_O-S | WD WD30EZRS | 3TB | 2.1T | 677G | WD-WMAWZ0009936 | Jun 2026 | ✅ |
 
 ---
 
@@ -63,10 +63,10 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 | Label | Model | Size | Used | Free | Serial | Backup | SMART |
 |-------|-------|------|------|------|--------|--------|-------|
 | AUDIOBOOKS 3TB | WD Caviar Green WD30EZRS | 3TB | — | — | WMAW20629019 | Feb 2024 | — |
-| TROVE 24-08 | Seagate ST6000VN0001 | 6TB | — | — | Z401Z7A5 | Aug 2024 | — |
-| TROVE BOOKS | Toshiba DT01ACA300 | 3TB | — | — | Y5GM22NGS | Feb 2024 | — |
 | D&D GAMING | Seagate ST3000DM001 | 3TB | — | — | Z5011ZMP | Feb 2024 | — |
 | READING | Seagate ST3000NM0033 | 3TB | — | — | Z1Y32KTB | Feb 2025 | — |
+| TROVE 24-08 | Seagate ST6000VN0001 | 6TB | — | — | Z401Z7A5 | Aug 2024 | — |
+| TROVE BOOKS | Toshiba DT01ACA300 | 3TB | — | — | Y5GM22NGS | Feb 2024 | — |
 
 ---
 
@@ -83,7 +83,6 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 |-------|-------|------|------|------|--------|--------|-------|
 | 6 TB SEAGATE 7200 | Seagate ST6000VN0001 | 6TB | — | — | Z40Z2HT9 | — | — |
 | PLEX ETC | Toshiba DT01ACA300 | 3TB | — | — | Y5GM755GS | Feb 2024 | — |
-| WAITING_FOR_DATA | Seagate ST3000651NS | 3TB | — | — | Z292SW9T | — | — |
 
 ---
 
