@@ -43,7 +43,7 @@ _Last updated: 2026-06-28_
 - [ ] Inventory 5 remaining waiting systems — match hardware to roles
 - [ ] Inventory pve3 (ThinkStation offsite) — specs, storage, role
 - [ ] Purchase Hologram.io SIM for argos-deb LTE
-- [x] Pi rack — 3D print or buy, house all 8 Pis cleanly
+- [ ] Pi rack — 3D print or buy, house all 8 Pis cleanly
 - [ ] PoE switch + PoE HATs — single cable per Pi for power + network
 - [ ] Shrink maturin pve-data pool — only cloudinit template remains on local-lvm
 - [ ] Investigate maturin VM 112 leftover disk on shardik NVMe (164GB orphan)
@@ -132,9 +132,9 @@ _Large multi-step tasks requiring a 4-hour focused block_
 ### 6. Shardik PSU Replacement
 **Goal:** Replace confirmed-dead PSU — 1-month uptime target starts when she's back online
 
-- [ ] **Replace PSU** — ATX form factor ⚠️
-- [ ] Verify all VMs stable after swap
-- [ ] Start 1-month uptime clock
+- [x] **Replace PSU** — ✅ COMPLETE 2026-06-28
+- [x] Verify all VMs stable after swap — ✅ COMPLETE 2026-06-28. Cluster quorate, 4 nodes.
+- [x] Start 1-month uptime clock — ✅ started 2026-06-28. Target: 2026-07-28.
 
 ### Completed Sunday Projects
 - [x] restic-deb → blaine-pve — ✅ COMPLETE 2026-06-22. Blaine joined cluster, onboarded via onboard2.yml. restic-deb rebuilt as VM on blaine.
@@ -151,7 +151,7 @@ _Large multi-step tasks requiring a 4-hour focused block_
 
 ### PVE Cluster — blaine-pve + pve3
 
-- [x] Add blaine-pve to cluster after Proxmox install (Sunday)
+- [ ] Add blaine-pve to cluster after Proxmox install (Sunday)
 - [ ] Configure Tailscale on pve3
 - [ ] Full hardware inventory pve3 (dmidecode, photos)
 - [ ] Add pve3 to Proxmox cluster (shardik + maturin + aslan + blaine + pve3)
