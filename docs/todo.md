@@ -3,7 +3,7 @@ _Last updated: 2026-06-28_
 ---
 
 ## Critical / Security
-- [ ] **Shardik PSU** — suspected failure, primary hypervisor — Sunday replacement planned
+- [x] **Shardik PSU** — suspected failure, primary hypervisor — Sunday replacement planned
 - [ ] docker-deb static IP or confirmed DHCP reservation — hosts Vaultwarden, Traefik, Portainer ⚠️
 - [ ] Disk space alerts — amontillado D: (11%), pi1 SD (91%) ⚠️
 - [ ] **Telegram bot** — Sam building patch notification bot (weekly_patch.yml results → Telegram after 3am run). Needs token + channel ID from Chris.
