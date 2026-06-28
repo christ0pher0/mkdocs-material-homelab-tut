@@ -53,7 +53,7 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 | STL_E-H | Seagate ST3000051NS SED | 3TB | 2.7T | 120G | Z2928YTG | Feb 2025 | ✅ |
 | STL_FIGURES | HGST HUS726T4TALE6L4 | 4TB | 2.9T | 800G | V6KAGYVR | Jun 2026 | ✅ |
 | STL_I-N | Seagate ST33000651NS | 3TB | 2.4T | 428G | Z292SYTG | Jun 2026 | ✅ |
-| STL_L-N | Seagate ST3000DM001 | 3TB | — | — | W1F0BALQ | Feb 2025 | — |
+| STL_T-Z | Seagate ST3000DM001 | 3TB | — | — | W1F0BALQ | Feb 2025 | — |
 | STL_MZ4250 | WD WD40EZRX | 4TB | 1.5T | 2.3T | WD-WCC4E6KA88HE | May 2026 | ✅ |
 | STL_O-S | WD WD30EZRS | 3TB | 2.1T | 677G | WD-WMAWZ0009936 | Jun 2026 | ✅ |
 
