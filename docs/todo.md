@@ -21,7 +21,7 @@ _Last updated: 2026-06-20_
 ---
 
 ## Immediate Maintenance (Sysadmin)
-- [ ] **Patch all hosts** — full OS update run across entire fleet ⚠️
+- [x] **Patch all hosts** — full OS update run across entire fleet ⚠️
 - [ ] **Reboot docker-deb** — kernel update pending 2+ weeks, critical (runs Vaultwarden/Traefik/Portainer)
 - [ ] Update Portainer — 13 months old
 - [ ] Fix pi1-deb SD card — 91% full, will fail silently (replacement SD in reserve)
