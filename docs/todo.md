@@ -161,7 +161,7 @@ _Large multi-step tasks requiring a 4-hour focused block_
 
 ### Docker Swarm
 
-- [ ] Migrate swarm01 (102) from shardik to aslan
+- [x] Migrate swarm01 (102) from shardik to aslan
 - [ ] Rebuild swarm01/02/03 (currently stopped)
 - [ ] Deploy Traefik in Swarm mode — cluster-wide reverse proxy
 - [ ] Deploy Uptime Kuma in Swarm
