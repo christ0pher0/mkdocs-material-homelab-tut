@@ -129,7 +129,7 @@ _Large multi-step tasks requiring a 4-hour focused block_
 
 - [ ] Draft runbook before touching hardware
 - [ ] Live-migrate or gracefully shut down all VMs on aslan (pbs, docker-deb, alma, rocky, kasm, swarm02, swarm03, pihole-book-deb)
-- [ ] Swap PSU
+- [x] Swap PSU
 - [ ] Boot aslan — verify all VMs start cleanly
 - [ ] Confirm PBS datastore accessible, cluster quorum healthy
 
