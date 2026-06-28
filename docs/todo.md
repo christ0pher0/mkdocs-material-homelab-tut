@@ -156,7 +156,7 @@ _Large multi-step tasks requiring a 4-hour focused block_
 ### PVE Cluster — blaine-pve + pve3
 - [ ] Add blaine-pve to cluster after Proxmox install (Sunday)
 - [ ] Configure Tailscale on pve3
-- [ ] Full hardware inventory pve3 (dmidecode, photos)
+- [x] Full hardware inventory pve3 (dmidecode, photos)
 - [ ] Add pve3 to Proxmox cluster (shardik + maturin + aslan + blaine + pve3)
 - [ ] Add pve3 to inventory_auto and MkDocs
 - [ ] Configure Proxmox HA for automatic VM failover
