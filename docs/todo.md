@@ -180,7 +180,7 @@ _Large multi-step tasks requiring a 4-hour focused block_
 
 - [ ] Deploy Ollama with GTX 1080 Ti GPU passthrough (GPU already bound to vfio-pci on aslan)
 - [ ] Deploy Open WebUI
-- [ ] Create sysadmin / homelab / casual assistant personalities
+- [x] Create sysadmin / homelab / casual assistant personalities
 - [ ] Add Whisper (STT) and Piper (TTS)
 - [ ] Feed MkDocs docs as RAG knowledge base
 
