@@ -79,7 +79,7 @@ _Large multi-step tasks requiring a 4-hour focused block_
 
 ### 2. Pi 2B — Flash DietPi
 **Goal:** Get Pi 2B (quad-core, 1GB RAM) online, decide on role via first-run installer
-- [ ] Download DietPi ARMv7-Bookworm image from dietpi.com/downloads
+- [x] Download DietPi ARMv7-Bookworm image from dietpi.com/downloads
 - [ ] Flash SD card (`dd if=DietPi_RPi-ARMv7-Bookworm.img of=/dev/sdX bs=4M status=progress`)
 - [ ] Boot, run first-run installer, pick role
 - [ ] Assign hostname and static IP, add to Ansible inventory
