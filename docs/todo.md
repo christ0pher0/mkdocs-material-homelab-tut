@@ -127,7 +127,7 @@ _Large multi-step tasks requiring a 4-hour focused block_
 ### 6. Aslan PSU Swap
 **Goal:** Replace aslan PSU — requires planned maintenance window (8 VMs running)
 
-- [ ] Draft runbook before touching hardware
+- [x] Draft runbook before touching hardware
 - [ ] Live-migrate or gracefully shut down all VMs on aslan (pbs, docker-deb, alma, rocky, kasm, swarm02, swarm03, pihole-book-deb)
 - [x] Swap PSU
 - [ ] Boot aslan — verify all VMs start cleanly
