@@ -258,3 +258,15 @@ _Sorted by date and node/area_
 - 108 alma-rpm, 109 rocky-rpm — running, SDA_store
 - 111 kasm-2404-deb — stopped, hdd3tb
 - 115 pbs — running, SDA_store
+
+## Swept 2026-06-28
+- [x] Fix onboard NIC (alc0) — confirmed dead (AR8161, alc driver, hours spent). Install Intel X540-T2 PCIe NIC instead (Sunday Project #7)
+- [x] Upgrade CPU: Ryzen 7 2700X — ✅ COMPLETE 2026-06
+- [x] Upgrade RAM to 64GB DDR4 — ✅ COMPLETE 2026-06
+- [x] Shardik hardware upgrade (CPU 2700X, RAM to 64GB) — complete 2026-06
+- [x] Router/AP rewire — complete
+- [x] Beryl AP setup — GL-MT3000 configured in AP mode, 192.168.1.10, extending Greyhawk WiFi (2026-06-15)
+- [x] idee-deb → aslan Proxmox hypervisor — complete 2026-06-16
+- [x] restic-deb → blaine-pve — complete 2026-06-22. Blaine joined cluster, onboarded via onboard2.yml. restic-deb rebuilt as VM on blaine.
+- [x] Pi rack installed — 6 Pis mounted and running 2026-06-28. Batocera off-rack (powers on for gaming only).
+- [x] TrueNAS boot-pool mirror complete — da0 (SanDisk) + da1 (Kingston), bootloader written 2026-06-28, scrub clean.
