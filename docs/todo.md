@@ -171,7 +171,7 @@ _Large multi-step tasks requiring a 4-hour focused block_
 
 ### Monitoring Stack (monitor-deb 192.168.1.29)
 
-- [ ] Add Uptime Kuma to Homepage widget (fix slug)
+- [x] Add Uptime Kuma to Homepage widget (fix slug)
 - [ ] Configure Zabbix → Telegram alerting
 - [ ] Deploy Loki for log aggregation
 - [ ] Uptime Kuma monitoring of mediastack-deb containers
