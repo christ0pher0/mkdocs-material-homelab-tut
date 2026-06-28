@@ -226,7 +226,7 @@ _Large multi-step tasks requiring a 4-hour focused block_
 
 ### Documentation
 
-- [ ] Create Proxmox cluster diagram
+- [x] Create Proxmox cluster diagram
 - [ ] Document monitoring stack architecture
 - [ ] Create backup_policy.md — 3-2-1 approach, rotation schedule, STL archive policy
 - [ ] hw_inv.md — document ST6000VN0001 Z4D2EJ31 retired, ST6000DX000 Z4D07FQ5 added
