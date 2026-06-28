@@ -3,6 +3,7 @@ _Last updated: 2026-06-28_
 ---
 
 ## Critical / Security
+
 - [ ] **Shardik PSU** — suspected failure, primary hypervisor — Sunday replacement planned
 - [ ] docker-deb static IP or confirmed DHCP reservation — hosts Vaultwarden, Traefik, Portainer ⚠️
 - [ ] Disk space alerts — amontillado D: (11%), pi1 SD (91%) ⚠️
@@ -13,6 +14,7 @@ _Last updated: 2026-06-28_
 - [ ] Investigate amontillado D: (2.79TB, 11% free) — audit VMs and junk, clear or expand
 
 ### Backup Strategy
+
 - [x] STL Non-Fantasy — ✅ COMPLETE 2026-06-28. cru3 now labeled STL_FIGURES. Sync confirmed complete.
 - [ ] STL_FIGURES — audit all scripts for hardcoded old label references (cru3 was: STL_Non-Fantasy → STL_#CRUNCH → STL_FIGURES)
 - [ ] STL T-Z — cru2 reformatted, rsync running, currently in T (Titan Forge) — monitor to completion
@@ -23,11 +25,12 @@ _Last updated: 2026-06-28_
 ---
 
 ## Immediate Maintenance (Sysadmin)
+
 - [ ] **Patch all hosts** — weekly_patch.yml runs Sundays 3am (automated). Manual run if urgent.
 - [x] **Reboot docker-deb** — ✅ COMPLETE 2026-06-28. Kernel current. Static IP still needed.
 - [x] Update Portainer — ✅ COMPLETE 2026-06-28
 - [ ] Fix pi1-deb SD card — 91% full, will fail silently (replacement SD in reserve)
-- [x] Clean stale entries from GL-MT6000 /etc/hosts: snipeit-deb, grafana-docker-deb, ubuntu-ansible-deb, apache-deb, weltgeist-media, alea_iacta_est-media
+- [ ] Clean stale entries from GL-MT6000 /etc/hosts: snipeit-deb, grafana-docker-deb, ubuntu-ansible-deb, apache-deb, weltgeist-media, alea_iacta_est-media
 - [ ] Investigate orphaned Docker network br-ca523ef71531 on docker-deb — prune if safe
 - [ ] Remove snipeit-deb from all docs (LXC destroyed 2026-05-10)
 - [ ] Remove grafana-docker-deb, ubuntu-ansible-deb, apache-deb from all docs
@@ -36,6 +39,7 @@ _Last updated: 2026-06-28_
 ---
 
 ## In Progress
+
 - [ ] Inventory 5 remaining waiting systems — match hardware to roles
 - [ ] Inventory pve3 (ThinkStation offsite) — specs, storage, role
 - [ ] Purchase Hologram.io SIM for argos-deb LTE
@@ -58,6 +62,7 @@ _Last updated: 2026-06-28_
 - [ ] **Netgate clarification** — confirm model and role in topology (Riley)
 
 ### Hardware Inventory Completion
+
 - [ ] Photo and dmidecode all 5 waiting systems
 - [ ] Photo pve3 (ThinkStation offsite)
 - [ ] Photo Elegoo Mars 3, Ender 3 V1, Flashforge Dreamer
@@ -99,7 +104,7 @@ _Large multi-step tasks requiring a 4-hour focused block_
 
 ### 3. Physical Tidy
 
-- [x] Tidy desk wires — full shutdown and rewire
+- [ ] Tidy desk wires — full shutdown and rewire
 - [ ] Sort hardware / find HBA
 - [ ] Clean off shelves
 
@@ -124,16 +129,7 @@ _Large multi-step tasks requiring a 4-hour focused block_
 - [ ] Remove/disable old USB NIC (ue0) interface
 - [ ] Confirm CIFS/NFS mounts come back on client machines
 
-### 6. Aslan PSU Swap
-**Goal:** Replace aslan PSU — requires planned maintenance window (8 VMs running)
-
-- [x] Draft runbook before touching hardware
-- [ ] Live-migrate or gracefully shut down all VMs on aslan (pbs, docker-deb, alma, rocky, kasm, swarm02, swarm03, pihole-book-deb)
-- [x] Swap PSU
-- [ ] Boot aslan — verify all VMs start cleanly
-- [ ] Confirm PBS datastore accessible, cluster quorum healthy
-
-### 7. Shardik PSU Replacement
+### 6. Shardik PSU Replacement
 **Goal:** Replace confirmed-dead PSU — 1-month uptime target starts when she's back online
 
 - [ ] **Replace PSU** — ATX form factor ⚠️
@@ -142,7 +138,7 @@ _Large multi-step tasks requiring a 4-hour focused block_
 
 ### Completed Sunday Projects
 - [x] restic-deb → blaine-pve — ✅ COMPLETE 2026-06-22. Blaine joined cluster, onboarded via onboard2.yml. restic-deb rebuilt as VM on blaine.
-- [ ] Pi rack Phase 1 — ✅ COMPLETE 2026-06-28. 6 Pis mounted and running. Batocera off-rack.
+- [x] Pi rack Phase 1 — ✅ COMPLETE 2026-06-28. 6 Pis mounted and running. Batocera off-rack.
 - [x] Shardik hardware upgrade (CPU 2700X, RAM to 64GB) — ✅ COMPLETE 2026-06
 - [x] Router/AP rewire — ✅ COMPLETE
 - [x] Beryl AP setup (GL-MT3000, AP mode, 192.168.1.10) — ✅ COMPLETE 2026-06-15
@@ -154,15 +150,17 @@ _Large multi-step tasks requiring a 4-hour focused block_
 ## Planned Projects
 
 ### PVE Cluster — blaine-pve + pve3
+
 - [ ] Add blaine-pve to cluster after Proxmox install (Sunday)
 - [ ] Configure Tailscale on pve3
-- [x] Full hardware inventory pve3 (dmidecode, photos)
+- [ ] Full hardware inventory pve3 (dmidecode, photos)
 - [ ] Add pve3 to Proxmox cluster (shardik + maturin + aslan + blaine + pve3)
 - [ ] Add pve3 to inventory_auto and MkDocs
 - [ ] Configure Proxmox HA for automatic VM failover
 - [ ] Set up shared storage — NFS from TrueNAS
 
 ### Docker Swarm
+
 - [ ] Migrate swarm01 (102) from shardik to aslan
 - [ ] Rebuild swarm01/02/03 (currently stopped)
 - [ ] Deploy Traefik in Swarm mode — cluster-wide reverse proxy
@@ -172,12 +170,14 @@ _Large multi-step tasks requiring a 4-hour focused block_
 - [ ] Evaluate MkDocs in Swarm
 
 ### Monitoring Stack (monitor-deb 192.168.1.29)
+
 - [ ] Add Uptime Kuma to Homepage widget (fix slug)
 - [ ] Configure Zabbix → Telegram alerting
 - [ ] Deploy Loki for log aggregation
 - [ ] Uptime Kuma monitoring of mediastack-deb containers
 
 ### Local AI Assistant (aslan)
+
 - [ ] Deploy Ollama with GTX 1080 Ti GPU passthrough (GPU already bound to vfio-pci on aslan)
 - [ ] Deploy Open WebUI
 - [ ] Create sysadmin / homelab / casual assistant personalities
@@ -185,9 +185,11 @@ _Large multi-step tasks requiring a 4-hour focused block_
 - [ ] Feed MkDocs docs as RAG knowledge base
 
 ### PBS — Next Steps
+
 - [ ] Evaluate PBS tape backup to CRU bays on blaine-pve (post-install)
 
 ### Mediastack / Plex
+
 - [ ] Add Tautulli — Plex analytics
 - [ ] Bazarr — subtitle automation
 - [ ] Tdarr — transcoding (needs GPU node first — aslan)
@@ -197,28 +199,33 @@ _Large multi-step tasks requiring a 4-hour focused block_
 - [ ] FlareSolverr redeployment + Prowlarr integration (post mediastack-deb rebuild)
 
 ### RomM / Gaming
+
 - [ ] Complete tactical RPG collections across all supported platforms
 - [ ] Deduplicate DS ROMs (Fire Emblem Shadow Dragon appears 3x)
 - [ ] Explore LaunchBox ROM archive on NAS — migrate to RomM
 
 ### Vaultwarden / Secrets
+
 - [ ] Fix Vaultwarden autofill port matching issue in browser extension
 - [ ] Store all service credentials with full URL including port
 - [ ] Evaluate HashiCorp Vault for Ansible secrets management
 
 ### Home Assistant
+
 - [ ] Phase 1 — backup to TrueNAS, Tailscale
 - [ ] Phase 2 — Zigbee, MQTT, ESPHome, Frigate
 - [ ] Phase 3 — automations, Music Assistant, OctoPrint
 - [ ] Phase 4 — argos-deb wall kiosk
 
 ### Network
+
 - [ ] Clarify Flint2 + Netgate topology — document which handles what
 - [ ] Evaluate VLANs for IoT/media/server segmentation
 - [ ] Unbound — local DNS resolver
 - [ ] Authelia — auth layer for exposed services
 
 ### Documentation
+
 - [ ] Create Proxmox cluster diagram
 - [ ] Document monitoring stack architecture
 - [ ] Create backup_policy.md — 3-2-1 approach, rotation schedule, STL archive policy
@@ -226,19 +233,27 @@ _Large multi-step tasks requiring a 4-hour focused block_
 - [ ] Update hosts.md with aslan and Beryl AP (192.168.1.10)
 
 ### Ansible
+
 - [ ] Pin ansible_python_interpreter per host in inventory_auto
 - [ ] Add fail2ban to homelab_baseline.yml
 - [ ] Add chrony LXC skip to sync_time.yml
 - [ ] Update check_services.yml to reflect current services
 - [ ] Update fail2ban.yml — add pause before verify task
 
+### Team Documentation
+
+- [ ] **ED: Create CLAUDE.md for each specialist** — Jordan, Kai, Sam, Riley, Morgan, Alex, Taylor, Casey, Drew — document domain, personality, rules, ownership, escalation paths
+
 ### MkDocs / Automation
+
 - [ ] Automate doc updates — push from ED session to git-ansible without manual paste
 - [ ] completed.md auto-population — move checked items from todo.md via checkbox_persist.js
+- [ ] **Sam: merge-aware todo_sync.sh** — deploy cron on git-ansible that pulls todo.md from amontillado but preserves `[x]` state from Gitea (prevent SCP from wiping web-checked boxes)
 
 ---
 
 ## Parking Lot (Research Needed — Not Yet Scheduled)
+
 - [ ] **Swarm architecture** — should monitoring stack move to swarm? Evaluate what makes sense
 - [ ] **Ceph** — second attempt, needs planning and dedicated hardware evaluation
 - [ ] **YouTube channel tech scouting** — Chris to provide channel list, 
