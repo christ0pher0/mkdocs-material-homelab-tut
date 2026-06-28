@@ -25,7 +25,7 @@ _Last updated: 2026-06-20_
 - [ ] **Reboot docker-deb** — kernel update pending 2+ weeks, critical (runs Vaultwarden/Traefik/Portainer)
 - [ ] Update Portainer — 13 months old
 - [ ] Fix pi1-deb SD card — 91% full, will fail silently (replacement SD in reserve)
-- [ ] Clean stale entries from GL-MT6000 /etc/hosts: snipeit-deb, grafana-docker-deb, ubuntu-ansible-deb, apache-deb, weltgeist-media, alea_iacta_est-media
+- [x] Clean stale entries from GL-MT6000 /etc/hosts: snipeit-deb, grafana-docker-deb, ubuntu-ansible-deb, apache-deb, weltgeist-media, alea_iacta_est-media
 - [ ] Investigate orphaned Docker network br-ca523ef71531 on docker-deb — prune if safe
 - [ ] Remove snipeit-deb from all docs (LXC destroyed 2026-05-10)
 - [ ] Remove grafana-docker-deb, ubuntu-ansible-deb, apache-deb from all docs
