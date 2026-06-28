@@ -45,7 +45,7 @@ _Last updated: 2026-06-20_
 - [ ] Audit offline hosts from router — confirm which are inactive vs decommissioned (eld-win, work-win, tahoe-mac, etc.)
 - [x] swarm01 (102) — pending migration from shardik to aslan
 - [x] KASM (111) — move disk from SDA_store to local-lvm NVMe on aslan for performance
-- [ ] onboard pbs-deb via Ansible (onboard_host.yml not yet run — passwordless sudo added manually)
+- [x] onboard pbs-deb via Ansible (onboard_host.yml not yet run — passwordless sudo added manually)
 - [ ] Manyfold — creators not populating correctly on docker-deb
 
 ### Hardware Inventory Completion
