@@ -99,7 +99,7 @@ _Large multi-step tasks requiring a 4-hour focused block_
 
 ### 3. Physical Tidy
 
-- [ ] Tidy desk wires — full shutdown and rewire
+- [x] Tidy desk wires — full shutdown and rewire
 - [ ] Sort hardware / find HBA
 - [ ] Clean off shelves
 
