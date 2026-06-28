@@ -12,7 +12,7 @@ _Last updated: 2026-06-20_
 - [ ] Investigate amontillado D: (2.79TB, 11% free) — audit VMs and junk, clear or expand
 
 ### Backup Strategy
-- [ ] STL Non-Fantasy — cru3 botched (drive filled mid-transfer), all batches need redo from scratch
+- [x] STL Non-Fantasy — cru3 botched (drive filled mid-transfer), all batches need redo from scratch
 - [ ] STL T-Z — no backup exists, cru2 reformat to STL_T-Z planned
 - [ ] Establish offsite drive rotation schedule (Tier 3)
 - [ ] Evaluate PBS tape backup to CRU bays (blaine-pve post-install)
