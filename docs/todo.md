@@ -143,7 +143,7 @@ _Large multi-step tasks requiring a 4-hour focused block_
 - [x] Router/AP rewire — ✅ COMPLETE
 - [x] Beryl AP setup (GL-MT3000, AP mode, 192.168.1.10) — ✅ COMPLETE 2026-06-15
 - [x] idee-deb → aslan Proxmox hypervisor — ✅ COMPLETE 2026-06-16
-- [x] TrueNAS boot-pool mirror — ✅ COMPLETE 2026-06-28. da0 (SanDisk) + da1 (Kingston), bootloader written, scrub clean.
+- [ ] TrueNAS boot-pool mirror — ✅ COMPLETE 2026-06-28. da0 (SanDisk) + da1 (Kingston), bootloader written, scrub clean.
 
 ---
 
