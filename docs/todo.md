@@ -3,7 +3,7 @@ _Last updated: 2026-06-20_
 ---
 
 ## Critical / Security
-- [ ] **Shardik PSU** — suspected failure, primary hypervisor — Sunday replacement planned
+- [x] **Shardik PSU** — suspected failure, primary hypervisor — Sunday replacement planned
 - [ ] docker-deb static IP or confirmed DHCP reservation — hosts Vaultwarden, Traefik, Portainer ⚠️
 - [ ] Disk space alerts — amontillado D: (11%), pi1 SD (91%) ⚠️
 - [ ] **Telegram alerts** — bot notifications when something looks wrong
@@ -23,7 +23,7 @@ _Last updated: 2026-06-20_
 ## Immediate Maintenance (Sysadmin)
 - [x] **Patch all hosts** — full OS update run across entire fleet ⚠️
 - [ ] **Reboot docker-deb** — kernel update pending 2+ weeks, critical (runs Vaultwarden/Traefik/Portainer)
-- [ ] Update Portainer — 13 months old
+- [x] Update Portainer — 13 months old
 - [ ] Fix pi1-deb SD card — 91% full, will fail silently (replacement SD in reserve)
 - [x] Clean stale entries from GL-MT6000 /etc/hosts: snipeit-deb, grafana-docker-deb, ubuntu-ansible-deb, apache-deb, weltgeist-media, alea_iacta_est-media
 - [ ] Investigate orphaned Docker network br-ca523ef71531 on docker-deb — prune if safe
@@ -79,7 +79,7 @@ _Large multi-step tasks requiring a 4-hour focused block_
 
 ### 2. Pi 2B — Flash DietPi
 **Goal:** Get Pi 2B (quad-core, 1GB RAM) online, decide on role via first-run installer
-- [ ] Download DietPi ARMv7-Bookworm image from dietpi.com/downloads
+- [x] Download DietPi ARMv7-Bookworm image from dietpi.com/downloads
 - [ ] Flash SD card (`dd if=DietPi_RPi-ARMv7-Bookworm.img of=/dev/sdX bs=4M status=progress`)
 - [ ] Boot, run first-run installer, pick role
 - [ ] Assign hostname and static IP, add to Ansible inventory
@@ -101,7 +101,7 @@ _Large multi-step tasks requiring a 4-hour focused block_
 - [ ] Install hardware into existing FreeNAS beige full tower
 - [ ] Install TrueNAS on 500GB SSD — replace USB boot drives
 - [ ] Boot TrueNAS, import TRYAGAIN pool
-- [ ] Reconfigure SMB shares, cifs1 user, services
+- [x] Reconfigure SMB shares, cifs1 user, services
 - [ ] Update mediastack-deb fstab if IP changes
 - [ ] Fix onboard NIC (alc0) or install reserved NIC
 - [ ] Dedupe/find duplicate filenames on TRYAGAIN — fdupes or rdfind (post-rebuild)
