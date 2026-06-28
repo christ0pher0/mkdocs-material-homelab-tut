@@ -101,7 +101,7 @@ _Large multi-step tasks requiring a 4-hour focused block_
 - [ ] Install hardware into existing FreeNAS beige full tower
 - [ ] Install TrueNAS on 500GB SSD — replace USB boot drives
 - [ ] Boot TrueNAS, import TRYAGAIN pool
-- [ ] Reconfigure SMB shares, cifs1 user, services
+- [x] Reconfigure SMB shares, cifs1 user, services
 - [ ] Update mediastack-deb fstab if IP changes
 - [ ] Fix onboard NIC (alc0) or install reserved NIC
 - [ ] Dedupe/find duplicate filenames on TRYAGAIN — fdupes or rdfind (post-rebuild)
