@@ -13,7 +13,7 @@ _Last updated: 2026-06-20_
 
 ### Backup Strategy
 - [x] STL Non-Fantasy — cru3 botched (drive filled mid-transfer), all batches need redo from scratch
-- [ ] STL T-Z — no backup exists, cru2 reformat to STL_T-Z planned
+- [x] STL T-Z — no backup exists, cru2 reformat to STL_T-Z planned
 - [ ] Establish offsite drive rotation schedule (Tier 3)
 - [ ] Evaluate PBS tape backup to CRU bays (blaine-pve post-install)
 - [ ] cru_stats.sh saves to /root/scripts/cru_stats/ (sudo) but backup_drives_update.sh reads ~/scripts/cru_stats/ — fix path mismatch
