@@ -23,7 +23,7 @@ _Last updated: 2026-06-20_
 ## Immediate Maintenance (Sysadmin)
 - [x] **Patch all hosts** — full OS update run across entire fleet ⚠️
 - [ ] **Reboot docker-deb** — kernel update pending 2+ weeks, critical (runs Vaultwarden/Traefik/Portainer)
-- [ ] Update Portainer — 13 months old
+- [x] Update Portainer — 13 months old
 - [ ] Fix pi1-deb SD card — 91% full, will fail silently (replacement SD in reserve)
 - [x] Clean stale entries from GL-MT6000 /etc/hosts: snipeit-deb, grafana-docker-deb, ubuntu-ansible-deb, apache-deb, weltgeist-media, alea_iacta_est-media
 - [ ] Investigate orphaned Docker network br-ca523ef71531 on docker-deb — prune if safe
