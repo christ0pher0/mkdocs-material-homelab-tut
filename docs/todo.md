@@ -229,7 +229,7 @@ _Large multi-step tasks requiring a 4-hour focused block_
 - [x] Create Proxmox cluster diagram
 - [ ] Document monitoring stack architecture
 - [ ] Create backup_policy.md — 3-2-1 approach, rotation schedule, STL archive policy
-- [ ] hw_inv.md — document ST6000VN0001 Z4D2EJ31 retired, ST6000DX000 Z4D07FQ5 added
+- [x] hw_inv.md — document ST6000VN0001 Z4D2EJ31 retired, ST6000DX000 Z4D07FQ5 added
 - [ ] Update hosts.md with aslan and Beryl AP (192.168.1.10)
 
 ### Ansible
