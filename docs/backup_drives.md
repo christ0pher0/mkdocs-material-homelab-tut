@@ -48,9 +48,9 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 ## STL Archive Drives
 | Label | Model | Size | Used | Free | Serial | Backup | SMART |
 |-------|-------|------|------|------|--------|--------|-------|
-| STL_#-B | Toshiba DT01ACA300 | 3TB | 2.7T | 70G | Y5FM2SEGS | Jan 2024 | ✅ |
-| STL_C-D | Toshiba DT01ACA300 | 3TB | 2.4T | 357G | Y5GMAEAGS | Feb 2025 | ✅ |
-| STL_E-H | Seagate ST3000051NS SED | 3TB | 2.7T | 120G | Z2928YTG | Feb 2025 | ✅ |
+| STL_#-B | Toshiba DT01ACA300 | 3TB | 2.7T | 70G | Y5FM2SEGS | May 2026 | ✅ |
+| STL_C-D | Toshiba DT01ACA300 | 3TB | 2.4T | 357G | Y5GMAEAGS | May 2026 | ✅ |
+| STL_E-H | Seagate ST3000051NS SED | 3TB | 2.7T | 120G | Z2928YTG | May 2026 | ✅ |
 | STL_FIGURES | HGST HUS726T4TALE6L4 | 4TB | 2.9T | 800G | V6KAGYVR | Jun 2026 | ✅ |
 | STL_I-N | Seagate ST33000651NS | 3TB | 2.4T | 428G | Z292SYTG | Jun 2026 | ✅ |
 | STL_T-Z | Seagate ST3000DM001 | 3TB | — | — | W1F0BALQ | Feb 2025 | — |
