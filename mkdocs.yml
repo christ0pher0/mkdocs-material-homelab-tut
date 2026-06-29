@@ -58,6 +58,7 @@ nav:
     - Network Devices: network_devices.md
     - Network Diagram: network_diagram.md
     - Tailscale Reference: tailscale.md
+    - Planned VLANS: vlan_ip_plan.md
   - Hosts & Inventory:
     - Host: host.md
     - Hosts: hosts.md

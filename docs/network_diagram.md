@@ -1,6 +1,6 @@
 # Network Diagram
 
-_Last update: 2026-06-11 05:10:02_
+_Last update: 2026-06-28 23:10:02_
 
 ```mermaid
 graph LR
@@ -52,14 +52,22 @@ graph LR
     Switch --> plow_rpm
     pi1_deb["pi1-deb<br/>192.168.1.120<br/>Debian/Ubuntu"]
     Switch --> pi1_deb
+    pihole_pi1_deb["pihole-pi1-deb<br/>192.168.1.120<br/>Debian/Ubuntu"]
+    Switch --> pihole_pi1_deb
     pi2_deb["pi2-deb<br/>192.168.1.121<br/>Debian/Ubuntu"]
     Switch --> pi2_deb
+    blank_dietpi_deb["blank-dietpi-deb<br/>192.168.1.121<br/>Debian/Ubuntu"]
+    Switch --> blank_dietpi_deb
     octopi_deb["octopi-deb<br/>192.168.1.122<br/>Debian/Ubuntu"]
     Switch --> octopi_deb
+    octopi_pi4_deb["octopi-pi4-deb<br/>192.168.1.122<br/>Debian/Ubuntu"]
+    Switch --> octopi_pi4_deb
     batocera_deb["batocera-deb<br/>192.168.1.123<br/>Debian/Ubuntu"]
     Switch --> batocera_deb
     pi3_deb["pi3-deb<br/>192.168.1.124<br/>Debian/Ubuntu"]
     Switch --> pi3_deb
+    tools_deb["tools-deb<br/>192.168.1.125<br/>Debian/Ubuntu"]
+    Switch --> tools_deb
     pi4_deb["pi4-deb<br/>192.168.1.126<br/>Debian/Ubuntu"]
     Switch --> pi4_deb
     argos_deb["argos-deb<br/>192.168.1.127<br/>Debian/Ubuntu"]
@@ -90,6 +98,8 @@ graph LR
     Switch --> tv2_media
     tahoe_mac["tahoe-mac<br/>192.168.1.200<br/>macOS"]
     Switch --> tahoe_mac
+    backup_dietpi_deb["backup-dietpi-deb<br/>192.168.1.126<br/>Debian/Ubuntu"]
+    Switch --> backup_dietpi_deb
 
     classDef infra fill:#4a4a8a,stroke:#9999cc,color:#fff
     classDef proxmox fill:#5a3e00,stroke:#e8a000,color:#fff
@@ -118,10 +128,14 @@ graph LR
     class alma_rpm linux
     class plow_rpm linux
     class pi1_deb linux
+    class pihole_pi1_deb linux
     class pi2_deb linux
+    class blank_dietpi_deb linux
     class octopi_deb linux
+    class octopi_pi4_deb linux
     class batocera_deb linux
     class pi3_deb linux
+    class tools_deb linux
     class pi4_deb linux
     class argos_deb linux
     class amontillado_win windows
@@ -137,4 +151,5 @@ graph LR
     class tv1_media network
     class tv2_media network
     class tahoe_mac network
+    class backup_dietpi_deb linux
 ```
