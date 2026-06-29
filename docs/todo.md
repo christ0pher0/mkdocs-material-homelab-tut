@@ -4,20 +4,21 @@ _Last updated: 2026-06-28_
 
 ## Critical / Security
 
-- [ ] **Shardik PSU** — suspected failure, primary hypervisor — Sunday replacement planned
+- [x] **Shardik PSU** — ✅ COMPLETE 2026-06-28. PSU replaced, CMOS battery replaced, cluster quorate.
 - [ ] docker-deb static IP or confirmed DHCP reservation — hosts Vaultwarden, Traefik, Portainer ⚠️
-- [ ] Disk space alerts — amontillado D: (11%), pi1 SD (91%) ⚠️
+- [ ] Disk space alerts — amontillado C: (7% free ⚠️), pi1 SD (91%) ⚠️
+- [ ] **amontillado C: drive** — 65.9GB free of 930GB (7%). Jordan to audit what's consuming it
 - [ ] **Telegram bot** — Sam building patch notification bot (weekly_patch.yml results → Telegram after 3am run). Needs token + channel ID from Chris.
 - [ ] **docker-deb watchdog** — Sam building script to alert Uptime Kuma if container stack hasn't restarted in >1 week
 - [ ] Alert on: drive errors, disk >85%, service down, high temp, RAM pressure
-- [ ] sudoers drop-in for docker group auto-add script (per-user, NOPASSWD usermod)
 - [ ] Investigate amontillado D: (2.79TB, 11% free) — audit VMs and junk, clear or expand
+- [ ] **VPN rationalization** — 3 VPN solutions running (Tailscale, WireGuard on mediastack, ZeroTier on amontillado). Riley to pick one and decommission the others
 
 ### Backup Strategy
 
 - [x] STL Non-Fantasy — ✅ COMPLETE 2026-06-28. cru3 now labeled STL_FIGURES. Sync confirmed complete.
 - [ ] STL_FIGURES — audit all scripts for hardcoded old label references (cru3 was: STL_Non-Fantasy → STL_#CRUNCH → STL_FIGURES)
-- [ ] STL T-Z — cru2 reformatted, rsync running, currently in T (Titan Forge) — monitor to completion
+- [ ] STL T-Z — cru2 rsync running, currently in V (Vae Victus) — monitor to completion
 - [ ] Establish offsite drive rotation schedule (Tier 3)
 - [ ] Evaluate PBS tape backup to CRU bays (blaine-pve post-install)
 - [ ] cru_stats.sh saves to /root/scripts/cru_stats/ (sudo) but backup_drives_update.sh reads ~/scripts/cru_stats/ — fix path mismatch
@@ -53,13 +54,20 @@ _Last updated: 2026-06-28_
 - [ ] **Confirm swarm VM status** — 102/104/105 all showing STOPPED on aslan. Intentional or not? ⚠️
 - [ ] KASM (111) — move disk from SDA_store to local-lvm NVMe on aslan for performance
 - [ ] onboard pbs-deb via Ansible (onboard_host.yml not yet run — passwordless sudo added manually)
-- [ ] Manyfold — Kai testing creator-population fix via LXC on blaine (2026-06-28)
+- [ ] Manyfold — now confirmed running on docker-deb :3214. Mark LXC test as resolved.
 - [ ] **Set Uptime Kuma TrueNAS poll to 30 seconds** — Taylor (USB NIC fragility mitigation)
 - [ ] **Check pihole-pi1-deb SD card** — was 91% full 2026-06-21, run `df -h` on pihole-pi1-deb (192.168.1.120)
 - [ ] **Confirm which 6 Pis are racked** — update fleet inventory (Drew)
 - [ ] **Ender 3 V2 yellow PLA** — run temp tower first to dial in profile before printing anything structural (Drew)
 - [ ] **Pi Status page** — build in MkDocs with uploaded Pi photos (Morgan)
-- [ ] **Netgate clarification** — confirm model and role in topology (Riley)
+- [ ] **Netgate clarification** — confirm model and role in topology (Riley). Did not respond to nmap/arp-scan — offline?
+- [ ] **Document monitoring topology** — Zabbix server on monitor-deb :10051, agents on 11 hosts. Is Grafana pulling from Zabbix? Taylor to map.
+- [ ] **Identify 192.168.1.218** — locally administered MAC, high ephemeral ports only. Riley to investigate
+- [ ] **Identify alma-rpm role** — Apache :80 running, role undocumented
+- [ ] **Identify rocky-rpm role** — SSH only, role undocumented
+- [ ] **Identify 2404HV-deb role** — Ubuntu 24.04 Hyper-V VM, SSH + node-exporter only
+- [ ] **Identify DIGIDIOT.local AD usage** — Server 2016 DC running as Hyper-V VM. What's joined? Still needed?
+- [ ] **monitor-deb :9221** — unknown service, identify
 
 ### Hardware Inventory Completion
 
@@ -136,6 +144,62 @@ _Large multi-step tasks requiring a 4-hour focused block_
 - [x] Verify all VMs stable after swap — ✅ COMPLETE 2026-06-28. Cluster quorate, 4 nodes.
 - [x] Start 1-month uptime clock — ✅ started 2026-06-28. Target: 2026-07-28.
 
+### 7. Network Inventory & Documentation
+**Goal:** Full enumeration of all hosts, services, and ports on the homelab network
+
+- [x] arp-scan 192.168.1.0/24 — ✅ COMPLETE 2026-06-28. 30 hosts.
+- [x] nmap -sV full subnet — ✅ COMPLETE 2026-06-28. All services identified.
+- [x] masscan -p1-65535 full subnet — ✅ COMPLETE 2026-06-28. 177 open ports found.
+- [x] docker ps on docker-deb and mediastack-deb — ✅ COMPLETE 2026-06-28.
+- [x] qm/pct list on all Proxmox nodes — ✅ COMPLETE 2026-06-28.
+- [x] Hyper-V VM inventory from amontillado — ✅ COMPLETE 2026-06-28.
+- [x] network_inventory.md created — ✅ COMPLETE 2026-06-28.
+
+- [ ] SCP network_inventory.md to git-ansible MkDocs docs
+- [ ] Resolve open questions (see network_inventory.md)
+
+### 8. Rack Build + pfSense + VLANs ⭐
+**Goal:** APC half rack, Dell managed switch, pfSense on SG-1100, full VLAN segmentation
+**Hardware in hand:** APC 4-post enclosed half rack, Netgate SG-1100, Dell managed switch (model TBD), Netgear GS116 (retire)
+**Owner:** Riley (network), Jordan (power/rack), Alex (TrueNAS chassis future)
+
+**Phase 1 — Pre-flight (no downtime)**
+- [ ] Identify Dell switch model — confirm 802.1Q VLAN support and port count
+- [ ] Place rack in final location
+- [ ] Install Dell switch, patch panel, PDU in rack
+- [ ] Set Flint 2 to AP mode while still live on existing network
+- [ ] Configure SG-1100 offline (laptop direct to LAN port): WAN, DHCP, DNS relay, VLAN interfaces
+- [ ] Configure Dell switch offline: VLAN 10/20/30/99, trunk port to SG-1100, access ports per device
+
+**Phase 2 — Cutover (planned outage ~1 hour)**
+- [ ] ⚠️ Announce maintenance window — everything goes down briefly
+- [ ] Pull WAN ethernet from Flint 2 → plug into SG-1100 WAN port
+- [ ] SG-1100 LAN → Dell switch trunk port
+- [ ] Move all cables from GS116 → Dell switch (correct VLAN per port)
+- [ ] Verify internet, verify all VLANs routing, verify firewall rules
+- [ ] Rollback: if anything breaks, replug Flint 2 WAN and return to GS116
+
+**Phase 3 — IP migration (full weekend)**
+- [ ] ⚠️ All hosts get new IPs — update DHCP reservations by MAC first
+- [ ] Update Ansible inventory_auto with new IPs
+- [ ] Update MkDocs hosts.md, network_inventory.md
+- [ ] Update Proxmox cluster configs (corosync ring addresses)
+- [ ] Update all fstab NFS/CIFS mounts with new IPs
+- [ ] Update Uptime Kuma monitors
+- [ ] Update Homepage dashboard
+- [ ] Update Zabbix agent configs
+
+**VLAN scheme:**
+- VLAN 10 Servers: 192.168.10.0/24 — Proxmox, TrueNAS, VMs, Docker, Pis
+- VLAN 20 Trusted: 192.168.20.0/24 — amontillado, work devices
+- VLAN 30 IoT: 192.168.30.0/24 — TVs, Echo, Fire TV, WiFi clients
+- VLAN 99 Mgmt: 192.168.99.0/24 — switch UI, pfSense UI (amontillado only)
+
+**Phase 4 — Physical rack (no downtime, ongoing)**
+- [ ] Shelf for maturin (OptiPlex SFF) in rack
+- [ ] Pi rack into rack
+- [ ] TrueNAS rack-mount chassis (tied to TrueNAS rebuild Sunday project)
+
 ### Completed Sunday Projects
 - [x] restic-deb → blaine-pve — ✅ COMPLETE 2026-06-22. Blaine joined cluster, onboarded via onboard2.yml. restic-deb rebuilt as VM on blaine.
 - [x] Pi rack Phase 1 — ✅ COMPLETE 2026-06-28. 6 Pis mounted and running. Batocera off-rack.
@@ -151,7 +215,7 @@ _Large multi-step tasks requiring a 4-hour focused block_
 
 ### PVE Cluster — blaine-pve + pve3
 
-- [x] Add blaine-pve to cluster after Proxmox install (Sunday)
+- [ ] Add blaine-pve to cluster after Proxmox install (Sunday)
 - [ ] Configure Tailscale on pve3
 - [ ] Full hardware inventory pve3 (dmidecode, photos)
 - [ ] Add pve3 to Proxmox cluster (shardik + maturin + aslan + blaine + pve3)
@@ -161,7 +225,7 @@ _Large multi-step tasks requiring a 4-hour focused block_
 
 ### Docker Swarm
 
-- [x] Migrate swarm01 (102) from shardik to aslan
+- [ ] Migrate swarm01 (102) from shardik to aslan
 - [ ] Rebuild swarm01/02/03 (currently stopped)
 - [ ] Deploy Traefik in Swarm mode — cluster-wide reverse proxy
 - [ ] Deploy Uptime Kuma in Swarm
@@ -171,16 +235,17 @@ _Large multi-step tasks requiring a 4-hour focused block_
 
 ### Monitoring Stack (monitor-deb 192.168.1.29)
 
-- [x] Add Uptime Kuma to Homepage widget (fix slug)
+- [ ] Add Uptime Kuma to Homepage widget (fix slug)
 - [ ] Configure Zabbix → Telegram alerting
 - [ ] Deploy Loki for log aggregation
 - [ ] Uptime Kuma monitoring of mediastack-deb containers
+- [ ] Document full Zabbix topology — server on monitor-deb, 11 agents deployed
 
 ### Local AI Assistant (aslan)
 
 - [ ] Deploy Ollama with GTX 1080 Ti GPU passthrough (GPU already bound to vfio-pci on aslan)
 - [ ] Deploy Open WebUI
-- [x] Create sysadmin / homelab / casual assistant personalities
+- [ ] Create sysadmin / homelab / casual assistant personalities
 - [ ] Add Whisper (STT) and Piper (TTS)
 - [ ] Feed MkDocs docs as RAG knowledge base
 
@@ -193,10 +258,17 @@ _Large multi-step tasks requiring a 4-hour focused block_
 - [ ] Add Tautulli — Plex analytics
 - [ ] Bazarr — subtitle automation
 - [ ] Tdarr — transcoding (needs GPU node first — aslan)
-- [ ] Kometa — verify Trakt/MDBList working after next run
+- [x] Kometa — ✅ running on mediastack-deb
 - [ ] Add Plex Music library fix for mobile (Plex Pass confirmed, unresolved)
 - [ ] Add Training and Photos libraries to Plex
-- [ ] FlareSolverr redeployment + Prowlarr integration (post mediastack-deb rebuild)
+- [x] FlareSolverr redeployment — ✅ COMPLETE (running on mediastack-deb :8191)
+- [x] Prowlarr integration — ✅ COMPLETE (running on mediastack-deb :9696)
+- [x] Audiobookshelf — ✅ installed, running on mediastack-deb :13378
+- [x] RomM — ✅ installed, running on mediastack-deb :8998
+- [x] Jellyfin — ✅ installed, running on tools-deb/ha-pi4-net :8096
+- [x] Tube Archivist — ✅ installed, running on docker-deb :8090
+- [x] Manyfold — ✅ installed, running on docker-deb :3214
+- [ ] Dual reverse proxy — Caddy + Traefik both on docker-deb. Riley + Casey to resolve.
 
 ### RomM / Gaming
 
@@ -223,14 +295,18 @@ _Large multi-step tasks requiring a 4-hour focused block_
 - [ ] Evaluate VLANs for IoT/media/server segmentation
 - [ ] Unbound — local DNS resolver
 - [ ] Authelia — auth layer for exposed services
+- [ ] VPN rationalization — Tailscale + WireGuard + ZeroTier all running. Pick one, retire the others.
+- [ ] Scan guest WiFi subnet — third LG TV likely there, range unknown
 
 ### Documentation
 
-- [x] Create Proxmox cluster diagram
+- [ ] Create Proxmox cluster diagram
 - [ ] Document monitoring stack architecture
 - [ ] Create backup_policy.md — 3-2-1 approach, rotation schedule, STL archive policy
-- [x] hw_inv.md — document ST6000VN0001 Z4D2EJ31 retired, ST6000DX000 Z4D07FQ5 added
+- [ ] hw_inv.md — document ST6000VN0001 Z4D2EJ31 retired, ST6000DX000 Z4D07FQ5 added
 - [ ] Update hosts.md with aslan and Beryl AP (192.168.1.10)
+- [ ] SCP network_inventory.md to git-ansible MkDocs docs root
+- [ ] SCP vlan_ip_plan.md to git-ansible MkDocs docs root
 
 ### Ansible
 
@@ -256,4 +332,7 @@ _Large multi-step tasks requiring a 4-hour focused block_
 
 - [ ] **Swarm architecture** — should monitoring stack move to swarm? Evaluate what makes sense
 - [ ] **Ceph** — second attempt, needs planning and dedicated hardware evaluation
-- [ ] **YouTube channel tech scouting** — Chris to provide channel list, 
+- [ ] **YouTube channel tech scouting** — Chris to provide channel list
+- [ ] **ZeroTier** — currently unconfigured on amontillado. Evaluate vs Tailscale/WireGuard
+- [ ] **Komga / Mylar** — comics stack running on mediastack. Populate libraries?
+- [ ] **Farson VM** — dedicated vuln/pentest VM (Kali or OpenVAS/Greenbone). Taylor to scope: host node, targets, reporting. Just a whim for now.
