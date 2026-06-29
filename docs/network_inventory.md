@@ -147,7 +147,7 @@ _No iocage jails running._
 
 ## Open Questions / Action Items
 
-- [x] **Dual reverse proxy** — Caddy + Traefik both running on docker-deb. Riley + Casey to determine which is authoritative
+- [ ] **Dual reverse proxy** — Caddy + Traefik both running on docker-deb. Riley + Casey to determine which is authoritative
 - [ ] **DIGIDIOT.local AD domain** — document what's joined, whether still in use, whether DIGIDIOTSERVER needs to stay running
 - [ ] **192.168.1.167** — likely second LG TV based on port pattern. Confirm
 - [ ] **192.168.1.218** — locally administered MAC, ephemeral ports only. Riley to identify (VPN tunnel?)
