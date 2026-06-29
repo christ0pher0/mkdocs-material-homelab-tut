@@ -25,6 +25,19 @@ _Last updated: 2026-06-28_
 
 ---
 
+## This Week — Assigned
+
+- [ ] **Jordan: amontillado C: drive audit** — 7% free, find what's consuming it. `WinDirStat` or `du` via WSL
+- [ ] **Jordan: pihole-pi1-deb SD card** — 91% full, swap with replacement SD in reserve before it fails silently
+- [ ] **Jordan: fail2ban rollout** — run fail2ban.yml across all SSH-exposed hosts via Ansible
+- [ ] **Kai: KASM disk move** — migrate VM 111 disk from SDA_store (spinning rust) to local-lvm (NVMe) on aslan
+- [ ] **Kai: swarm01 migration** — migrate VM 102 from shardik to aslan, then bring up 104 + 105, deploy Traefik in swarm mode
+- [ ] **Sam: cru_stats path fix** — align cru_stats.sh and backup_drives_update.sh to same path. Alex to sign off first.
+- [ ] **Sam: Telegram bot** — weekly_patch.yml results → Telegram channel after 3am Sunday run. Needs token + channel ID from Chris
+- [ ] **Sam: auto network_inventory.md** — script combining arp-scan + masscan + ansible facts → outputs fresh network_inventory.md. Replaces manual scans.
+
+---
+
 ## Immediate Maintenance (Sysadmin)
 
 - [ ] **Patch all hosts** — weekly_patch.yml runs Sundays 3am (automated). Manual run if urgent.
@@ -307,6 +320,7 @@ _Large multi-step tasks requiring a 4-hour focused block_
 - [ ] Update hosts.md with aslan and Beryl AP (192.168.1.10)
 - [ ] SCP network_inventory.md to git-ansible MkDocs docs root
 - [ ] SCP vlan_ip_plan.md to git-ansible MkDocs docs root
+- [ ] SCP site_assets.md to git-ansible MkDocs docs root
 
 ### Ansible
 
@@ -334,5 +348,6 @@ _Large multi-step tasks requiring a 4-hour focused block_
 - [ ] **Ceph** — second attempt, needs planning and dedicated hardware evaluation
 - [ ] **YouTube channel tech scouting** — Chris to provide channel list
 - [ ] **ZeroTier** — currently unconfigured on amontillado. Evaluate vs Tailscale/WireGuard
+- [ ] **STL collection page** — evaluate Manyfold (:3214 on docker-deb) first; if it doesn't meet the need, build a custom page similar to vinyl_collection.html. Drew + Sam.
 - [ ] **Komga / Mylar** — comics stack running on mediastack. Populate libraries?
 - [ ] **Farson VM** — dedicated vuln/pentest VM (Kali or OpenVAS/Greenbone). Taylor to scope: host node, targets, reporting. Just a whim for now.
