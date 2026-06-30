@@ -4,7 +4,7 @@ _Last updated: 2026-06-28_
 
 ## Critical / Security
 
-- [x] **Shardik PSU** — ✅ COMPLETE 2026-06-28. PSU replaced, CMOS battery replaced, cluster quorate.
+- [ ] **Shardik PSU** — ✅ COMPLETE 2026-06-28. PSU replaced, CMOS battery replaced, cluster quorate.
 - [x] docker-deb static IP or confirmed DHCP reservation — hosts Vaultwarden, Traefik, Portainer ⚠️
 - [ ] Disk space alerts — amontillado C: (7% free ⚠️), pi1 SD (91%) ⚠️
 - [x] **amontillado C: drive** — 65.9GB free of 930GB (7%). Jordan to audit what's consuming it
