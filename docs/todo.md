@@ -1,11 +1,12 @@
 # Homelab Todo & Roadmap
-_Last updated: 2026-06-28_
+_Last updated: 2026-06-30_
 ---
 
 ## Critical / Security
 
 - [x] **Shardik PSU** — ✅ COMPLETE 2026-06-28. PSU replaced, CMOS battery replaced, cluster quorate.
-- [x] docker-deb static IP or confirmed DHCP reservation — hosts Vaultwarden, Traefik, Portainer ⚠️
+- [x] **Shardik RAM** — ✅ COMPLETE 2026-06-29. Bad PNY XLR8 16GB (2x) replaced with Ballistix 16GB + 3x Micron 8GB DDR4-2666 (40GB total). stress-ng 30min passed. Root cause of all historical instability and ZFS corruption confirmed.
+- [ ] docker-deb static IP or confirmed DHCP reservation — hosts Vaultwarden, Traefik, Portainer ⚠️
 - [ ] Disk space alerts — amontillado C: (7% free ⚠️), pi1 SD (91%) ⚠️
 - [ ] **amontillado C: drive** — 65.9GB free of 930GB (7%). Jordan to audit what's consuming it
 - [ ] **Telegram bot** — Sam building patch notification bot (weekly_patch.yml results → Telegram after 3am run). Needs token + channel ID from Chris.
@@ -18,7 +19,8 @@ _Last updated: 2026-06-28_
 
 - [x] STL Non-Fantasy — ✅ COMPLETE 2026-06-28. cru3 now labeled STL_FIGURES. Sync confirmed complete.
 - [ ] STL_FIGURES — audit all scripts for hardcoded old label references (cru3 was: STL_Non-Fantasy → STL_#CRUNCH → STL_FIGURES)
-- [ ] STL T-Z — cru2 rsync running, currently in V (Vae Victus) — monitor to completion
+- [x] STL T-Z — ✅ COMPLETE 2026-06-29. Rsync complete, SMART ✅, backup_drives.md updated.
+- [ ] STL ACCESSORIES (732G), TERRAIN (446G), SOURCE_MATERIAL (1.4T) — next rsync targets. Drives (16TB, 2TB, 20TB) formatted, SMART long tests running on blaine. Re-attach and relabel after tests complete Wed Jul 1.
 - [ ] Establish offsite drive rotation schedule (Tier 3)
 - [ ] Evaluate PBS tape backup to CRU bays (blaine-pve post-install)
 - [ ] cru_stats.sh saves to /root/scripts/cru_stats/ (sudo) but backup_drives_update.sh reads ~/scripts/cru_stats/ — fix path mismatch
@@ -35,6 +37,17 @@ _Last updated: 2026-06-28_
 - [ ] **Sam: cru_stats path fix** — align cru_stats.sh and backup_drives_update.sh to same path. Alex to sign off first.
 - [ ] **Sam: Telegram bot** — weekly_patch.yml results → Telegram channel after 3am Sunday run. Needs token + channel ID from Chris
 - [ ] **Sam: auto network_inventory.md** — script combining arp-scan + masscan + ansible facts → outputs fresh network_inventory.md. Replaces manual scans.
+- [ ] **Sam: expand cru_plexfolder_stats.sh** — add TrueNAS Libraries section (Movies, TV, Music, AudioBooksPlex, Books_Author, Comics) with du -sh per folder. Draft ready for Sunday meeting.
+- [ ] **Sam: refactor backup_drives_update.sh** — use Gitea API instead of local mkdocs clone on restic-deb. Eliminate git conflicts between restic-deb and git-ansible. Top priority.
+- [ ] **Sam: auto backup date in cru_stats** — write `Backup: <date>` to stats file when SMART passes. update_drives_table.py to read and update Backup column automatically.
+- [ ] **Sam + Kai: CRU hotplug automation** — cru_mount_vm.sh to handle qm set attach/detach automatically on drive swap. VM should start without CRU drives. Working solution by Sunday.
+- [ ] **Kai: pve3 Tailscale clustering** — spec corosync over Tailscale, WAN timeout tuning, cold/warm failover runbook. Sunday meeting deliverable.
+- [ ] **Kai: formal warning** — CRU passthrough implemented as static VM config instead of hotplug per spec. One more significant miss = PIP.
+- [ ] **Jordan: git identity on restic-deb** — set user.email and user.name globally so commits don't fail.
+- [ ] **Jordan: document mkdocs_dev_material on restic-deb** — note it lives there intentionally (required by backup_drives_update.sh until Sam refactors).
+- [ ] **Riley: pve3 Tailscale setup** — configure Tailscale on ThinkStation offsite node.
+- [ ] **Morgan: session documentation** — shardik recovery runbook, red case inventory page, PBS migration decision log, pve3 DR node page. First active assignment.
+- [ ] **Sam: add -tree flag to cru_plexfolder_stats.sh** — dumps per-creator folder sizes for a given drive label (e.g. `--tree STL_#-B`). Run weekly via cron, save output, `--view` returns instant results. Draft ready for Sunday meeting.
 
 ---
 
@@ -229,6 +242,12 @@ _Large multi-step tasks requiring a 4-hour focused block_
 ### PVE Cluster — blaine-pve + pve3
 
 - [ ] Add blaine-pve to cluster after Proxmox install (Sunday)
+- [ ] **Wednesday Jul 1** — Check SMART results on blaine drives (sda 16TB ~1am, sdb 2TB ~7am Tue, sdc 20TB ~5am Wed). Re-attach to VM 100, relabel, begin STL ACCESSORIES rsync.
+- [ ] **Shardik: SMART test** — run short SMART on 4x 6TB drives (sda/sdb/sdc/sdd), results pending.
+- [ ] **Shardik: PBS decision** — migrate PBS back to shardik or keep on aslan. Alex + Kai. Sunday.
+- [ ] **Shardik: ZFS pool** — 4x 6TB drives, 24TB raw. Alex to confirm layout (no RAIDZ, raw for PBS). Sunday.
+- [ ] **Red case (ASRock B450M Steel Legend)** — hostname and role TBD. Sunday team discussion. Specs: Ryzen 5 1600X, 32GB DDR4-2133, 1TB SSD.
+- [ ] **hw_reserve.md** — SCP to git-ansible + git commit + push (updated this session).
 - [ ] Configure Tailscale on pve3
 - [ ] Full hardware inventory pve3 (dmidecode, photos)
 - [ ] Add pve3 to Proxmox cluster (shardik + maturin + aslan + blaine + pve3)
