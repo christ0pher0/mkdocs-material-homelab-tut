@@ -7,7 +7,7 @@ _Last updated: 2026-06-28_
 - [ ] **Shardik PSU** — ✅ COMPLETE 2026-06-28. PSU replaced, CMOS battery replaced, cluster quorate.
 - [x] docker-deb static IP or confirmed DHCP reservation — hosts Vaultwarden, Traefik, Portainer ⚠️
 - [ ] Disk space alerts — amontillado C: (7% free ⚠️), pi1 SD (91%) ⚠️
-- [ ] **amontillado C: drive** — 65.9GB free of 930GB (7%). Jordan to audit what's consuming it
+- [x] **amontillado C: drive** — 65.9GB free of 930GB (7%). Jordan to audit what's consuming it
 - [ ] **Telegram bot** — Sam building patch notification bot (weekly_patch.yml results → Telegram after 3am run). Needs token + channel ID from Chris.
 - [ ] **docker-deb watchdog** — Sam building script to alert Uptime Kuma if container stack hasn't restarted in >1 week
 - [ ] Alert on: drive errors, disk >85%, service down, high temp, RAM pressure
