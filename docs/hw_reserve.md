@@ -1,5 +1,5 @@
 # Hardware Reserve
-_Last updated: 2026-06-11_
+_Last updated: 2026-06-29_
 _Spare and undeployed hardware available for upgrades and new builds_
 _Inventory in progress — updated as items are found_
 ---
@@ -62,13 +62,20 @@ _Inventory in progress — updated as items are found_
 ## RAM — DDR4 Desktop (UDIMM)
 | Item | Qty | Speed | Notes |
 |------|-----|-------|-------|
-| SK Hynix 4GB HMA851U6AFR6N | 4 | DDR4-2400 | Low capacity — limited use cases |
-| Micron 8GB MTA8ATF1G64AZ | 1 | DDR4-2666 | Desktop UDIMM |
-| GeIL 8GB GN48GB2400C16S | 1 | DDR4-2400 | Desktop UDIMM |
-| Crucial 8GB CT8G4DFS824A | 1 | DDR4-2400 | Desktop UDIMM |
-| Crucial 8GB CT8G40FD8213 | 1 | DDR4-2133 | Desktop UDIMM |
-| PNY XLR8 16GB 16GF2X16QFHH36 | 1 | DDR4-3200 | Desktop UDIMM — matches 1x in shardik, swap plan pending |
+| SK Hynix 4GB HMA851U6AFR6N | 4 | DDR4-2400 | Low capacity — limited use cases. Untested. |
+| G.Skill Trident Z RGB 8GB F4-3200C16 | 2 | DDR4-3200 | ✅ memtest clean 2026-06-29 — known good spares |
+| Crucial 8GB CT8G4DFS824A | 3 | DDR4-2400 | Untested |
+| Crucial 8GB CT8G40FD8213 | 2 | DDR4-2133 | Untested |
+| HyperX Fury 8GB DDR4-2666 | 1 | DDR4-2666 | Found in ASRock B450M red case 2026-06-29 — untested |
+| Micron 8GB MTA16ATF1G64AZ | 1 | DDR4-2133 | Untested |
+| Mushkin Essentials 8GB | 1 | DDR4-2133 | Untested |
+| Samsung 8GB M378A1G43 | 1 | DDR4-2133 | Untested |
+| Team Group RockSoul 8GB TED48G2400C16BK | 1 | DDR4-2400 | Untested |
+| DDR4-2133 sticks (various) | ~8 | DDR4-2133 | Not yet individually catalogued — 13 total DDR4-2133 known in reserve, 5 above + ~8 uncatalogued |
+_Deployed 2026-06-29: Ballistix by Micron 16GB BLS16G4D26BFST → shardik; Micron 8GB MTA8ATF1G64AZ (3x) → shardik. Total: 40GB DDR4-2666 in shardik._
+_Deployed 2026-06-29: GeIL 8GB GN48GB2400C16S (2x) + ADATA XPG 8GB AX4U240038G16-BRZ (2x) → ASRock B450M Steel Legend (mystery machine / red case) — untested, 32GB total_
 _Deployed 2026-06: Micron 8GB MTA16ATF1G64AZ (2x) → urnst-deb; Samsung 8GB M378A1G43DB0 (2x) → idee-deb_
+_Disposed 2026-06-29: PNY XLR8 16GB 16GF2X16QFHH36 (2x) — failed memtest and stress-ng, pulled from shardik, dead_
 ---
 ## RAM — DDR4 ECC Registered (Server Only)
 !!! warning "Not compatible with any current fleet boards"
