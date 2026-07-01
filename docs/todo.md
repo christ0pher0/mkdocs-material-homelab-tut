@@ -48,6 +48,7 @@ _Last updated: 2026-06-30 (evening — DC1 survey + Pi rack documentation)_
 - [ ] **Jordan: document mkdocs_dev_material on restic-deb** — note it lives there intentionally (required by backup_drives_update.sh until Sam refactors).
 - [ ] **Riley: pve3 Tailscale setup** — configure Tailscale on ThinkStation offsite node.
 - [ ] **Morgan: session documentation** — shardik recovery runbook, red case inventory page, PBS migration decision log, pve3 DR node page. First active assignment.
+- [ ] **Morgan + Riley: MkDocs Network section overhaul** — create dedicated Network section in nav. Move network_inventory.md, network_diagram.md, hosts.md here. Add vlan_design.md. Riley owns content accuracy, Morgan owns structure and nav.
 - [ ] **Sam: add -tree flag to cru_plexfolder_stats.sh** — dumps per-creator folder sizes for a given drive label (e.g. `--tree STL_#-B`). Run weekly via cron, save output, `--view` returns instant results. Draft ready for Sunday meeting.
 
 ---
