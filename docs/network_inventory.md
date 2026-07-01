@@ -102,16 +102,26 @@ _AD Domain: DIGIDIOT.local (controller: DIGIDIOTSERVER)_
 
 ## Raspberry Pi Fleet
 
+_Pi rack fully documented 2026-06-30. 6-slot 3D printed red/black tower, desk location. Z-680 control pod on top._
+
+### Racked (3D Printed Pi Rack)
+
+| Slot | IP | Hostname | Hardware | OS | Services |
+|------|----|----------|----------|----|---------|
+| S1 | 192.168.1.125 | ha-net | RPi 4 | Home Assistant OS / DietPi (alt SD) | HA, Jellyfin :8096, Vaultwarden, Zabbix agent :10050 |
+| S2 | 192.168.1.121 | blank-dietpi-deb | RPi 2B | DietPi | SSH — role TBD |
+| S3 | 192.168.1.126 | backup-dietpi-deb | RPi 2B | DietPi | Gitea mirror :3000, Vaultwarden backup :8888, xrdp :3389 |
+| S4 | 192.168.1.124 | retropi | RPi Model B | RetroPie | SSH, Samba — EOL, kept for patching only ⚠️ |
+| S5 | 192.168.1.123 | batocera-deb | RPi 5 | Batocera | Retro gaming — 52Pi case |
+| S6 | 192.168.1.120 | pihole-pi-deb | RPi Model B | Raspbian | Pi-hole DNS :53, web :80/:443 — SD card ⚠️ |
+
+### Not Racked
+
 | IP | Hostname | Hardware | OS | Services |
 |----|----------|----------|----|---------|
-| 192.168.1.120 | pihole-pi1-deb | RPi Model B | Raspbian | Pi-hole DNS :53, web :80/:443 — SD 91% full ⚠️ |
-| 192.168.1.121 | blank-dietpi1-deb | RPi Model B Rev 2 | DietPi | SSH, Apache :80 — needs role assigned |
-| 192.168.1.122 | octopi-pi4-deb | RPi 4 | OctoPrint OS | OctoPrint :80/:443, node-exporter :9100 |
-| 192.168.1.124 | retropi-pi1-deb | RPi Model B | RetroPie | SSH, Samba :139/:445 — unmanaged |
-| 192.168.1.125 | ha-pi4-net / tools-deb | RPi 4 | Home Assistant OS / DietPi (alt SD) | SSH, rpcbind :111, **Jellyfin :8096**, Zabbix agent :10050 |
-| 192.168.1.126 | backup-dietpi-deb | RPi 2B | DietPi | Gitea mirror :3000, lighttpd :80, Vaultwarden backup :8888, xrdp :3389 |
-
-_Offline: argos-pi4-deb (.127), argos-pi4-wifi-deb (.128), batocera-pi5-deb (.123 — off rack)_
+| 192.168.1.122 | octopi-pi4-deb | RPi 4 | OctoPrint OS | OctoPrint :80/:443, node-exporter :9100 — attached to Ender 3 V2 |
+| 192.168.1.127 | argos-pi4-deb | RPi 4 | RPi OS Bookworm | Offline — IoT field station (touchscreen, LTE, LoRa, camera) |
+| 192.168.1.128 | argos-pi4-wifi-deb | RPi 4 | — | Offline — TBD |
 
 ---
 
