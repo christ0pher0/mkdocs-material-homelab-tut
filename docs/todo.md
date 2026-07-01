@@ -1,5 +1,5 @@
 # Homelab Todo & Roadmap
-_Last updated: 2026-06-30 (evening — DC1 survey + Pi rack documentation)_
+_Last updated: 2026-07-01 (Ansible fleet baseline, Pi rack complete, DC1 survey, homelab_baseline.yml updated)_
 ---
 
 ## Critical / Security
@@ -45,6 +45,12 @@ _Last updated: 2026-06-30 (evening — DC1 survey + Pi rack documentation)_
 - [ ] **Kai: pve3 Tailscale clustering** — spec corosync over Tailscale, WAN timeout tuning, cold/warm failover runbook. Sunday meeting deliverable.
 - [ ] **Kai: formal warning** — CRU passthrough implemented as static VM config instead of hotplug per spec. One more significant miss = PIP.
 - [ ] **Jordan: git identity on restic-deb** — set user.email and user.name globally so commits don't fail.
+- [x] **Jordan: clean up inventory_auto** — ✅ COMPLETE 2026-06-30. Stale pi# names removed, idee-deb removed (now aslan), linux_skip group added for batocera/retropi.
+- [x] **Jordan: move /etc/hosts push + SSH key sync to homelab_baseline.yml** — ✅ COMPLETE 2026-06-30. Both tasks added to homelab_baseline.yml. Fleet run: 18 hosts, 0 failures.
+- [ ] **Jordan: onboard pbs-deb** — run onboard2.yml, confirm passwordless sudo and SSH key auth working.
+- [ ] **Jordan: octopi-pi4-deb SSH key auth** — confirm key auth works after baseline run; if not, run onboard2.yml individually.
+- [ ] **Jordan: run homelab_baseline.yml against plow-rpm** — skipped last run due to Tailscale conflict. Tailscale manually upgraded 2026-06-30. Ready to run.
+- [ ] **Jordan: blaine sdc SMART long test** — started ~2026-06-29. Expected completion ~Wed Jul 1 5am. Check results, relabel, attach to VM 100 for STL rsync.
 - [ ] **Jordan: document mkdocs_dev_material on restic-deb** — note it lives there intentionally (required by backup_drives_update.sh until Sam refactors).
 - [ ] **Riley: pve3 Tailscale setup** — configure Tailscale on ThinkStation offsite node.
 - [ ] **Morgan: session documentation** — shardik recovery runbook, red case inventory page, PBS migration decision log, pve3 DR node page. First active assignment.
