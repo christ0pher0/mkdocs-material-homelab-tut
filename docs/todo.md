@@ -1,5 +1,5 @@
 # Homelab Todo & Roadmap
-_Last updated: 2026-07-01 (Ansible fleet baseline, Pi rack complete, DC1 survey, homelab_baseline.yml updated)_
+_Last updated: 2026-07-01 (Fleet re-baselined, inventory cleaned, plow-rpm Rocky repos, pihole hostname fixed)_
 ---
 
 ## Critical / Security
@@ -45,7 +45,7 @@ _Last updated: 2026-07-01 (Ansible fleet baseline, Pi rack complete, DC1 survey,
 - [ ] **Kai: pve3 Tailscale clustering** — spec corosync over Tailscale, WAN timeout tuning, cold/warm failover runbook. Sunday meeting deliverable.
 - [ ] **Kai: formal warning** — CRU passthrough implemented as static VM config instead of hotplug per spec. One more significant miss = PIP.
 - [ ] **Jordan: git identity on restic-deb** — set user.email and user.name globally so commits don't fail.
-- [x] **Jordan: clean up inventory_auto** — ✅ COMPLETE 2026-06-30. Stale pi# names removed, idee-deb removed (now aslan), linux_skip group added for batocera/retropi.
+- [x] **Jordan: clean up inventory_auto** — ✅ COMPLETE 2026-07-01. Stale pi# names removed, idee-deb removed (now aslan), linux_skip group added for batocera/retropi. 4 stale inventory files deleted (inventory, inventory1, inventory2, inventory_web). inventory_auto is sole source of truth.
 - [x] **Jordan: move /etc/hosts push + SSH key sync to homelab_baseline.yml** — ✅ COMPLETE 2026-06-30. Both tasks added to homelab_baseline.yml. Fleet run: 18 hosts, 0 failures.
 - [ ] **Jordan: onboard pbs-deb** — run onboard2.yml, confirm passwordless sudo and SSH key auth working.
 - [ ] **Jordan: octopi-pi4-deb SSH key auth** — confirm key auth works after baseline run; if not, run onboard2.yml individually.
