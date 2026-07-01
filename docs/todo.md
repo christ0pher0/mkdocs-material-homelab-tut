@@ -49,11 +49,17 @@ _Last updated: 2026-07-01 (Fleet re-baselined, inventory cleaned, plow-rpm Rocky
 - [x] **Jordan: move /etc/hosts push + SSH key sync to homelab_baseline.yml** — ✅ COMPLETE 2026-06-30. Both tasks added to homelab_baseline.yml. Fleet run: 18 hosts, 0 failures.
 - [ ] **Jordan: onboard pbs-deb** — run onboard2.yml, confirm passwordless sudo and SSH key auth working.
 - [ ] **Jordan: octopi-pi4-deb SSH key auth** — confirm key auth works after baseline run; if not, run onboard2.yml individually.
-- [ ] **Jordan: run homelab_baseline.yml against plow-rpm** — skipped last run due to Tailscale conflict. Tailscale manually upgraded 2026-06-30. Ready to run.
+- [x] **Jordan: run homelab_baseline.yml against plow-rpm** — ✅ COMPLETE 2026-07-01. Rocky BaseOS/AppStream repos added, git/vim/curl installed, baselined ok=16.
 - [ ] **Jordan: blaine sdc SMART long test** — started ~2026-06-29. Expected completion ~Wed Jul 1 5am. Check results, relabel, attach to VM 100 for STL rsync.
+- [ ] **Jordan: add Zabbix repo task to homelab_baseline.yml** — restic-deb had no Zabbix repo, agent2 install failed. Add repo setup task before agent install. Sam to implement.
+- [ ] **Jordan: fix SSH service name for DietPi hosts** — baseline uses 'ssh' service name but DietPi uses dropbear. Add conditional or ignore for DietPi hosts.
+- [ ] **Jordan: fix ansible_facts deprecation warnings** — update homelab_baseline.yml to use ansible_facts["fact_name"] syntax before ansible-core 2.24 drops support. Sam to implement.
+- [ ] **Riley: DHCP reservation for octopi-pi4-deb** — lock to 192.168.1.122 on router to prevent drift.
 - [ ] **Jordan: document mkdocs_dev_material on restic-deb** — note it lives there intentionally (required by backup_drives_update.sh until Sam refactors).
 - [ ] **Riley: pve3 Tailscale setup** — configure Tailscale on ThinkStation offsite node.
 - [ ] **Morgan: session documentation** — shardik recovery runbook, red case inventory page, PBS migration decision log, pve3 DR node page. First active assignment.
+- [ ] **Morgan: cluster capacity page** — MkDocs page showing each node: mobo, CPU, current RAM, max RAM, slot config, current VM/CT placement and allocation, upgrade path. Reference before every hardware decision. Kai provides VM data, Jordan provides dmidecode, Morgan builds the page.
+- [ ] **Morgan: hardware target state page** — MkDocs page documenting where the homelab is headed: desired node specs, RAM targets, storage goals, network end state, hardware to acquire. Living document — updated as decisions are made. ED owns content, Morgan owns structure.
 - [ ] **Morgan + Riley: MkDocs Network section overhaul** — create dedicated Network section in nav. Move network_inventory.md, network_diagram.md, hosts.md here. Add vlan_design.md. Riley owns content accuracy, Morgan owns structure and nav.
 - [ ] **Sam: add -tree flag to cru_plexfolder_stats.sh** — dumps per-creator folder sizes for a given drive label (e.g. `--tree STL_#-B`). Run weekly via cron, save output, `--view` returns instant results. Draft ready for Sunday meeting.
 
@@ -88,7 +94,7 @@ _Last updated: 2026-07-01 (Fleet re-baselined, inventory cleaned, plow-rpm Rocky
 - [ ] **Confirm swarm VM status** — 102/104/105 all showing STOPPED on aslan. Intentional or not? ⚠️
 - [ ] KASM (111) — move disk from SDA_store to local-lvm NVMe on aslan for performance
 - [ ] onboard pbs-deb via Ansible (onboard_host.yml not yet run — passwordless sudo added manually)
-- [ ] Manyfold — now confirmed running on docker-deb :3214. Mark LXC test as resolved.
+- [ ] **Manyfold** — remove from docker-deb :3214 (poor performance). blaine LXC (CT 103) is the candidate — promising results. Kai to complete evaluation and confirm as permanent home before go-live.
 - [ ] **Set Uptime Kuma TrueNAS poll to 30 seconds** — Taylor (USB NIC fragility mitigation)
 - [ ] **Check pihole-pi1-deb SD card** — was 91% full 2026-06-21, run `df -h` on pihole-pi1-deb (192.168.1.120)
 - [x] **Confirm which 6 Pis are racked** — ✅ COMPLETE 2026-06-30. All 6 slots documented: ha-net, blank-dietpi-deb, backup-dietpi-deb, retropi, batocera-deb, pihole-pi-deb. hw_inv.md updated.
@@ -118,6 +124,22 @@ _Last updated: 2026-07-01 (Fleet re-baselined, inventory cleaned, plow-rpm Rocky
 - [ ] **Cisco SG200-50** — retrieve, use for VLAN project (solves switch gap)
 - [ ] **12U half rack** — retrieve, rack all new DC hardware
 - [ ] **Logitech Z-680 sub recap** — Drew to spec capacitor kit (known failure mode)
+
+### RAM Upgrade Targets — Scavenge / Shop
+
+Current state after planned swap (maturin 2x16GB → aslan):
+
+| Node | Current | Target | Needed |
+|---|---|---|---|
+| shardik | 40GB (16+8+8+8) | 64GB | 3x 16GB DDR4-2666 UDIMM |
+| aslan | 48GB (2x16+2x8) | 64GB | 2x 16GB DDR4-2400+ UDIMM |
+| maturin | 32GB (4x8) | 32GB | ✅ sufficient post-migration |
+
+⚠️ **DC1 server RAM (R730, Supermicro) = DDR4 RDIMM ECC — NOT compatible with AM4 consumer boards.** Only workstation/desktop DDR4 UDIMM non-ECC works. Check Lambda GPU workstation RAM on authorization — may be compatible.
+
+- [ ] **Scavenge:** Check Lambda GPU workstations for DDR4 UDIMM non-ECC sticks on pickup
+- [ ] **Shop (if not found):** 16GB DDR4-2666 or 3200 UDIMM non-ECC — ~$20-25/stick on eBay. Need 5 sticks total (3 for shardik, 2 for aslan).
+- [ ] **Execute RAM swap** — maturin DIMM3/4 (2x16GB SK Hynix) → aslan. Requires downtime both nodes. Jordan + Kai. Sunday.
 
 ### Hardware Inventory Completion
 
@@ -249,6 +271,19 @@ _Large multi-step tasks requiring a 4-hour focused block_
 - [ ] Shelf for maturin (OptiPlex SFF) in rack
 - [ ] Pi rack into rack
 - [ ] TrueNAS rack-mount chassis (tied to TrueNAS rebuild Sunday project)
+
+### 9. VM & Container Placement Audit ⭐
+**Goal:** Ensure every VM and LXC is on the optimal hypervisor with right-sized resources
+**Owner:** Kai
+**Blocker:** Wait for shardik uptime target (2026-07-28) before migrating mediastack
+
+- [ ] **Migrate mediastack-deb → shardik** after Jul 28 — currently misplaced on maturin (weakest node, 55% RAM). Shardik has 64GB/Ryzen 7 2700X.
+- [ ] **Right-size VM RAM allocations** across all nodes — audit over/under provisioned VMs
+- [ ] **Swarm VMs (102/104/105)** — decide rebuild or decommission. All stopped on aslan.
+- [ ] **Fix root SSH git-ansible → blaine** — Jordan. Needed for Proxmox-level management.
+- [ ] **GPU transcoding** — revisit mediastack on aslan with GTX 1080 Ti passthrough once RAM allows. Casey + Kai.
+- [ ] **kasm-2404-deb (111)** — move disk from SDA_store → local-lvm NVMe, then start.
+- [ ] **Manyfold permanent home** — blaine LXC test (CT 103) outperforming docker-deb. Kai to report on LXC results, then decide: keep on blaine or move to dedicated LXC on better node. DO NOT delete CT 103.
 
 ### Completed Sunday Projects
 - [x] restic-deb → blaine-pve — ✅ COMPLETE 2026-06-22. Blaine joined cluster, onboarded via onboard2.yml. restic-deb rebuilt as VM on blaine.
