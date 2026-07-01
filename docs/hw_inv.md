@@ -80,7 +80,7 @@ _Ordered by utility — least capable first, most capable last_
 ### Pi Rack — 3D Printed Red/Black Tower
 _Photographed 2026-06-30. Desk location. Z-680 control pod sits on top shelf. 6-slot, 3-tier (2 per tier)._
 
-![Pi Rack](images/pi_rack.svg)
+![Pi Rack](images/pi_rack.svg){ width=500 }
 
 | Slot | Hostname | IP | Model | Software | Notes |
 |------|----------|----|-------|----------|-------|
