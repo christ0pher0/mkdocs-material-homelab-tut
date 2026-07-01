@@ -5,6 +5,14 @@ _Ordered by utility — least capable first, most capable last_
 !!! tip "Adding Photos"
     Save host photos to `docs/images/hw/` and name them to match the image references below (e.g. `proxmox-deb.jpg`).
 ---
+## Lab Audio
+
+| Item | Model | Status | Location | Notes |
+|------|-------|--------|----------|-------|
+| Logitech Z-680 5.1 | Z-680 (THX, Dolby Digital, DTS) | ⚠️ **Partially functional** | Control pod on Pi rack | Only 1 speaker working. Sub caps blown — known failure mode for this model. Drew to recap sub or replace system. |
+
+---
+
 ## Ewaste / Recycled
 | Photo | System | Reason |
 |-------|--------|--------|
@@ -68,6 +76,22 @@ _Ordered by utility — least capable first, most capable last_
 | ![ha](images/hw/ha-net.jpg){ width=100 } | ha-net | 192.168.1.125 | RPi 4 Model B Rev 1.4 — CanaKit black case | ARM 4-core | 3.7GB | 28.6GB | Home Assistant OS 17.2 / Core 2026.4.2 | Online |
 | ![batocera](images/hw/batocera.jpg){ width=100 } | batocera-deb | 192.168.1.123 | RPi 5 Model B Rev 1.0 | ARM 4-core | 3.9GB | 111GB SD | Best retro gaming — PS2, GameCube, Dreamcast, some Switch (Batocera) | Online |
 | ![argos](images/hw/argos-deb.jpg){ width=100 } | argos-deb | 192.168.1.127 | RPi 4 Model B Rev 1.1 — 1GB — ewaste find! | ARM 4-core | 870MB | 32GB PNY | Fully kitted IoT field station — touchscreen, camera, LTE, LoRa | Online |
+
+### Pi Rack — 3D Printed Red/Black Tower
+_Photographed 2026-06-30. Desk location. Z-680 control pod sits on top shelf. 6-slot, 3-tier (2 per tier)._
+
+![Pi Rack](images/pi_rack.svg)
+
+| Slot | Hostname | IP | Model | Software | Notes |
+|------|----------|----|-------|----------|-------|
+| Top | — | — | — | — | Z-680 control pod rests here |
+| S1 | ha-net | 192.168.1.125 | RPi 4 | Home Assistant OS · Jellyfin · Vaultwarden | Tier 1 left |
+| S2 | blank-dietpi-deb | 192.168.1.121 | RPi 2B | DietPi | Tier 1 right — role TBD |
+| S3 | backup-dietpi-deb | 192.168.1.126 | RPi 2B | DietPi · Gitea mirror · Vaultwarden backup | Tier 2 left |
+| S4 | retropi | TBD | RPi ? | RetroPie | Tier 2 right — EOL, kept for patching only |
+| S5 | batocera-deb | 192.168.1.123 | RPi 5 | Batocera | Tier 3 left — 52Pi case |
+| S6 | pihole-pi-deb | TBD | RPi ? | Pi-hole | Tier 3 right |
+
 ---
 ## argos-deb (192.168.1.127)
 | | |

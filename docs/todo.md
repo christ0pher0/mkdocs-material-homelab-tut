@@ -1,5 +1,5 @@
 # Homelab Todo & Roadmap
-_Last updated: 2026-06-30_
+_Last updated: 2026-06-30 (evening — DC1 survey + Pi rack documentation)_
 ---
 
 ## Critical / Security
@@ -20,7 +20,8 @@ _Last updated: 2026-06-30_
 - [x] STL Non-Fantasy — ✅ COMPLETE 2026-06-28. cru3 now labeled STL_FIGURES. Sync confirmed complete.
 - [ ] STL_FIGURES — audit all scripts for hardcoded old label references (cru3 was: STL_Non-Fantasy → STL_#CRUNCH → STL_FIGURES)
 - [x] STL T-Z — ✅ COMPLETE 2026-06-29. Rsync complete, SMART ✅, backup_drives.md updated.
-- [ ] STL ACCESSORIES (732G), TERRAIN (446G), SOURCE_MATERIAL (1.4T) — next rsync targets. Drives (16TB, 2TB, 20TB) formatted, SMART long tests running on blaine. Re-attach and relabel after tests complete Wed Jul 1.
+- [ ] STL ACCESSORIES (732G), TERRAIN (446G), SOURCE_MATERIAL (1.4T) — next rsync targets. Drives (16TB, 2TB, 20TB) formatted, SMART long tests running on blaine. sdb (2TB) done ~Tue 7am, sda (16TB) ~Wed 1am, sdc (20TB) ~Wed 5am. Re-attach and relabel after tests complete.
+- [ ] **Logitech sub recap** — caps blown on subwoofer, lab running 1 speaker. Drew to spec recap kit. Revisit Sunday.
 - [ ] Establish offsite drive rotation schedule (Tier 3)
 - [ ] Evaluate PBS tape backup to CRU bays (blaine-pve post-install)
 - [ ] cru_stats.sh saves to /root/scripts/cru_stats/ (sudo) but backup_drives_update.sh reads ~/scripts/cru_stats/ — fix path mismatch
@@ -83,9 +84,12 @@ _Last updated: 2026-06-30_
 - [ ] Manyfold — now confirmed running on docker-deb :3214. Mark LXC test as resolved.
 - [ ] **Set Uptime Kuma TrueNAS poll to 30 seconds** — Taylor (USB NIC fragility mitigation)
 - [ ] **Check pihole-pi1-deb SD card** — was 91% full 2026-06-21, run `df -h` on pihole-pi1-deb (192.168.1.120)
-- [ ] **Confirm which 6 Pis are racked** — update fleet inventory (Drew)
+- [x] **Confirm which 6 Pis are racked** — ✅ COMPLETE 2026-06-30. All 6 slots documented: ha-net, blank-dietpi-deb, backup-dietpi-deb, retropi, batocera-deb, pihole-pi-deb. hw_inv.md updated.
 - [ ] **Ender 3 V2 yellow PLA** — run temp tower first to dial in profile before printing anything structural (Drew)
 - [ ] **Pi Status page** — build in MkDocs with uploaded Pi photos (Morgan)
+- [ ] **retropi IP** — confirm IP for slot 4 (retropi). Add to hw_inv.md and hosts.md
+- [ ] **pihole-pi-deb IP** — confirm IP for slot 6. Add to hw_inv.md and hosts.md
+- [ ] **blank-dietpi-deb role** — assign permanent role (slot 2, 192.168.1.121, RPi 2B). Options: Gitea mirror secondary, MQTT broker, rsync relay
 - [ ] **Netgate clarification** — confirm model and role in topology (Riley). Did not respond to nmap/arp-scan — offline?
 - [ ] **Document monitoring topology** — Zabbix server on monitor-deb :10051, agents on 11 hosts. Is Grafana pulling from Zabbix? Taylor to map.
 - [ ] **Identify 192.168.1.218** — locally administered MAC, high ephemeral ports only. Riley to investigate
@@ -94,6 +98,19 @@ _Last updated: 2026-06-30_
 - [ ] **Identify 2404HV-deb role** — Ubuntu 24.04 Hyper-V VM, SSH + node-exporter only
 - [ ] **Identify DIGIDIOT.local AD usage** — Server 2016 DC running as Hyper-V VM. What's joined? Still needed?
 - [ ] **monitor-deb :9221** — unknown service, identify
+
+### DC Decommission Salvage
+
+- [x] **DC1 survey** — ✅ COMPLETE 2026-06-30. All rooms inventoried. dc_salvage.md created.
+- [ ] **DC1 authorization follow-up** — Dell N4032F x2, Lambda GPU workstations, Dell Precision 7920
+- [ ] **DC1 NEEDS MORE INFO checklist** — work through on next visit (see dc_salvage.md)
+- [ ] **Dell R730 pickup** — get CPU model + RAM when collecting
+- [ ] **Dell JBOD (4TB SAS)** — confirm chassis/bay count, pair with Dell SAS 12G HBA for TrueNAS
+- [ ] **DC2 walkthrough** — schedule and inventory
+- [ ] **DC3/DC4 status** — confirm if going down, schedule walkthrough
+- [ ] **Cisco SG200-50** — retrieve, use for VLAN project (solves switch gap)
+- [ ] **12U half rack** — retrieve, rack all new DC hardware
+- [ ] **Logitech Z-680 sub recap** — Drew to spec capacitor kit (known failure mode)
 
 ### Hardware Inventory Completion
 
