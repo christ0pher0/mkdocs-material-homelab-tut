@@ -1,5 +1,5 @@
 # Homelab Todo & Roadmap
-_Last updated: 2026-07-01 (Fleet re-baselined, inventory cleaned, plow-rpm Rocky repos, pihole hostname fixed)_
+_Last updated: 2026-07-02 (Shardik ZFS RAIDZ1 tank pool created, aslan RAM upgraded to 64GB, mediastack-deb migrated maturin→aslan)_
 ---
 
 ## Critical / Security
@@ -47,6 +47,13 @@ _Last updated: 2026-07-01 (Fleet re-baselined, inventory cleaned, plow-rpm Rocky
 - [ ] **Jordan: git identity on restic-deb** — set user.email and user.name globally so commits don't fail.
 - [x] **Jordan: clean up inventory_auto** — ✅ COMPLETE 2026-07-01. Stale pi# names removed, idee-deb removed (now aslan), linux_skip group added for batocera/retropi. 4 stale inventory files deleted (inventory, inventory1, inventory2, inventory_web). inventory_auto is sole source of truth.
 - [x] **Jordan: move /etc/hosts push + SSH key sync to homelab_baseline.yml** — ✅ COMPLETE 2026-06-30. Both tasks added to homelab_baseline.yml. Fleet run: 18 hosts, 0 failures.
+- [ ] **Jordan: BIOS download links** — Jordan to find and provide direct download links for Chris to apply. Current status per dmidecode 2026-07-02:
+  - shardik (ASRock AB350M Pro4): P10.43 Jun 2025 — https://www.asrock.com/mb/AMD/AB350M%20Pro4/index.asp#BIOS
+  - maturin (Dell OptiPlex 7050): 1.27.0 Sep 2023 — https://www.dell.com/support/product-details/en-us/product/optiplex-7050-desktop/drivers — appears current, confirm ✅
+  - aslan (Gigabyte AB350-Gaming 3-CF): F50a Nov 2019 — https://www.gigabyte.com/Motherboard/GA-AB350-Gaming-3-rev-1x/support#support-dl-bios — F52 available ⚠️
+  - blaine (Gigabyte GA-Z77-DS3H): F8 Aug 2012 — Rev 1.0: https://www.gigabyte.com/Motherboard/GA-Z77-DS3H-rev-10/support | Rev 1.1: https://www.gigabyte.com/Motherboard/GA-Z77-DS3H-rev-11/support — physical inspection required to confirm revision before flashing
+- [x] **Jordan: microcode patch verification** — ✅ COMPLETE 2026-07-02. shardik (amd64-microcode) and maturin (intel-microcode) were missing — installed and activated via reboot. blaine and aslan were already current. maturin also missing non-free-firmware repo — added via sed to sources.list.
+- [ ] **Jordan: add microcode + non-free-firmware to homelab_baseline.yml** — ensure amd64-microcode/intel-microcode installed on all Debian nodes based on CPU vendor, and non-free-firmware repo present. Prevents future drift.
 - [ ] **Jordan: onboard pbs-deb** — run onboard2.yml, confirm passwordless sudo and SSH key auth working.
 - [ ] **Jordan: octopi-pi4-deb SSH key auth** — confirm key auth works after baseline run; if not, run onboard2.yml individually.
 - [x] **Jordan: run homelab_baseline.yml against plow-rpm** — ✅ COMPLETE 2026-07-01. Rocky BaseOS/AppStream repos added, git/vim/curl installed, baselined ok=16.
@@ -127,19 +134,21 @@ _Last updated: 2026-07-01 (Fleet re-baselined, inventory cleaned, plow-rpm Rocky
 
 ### RAM Upgrade Targets — Scavenge / Shop
 
-Current state after planned swap (maturin 2x16GB → aslan):
+State as of 2026-07-02:
 
 | Node | Current | Target | Needed |
 |---|---|---|---|
-| shardik | 40GB (16+8+8+8) | 64GB | 3x 16GB DDR4-2666 UDIMM |
-| aslan | 48GB (2x16+2x8) | 64GB | 2x 16GB DDR4-2400+ UDIMM |
-| maturin | 32GB (4x8) | 32GB | ✅ sufficient post-migration |
+| shardik | 32GB (4×8GB DDR4-2400) | 64GB | 4x 16GB DDR4-2666 UDIMM |
+| aslan | ✅ 64GB (4×16GB) — COMPLETE 2026-07-02 | 64GB | done |
+| maturin | 32GB (4×8GB) | 32GB | ✅ sufficient |
+| blaine | 32GB (4×8GB DDR3-1333) — confirmed 2026-07-02 | 32GB | ✅ sufficient (DDR3, Sandy Bridge — no upgrade path worth pursuing) |
 
 ⚠️ **DC1 server RAM (R730, Supermicro) = DDR4 RDIMM ECC — NOT compatible with AM4 consumer boards.** Only workstation/desktop DDR4 UDIMM non-ECC works. Check Lambda GPU workstation RAM on authorization — may be compatible.
 
-- [ ] **Scavenge:** Check Lambda GPU workstations for DDR4 UDIMM non-ECC sticks on pickup
-- [ ] **Shop (if not found):** 16GB DDR4-2666 or 3200 UDIMM non-ECC — ~$20-25/stick on eBay. Need 5 sticks total (3 for shardik, 2 for aslan).
-- [ ] **Execute RAM swap** — maturin DIMM3/4 (2x16GB SK Hynix) → aslan. Requires downtime both nodes. Jordan + Kai. Sunday.
+- [ ] **Scavenge:** Check Lambda GPU workstations for DDR4 UDIMM non-ECC 32GB sticks on pickup — need 8 total (4 per node). Both shardik and aslan confirmed 128GB board max via dmidecode 2026-07-02.
+- [ ] **Shop (if not found):** 8×32GB DDR4-3200 UDIMM non-ECC — ~$40-60/stick on eBay (~$320-480 total). Target: shardik 128GB + aslan 128GB. Note: with 4 populated slots, boards will likely train to DDR4-2666 — buy for capacity, not speed.
+- [x] **Execute RAM swap** — ✅ COMPLETE 2026-07-02. Aslan upgraded to 64GB (2x Ballistix from shardik + 2x SK Hynix from maturin). Maturin back to 4×8GB. Shardik down to 32GB (4×8GB).
+- [x] **Confirm blaine RAM** — ✅ COMPLETE 2026-07-02. 32GB DDR3-1333 (4×8GB). i5-2500K Sandy Bridge — DDR3 only, no meaningful upgrade path.
 
 ### Hardware Inventory Completion
 
@@ -172,7 +181,8 @@ _Large multi-step tasks requiring a 4-hour focused block_
 
 - [ ] Check temerant-win 2x 3TB HDDs (Seagate ST3000DM001) for important data ⚠️
 - [ ] Pull mobo, Ryzen 5 1600X, 32GB DDR4, GTX 1080 Ti, 500GB SSD from temerant
-- [ ] **Order LSI 9207-8i or 9211-8i HBA** (~$20-40 eBay) — blocking item
+- [x] **HBA found** — ✅ IBM ServeRAID M1115 (LSI 2008 chip) located 2026-07-01. Needs cross-flash to IT mode before use.
+- [ ] **Flash M1115 to LSI IT mode** — Jordan to execute. Chris has done this before. Do NOT attach TrueNAS drives before flashing.
 - [ ] Order 2x SFF-8087 to SATA breakout cables (~$5-10 each eBay)
 - [ ] Install hardware into existing FreeNAS beige full tower
 - [ ] Install TrueNAS on 500GB SSD — replace USB boot drives
@@ -214,7 +224,7 @@ _Large multi-step tasks requiring a 4-hour focused block_
 
 - [x] **Replace PSU** — ✅ COMPLETE 2026-06-28
 - [x] Verify all VMs stable after swap — ✅ COMPLETE 2026-06-28. Cluster quorate, 4 nodes.
-- [x] Start 1-month uptime clock — ✅ started 2026-06-28. Target: 2026-07-28.
+- [x] Start 1-month uptime clock — ✅ restarted 2026-07-02 after microcode reboot. Target: 2026-08-02.
 
 ### 7. Network Inventory & Documentation
 **Goal:** Full enumeration of all hosts, services, and ports on the homelab network
@@ -277,10 +287,10 @@ _Large multi-step tasks requiring a 4-hour focused block_
 **Owner:** Kai
 **Blocker:** Wait for shardik uptime target (2026-07-28) before migrating mediastack
 
-- [ ] **Migrate mediastack-deb → shardik** after Jul 28 — currently misplaced on maturin (weakest node, 55% RAM). Shardik has 64GB/Ryzen 7 2700X.
+- [ ] **Migrate mediastack-deb → shardik** after Jul 28 — currently on aslan (migrated from maturin 2026-07-02 for RAM swap). Shardik is the ultimate destination (Ryzen 7 2700X, tank pool). Wait for 1-month uptime target 2026-07-28.
 - [ ] **Right-size VM RAM allocations** across all nodes — audit over/under provisioned VMs
 - [ ] **Swarm VMs (102/104/105)** — decide rebuild or decommission. All stopped on aslan.
-- [ ] **Fix root SSH git-ansible → blaine** — Jordan. Needed for Proxmox-level management.
+- [x] **Fix root SSH git-ansible → blaine** — ✅ COMPLETE 2026-07-02. Added cos public key to root authorized_keys, set PermitRootLogin prohibit-password, sshd restarted. Confirmed working.
 - [ ] **GPU transcoding** — revisit mediastack on aslan with GTX 1080 Ti passthrough once RAM allows. Casey + Kai.
 - [ ] **kasm-2404-deb (111)** — move disk from SDA_store → local-lvm NVMe, then start.
 - [ ] **Manyfold permanent home** — blaine LXC test (CT 103) outperforming docker-deb. Kai to report on LXC results, then decide: keep on blaine or move to dedicated LXC on better node. DO NOT delete CT 103.
@@ -304,7 +314,7 @@ _Large multi-step tasks requiring a 4-hour focused block_
 - [ ] **Wednesday Jul 1** — Check SMART results on blaine drives (sda 16TB ~1am, sdb 2TB ~7am Tue, sdc 20TB ~5am Wed). Re-attach to VM 100, relabel, begin STL ACCESSORIES rsync.
 - [ ] **Shardik: SMART test** — run short SMART on 4x 6TB drives (sda/sdb/sdc/sdd), results pending.
 - [ ] **Shardik: PBS decision** — migrate PBS back to shardik or keep on aslan. Alex + Kai. Sunday.
-- [ ] **Shardik: ZFS pool** — 4x 6TB drives, 24TB raw. Alex to confirm layout (no RAIDZ, raw for PBS). Sunday.
+- [x] **Shardik: ZFS pool** — ✅ COMPLETE 2026-07-02. RAIDZ1 "tank" pool created on 4×5.5TB HDDs (sda/sdb/sdc/sdd, ashift=12). 15.7TB usable. pvesm added as tank-storage. Survives reboot with auto-import.
 - [ ] **Red case (ASRock B450M Steel Legend)** — hostname and role TBD. Sunday team discussion. Specs: Ryzen 5 1600X, 32GB DDR4-2133, 1TB SSD.
 - [ ] **hw_reserve.md** — SCP to git-ansible + git commit + push (updated this session).
 - [ ] Configure Tailscale on pve3

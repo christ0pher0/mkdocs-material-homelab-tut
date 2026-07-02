@@ -1,6 +1,6 @@
 # DIGIDIOT Homelab — The Holy Grail
 _The ideal end state. Every decision moves us toward this._
-_Last updated: 2026-07-01_
+_Last updated: 2026-07-02_
 
 ---
 
@@ -8,10 +8,10 @@ _Last updated: 2026-07-01_
 
 | Node | Role | Current RAM | Max RAM | Target Storage | Status |
 |---|---|---|---|---|---|
-| shardik | Primary VM host — general workloads | 40GB | 128GB | NVMe + 3x HDD pool | 🟡 Uptime watch to Jul 28 |
-| maturin | Secondary VM host — lightweight services | 48GB | 64GB | Local SSD | 🟢 Stable |
-| aslan | GPU node — AI, transcoding, GPU VMs | 32GB | 128GB | NVMe + HDD | 🟡 RAM upgrade needed |
-| blaine | CRU/backup node — restic + Samba | 30GB | 32GB (maxed, DDR3) | SSD | 🟢 Role locked |
+| shardik | Primary VM host — general workloads | 32GB (4×8GB DDR4-2400) | 128GB | NVMe + ZFS RAIDZ1 tank (15.7TB) | 🟡 Uptime watch to Aug 2 |
+| maturin | Secondary VM host — lightweight services | 32GB (4×8GB DDR4-2133) | 64GB | Local SSD | 🟢 Stable |
+| aslan | GPU node — AI, transcoding, GPU VMs | 64GB (4×16GB DDR4-2666) | 128GB | NVMe + HDD | 🟢 RAM upgraded 2026-07-02 |
+| blaine | CRU/backup node — restic + Samba | 32GB (4×8GB DDR3-1333) | 32GB (maxed, DDR3) | SSD | 🟢 Role locked |
 | pve3 | Offsite DR node — cold/warm failover | Unknown | TBD | TBD | 🔴 Not yet configured |
 
 **Target cluster state:**
