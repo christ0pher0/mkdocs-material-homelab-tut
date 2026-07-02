@@ -260,7 +260,7 @@ _Large multi-step tasks requiring a 4-hour focused block_
 
 - [x] **Replace PSU** — ✅ COMPLETE 2026-06-28
 - [x] Verify all VMs stable after swap — ✅ COMPLETE 2026-06-28. Cluster quorate, 4 nodes.
-- [x] Start 1-month uptime clock — ✅ restarted 2026-07-02 after microcode reboot. Target: 2026-08-02.
+- [x] Start 1-month uptime clock — ✅ restarted 2026-07-02 after microcode reboot. Target: 2026-08-01.
 
 ### 7. Network Inventory & Documentation
 **Goal:** Full enumeration of all hosts, services, and ports on the homelab network
@@ -321,7 +321,7 @@ _Large multi-step tasks requiring a 4-hour focused block_
 ### 9. VM & Container Placement Audit ⭐
 **Goal:** Ensure every VM and LXC is on the optimal hypervisor with right-sized resources
 **Owner:** Kai
-**Blocker:** Wait for shardik uptime target (2026-07-28) before migrating mediastack
+**Blocker:** Wait for shardik uptime target (2026-08-01) before migrating any prod workloads. No production touching shardik until Aug 1. KASM (111) moved there as stress test only — acceptable. Target will likely be amended again.
 
 - [ ] **Migrate mediastack-deb → shardik** after Jul 28 — currently on aslan (migrated from maturin 2026-07-02 for RAM swap). Shardik is the ultimate destination (Ryzen 7 2700X, tank pool). Wait for 1-month uptime target 2026-07-28.
 - [ ] **Right-size VM RAM allocations** across all nodes — audit over/under provisioned VMs
