@@ -1,5 +1,5 @@
 # Hosts
-_Last update: 2026-06-30 22:05:01_
+_Last update: 2026-06-29 17:05:01_
 
 | # | Hostname | IP Address | MAC Address | OS | Status | Notes |
 |---|----------|------------|------------|----|--------|-------|
@@ -16,15 +16,22 @@ _Last update: 2026-06-30 22:05:01_
 | 11 | monitor-deb | 192.168.1.29 | BC:24:11:A7:F3:4F | Debian/Ubuntu Linux | Online | ------ |
 | 12 | pihole-book-deb | 192.168.1.33 | BC:24:11:E8:54:9D | Debian/Ubuntu Linux | Online | ------ |
 | 13 | docker-deb | 192.168.1.34 | BC:24:11:E3:70:53 | Debian/Ubuntu Linux | Online | ------ |
-| 14 | mediastack-deb | 192.168.1.36 | BC:24:11:63:F7:0D | Debian/Ubuntu Linux | Online | ------ |
-| 15 | restic-deb | 192.168.1.40 | BC:24:11:DB:17:74 | Debian/Ubuntu Linux | Online | ------ |
-| 16 | alma-rpm | 192.168.1.52 | BC:24:11:E5:47:A1 | RHEL/Rocky/Alma Linux | Online | ------ |
-| 17 | pihole-pi1-deb | 192.168.1.120 | B8:27:EB:EC:8D:EA | Debian/Ubuntu Linux | Online | ------ |
-| 18 | blank-dietpi-deb | 192.168.1.121 | B8:27:EB:E5:8C:02 | Debian/Ubuntu Linux | Online | ------ |
-| 19 | octopi-pi4-deb | 192.168.1.122 | DC:A6:32:5E:04:08 | Debian/Ubuntu Linux | Online | ------ |
-| 20 | tools-deb | 192.168.1.125 | E4:5F:01:65:56:EE | Debian/Ubuntu Linux | Online | ------ |
-| 21 | pi4-deb | 192.168.1.126 | B8:27:EB:E4:37:9E | Debian/Ubuntu Linux | Online | ------ |
-| 22 | tv1-media | 192.168.1.140 | A8:23:FE:13:A9:D1 | Media Device | Online | ------ |
-| 23 | unknown-192.168.1.145 | 192.168.1.145 | 74:E2:0C:D6:71:DD | Unknown | Online | ------ |
-| 24 | unknown-192.168.1.167 | 192.168.1.167 | A4:36:C7:75:27:18 | Linux 4.15 - 5.8 | Online | ------ |
-| 25 | unknown-192.168.1.218 | 192.168.1.218 | 16:D1:97:80:67:08 | Unknown | Online | ------ |
+| 14 | 2404HV-deb | 192.168.1.35 | 00:15:5D:00:B3:1E | Debian/Ubuntu Linux | Online | ------ |
+| 15 | mediastack-deb | 192.168.1.36 | BC:24:11:63:F7:0D | Debian/Ubuntu Linux | Online | ------ |
+| 16 | restic-deb | 192.168.1.40 | BC:24:11:DB:17:74 | Debian/Ubuntu Linux | Online | ------ |
+| 17 | unknown-192.168.1.41 | 192.168.1.41 | BC:24:11:A4:35:42 | Linux 5.3 - 5.4 | Online | ------ |
+| 18 | alma-rpm | 192.168.1.52 | BC:24:11:E5:47:A1 | RHEL/Rocky/Alma Linux | Online | ------ |
+| 19 | plow-rpm | 192.168.1.53 | 00:15:5D:00:B3:03 | RHEL/Rocky/Alma Linux | Online | ------ |
+| 20 | amontillado-win | 192.168.1.100 | 04:7C:16:C1:44:8E | Windows | Online | ------ |
+| 21 | todash-win | 192.168.1.103 | 00:15:5D:00:B3:08 | Windows | Online | ------ |
+| 22 | fortunato-win | 192.168.1.106 | 00:15:5D:00:B3:1A | Windows | Online | ------ |
+| 23 | pihole-pi1-deb | 192.168.1.120 | B8:27:EB:EC:8D:EA | Debian/Ubuntu Linux | Online | ------ |
+| 24 | blank-dietpi-deb | 192.168.1.121 | B8:27:EB:E5:8C:02 | Debian/Ubuntu Linux | Online | ------ |
+| 25 | octopi-pi4-deb | 192.168.1.205 (wired) / 192.168.1.122 (WiFi — down) | DC:A6:32:5E:04:08 | OctoPi 1.1.0 / OctoPrint 1.11.7 | Online (wired) | Tailscale: 100.75.54.17 |
+| 26 | pi3-deb | 192.168.1.124 | B8:27:EB:ED:5B:52 | Debian/Ubuntu Linux | Online | ------ |
+| 27 | tools-deb | 192.168.1.125 | E4:5F:01:65:56:EE | Debian/Ubuntu Linux | Online | ------ |
+| 28 | pi4-deb | 192.168.1.126 | B8:27:EB:E4:37:9E | Debian/Ubuntu Linux | Online | ------ |
+| 29 | tv1-media | 192.168.1.140 | A8:23:FE:13:A9:D1 | Media Device | Online | ------ |
+| 30 | unknown-192.168.1.167 | 192.168.1.167 | A4:36:C7:75:27:18 | Unknown | Online | ------ |
+| 31 | unknown-192.168.1.217 | 192.168.1.217 | 00:15:5D:00:B3:20 | Microsoft Windows Server 2016 | Online | ------ |
+| 32 | unknown-192.168.1.218 | 192.168.1.218 | 16:D1:97:80:67:08 | Unknown | Online | ------ |

@@ -1,5 +1,5 @@
 # Homelab Todo & Roadmap
-_Last updated: 2026-07-02 (Shardik ZFS RAIDZ1 tank pool created, aslan RAM upgraded to 64GB, mediastack-deb migrated maturin→aslan)_
+_Last updated: 2026-07-02 (Shardik ZFS RAIDZ1 tank pool created, aslan RAM upgraded to 64GB, mediastack-deb migrated maturin→aslan, DC salvage checklist added, RAM finds logged)_
 ---
 
 ## Critical / Security
@@ -20,7 +20,10 @@ _Last updated: 2026-07-02 (Shardik ZFS RAIDZ1 tank pool created, aslan RAM upgra
 - [x] STL Non-Fantasy — ✅ COMPLETE 2026-06-28. cru3 now labeled STL_FIGURES. Sync confirmed complete.
 - [ ] STL_FIGURES — audit all scripts for hardcoded old label references (cru3 was: STL_Non-Fantasy → STL_#CRUNCH → STL_FIGURES)
 - [x] STL T-Z — ✅ COMPLETE 2026-06-29. Rsync complete, SMART ✅, backup_drives.md updated.
-- [ ] STL ACCESSORIES (732G), TERRAIN (446G), SOURCE_MATERIAL (1.4T) — next rsync targets. Drives (16TB, 2TB, 20TB) formatted, SMART long tests running on blaine. sdb (2TB) done ~Tue 7am, sda (16TB) ~Wed 1am, sdc (20TB) ~Wed 5am. Re-attach and relabel after tests complete.
+- [ ] STL ACCESSORIES (732G) — assign to sda (16TB). SMART ✅ 2026-07-02. Re-attach to blaine, relabel, start rsync.
+- [ ] TERRAIN (446G) — assign to sdb (2TB). SMART ✅ 2026-07-02. Re-attach to blaine, relabel, start rsync.
+- [ ] SOURCE_MATERIAL (1.4T) — no drive assigned. Inventory available drives first, then assign. On hold.
+- [ ] sdc (20TB) — pulled from CRU rotation 2026-07-02. Relabel as spare. Shelf it — quick pivot if TRYAGAIN needs emergency replacement. History: prior anxious behavior in TrueNAS, passed SMART 2026-07-02.
 - [ ] **Logitech sub recap** — caps blown on subwoofer, lab running 1 speaker. Drew to spec recap kit. Revisit Sunday.
 - [ ] Establish offsite drive rotation schedule (Tier 3)
 - [ ] Evaluate PBS tape backup to CRU bays (blaine-pve post-install)
@@ -131,22 +134,55 @@ _Last updated: 2026-07-02 (Shardik ZFS RAIDZ1 tank pool created, aslan RAM upgra
 - [ ] **Cisco SG200-50** — retrieve, use for VLAN project (solves switch gap)
 - [ ] **12U half rack** — retrieve, rack all new DC hardware
 - [ ] **Logitech Z-680 sub recap** — Drew to spec capacitor kit (known failure mode)
+- [ ] **Dell PowerVault MD1200** — KEEP. 12-bay SAS shelf. Pairs with SAS HBA for TrueNAS expansion. Retrieve when collecting other DC hardware.
+- [ ] **Dell PowerEdge R750** — check CPU/RAM/drives/PCIe cards. Potentially TrueNAS rebuild target or new Proxmox node.
+- [ ] **DLI IP Power Switches (x2)** — KEEP. Get model numbers. Useful for remote power cycling.
+- [ ] **Dell M630 blades** — pull model + service tag. DDR4 ECC RDIMM + E5-2600 v3/v4 CPUs have resale value. Check 2.5" drives in each blade.
+- [ ] **Synology RS810RP+** — pass. Too old (Atom D510, DSM EOL). Donate/scrap.
+- [ ] **Hitachi AMS2100** — pass on controllers. Alex to decide on Cheetah drives before disposal.
+- [ ] **Dell M1000e chassis** — pass. Too power-hungry for homelab. Scrap/sell.
+- [ ] **Polycom conference gear** — resale. Get model numbers, list on eBay/Marketplace.
+
+**DC Salvage Scavenge Checklist — what to grab on every visit:**
+
+Priority 1 — Pull every one found:
+- Any **32GB DDR4 UDIMM** (Crucial, Kingston, Corsair, G.Skill — non-ECC, unbuffered)
+- Any **16GB DDR4 UDIMM** (already have 10, more is fine)
+- **LSI 9211-8i, 9207-8i, IBM M1015, Dell PERC H200** — TrueNAS HBA (IT mode or flashable)
+- **Intel PCIe NICs** (avoid Realtek)
+
+Priority 2 — Note specs, photograph:
+- **R750 contents** — CPU, RAM type/amount, drives, PCIe cards
+- Any **NVMe drives** (U.2 or M.2)
+- Any **2.5" or 3.5" SSDs**
+- **10GbE NICs** (Intel X540, X550, Mellanox ConnectX-3/4)
+
+Priority 3 — Photograph, flag for Alex:
+- Any **SAS drives 1TB+** (MD1200 candidates)
+- Any **SAS HBAs** (even IR mode — some flashable)
 
 ### RAM Upgrade Targets — Scavenge / Shop
 
 State as of 2026-07-02:
 
-| Node | Current | Target | Needed |
+| Node | Current | Grail Target | Needed |
 |---|---|---|---|
-| shardik | 32GB (4×8GB DDR4-2400) | 64GB | 4x 16GB DDR4-2666 UDIMM |
-| aslan | ✅ 64GB (4×16GB) — COMPLETE 2026-07-02 | 64GB | done |
-| maturin | 32GB (4×8GB) | 32GB | ✅ sufficient |
+| shardik | 32GB (4×8GB DDR4-2400) | 128GB (4×32GB DDR4 UDIMM) | 4×32GB — 2 Crucial CT32G4DFD832A in hand, 2 more machines to check |
+| aslan | ✅ 64GB (4×16GB) — COMPLETE 2026-07-02 | 128GB (4×32GB DDR4 UDIMM) | 4×32GB — scavenging DC2/DC3 |
+| maturin | 32GB (4×8GB) | 64GB (maxed) | 4×16GB UDIMM — 10×16GB DDR4-2400 UDIMM found at DC 2026-07-02 |
 | blaine | 32GB (4×8GB DDR3-1333) — confirmed 2026-07-02 | 32GB | ✅ sufficient (DDR3, Sandy Bridge — no upgrade path worth pursuing) |
 
-⚠️ **DC1 server RAM (R730, Supermicro) = DDR4 RDIMM ECC — NOT compatible with AM4 consumer boards.** Only workstation/desktop DDR4 UDIMM non-ECC works. Check Lambda GPU workstation RAM on authorization — may be compatible.
+⚠️ **DC server RAM = DDR4/DDR5 RDIMM ECC — NOT compatible with AM4 consumer boards.** Only workstation/desktop DDR4 UDIMM non-ECC works.
 
-- [ ] **Scavenge:** Check Lambda GPU workstations for DDR4 UDIMM non-ECC 32GB sticks on pickup — need 8 total (4 per node). Both shardik and aslan confirmed 128GB board max via dmidecode 2026-07-02.
-- [ ] **Shop (if not found):** 8×32GB DDR4-3200 UDIMM non-ECC — ~$40-60/stick on eBay (~$320-480 total). Target: shardik 128GB + aslan 128GB. Note: with 4 populated slots, boards will likely train to DDR4-2666 — buy for capacity, not speed.
+**Found 2026-07-02 at DC:**
+- 10×16GB DDR4-2400 UDIMM (part: 16GF2X16QFHH36-135-K) — assign 4→maturin (maxes it), 4→shardik (interim upgrade), 2 spare
+- 2×32GB DDR4-3200 UDIMM Crucial CT32G4DFD832A — holy grail sticks. 2 more DC machines to check.
+- 8×32GB DDR5 ECC RDIMM SK Hynix (Supermicro) — incompatible with all current nodes. **Sell.**
+- 2×32GB DDR4-2933 RDIMM OWC Mac Pro (already in pve3) — RDIMM, not usable in AM4 nodes.
+
+- [ ] **Scavenge 2 remaining DC machines** — pull all 32GB DDR4 UDIMM sticks found. Need 6 more for grail (4 shardik + 4 aslan − 2 in hand).
+- [ ] **Install 16GB sticks** — Jordan: 4×16GB→maturin (64GB, maxed), 4×16GB→shardik (64GB interim). Verify compatibility on OptiPlex 7050 first.
+- [ ] **Shop (if not found):** 32GB DDR4-3200 UDIMM non-ECC — ~$40-60/stick on eBay. Buy only what DC salvage doesn't cover.
 - [x] **Execute RAM swap** — ✅ COMPLETE 2026-07-02. Aslan upgraded to 64GB (2x Ballistix from shardik + 2x SK Hynix from maturin). Maturin back to 4×8GB. Shardik down to 32GB (4×8GB).
 - [x] **Confirm blaine RAM** — ✅ COMPLETE 2026-07-02. 32GB DDR3-1333 (4×8GB). i5-2500K Sandy Bridge — DDR3 only, no meaningful upgrade path.
 
