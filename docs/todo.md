@@ -14,6 +14,7 @@ _Last updated: 2026-07-03 (Cisco SG200-50 VLAN config complete — VLANs 10/20/3
 - [ ] Alert on: drive errors, disk >85%, service down, high temp, RAM pressure
 - [ ] Investigate amontillado D: (2.79TB, 11% free) — audit VMs and junk, clear or expand
 - [ ] **VPN rationalization** — 3 VPN solutions running (Tailscale, WireGuard on mediastack, ZeroTier on amontillado). Riley to pick one and decommission the others
+- [ ] **Alex + Riley: LAGG on freenas-bsd** — X540-T2 has ix0 (active, 2026-07-03) + ix1 spare. Link-aggregate for NIC redundancy — needs LACP/failover config on both TrueNAS (Network → Link Aggregations) and SG200-50 switch port config. Backlog, not urgent.
 
 ### Backup Strategy
 
