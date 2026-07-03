@@ -1,5 +1,5 @@
 # Homelab Todo & Roadmap
-_Last updated: 2026-07-02 (Shardik ZFS RAIDZ1 tank pool created, aslan RAM upgraded to 64GB, mediastack-deb migrated maturin→aslan, DC salvage checklist added, RAM finds logged)_
+_Last updated: 2026-07-03 (Cisco SG200-50 VLAN config complete — VLANs 10/20/30/99 created, port ranges assigned; swarm VMs 102/104/105 destroyed; KASM migrated aslan→shardik as stress test; cutover pre-work assigned to Riley)_
 ---
 
 ## Critical / Security
@@ -65,6 +65,9 @@ _Last updated: 2026-07-02 (Shardik ZFS RAIDZ1 tank pool created, aslan RAM upgra
 - [ ] **Jordan: fix SSH service name for DietPi hosts** — baseline uses 'ssh' service name but DietPi uses dropbear. Add conditional or ignore for DietPi hosts.
 - [ ] **Jordan: fix ansible_facts deprecation warnings** — update homelab_baseline.yml to use ansible_facts["fact_name"] syntax before ansible-core 2.24 drops support. Sam to implement.
 - [ ] **Riley: DHCP reservation for octopi-pi4-deb** — lock to 192.168.1.122 on router to prevent drift.
+- [ ] **Riley: Flint 2 cutover pre-work** — configure OpenWrt in dumb AP mode; set trunk port to switch GE1 with tagged VLANs 10/20/30/99; map main SSID → VLAN 20, guest/IoT SSID → VLAN 30. Deliver as paste-ready config block.
+- [ ] **Riley: pfSense SG-1100 offline config** — initial setup via laptop direct to LAN port (not live network). WAN interface, VLAN interfaces 10/20/30/99, DHCP pools per vlan_ip_plan.md, firewall rules per plan. Deliver step-by-step runbook. Pre-work for cutover weekend.
+- [ ] **Riley: Hyper-V VLAN decision for amontillado** — amontillado on VLAN 20 (GE25) but Hyper-V VMs need VLAN 10 access. Decision: (a) trunk port on GE25 + separate vSwitch per VLAN in Hyper-V, or (b) second NIC on amontillado for VLAN 10. Must decide before cutover day.
 - [ ] **Jordan: document mkdocs_dev_material on restic-deb** — note it lives there intentionally (required by backup_drives_update.sh until Sam refactors).
 - [ ] **Riley: pve3 Tailscale setup** — configure Tailscale on ThinkStation offsite node.
 - [ ] **Morgan: session documentation** — shardik recovery runbook, red case inventory page, PBS migration decision log, pve3 DR node page. First active assignment.
@@ -101,8 +104,8 @@ _Last updated: 2026-07-02 (Shardik ZFS RAIDZ1 tank pool created, aslan RAM upgra
 - [ ] P2V GOODWIM CENTOS drive (Seagate 500GB) — convert CentOS install to Proxmox VM before disposing
 - [ ] Audit offline hosts from router — confirm which are inactive vs decommissioned (eld-win, work-win, tahoe-mac, etc.)
 - [ ] swarm01 (102) — pending migration from shardik to aslan
-- [ ] **Confirm swarm VM status** — 102/104/105 all showing STOPPED on aslan. Intentional or not? ⚠️
-- [ ] KASM (111) — move disk from SDA_store to local-lvm NVMe on aslan for performance
+- [x] **Swarm VMs 102/104/105** — ✅ DESTROYED 2026-07-03. Ceph/microceph confirmed removed. No active workloads. VIP .250 unused. Rebuild when actually needed (clean Ubuntu 24.04, no Ceph).
+- [x] **KASM (111) migrated aslan→shardik** — ✅ COMPLETE 2026-07-03. Running as shardik stress test. Cloud-init re-added post-migration. Accessible at 192.168.1.26.
 - [ ] onboard pbs-deb via Ansible (onboard_host.yml not yet run — passwordless sudo added manually)
 - [ ] **Manyfold** — remove from docker-deb :3214 (poor performance). blaine LXC (CT 103) is the candidate — promising results. Kai to complete evaluation and confirm as permanent home before go-live.
 - [ ] **Set Uptime Kuma TrueNAS poll to 30 seconds** — Taylor (USB NIC fragility mitigation)
@@ -131,7 +134,7 @@ _Last updated: 2026-07-02 (Shardik ZFS RAIDZ1 tank pool created, aslan RAM upgra
 - [ ] **Dell JBOD (4TB SAS)** — confirm chassis/bay count, pair with Dell SAS 12G HBA for TrueNAS
 - [ ] **DC2 walkthrough** — schedule and inventory
 - [ ] **DC3/DC4 status** — confirm if going down, schedule walkthrough
-- [ ] **Cisco SG200-50** — retrieve, use for VLAN project (solves switch gap)
+- [x] **Cisco SG200-50** — ✅ COMPLETE 2026-07-03. Retrieved, factory reset, firmware confirmed 1.4.8.6 (latest), VLANs 10/20/30/99 configured, port ranges assigned, password saved to KeePass.
 - [ ] **12U half rack** — retrieve, rack all new DC hardware
 - [ ] **Logitech Z-680 sub recap** — Drew to spec capacitor kit (known failure mode)
 - [ ] **Dell PowerVault MD1200** — KEEP. 12-bay SAS shelf. Pairs with SAS HBA for TrueNAS expansion. Retrieve when collecting other DC hardware.
@@ -287,7 +290,7 @@ _Large multi-step tasks requiring a 4-hour focused block_
 - [ ] Install Dell switch, patch panel, PDU in rack
 - [ ] Set Flint 2 to AP mode while still live on existing network
 - [ ] Configure SG-1100 offline (laptop direct to LAN port): WAN, DHCP, DNS relay, VLAN interfaces
-- [ ] Configure Dell switch offline: VLAN 10/20/30/99, trunk port to SG-1100, access ports per device
+- [x] Configure Dell switch: VLAN 10/20/30/99 created, port ranges assigned ✅ 2026-07-03. Port map: GE1=uplink (Flint 2), GE2-24=Servers(10), GE25-30=Trusted(20), GE31-40=IoT(30), GE41-48=Trunk, GE49=Mgmt(99), GE50=Reserved. Amontillado on GE50 temp (management access). GE25-30 cutover pending Flint 2 VLAN config.
 
 **Phase 2 — Cutover (planned outage ~1 hour)**
 - [ ] ⚠️ Announce maintenance window — everything goes down briefly
