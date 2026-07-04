@@ -147,7 +147,7 @@ _Last updated: 2026-07-03 (Friday 1:1 session — Sunday meeting prep brief prod
 - [ ] **Dell PowerEdge R750** — check CPU/RAM/drives/PCIe cards. Potentially TrueNAS rebuild target or new Proxmox node.
 - [ ] **DLI IP Power Switches (x2)** — KEEP. Get model numbers. Useful for remote power cycling.
 - [ ] **Dell M630 blades** — pull model + service tag. DDR4 ECC RDIMM + E5-2600 v3/v4 CPUs have resale value. Check 2.5" drives in each blade.
-- [ ] **Synology RS810RP+** — pass. Too old (Atom D510, DSM EOL). Donate/scrap.
+- [x] **Synology RS810RP+** — pass. Too old (Atom D510, DSM EOL). Donate/scrap.
 - [ ] **Hitachi AMS2100** — pass on controllers. Alex to decide on Cheetah drives before disposal.
 - [ ] **Dell M1000e chassis** — pass. Too power-hungry for homelab. Scrap/sell.
 - [ ] **Polycom conference gear** — resale. Get model numbers, list on eBay/Marketplace.
