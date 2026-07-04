@@ -103,7 +103,7 @@ _Last updated: 2026-07-03 (Friday 1:1 session — Sunday meeting prep brief prod
 - [x] Inventory 5 remaining waiting systems — match hardware to roles
 - [ ] Inventory pve3 (ThinkStation offsite) — specs, storage, role
 - [ ] Purchase Hologram.io SIM for argos-deb LTE
-- [ ] Pi rack — 3D print or buy, house all 8 Pis cleanly
+- [x] Pi rack — 3D print or buy, house all 8 Pis cleanly
 - [ ] PoE switch + PoE HATs — single cable per Pi for power + network
 - [ ] Shrink maturin pve-data pool — only cloudinit template remains on local-lvm
 - [ ] Investigate maturin VM 112 leftover disk on shardik NVMe (164GB orphan)
