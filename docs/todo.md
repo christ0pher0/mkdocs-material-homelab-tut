@@ -118,7 +118,7 @@ _Last updated: 2026-07-03 (Friday 1:1 session — Sunday meeting prep brief prod
 - [ ] **Check pihole-pi1-deb SD card** — was 91% full 2026-06-21, run `df -h` on pihole-pi1-deb (192.168.1.120)
 - [x] **Confirm which 6 Pis are racked** — ✅ COMPLETE 2026-06-30. All 6 slots documented: ha-net, blank-dietpi-deb, backup-dietpi-deb, retropi, batocera-deb, pihole-pi-deb. hw_inv.md updated.
 - [ ] **Ender 3 V2 yellow PLA** — run temp tower first to dial in profile before printing anything structural (Drew)
-- [ ] **Pi Status page** — build in MkDocs with uploaded Pi photos (Morgan)
+- [x] **Pi Status page** — build in MkDocs with uploaded Pi photos (Morgan)
 - [ ] **retropi IP** — confirm IP for slot 4 (retropi). Add to hw_inv.md and hosts.md
 - [ ] **pihole-pi-deb IP** — confirm IP for slot 6. Add to hw_inv.md and hosts.md
 - [ ] **blank-dietpi-deb role** — assign permanent role (slot 2, 192.168.1.121, RPi 2B). Options: Gitea mirror secondary, MQTT broker, rsync relay
