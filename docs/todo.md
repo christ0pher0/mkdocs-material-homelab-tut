@@ -138,7 +138,7 @@ _Last updated: 2026-07-03 (Friday 1:1 session — Sunday meeting prep brief prod
 - [x] **DC1 NEEDS MORE INFO checklist** — work through on next visit (see dc_salvage.md)
 - [ ] **Dell R730 pickup** — get CPU model + RAM when collecting
 - [ ] **Dell JBOD (4TB SAS)** — confirm chassis/bay count, pair with Dell SAS 12G HBA for TrueNAS
-- [ ] **DC2 walkthrough** — schedule and inventory
+- [x] **DC2 walkthrough** — schedule and inventory
 - [ ] **DC3/DC4 status** — confirm if going down, schedule walkthrough
 - [x] **Cisco SG200-50** — ✅ COMPLETE 2026-07-03. Retrieved, factory reset, firmware confirmed 1.4.8.6 (latest), VLANs 10/20/30/99 configured, port ranges assigned, password saved to KeePass.
 - [ ] **12U half rack** — retrieve, rack all new DC hardware
