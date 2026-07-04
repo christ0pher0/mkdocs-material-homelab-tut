@@ -149,7 +149,7 @@ _Last updated: 2026-07-03 (Friday 1:1 session — Sunday meeting prep brief prod
 - [ ] **Dell M630 blades** — pull model + service tag. DDR4 ECC RDIMM + E5-2600 v3/v4 CPUs have resale value. Check 2.5" drives in each blade.
 - [x] **Synology RS810RP+** — pass. Too old (Atom D510, DSM EOL). Donate/scrap.
 - [x] **Hitachi AMS2100** — pass on controllers. Alex to decide on Cheetah drives before disposal.
-- [ ] **Dell M1000e chassis** — pass. Too power-hungry for homelab. Scrap/sell.
+- [x] **Dell M1000e chassis** — pass. Too power-hungry for homelab. Scrap/sell.
 - [ ] **Polycom conference gear** — resale. Get model numbers, list on eBay/Marketplace.
 
 **DC Salvage Scavenge Checklist — what to grab on every visit:**
