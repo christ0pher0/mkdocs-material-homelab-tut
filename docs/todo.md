@@ -1,11 +1,12 @@
 # Homelab Todo & Roadmap
-_Last updated: 2026-07-03 (Cisco SG200-50 VLAN config complete — VLANs 10/20/30/99 created, port ranges assigned; swarm VMs 102/104/105 destroyed; KASM migrated aslan→shardik as stress test; cutover pre-work assigned to Riley)_
+_Last updated: 2026-07-03 (Friday 1:1 session — Sunday meeting prep brief produced; 2 tracking gaps surfaced below; cos SSH key auth root-caused and deferred, see Critical/Security)_
 ---
 
 ## Critical / Security
 
 - [x] **Shardik PSU** — ✅ COMPLETE 2026-06-28. PSU replaced, CMOS battery replaced, cluster quorate.
 - [x] **Shardik RAM** — ✅ COMPLETE 2026-06-29. Bad PNY XLR8 16GB (2x) replaced with Ballistix 16GB + 3x Micron 8GB DDR4-2666 (40GB total). stress-ng 30min passed. Root cause of all historical instability and ZFS corruption confirmed.
+- [ ] **cos SSH key auth on freenas-bsd (192.168.1.5) — DECIDED 2026-07-03: staying on password, not fixing.** Root cause fully diagnosed: OpenSSH `StrictModes` rejects pubkey auth because `/mnt/TRYAGAIN` (pool root, owner `cifs1:plex_access`, mode `drwxrwx---+`) is group-writable and `cos` is a `plex_access` member — StrictModes checks every ancestor directory in the path, not just the immediate home dir. Mid-session fix attempt: created new sibling dataset `TRYAGAIN/admin` (root:wheel, no group-write) and relocated cos's home to `/mnt/TRYAGAIN/admin/cos` (rsync'd dotfiles/authorized_keys over, correct 700/600 perms, Home Directory field repointed via WebUI) — this did NOT work, because `/mnt/TRYAGAIN` itself is still an unavoidable ancestor of any dataset under that pool, and its group-write bit was never touched. Real fix identified (Alex): remove Write from the `group@`/`plex_access` ACE on the **pool root** dataset only (Storage → Pools → TRYAGAIN → Edit Permissions → uncheck group Write, leave Read+Execute) — safe because Samba only writes inside subdirectories like `plex/`, never at the root, **provided "Apply permissions recursively" is left OFF** (checking it would strip plex_access write from every share subdirectory, breaking CIFS fleet-wide). Chris declined to make this change — too risky-feeling for a production pool root; password auth on this one host is an acceptable asymmetry vs. the rest of the Ansible-keyed fleet. **If revisited:** the fix above is exact and ready to execute, just needs sign-off. cos's home directory is now permanently at `/mnt/TRYAGAIN/admin/cos` (moved from `/mnt/TRYAGAIN/home/cos`, old copy left untouched, not deleted) regardless of the key-auth decision.
 - [ ] docker-deb static IP or confirmed DHCP reservation — hosts Vaultwarden, Traefik, Portainer ⚠️
 - [ ] Disk space alerts — amontillado C: (7% free ⚠️), pi1 SD (91%) ⚠️
 - [ ] **amontillado C: drive** — 65.9GB free of 930GB (7%). Jordan to audit what's consuming it
@@ -15,16 +16,20 @@ _Last updated: 2026-07-03 (Cisco SG200-50 VLAN config complete — VLANs 10/20/3
 - [ ] Investigate amontillado D: (2.79TB, 11% free) — audit VMs and junk, clear or expand
 - [ ] **VPN rationalization** — 3 VPN solutions running (Tailscale, WireGuard on mediastack, ZeroTier on amontillado). Riley to pick one and decommission the others
 - [ ] **Alex + Riley: LAGG on freenas-bsd** — X540-T2 has ix0 (active, 2026-07-03) + ix1 spare. Link-aggregate for NIC redundancy — needs LACP/failover config on both TrueNAS (Network → Link Aggregations) and SG200-50 switch port config. Backlog, not urgent.
+- [ ] **Verify TrueNAS boot-pool status** — memory (2026-07-01) shows boot-pool DEGRADED (3 USB replacement attempts all failed), but no entry in this file since. Confirm current state: `zpool status bootpool` on freenas-bsd. Surfaced as a tracking gap during 2026-07-03 Friday 1:1 review — flag for Sunday meeting.
+- [ ] **Clarify Dell switch vs Cisco SG200-50** — "Rack Build" plan (Sunday Project 8) still lists "Dell managed switch (model TBD)" as hardware in hand, but Cisco SG200-50 was retrieved/configured 2026-07-03 with VLANs 10/20/30/99 already assigned. Confirm with Chris whether these are the same switch or if the Dell unit is still a separate, needed piece.
 
 ### Backup Strategy
 
 - [x] STL Non-Fantasy — ✅ COMPLETE 2026-06-28. cru3 now labeled STL_FIGURES. Sync confirmed complete.
 - [ ] STL_FIGURES — audit all scripts for hardcoded old label references (cru3 was: STL_Non-Fantasy → STL_#CRUNCH → STL_FIGURES)
 - [x] STL T-Z — ✅ COMPLETE 2026-06-29. Rsync complete, SMART ✅, backup_drives.md updated.
-- [ ] STL ACCESSORIES (732G) — assign to sda (16TB). SMART ✅ 2026-07-02. Re-attach to blaine, relabel, start rsync.
-- [ ] TERRAIN (446G) — assign to sdb (2TB). SMART ✅ 2026-07-02. Re-attach to blaine, relabel, start rsync.
+- [ ] **STL_ACCESSORIES_TERRAIN (732G + 446G ≈ 1.18TB combined)** — REASSIGNED 2026-07-03 to new drive: ST3000NM0033-9ZM178, serial Z1Y331AG, 2.7TB. Both categories combined on one drive, per Chris. (Original 16TB/sda plan for ACCESSORIES and 2TB/sdb plan for TERRAIN both swapped back out — original 16TB drive's disposition TBD; original 2TB drive still earmarked for a friend getting into data hoarding once free.) Next: partition (GPT), format NTFS, label "STL_ACCESSORIES_TERRAIN", mount, start rsync. Attached to VM 100 scsi1 2026-07-03.
+- [ ] **STL_SOURCE_MATERIAL (1.4T)** — ASSIGNED 2026-07-03 to new drive: ST33000651NS, serial Z292SYYH, 2.7TB. Next: partition (GPT), format NTFS, label "STL_SOURCE_MATERIAL", mount, start rsync. Attached to VM 100 scsi2 2026-07-03.
+- [ ] **FUTURE_USE spare (2026-07-03):** ST6000VN0001-1SF17Z, serial Z4D2EJ31, 5.5TB. Partition, format NTFS, label "FUTURE_USE" — no content assignment yet. Attached to VM 100 scsi3 2026-07-03.
 - [ ] SOURCE_MATERIAL (1.4T) — no drive assigned. Inventory available drives first, then assign. On hold.
-- [ ] sdc (20TB) — pulled from CRU rotation 2026-07-02. Relabel as spare. Shelf it — quick pivot if TRYAGAIN needs emergency replacement. History: prior anxious behavior in TrueNAS, passed SMART 2026-07-02.
+- [ ] **STL_T-Z status unresolved** — backup_drives.md (local) shows Jun 2026/✅ per todo.md's completion claim, but cru_plexfolder_stats.sh --view live cache still shows Feb 2025/— as of 2026-07-03. Two sources disagree — confirm actual state before trusting either.
+- [ ] sdc (20TB) — pulled from CRU rotation 2026-07-02. Relabel as spare. Shelf it — quick pivot if TRYAGAIN needs emergency replacement. History: prior anxious behavior in TrueNAS, passed SMART 2026-07-02. **Confirmed 2026-07-03: dedicated emergency TrueNAS spare, not returning to CRU rotation.**
 - [ ] **Logitech sub recap** — caps blown on subwoofer, lab running 1 speaker. Drew to spec recap kit. Revisit Sunday.
 - [ ] Establish offsite drive rotation schedule (Tier 3)
 - [ ] Evaluate PBS tape backup to CRU bays (blaine-pve post-install)
@@ -247,17 +252,19 @@ _Large multi-step tasks requiring a 4-hour focused block_
 - [ ] PoE switch + PoE HATs — single cable per Pi for power + network
 - [ ] Full cable management on rack
 
-### 5. TrueNAS NIC Swap + Boot Test
-**Goal:** Replace fragile USB NIC with Intel X540-T2 PCIe card; confirm Kingston boot mirror
+### 5. TrueNAS NIC Swap + Boot Test — ✅ RESOLVED 2026-07-03 (unexpected path)
+**Goal:** Replace fragile USB NIC with reliable PCIe NIC; confirm Kingston boot mirror
 
-- [ ] Shut down TrueNAS gracefully
-- [ ] Install Intel X540-T2 into primary PCIe x16 slot
-- [ ] Remove SanDisk USB — boot from Kingston only to confirm mirror works
-- [ ] Re-insert SanDisk — confirm both da0 and da1 still in mirror (`zpool status boot-pool`)
-- [ ] Boot TrueNAS — confirm X540-T2 detected (`pciconf -lv | grep ix`)
-- [ ] Assign static IP 192.168.1.5 to new interface in TrueNAS UI (Network → Interfaces)
-- [ ] Remove/disable old USB NIC (ue0) interface
-- [ ] Confirm CIFS/NFS mounts come back on client machines
+- [x] Shut down TrueNAS gracefully, installed Intel X540-T2 into primary PCIe x16 slot — ✅ COMPLETE
+- [x] Kingston boot USB finally POSTed cleanly alongside SanDisk after 20 tries — mirror proven working, not degraded
+- [x] X540-T2 detected by driver (`pciconf`/`dmesg` clean, device 0x1528) but **both ports (ix0/ix1) never showed link — status: no carrier, even cross-tested with a known-working cable/port pair.** Suspected DOA card. Chris to bench-test it on another system separately. No spare 10GbE/compatible card in reserve — dc_salvage.md watch list only.
+- [x] **BIOS/CMOS battery replaced** — board wasn't holding boot device order across power cycles (Z77-DS3H, 2012 board). Boot order re-set after replacement.
+- [x] **Discovery: onboard `alc0` (previously documented dead, AR8161/alc driver) is actually functional.** Pulled a real DHCP lease, then configured with static 192.168.1.5/24 through TrueNAS WebUI (proper managed config, not console-only). `ue0` USB NIC removed from service entirely.
+- [x] Static IP 192.168.1.5 confirmed live on `alc0`, WebUI reachable, CIFS/NFS mount recovery expected automatically (all scripts/configs hardcode .5, no DNS dependency)
+- [ ] **Watch `alc0` for stability over next 1-2 days before fully trusting it** — `alc` driver has a rougher FreeBSD track record than Intel NICs; possible this is why it was originally marked dead (intermittent, not fully broken)
+- [ ] hw_inv.md / network_inventory.md — update NIC status for freenas-bsd (done same session, see below)
+- [ ] Source/RMA replacement X540-T2 (or equivalent Intel-chipset 10GbE/GbE card) if bench test confirms it's dead — add to shopping list
+- [ ] **Jumbo frames on alc0** — backlog, not now. Wait for stability proof first; requires matching MTU on Flint port too. Revisit as separate perf task once alc0 is trusted.
 
 ### 6. Shardik PSU Replacement
 **Goal:** Replace confirmed-dead PSU — 1-month uptime target starts when she's back online
