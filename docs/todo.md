@@ -100,7 +100,7 @@ _Last updated: 2026-07-03 (Friday 1:1 session — Sunday meeting prep brief prod
 
 ## In Progress
 
-- [ ] Inventory 5 remaining waiting systems — match hardware to roles
+- [x] Inventory 5 remaining waiting systems — match hardware to roles
 - [ ] Inventory pve3 (ThinkStation offsite) — specs, storage, role
 - [ ] Purchase Hologram.io SIM for argos-deb LTE
 - [ ] Pi rack — 3D print or buy, house all 8 Pis cleanly
