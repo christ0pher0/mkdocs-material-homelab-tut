@@ -109,7 +109,7 @@ _Last updated: 2026-07-03 (Friday 1:1 session — Sunday meeting prep brief prod
 - [x] Investigate maturin VM 112 leftover disk on shardik NVMe (164GB orphan)
 - [ ] P2V GOODWIM CENTOS drive (Seagate 500GB) — convert CentOS install to Proxmox VM before disposing
 - [ ] Audit offline hosts from router — confirm which are inactive vs decommissioned (eld-win, work-win, tahoe-mac, etc.)
-- [ ] swarm01 (102) — pending migration from shardik to aslan
+- [x] swarm01 (102) — pending migration from shardik to aslan
 - [x] **Swarm VMs 102/104/105** — ✅ DESTROYED 2026-07-03. Ceph/microceph confirmed removed. No active workloads. VIP .250 unused. Rebuild when actually needed (clean Ubuntu 24.04, no Ceph).
 - [x] **KASM (111) migrated aslan→shardik** — ✅ COMPLETE 2026-07-03. Running as shardik stress test. Cloud-init re-added post-migration. Accessible at 192.168.1.26.
 - [ ] onboard pbs-deb via Ansible (onboard_host.yml not yet run — passwordless sudo added manually)
