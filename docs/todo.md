@@ -106,7 +106,7 @@ _Last updated: 2026-07-03 (Friday 1:1 session — Sunday meeting prep brief prod
 - [x] Pi rack — 3D print or buy, house all 8 Pis cleanly
 - [x] PoE switch + PoE HATs — single cable per Pi for power + network
 - [ ] Shrink maturin pve-data pool — only cloudinit template remains on local-lvm
-- [ ] Investigate maturin VM 112 leftover disk on shardik NVMe (164GB orphan)
+- [x] Investigate maturin VM 112 leftover disk on shardik NVMe (164GB orphan)
 - [ ] P2V GOODWIM CENTOS drive (Seagate 500GB) — convert CentOS install to Proxmox VM before disposing
 - [ ] Audit offline hosts from router — confirm which are inactive vs decommissioned (eld-win, work-win, tahoe-mac, etc.)
 - [ ] swarm01 (102) — pending migration from shardik to aslan
