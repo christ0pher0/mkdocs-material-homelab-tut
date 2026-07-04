@@ -112,7 +112,7 @@ _Last updated: 2026-07-03 (Friday 1:1 session — Sunday meeting prep brief prod
 - [x] swarm01 (102) — pending migration from shardik to aslan
 - [x] **Swarm VMs 102/104/105** — ✅ DESTROYED 2026-07-03. Ceph/microceph confirmed removed. No active workloads. VIP .250 unused. Rebuild when actually needed (clean Ubuntu 24.04, no Ceph).
 - [x] **KASM (111) migrated aslan→shardik** — ✅ COMPLETE 2026-07-03. Running as shardik stress test. Cloud-init re-added post-migration. Accessible at 192.168.1.26.
-- [ ] onboard pbs-deb via Ansible (onboard_host.yml not yet run — passwordless sudo added manually)
+- [x] onboard pbs-deb via Ansible (onboard_host.yml not yet run — passwordless sudo added manually)
 - [ ] **Manyfold** — remove from docker-deb :3214 (poor performance). blaine LXC (CT 103) is the candidate — promising results. Kai to complete evaluation and confirm as permanent home before go-live.
 - [ ] **Set Uptime Kuma TrueNAS poll to 30 seconds** — Taylor (USB NIC fragility mitigation)
 - [ ] **Check pihole-pi1-deb SD card** — was 91% full 2026-06-21, run `df -h` on pihole-pi1-deb (192.168.1.120)
