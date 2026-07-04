@@ -104,7 +104,7 @@ _Last updated: 2026-07-03 (Friday 1:1 session — Sunday meeting prep brief prod
 - [ ] Inventory pve3 (ThinkStation offsite) — specs, storage, role
 - [ ] Purchase Hologram.io SIM for argos-deb LTE
 - [x] Pi rack — 3D print or buy, house all 8 Pis cleanly
-- [ ] PoE switch + PoE HATs — single cable per Pi for power + network
+- [x] PoE switch + PoE HATs — single cable per Pi for power + network
 - [ ] Shrink maturin pve-data pool — only cloudinit template remains on local-lvm
 - [ ] Investigate maturin VM 112 leftover disk on shardik NVMe (164GB orphan)
 - [ ] P2V GOODWIM CENTOS drive (Seagate 500GB) — convert CentOS install to Proxmox VM before disposing
