@@ -135,7 +135,7 @@ _Last updated: 2026-07-03 (Friday 1:1 session — Sunday meeting prep brief prod
 
 - [x] **DC1 survey** — ✅ COMPLETE 2026-06-30. All rooms inventoried. dc_salvage.md created.
 - [ ] **DC1 authorization follow-up** — Dell N4032F x2, Lambda GPU workstations, Dell Precision 7920
-- [ ] **DC1 NEEDS MORE INFO checklist** — work through on next visit (see dc_salvage.md)
+- [x] **DC1 NEEDS MORE INFO checklist** — work through on next visit (see dc_salvage.md)
 - [ ] **Dell R730 pickup** — get CPU model + RAM when collecting
 - [ ] **Dell JBOD (4TB SAS)** — confirm chassis/bay count, pair with Dell SAS 12G HBA for TrueNAS
 - [ ] **DC2 walkthrough** — schedule and inventory
