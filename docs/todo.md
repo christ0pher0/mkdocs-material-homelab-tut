@@ -36,7 +36,8 @@ _Last updated: 2026-07-05 (backup-dietpi-deb "watch the watcher" stack fully liv
 - [ ] SOURCE_MATERIAL (1.4T) — no drive assigned. Inventory available drives first, then assign. On hold.
 - [ ] **STL_T-Z status unresolved** — backup_drives.md (local) shows Jun 2026/✅ per todo.md's completion claim, but cru_plexfolder_stats.sh --view live cache still shows Feb 2025/— as of 2026-07-03. Two sources disagree — confirm actual state before trusting either.
 - [ ] sdc (20TB) — pulled from CRU rotation 2026-07-02. Relabel as spare. Shelf it — quick pivot if TRYAGAIN needs emergency replacement. History: prior anxious behavior in TrueNAS, passed SMART 2026-07-02. **Confirmed 2026-07-03: dedicated emergency TrueNAS spare, not returning to CRU rotation.**
-- [ ] **Logitech sub recap** — caps blown on subwoofer (Z-680). Onset 2026-07-05: fine this morning, degraded same day to intermittent speaker count (1, now fluctuating to 2) plus heavy static/hum on both working speakers — rapid same-day onset is typical of caps crossing end-of-life (gradual wear, abrupt failure), not a new/separate cause. Static points to PSU-section caps (ripple bleeding into audio), not just whatever's causing the channel dropout — Drew should scope the recap kit to cover PSU caps, not just the minimum for the dropout symptom. Revisit Sunday.
+- [x] **Logitech Z-680 acute static/dropout** — ✅ RESOLVED 2026-07-05, was NOT hardware. Tested systematically: sub power-cycle didn't fix it, PC reboot did — confirms today's static + fluctuating speaker count was a PC-side audio driver glitch, not a hardware fault.
+- [ ] **Logitech Z-680 stuck at 2.1, not full 5.1 — WORKAROUND ONLY, NOT FIXED** — separate, longer-standing issue (~1 year per Chris, 2026-07-05) that today's reboot did NOT fix. 2.1 (stereo + sub) is currently working and is a livable workaround, but the rear/center surround channels are still not diagnosed or repaired — this is not resolved, just not actively broken-sounding right now. Original "caps blown" note was an untested guess for this specific symptom, never confirmed either way. Actual cause still unknown: could be a dead amp channel/section on the sub (real hardware), a receiver/source channel config issue, or a cabling problem for the missing rear/center channels. Full troubleshoot needed eventually — start with source/receiver channel config and speaker wire connections to the missing channels before assuming hardware failure again.
 - [ ] Establish offsite drive rotation schedule (Tier 3)
 - [ ] Evaluate PBS tape backup to CRU bays (blaine-pve post-install)
 - [ ] cru_stats.sh saves to /root/scripts/cru_stats/ (sudo) but backup_drives_update.sh reads ~/scripts/cru_stats/ — fix path mismatch
@@ -131,7 +132,7 @@ _Last updated: 2026-07-05 (backup-dietpi-deb "watch the watcher" stack fully liv
 - [ ] **DC2 walkthrough** — schedule and inventory
 - [ ] **DC3/DC4 status** — confirm if going down, schedule walkthrough
 - [ ] **12U half rack** — retrieve, rack all new DC hardware
-- [ ] **Logitech Z-680 sub recap** — Drew to spec capacitor kit (known failure mode)
+- [x] **Logitech Z-680 sub recap** — ✅ NOT NEEDED, see Critical/Security section. 2026-07-05 static/dropout incident tested and traced to a PC audio driver glitch (fixed by reboot), not hardware. Dropping unless it recurs.
 - [ ] **Dell PowerVault MD1200** — KEEP. 12-bay SAS shelf. Pairs with SAS HBA for TrueNAS expansion. Retrieve when collecting other DC hardware.
 - [ ] **Dell PowerEdge R750** — check CPU/RAM/drives/PCIe cards. Potentially TrueNAS rebuild target or new Proxmox node.
 - [ ] **DLI IP Power Switches (x2)** — KEEP. Get model numbers. Useful for remote power cycling.
