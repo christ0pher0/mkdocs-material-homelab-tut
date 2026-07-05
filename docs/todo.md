@@ -1,5 +1,5 @@
 # Homelab Todo & Roadmap
-_Last updated: 2026-07-03 (Friday 1:1 continued — boot-pool fixed, mobo concern resolved, KASM/CRU hotplug/cru_plexfolder_stats/SG200-50 all confirmed done; alc0 NIC bottleneck narrowed to hardware/cabling, physical swap test still needed; monitor-deb hung with no alert, watchdog gap logged; cos SSH key auth root-caused and deferred)_
+_Last updated: 2026-07-04 (NIC saga resolved — alc0 retired, ix0 confirmed working, jumbo frames staged pending switch side; remaining throughput mystery narrowed to a client-specific path issue, likely aging GS116 switch — rack build/SG200-50 cutover priority raised; monitor-deb hung with no alert, watchdog gap logged; cos SSH key auth root-caused and deferred; Homepage/Kuma/Monit underway on backup-dietpi-deb)_
 ---
 
 ## Critical / Security
@@ -296,23 +296,23 @@ _Large multi-step tasks requiring a 4-hour focused block_
 - [ ] Resolve open questions (see network_inventory.md)
 
 ### 8. Rack Build + pfSense + VLANs ⭐
-**Goal:** APC half rack, Dell managed switch, pfSense on SG-1100, full VLAN segmentation
-**Hardware in hand:** APC 4-post enclosed half rack, Netgate SG-1100, Cisco SG200-50 (confirmed 2026-07-03 — the only layer 2 managed switch we have, no separate Dell unit), Netgear GS116 (retire)
+**Goal:** APC half rack, Cisco SG200-50 managed switch, pfSense on SG-1100, full VLAN segmentation
+**Hardware in hand:** APC 4-post enclosed half rack, Netgate SG-1100, Cisco SG200-50 (confirmed 2026-07-03 — the only layer 2 managed switch we have, no separate Dell unit), Netgear GS116 (currently live, retire on cutover)
 **Owner:** Riley (network), Jordan (power/rack), Alex (TrueNAS chassis future)
+**Priority note (2026-07-04):** GS116 has had at least one confirmed dead port for ~7 years and is still in daily use (14/16 ports active). Tonight's NIC throughput debugging found a client-specific bottleneck (git-ansible → freenas-bsd capped at ~340-514kB/s raw TCP while restic-deb's path to the same host sustains 24-25MB/s) that couldn't be fully diagnosed because the GS116 is unmanaged — no port stats, no way to inspect further short of physically swapping cables. A switch with one known-dead port after 7 years of continuous use is a reasonable candidate for other ports quietly degrading too. This is a concrete argument to treat the SG200-50 cutover as sooner-than-"someday" — it would also finally give visibility (per-port error/utilization stats) into problems like tonight's that are currently undiagnosable.
 
 **Phase 1 — Pre-flight (no downtime)**
-- [ ] Identify Dell switch model — confirm 802.1Q VLAN support and port count
 - [ ] Place rack in final location
-- [ ] Install Dell switch, patch panel, PDU in rack
+- [ ] Install SG200-50, patch panel, PDU in rack
 - [ ] Set Flint 2 to AP mode while still live on existing network
 - [ ] Configure SG-1100 offline (laptop direct to LAN port): WAN, DHCP, DNS relay, VLAN interfaces
-- [x] Configure Dell switch: VLAN 10/20/30/99 created, port ranges assigned ✅ 2026-07-03. Port map: GE1=uplink (Flint 2), GE2-24=Servers(10), GE25-30=Trusted(20), GE31-40=IoT(30), GE41-48=Trunk, GE49=Mgmt(99), GE50=Reserved. Amontillado on GE50 temp (management access). GE25-30 cutover pending Flint 2 VLAN config.
+- [x] Configure SG200-50: VLAN 10/20/30/99 created, port ranges assigned ✅ 2026-07-03. Port map: GE1=uplink (Flint 2), GE2-24=Servers(10), GE25-30=Trusted(20), GE31-40=IoT(30), GE41-48=Trunk, GE49=Mgmt(99), GE50=Reserved. Amontillado on GE50 temp (management access). GE25-30 cutover pending Flint 2 VLAN config.
 
 **Phase 2 — Cutover (planned outage ~1 hour)**
 - [ ] ⚠️ Announce maintenance window — everything goes down briefly
 - [ ] Pull WAN ethernet from Flint 2 → plug into SG-1100 WAN port
-- [ ] SG-1100 LAN → Dell switch trunk port
-- [ ] Move all cables from GS116 → Dell switch (correct VLAN per port)
+- [ ] SG-1100 LAN → SG200-50 trunk port
+- [ ] Move all cables from GS116 → SG200-50 (correct VLAN per port)
 - [ ] Verify internet, verify all VLANs routing, verify firewall rules
 - [ ] Rollback: if anything breaks, replug Flint 2 WAN and return to GS116
 
