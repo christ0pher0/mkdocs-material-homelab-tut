@@ -167,6 +167,7 @@ cd ~/material/mkdocs_dev_material && git add docs/backup_drives.md && git commit
 | `cru_mount_vm.sh mount` doesn't recognize the drive | New UUID not in `UUID_MAP` | Edit `UUID_MAP` in `cru_mount_vm.sh` on restic-deb, add the new bay/UUID pair |
 | `attach`/`preflight` reports slot occupied unexpectedly | Stale passthrough from a previous session that wasn't cleanly detached | Run `cru_vm_detach_check.sh 100 scsi1` before retrying attach |
 | Checkboxes on the MkDocs todo page don't persist | SCP was run without the git-ansible commit+push step | Re-run both steps together (Part E) — never SCP alone |
+| `backup_drives.md` shows no Backup date/Used/Free after running the exit chain | **Confirmed path mismatch (2026-07-06):** `cru_stats.sh` writes stats to `/opt/cru_stats/<label>.txt`, but `backup_drives_update.sh` reads from a different path (`~/scripts/cru_stats/` per earlier finding) — the two scripts don't agree on where stats live, so the update script finds nothing even when stats were generated successfully. | Not a workaround — this is a real script bug for Sam to fix (make both scripts agree on one path). Until fixed, manually verify stats actually exist in `/opt/cru_stats/` before assuming a drive session's stats generation failed. |
 
 ## Rollback
 - **Attach went wrong:** `qm unset 100 -scsi1` on blaine (or re-run `cru_hotplug.sh preflight 100 scsi1 --apply`) to clear the slot, then retry.
