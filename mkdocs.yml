@@ -70,6 +70,8 @@ nav:
     - Docker Inventory: docker_inv.md
     - Software Inventory: software_inventory.md
     - Upgrade Radar: upgrade_radar.md
+  - Runbooks:
+    - CRU Backup Workflow: cru_backup_workflow_runbook.md
   - Monitoring & Reports:
     - Scan Results: scan_results.md
     - Disk Space: disk_space.md
@@ -87,9 +89,7 @@ nav:
     - Concerts: concerts.md
     - Albums: vinyl_collection.html
 copyright: Copyright &copy; 2025 C. O'Shaughnessy as inspired by James Willett
-
 extra_javascript:
   - javascripts/checkbox_persist.js
-
 extra_css:
   - stylesheets/extra.css
