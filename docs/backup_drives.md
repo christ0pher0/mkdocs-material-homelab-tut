@@ -8,7 +8,7 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 ## Overview
 | Stat | Value |
 |------|-------|
-| Total drives | 27 |
+| Total drives | 33 |
 | Total capacity | ~92TB |
 | CRU bays (restic-deb) | 3 |
 | Backup method | Manual rsync — additive only, no --delete |
