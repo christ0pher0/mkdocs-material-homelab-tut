@@ -1,12 +1,21 @@
 # Homelab Todo & Roadmap
-_Last updated: 2026-07-06 (cleanup pass: cleared stale "Telegram bot" line-items now that OerthBot is fully deployed — remaining Telegram gaps are SMART/smartd wiring (Taylor) and Zabbix media type (Taylor), both now explicit tasks below. Prior 2026-07-05 note: patch reboots ruled NOT to count against shardik's uptime clock; garuda confirmed as pve3's hostname, NOT the red case; Sam's two proposals approved; Morgan reorganized this file into system-based sections; every specialist has ≥5 tasks queued for next week)_
+_Last updated: 2026-07-06 end of session (Garm=red case, Gan=TrueNAS rebuild hostname — naming closed. Shardik RAM addressed, uptime clock stays paused until a sustained stress test/benchmark confirms stability — Jordan/Kai. Cleared stale "Telegram bot" line-items — OerthBot fully deployed; real remaining gaps are SMART/smartd wiring and Zabbix media type, both under Taylor. octopi-pi4-deb SSH connectivity confirmed via fleet run. Same fleet run surfaced: batocera-deb/pi3-deb showing "unreachable" in the linux-group recap instead of being cleanly skipped, duplicate inventory aliases across 4 Pi hosts, and a tools-deb vs. ha-net naming conflict at .125 — all logged for Jordan. Internal DNS raised as a want, logged against the existing Unbound item, sequencing TBD by Riley. Tomorrow's priority: bench-test the SG200-50/SG-1100 switch in place on top of freenas-bsd — not a rack install — over SMART wiring. Prior 2026-07-05 note: patch reboots ruled NOT to count against shardik's uptime clock; garuda confirmed as pve3's hostname; Sam's two proposals approved; every specialist has ≥5 tasks queued for next week)_
 
 ---
 
 ## Decisions Still Needed from Chris
 
-- [ ] **Red case hostname — confirm which you meant.** You said "Garm" — is that for the red case, or should **freenas** become Garm after its rebuild instead? If it's the red case, Garm (dog, Norse mythology, Hel's hellhound) is locked in. Remaining unused either way: babar, navius, rocinante, chuchundra, jasconius, camazotz, owsla.
 - [ ] **Hyper-V VLAN approach for amontillado** — still open. Reasoning for why the VMs were proposed for Servers (VLAN 10) instead of Trusted (VLAN 20): Trusted is meant for physical end-user devices (amontillado itself, phones, etc.), Servers is meant for anything acting as backend infrastructure. If amontillado's Hyper-V VMs are running actual services other systems depend on, keeping them in Trusted either forces opening Trusted↔Servers broadly (defeats the segmentation) or leaves them unreachable from the rest of the infra. If they're just personal/test VMs with no service role, Trusted is fine — worth Riley confirming what those VMs actually do before deciding.
+
+---
+
+## Resolved This Session (2026-07-06)
+
+- **Red case hostname decided: Garm.** (dog, Norse mythology, Hel's hellhound). Confirmed — no longer ambiguous with the freenas naming question below.
+- **TrueNAS (freenas-bsd) rebuild hostname decided: Gan.** New name, not drawn from the original reserve pool — Dark Tower reference (the prime creative force behind the Beams), fits the existing shardik/maturin/aslan/blaine theme. Morgan/Jordan to apply once the TrueNAS hardware rebuild actually happens (still blocked on the M1115 HBA).
+- **Shardik RAM issue addressed** — bad DIMM handled. Gate before resuming the uptime clock: sustained stress test/benchmark, not just another memtest pass (Jordan/Kai).
+- **Priority call for 2026-07-07: switch bench test over SMART monitoring wiring.** Chris judged this more impactful than Taylor's smartd_telegram_alert.sh wiring (not urgent right now). Clarified: this is testing the SG200-50/SG-1100 **in place on top of freenas-bsd**, not a rack install — matches Riley's existing "offline config, laptop direct to LAN, not live network" plan. Rack is still offsite and not a blocker for this.
+- **Internal DNS raised as a want** — Chris flagged that DNS (resolving hostnames like garm/gan/garuda instead of raw IPs) would help, but noted it likely depends on the switch/VLAN work landing first. Logged against the existing Unbound backlog item below; not actioned — Riley to scope sequencing against the rack/VLAN rollout.
 
 ---
 
@@ -38,7 +47,7 @@ _Every specialist gets ≥5 pulled tasks. Goal: clear backlog before scope creep
 3. Git identity (user.email/user.name) on restic-deb
 4. DC salvage: scavenge remaining 2 DC machines for 32GB DDR4 UDIMM sticks (need 6 more for shardik+aslan grail RAM)
 5. Onboard pbs-deb via onboard2.yml (passwordless sudo + SSH key auth)
-6. Confirm octopi-pi4-deb SSH key auth post-baseline run
+6. Add Zabbix repo task to homelab_baseline.yml (before agent install)
 
 ### Kai
 1. Manyfold/blaine LXC (CT 103) — one more week, then confirm as permanent home or move
@@ -122,9 +131,10 @@ _Full context for every item above, plus everything else not yet scheduled. Orga
 
 ### Shardik & Cluster Stability
 - ⚠️ **Shardik hung/froze 2026-07-05 evening — separate incident from this morning's accidental unplug.** Symptoms: frozen display, keyboard LEDs unresponsive to toggle, unreachable via ping/SSH from multiple hosts (amontillado, aslan), not present in `pvecm status` membership at all. Cluster itself stayed quorate throughout (maturin/aslan/blaine fine) — no impact to other nodes. Hard power-cycled to recover; came up in Memtest86+ (intentional, Chris wanted to run it).
-- ⚠️ **Memtest86+ found a confirmed RAM error 2026-07-05** — moving inversions test (64-bit pattern), failing address in the 30-31GB range, 53% through pass 0. This is very likely the actual root cause of tonight's freeze. **Next step: isolate which of the 4 sticks is bad by testing one at a time** (pull 3, leave 1, repeat per slot) — an interleaved multi-stick failure doesn't tell us which physical DIMM is at fault without isolation testing. Known-good spares in reserve: 2x G.Skill Trident Z RGB 8GB DDR4-3200 (memtest-clean 2026-06-29).
+- ✅ **Shardik RAM issue addressed 2026-07-06** — bad DIMM (moving-inversions failure, 30-31GB range, found 2026-07-05) identified and handled. Known-good spares in reserve if still needed: 2x G.Skill Trident Z RGB 8GB DDR4-3200 (memtest-clean 2026-06-29). **Next step: sustained benchmark/stress test (not just memtest) to confirm stability before trusting it and resuming the uptime clock** — Jordan/Kai.
 - ⚠️ **Hardware documentation mismatch discovered 2026-07-05 — needs reconciling once shardik is stable.** Memtest86+ shows shardik's actual live hardware as: **AMD Ryzen 5 1600 (6c/12t)**, not the documented Ryzen 7 2700X (8c/16t); **32GB RAM (4×8GB: 1x Team Group DDR4-2400 + 3x Micron DDR4-2666 2019-W43)**, not the documented 64GB maxed. hw_inv.md and project_lab_state memory both need correcting to match reality — confirm via `lscpu` + RAM check from inside the OS once it boots normally, don't just take the memtest screen's word for it without a second confirmation.
-- **Shardik uptime clock** — reset 2026-07-05 (accidental unplug this morning, not a repeat PSU failure) — now moot given tonight's separate hang; clock resets again once shardik is confirmed stable and back in service. Policy: scheduled patch reboots don't count against it, only unplanned freezes/outages do (Chris, 2026-07-05).
+- **Shardik uptime clock** — reset 2026-07-05 (accidental unplug that morning, not a repeat PSU failure) — superseded by that evening's separate RAM-caused hang. Clock resets again once the RAM stress test/benchmark below confirms stability. Policy: scheduled patch reboots don't count against it, only unplanned freezes/outages do (Chris, 2026-07-05).
+- [ ] Shardik: sustained RAM stress test / benchmark (e.g. stress-ng --vm, or a full repeat memtest pass) before resuming the uptime clock — Jordan/Kai
 - ✅ **Shardik back up 2026-07-05 late evening, ZFS tank pool confirmed healthy** — `zpool status tank`: ONLINE, all 4 raidz1 members ONLINE, no known data errors. Hard power cycle didn't hurt anything.
 - ⚠️ **Odd discovery in dmesg 2026-07-05 — AppArmor profiles for Discord, Brave, 1Password, balena-etcher, buildah, ch-run/ch-checkns loading on boot**, plus an HD-Audio codec with mic/headphone/line-in jacks detected. This is desktop/personal-computer software, not what a dedicated headless Proxmox hypervisor should have. Chris confirmed `hostname && hostname -I` on the actual session — this genuinely is shardik (192.168.1.2), not a mixup with a different host. Chris recalls using those apps on eld (restic-deb's prior identity) rather than shardik, and eld's drives have since been wiped — so the profiles likely came from an OS image/clone/template carried over during shardik's May 2026 ZFS rebuild, not anything currently concerning. **Not urgent — investigate OS install provenance when there's time, not tonight.**
 - [ ] Connect a real notification channel to backup-dietpi-deb's Kuma so a drop like today's actually pages someone (Taylor, see Next Week)
@@ -187,7 +197,7 @@ _Full context for every item above, plus everything else not yet scheduled. Orga
 - [ ] Identify 192.168.1.218 (locally administered MAC, high ephemeral ports only)
 - [ ] Clarify Flint2 + Netgate topology — document which handles what
 - [ ] Scan guest WiFi subnet — third LG TV likely there
-- [ ] Unbound (local DNS resolver), Authelia (auth layer) — longer-horizon
+- [ ] Unbound (local DNS resolver) for internal hostname resolution (garm, gan, garuda, etc. instead of raw IPs — Chris flagged 2026-07-06), Authelia (auth layer) — longer-horizon; likely depends on the pfSense/switch VLAN rollout landing first, Riley to scope sequencing
 - [ ] **Rack Build + pfSense + VLANs** — hardware in hand (APC half rack, SG-1100, SG200-50 configured, GS116 to retire). Priority raised: GS116 has a confirmed dead port after 7 years and no port visibility to diagnose others.
   - Phase 0: **transport rack home** — currently offsite, needs Chris's car
   - Phase 1 (no downtime): place rack, install SG200-50/PDU (no patch panel — dropped 2026-07-05, only real structured run is Flint2→Beryl and it's nowhere near the rack), Flint 2 to AP mode, SG-1100 offline config
@@ -264,7 +274,7 @@ _Full context for every item above, plus everything else not yet scheduled. Orga
 - [ ] BIOS download links for shardik/maturin/aslan/blaine — links gathered, aslan (F52) and blaine (revision-dependent) need action
 - [ ] Add microcode + non-free-firmware to homelab_baseline.yml
 - [ ] Onboard pbs-deb via onboard2.yml
-- [ ] Confirm octopi-pi4-deb SSH key auth post-baseline
+- [x] **octopi-pi4-deb connectivity confirmed 2026-07-06** — homelab_baseline.yml run reached `ok` against the host (reaching "ok" requires a working SSH connection). The polkit/fwupd warning in the run is expected and harmless — that task already has `ignore_errors: yes`.
 - [ ] Add Zabbix repo task to homelab_baseline.yml (before agent install)
 - [ ] Fix SSH service name for DietPi hosts (ssh vs. dropbear)
 - [ ] Fix ansible_facts deprecation warnings before ansible-core 2.24
@@ -272,6 +282,9 @@ _Full context for every item above, plus everything else not yet scheduled. Orga
 - [ ] Pin ansible_python_interpreter per host in inventory_auto
 - [ ] Add chrony LXC skip to sync_time.yml; update check_services.yml; fix pause timing in fail2ban.yml
 - [ ] Audit offline hosts from router — inactive vs. decommissioned
+- [ ] Confirm batocera-deb (and pi3-deb — host TBD) are actually in `[linux_skip]`, not `[linux]` — 2026-07-06 fleet run shows both "unreachable" in the linux-group recap, meaning the host pattern didn't exclude them like it should have
+- [ ] Dedupe Ansible inventory aliases — pi1-deb/pihole-pi1-deb (.120), pi2-deb/blank-dietpi-deb (.121), pi4-deb/backup-dietpi-deb (.126), octopi-deb/octopi-pi4-deb (.122) each resolve to the same physical host, so the baseline playbook runs twice against each
+- [ ] ⚠️ **tools-deb (192.168.1.125, seen in 2026-07-06 fleet run) vs. ha-net (192.168.1.125 per Pi Fleet docs, RPi 4/Home Assistant OS)** — same IP, different hostname in two sources. Confirm which is current before trusting either doc.
 
 ### DC Decommission Salvage
 - [ ] DC1 authorization follow-up — Dell N4032F x2, Lambda GPU workstations, Dell Precision 7920
@@ -323,4 +336,4 @@ _Full context for every item above, plus everything else not yet scheduled. Orga
 
 ## Naming Reference
 
-Active Proxmox nodes: shardik (bear), maturin (turtle), aslan (lion), blaine (Blaine the Mono), **garuda = pve3 (bird, confirmed 2026-07-05)**. Remaining unused: babar, navius, rocinante, garm, chuchundra, jasconius, camazotz, owsla — next up for the red case.
+Active Proxmox nodes: shardik (bear), maturin (turtle), aslan (lion), blaine (Blaine the Mono), garuda = pve3 (bird, confirmed 2026-07-05). Red case: **Garm confirmed 2026-07-06** (dog, Norse mythology, Hel's hellhound). TrueNAS (freenas-bsd) rebuild: **Gan confirmed 2026-07-06** (Dark Tower — new name, outside the original reserve pool). Remaining unused reserve: babar, navius, rocinante, chuchundra, jasconius, camazotz, owsla.
