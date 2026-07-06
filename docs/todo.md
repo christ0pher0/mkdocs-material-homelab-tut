@@ -1,441 +1,326 @@
 # Homelab Todo & Roadmap
-_Last updated: 2026-07-05 (backup-dietpi-deb "watch the watcher" stack fully live — Kuma + Homepage both persistent via systemd, 27 hosts monitored, real ping widgets working on both dashboards; caught a genuine shardik network drop same day — resolved (stale ARP, not hardware), guest was healthy throughout; monitor-deb ↔ backup-dietpi-deb monitoring now mutual in both directions; Proxmox HA sequencing decided — blocked on shared storage + shardik uptime lock; Logitech Z-680 static/dropout symptom being triaged, root cause not yet confirmed; STL rsync throughput crisis escalated to critical, 710kB/s / ~44 days not viable; weekly_patch.yml 3am reboot vs. shardik uptime-clock conflict flagged for Chris; red case tentatively named garuda pending sign-off; Sam proposed two new automation projects; see Decisions Needed section below)_
----
-
-## Decisions Needed from Chris — 2026-07-05 Meeting
-
-- [ ] **Weekly patch reboots vs. shardik uptime clock** — weekly_patch.yml runs Sundays 3am and can reboot nodes for kernel/microcode updates. Shardik's 1-month target (2026-08-01) was framed as "stability," but a patch-triggered reboot resets a literal uptime counter. Jordan needs a call: (a) exclude shardik from automated patch reboots until Aug 1, or (b) treat the target as "no unplanned crashes" and let scheduled reboots continue. Decide before next Sunday's 3am run.
-- [ ] **Red case hostname** — team proposed **garuda** (next name off the approved 12-name master list) for the ASRock B450M Steel Legend red case. Needs Chris sign-off before Jordan/Kai provision it.
-- [ ] **Sam's two new project proposals** — (1) extend the in-progress Telegram bot from patch-only notifications into a general alert relay (Kuma/Zabbix/SMART all through one bot), (2) a "drive label linter" that scans all scripts/configs for stale CRU label references (cru3 has changed labels 3x and bitten the team before). Approve, prioritize, or park.
-- [ ] **STL rsync throughput crisis timeline** — at 710.56 kB/s a 2.7TB copy is ~44 days, not viable. Alex/Riley/Taylor want to prioritize root-causing this by next Sunday (2026-07-12) — confirm this takes precedence over other assigned network/storage work this week.
+_Last updated: 2026-07-06 (cleanup pass: cleared stale "Telegram bot" line-items now that OerthBot is fully deployed — remaining Telegram gaps are SMART/smartd wiring (Taylor) and Zabbix media type (Taylor), both now explicit tasks below. Prior 2026-07-05 note: patch reboots ruled NOT to count against shardik's uptime clock; garuda confirmed as pve3's hostname, NOT the red case; Sam's two proposals approved; Morgan reorganized this file into system-based sections; every specialist has ≥5 tasks queued for next week)_
 
 ---
 
-## Critical / Security
+## Decisions Still Needed from Chris
 
-- [ ] **cos SSH key auth on freenas-bsd (192.168.1.5) — DECIDED 2026-07-03: staying on password, not fixing.** Root cause fully diagnosed: OpenSSH `StrictModes` rejects pubkey auth because `/mnt/TRYAGAIN` (pool root, owner `cifs1:plex_access`, mode `drwxrwx---+`) is group-writable and `cos` is a `plex_access` member — StrictModes checks every ancestor directory in the path, not just the immediate home dir. Mid-session fix attempt: created new sibling dataset `TRYAGAIN/admin` (root:wheel, no group-write) and relocated cos's home to `/mnt/TRYAGAIN/admin/cos` (rsync'd dotfiles/authorized_keys over, correct 700/600 perms, Home Directory field repointed via WebUI) — this did NOT work, because `/mnt/TRYAGAIN` itself is still an unavoidable ancestor of any dataset under that pool, and its group-write bit was never touched. Real fix identified (Alex): remove Write from the `group@`/`plex_access` ACE on the **pool root** dataset only (Storage → Pools → TRYAGAIN → Edit Permissions → uncheck group Write, leave Read+Execute) — safe because Samba only writes inside subdirectories like `plex/`, never at the root, **provided "Apply permissions recursively" is left OFF** (checking it would strip plex_access write from every share subdirectory, breaking CIFS fleet-wide). Chris declined to make this change — too risky-feeling for a production pool root; password auth on this one host is an acceptable asymmetry vs. the rest of the Ansible-keyed fleet. **If revisited:** the fix above is exact and ready to execute, just needs sign-off. cos's home directory is now permanently at `/mnt/TRYAGAIN/admin/cos` (moved from `/mnt/TRYAGAIN/home/cos`, old copy left untouched, not deleted) regardless of the key-auth decision.
-- [ ] docker-deb static IP or confirmed DHCP reservation — hosts Vaultwarden, Traefik, Portainer ⚠️
-- [ ] Disk space alerts — amontillado C: (7% free ⚠️), pi1 SD (91%) ⚠️
-- [ ] **amontillado C: drive** — 65.9GB free of 930GB (7%). Jordan to audit what's consuming it
-- [ ] **Telegram bot** — Sam building patch notification bot (weekly_patch.yml results → Telegram after 3am run). Needs token + channel ID from Chris.
-- [ ] **docker-deb watchdog** — Sam building script to alert Uptime Kuma if container stack hasn't restarted in >1 week
-- [ ] Alert on: drive errors, disk >85%, service down, high temp, RAM pressure
-- [ ] **monitor-deb (VM 101, maturin) hung 2026-07-03 — no alert fired.** Chris caught it manually and restarted it; fixed. Root gap: monitor-deb hosts Uptime Kuma + Zabbix themselves, so when the VM hangs, the thing that would alert on downtime is the thing that's down — no external/independent watchdog exists for the monitoring host itself. **Decided 2026-07-03: install Homepage + Uptime Kuma on `backup-dietpi-deb` (S3, RPi 2B, 192.168.1.126)** as an independent secondary monitoring point, alongside its existing Gitea mirror + Vaultwarden backup duties — both new services are low-footprint enough that the Pi has room. Rationale for weight choice: Homepage is lightest (static dashboard, on-demand API pulls, no polling loop, no DB) and Uptime Kuma is next-lightest with active alerting (small Node.js app, SQLite, its own polling loop); Grafana and Zabbix were ruled out as too heavy for this Pi. Note: `blank-dietpi-deb` (S2, .121) remains fully unassigned/role TBD if Chris later wants to split this out separately instead of consolidating onto backup-dietpi-deb. Taylor/Sam to implement.
-- [ ] Investigate amontillado D: (2.79TB, 11% free) — audit VMs and junk, clear or expand
-- [ ] **VPN rationalization** — 3 VPN solutions running (Tailscale, WireGuard on mediastack, ZeroTier on amontillado). Riley to pick one and decommission the others
-- [ ] **X540-T2 in freenas-bsd — evidence now strongly points to genuinely dead card, not board/slot/cable.** 2026-07-04: reseated and retested with a different known-good patch cable AND a different switch port (in addition to the original session's cable/port cross-test) — both ix0 and ix1 still show "no link ... giving up" via `dhclient`. Card still enumerates cleanly on the PCIe bus (pciconf/dmesg, device 0x1528), so this isn't a bus/detection issue — both PHYs simply refuse to link regardless of what's plugged in, which is classic hardware failure, not a driver or cabling problem (a driver bug would typically prevent the interface from working at all or behave inconsistently, not just refuse link negotiation cleanly on both ports every time). Bench test on a separate machine is still the final formal confirmation but is now more a formality than an open question. **Also tried 2026-07-04: reinstalling the Dell 0THGMP (Intel I350-T4 quad-port) instead** — this card beeped continuously and auto-shut-down the system on boot, a different failure mode entirely (looks like a board-level BIOS/Option ROM/CSM issue on this old Gigabyte Z77-DS3H board, not the card — Chris recalls this exact card working fine in another machine, possibly shardik, which would confirm it's this board's BIOS, not the card). Net state: `alc0` (onboard, slow but working) remains the only functional NIC on this box for now. LAGG plan below is on hold until a working second/replacement NIC is actually confirmed.
-- [ ] **Alex + Riley: LAGG on freenas-bsd** — originally planned around X540-T2 ix0+ix1, now on hold pending resolution above. Link-aggregate for NIC redundancy — needs LACP/failover config on both TrueNAS (Network → Link Aggregations) and SG200-50 switch port config. Backlog, not urgent.
-
-### Backup Strategy
-
-- [ ] STL_FIGURES — audit all scripts for hardcoded old label references (cru3 was: STL_Non-Fantasy → STL_#CRUNCH → STL_FIGURES)
-- [ ] **STL_ACCESSORIES_TERRAIN (732G + 446G ≈ 1.18TB combined)** — drive ST3000NM0033-9ZM178, serial Z1Y331AG, 2.7TB. Partitioned, formatted, labeled, mounted, **rsync IN PROGRESS as of 2026-07-03**. Attached to VM 100 scsi1.
-- [ ] **STL_SOURCE_MATERIAL (1.4T)** — drive ST33000651NS, serial Z292SYYH, 2.7TB. Partitioned, formatted, labeled, mounted, **rsync IN PROGRESS as of 2026-07-03**. Attached to VM 100 scsi2.
-- [ ] ⚠️ **restic-deb VM rsync throughput very slow — 710.56 kB/s average.** At this rate a 2.7TB copy is ~44 days — not viable. Needs diagnosis before either STL drive rsync is trusted to finish this week. Alex to own; Taylor/Riley to check freenas-bsd `alc0` link negotiation as a prime suspect (recently-revived NIC, previously "dead" — possible duplex/speed mismatch, not yet proven stable under sustained load per [[project_lab_state]] risk note). Also check whether rsync is traversing network (TrueNAS source over LAN) vs. local disk-to-disk on VM 100 — very different bottlenecks. **Escalated 2026-07-05 team meeting — target root cause identified by next Sunday (2026-07-12).**
-- [ ] **FUTURE_USE spare (2026-07-03):** ST6000VN0001-1SF17Z, serial Z4D2EJ31, 5.5TB. Partition, format NTFS, label "FUTURE_USE" — no content assignment yet. Attached to VM 100 scsi3 2026-07-03.
-- [ ] SOURCE_MATERIAL (1.4T) — no drive assigned. Inventory available drives first, then assign. On hold.
-- [ ] **STL_T-Z status unresolved** — backup_drives.md (local) shows Jun 2026/✅ per todo.md's completion claim, but cru_plexfolder_stats.sh --view live cache still shows Feb 2025/— as of 2026-07-03. Two sources disagree — confirm actual state before trusting either.
-- [ ] sdc (20TB) — pulled from CRU rotation 2026-07-02. Relabel as spare. Shelf it — quick pivot if TRYAGAIN needs emergency replacement. History: prior anxious behavior in TrueNAS, passed SMART 2026-07-02. **Confirmed 2026-07-03: dedicated emergency TrueNAS spare, not returning to CRU rotation.**
-- [x] **Logitech Z-680 acute static/dropout** — ✅ RESOLVED 2026-07-05, was NOT hardware. Tested systematically: sub power-cycle didn't fix it, PC reboot did — confirms today's static + fluctuating speaker count was a PC-side audio driver glitch, not a hardware fault.
-- [ ] **Logitech Z-680 stuck at 2.1, not full 5.1 — WORKAROUND ONLY, NOT FIXED** — separate, longer-standing issue (~1 year per Chris, 2026-07-05) that today's reboot did NOT fix. 2.1 (stereo + sub) is currently working and is a livable workaround, but the rear/center surround channels are still not diagnosed or repaired — this is not resolved, just not actively broken-sounding right now. Original "caps blown" note was an untested guess for this specific symptom, never confirmed either way. Actual cause still unknown: could be a dead amp channel/section on the sub (real hardware), a receiver/source channel config issue, or a cabling problem for the missing rear/center channels. Full troubleshoot needed eventually — start with source/receiver channel config and speaker wire connections to the missing channels before assuming hardware failure again.
-- [ ] Establish offsite drive rotation schedule (Tier 3)
-- [ ] Evaluate PBS tape backup to CRU bays (blaine-pve post-install)
-- [ ] cru_stats.sh saves to /root/scripts/cru_stats/ (sudo) but backup_drives_update.sh reads ~/scripts/cru_stats/ — fix path mismatch
+- [ ] **Red case hostname — confirm which you meant.** You said "Garm" — is that for the red case, or should **freenas** become Garm after its rebuild instead? If it's the red case, Garm (dog, Norse mythology, Hel's hellhound) is locked in. Remaining unused either way: babar, navius, rocinante, chuchundra, jasconius, camazotz, owsla.
+- [ ] **Hyper-V VLAN approach for amontillado** — still open. Reasoning for why the VMs were proposed for Servers (VLAN 10) instead of Trusted (VLAN 20): Trusted is meant for physical end-user devices (amontillado itself, phones, etc.), Servers is meant for anything acting as backend infrastructure. If amontillado's Hyper-V VMs are running actual services other systems depend on, keeping them in Trusted either forces opening Trusted↔Servers broadly (defeats the segmentation) or leaves them unreachable from the rest of the infra. If they're just personal/test VMs with no service role, Trusted is fine — worth Riley confirming what those VMs actually do before deciding.
 
 ---
 
-## This Week — Assigned
+## Resolved This Session (2026-07-05)
 
-- [ ] **Jordan: amontillado C: drive audit** — 7% free, find what's consuming it. `WinDirStat` or `du` via WSL
-- [ ] **Jordan: pihole-pi1-deb SD card** — 91% full, swap with replacement SD in reserve before it fails silently
-- [ ] **Jordan: fail2ban rollout** — run fail2ban.yml across all SSH-exposed hosts via Ansible
-- [ ] **Sam: cru_stats path fix** — align cru_stats.sh and backup_drives_update.sh to same path. Alex to sign off first.
-- [ ] **Sam: Telegram bot** — weekly_patch.yml results → Telegram channel after 3am Sunday run. Needs token + channel ID from Chris
-- [ ] **Sam: auto network_inventory.md** — script combining arp-scan + masscan + ansible facts → outputs fresh network_inventory.md. Replaces manual scans.
-- [ ] **Sam: refactor backup_drives_update.sh** — use Gitea API instead of local mkdocs clone on restic-deb. Eliminate git conflicts between restic-deb and git-ansible. **Implemented 2026-07-03 (per Chris) — needs testing/validation before it's trusted. Not yet marked complete.**
-- [ ] **Sam: auto backup date in cru_stats** — write `Backup: <date>` to stats file when SMART passes. update_drives_table.py to read and update Backup column automatically.
-- [ ] **Kai: pve3 Tailscale clustering** — spec corosync over Tailscale, WAN timeout tuning, cold/warm failover runbook. Sunday meeting deliverable.
-- [ ] **Jordan: git identity on restic-deb** — set user.email and user.name globally so commits don't fail.
-- [ ] **Jordan: BIOS download links** — Jordan to find and provide direct download links for Chris to apply. Current status per dmidecode 2026-07-02:
-  - shardik (ASRock AB350M Pro4): P10.43 Jun 2025 — https://www.asrock.com/mb/AMD/AB350M%20Pro4/index.asp#BIOS
-  - maturin (Dell OptiPlex 7050): 1.27.0 Sep 2023 — https://www.dell.com/support/product-details/en-us/product/optiplex-7050-desktop/drivers — appears current, confirm ✅
-  - aslan (Gigabyte AB350-Gaming 3-CF): F50a Nov 2019 — https://www.gigabyte.com/Motherboard/GA-AB350-Gaming-3-rev-1x/support#support-dl-bios — F52 available ⚠️
-  - blaine (Gigabyte GA-Z77-DS3H): F8 Aug 2012 — Rev 1.0: https://www.gigabyte.com/Motherboard/GA-Z77-DS3H-rev-10/support | Rev 1.1: https://www.gigabyte.com/Motherboard/GA-Z77-DS3H-rev-11/support — physical inspection required to confirm revision before flashing
-- [ ] **Jordan: add microcode + non-free-firmware to homelab_baseline.yml** — ensure amd64-microcode/intel-microcode installed on all Debian nodes based on CPU vendor, and non-free-firmware repo present. Prevents future drift.
-- [ ] **Jordan: onboard pbs-deb** — run onboard2.yml, confirm passwordless sudo and SSH key auth working.
-- [ ] **Jordan: octopi-pi4-deb SSH key auth** — confirm key auth works after baseline run; if not, run onboard2.yml individually.
-- [ ] **Jordan: blaine sdc SMART long test** — started ~2026-06-29. Expected completion ~Wed Jul 1 5am. Check results, relabel, attach to VM 100 for STL rsync.
-- [ ] **Jordan: add Zabbix repo task to homelab_baseline.yml** — restic-deb had no Zabbix repo, agent2 install failed. Add repo setup task before agent install. Sam to implement.
-- [ ] **Jordan: fix SSH service name for DietPi hosts** — baseline uses 'ssh' service name but DietPi uses dropbear. Add conditional or ignore for DietPi hosts.
-- [ ] **Jordan: fix ansible_facts deprecation warnings** — update homelab_baseline.yml to use ansible_facts["fact_name"] syntax before ansible-core 2.24 drops support. Sam to implement.
-- [ ] **Riley: DHCP reservation for octopi-pi4-deb** — lock to 192.168.1.122 on router to prevent drift.
-- [ ] **Riley: Flint 2 cutover pre-work** — configure OpenWrt in dumb AP mode; set trunk port to switch GE1 with tagged VLANs 10/20/30/99; map main SSID → VLAN 20, guest/IoT SSID → VLAN 30. Deliver as paste-ready config block.
-- [ ] **Riley: pfSense SG-1100 offline config** — initial setup via laptop direct to LAN port (not live network). WAN interface, VLAN interfaces 10/20/30/99, DHCP pools per vlan_ip_plan.md, firewall rules per plan. Deliver step-by-step runbook. Pre-work for cutover weekend.
-- [ ] **Riley: Hyper-V VLAN decision for amontillado** — amontillado on VLAN 20 (GE25) but Hyper-V VMs need VLAN 10 access. Decision: (a) trunk port on GE25 + separate vSwitch per VLAN in Hyper-V, or (b) second NIC on amontillado for VLAN 10. Must decide before cutover day.
-- [ ] **Jordan: document mkdocs_dev_material on restic-deb** — note it lives there intentionally (required by backup_drives_update.sh until Sam refactors).
-- [ ] **Riley: pve3 Tailscale setup** — configure Tailscale on ThinkStation offsite node.
-- [ ] **Morgan: session documentation** — shardik recovery runbook, red case inventory page, PBS migration decision log, pve3 DR node page. First active assignment.
-- [ ] **Morgan: cluster capacity page** — MkDocs page showing each node: mobo, CPU, current RAM, max RAM, slot config, current VM/CT placement and allocation, upgrade path. Reference before every hardware decision. Kai provides VM data, Jordan provides dmidecode, Morgan builds the page.
-- [ ] **Morgan: set holy_grail.md as MkDocs front page** — Chris wants the mission statement as the site's landing page (docs/index.md or mkdocs.yml nav reorder), not buried in the doc tree.
-- [ ] **Morgan: pull-before-push check** — before SCPing holy_grail.md / hardware_target_state.md to git-ansible, confirm neither already exists there under a different name/content (avoid repeat of the completed.md overwrite incident 2026-06-28).
-- [ ] **Morgan + Riley: MkDocs Network section overhaul** — create dedicated Network section in nav. Move network_inventory.md, network_diagram.md, hosts.md here. Add vlan_design.md. Riley owns content accuracy, Morgan owns structure and nav.
+- **Patch reboots vs. shardik uptime clock** — Chris's ruling: scheduled patch reboots do **not** reset the clock; only unplanned freezes/outages do. Note this doesn't help this week anyway — see below.
+- **Shardik uptime clock reset again 2026-07-05** — accidental unplug (not a repeat PSU failure, confirmed by Chris), caught via the new backup-dietpi-deb Kuma monitor and recovered before Chris even checked. Per the ruling above, this **does** count (real outage, not a patch reboot) — new target ~2026-08-05, pending final confirmation. No alert fired because backup-dietpi-deb's Kuma has no notification channel wired yet — folded into Taylor's queue below.
+- **garuda = pve3**, confirmed. This matches the original naming-list reservation ("garuda reserved for next new physical node") — the red case needs a different name, see Decisions above.
+- **Sam's two proposals approved**: general alert relay bot (Kuma/Zabbix/SMART → one Telegram channel) and the CRU label linter script. Both now active, queued below.
+- **STL rsync throughput crisis confirmed top priority** — Alex/Riley/Taylor target root cause by 2026-07-12.
+- **cru_stats.sh path fix — Alex signed off 2026-07-05.** Sam cleared to ship.
+- **VPN rationalization decided: Tailscale.** WireGuard (mediastack) and ZeroTier (amontillado) — decommission both.
+- **blank-dietpi-deb renamed docs-dietpi-deb** — role: documentation-adjacent host (extends the "Gitea mirror secondary" option toward actually serving docs, not just mirroring the repo).
+- **STL rsync throughput — major improvement: ~400kB/s → 25MB/s (~60x).** No longer a viability crisis (2.7TB is now ~30 hours, not 44 days). Root-cause work continues but the backups aren't blocked anymore — downgraded from top priority.
+- **Rack is currently offsite** — needs Chris's car to transport home before Phase 1 (placement) can even start.
+- **Telegram bot fully deployed and verified 2026-07-05.** OerthBot live on git-ansible (`/opt/scripts/notify_telegram.py`, config at `/etc/oerthbot/config.json`, mode 600), admin of OerthChannel, test message confirmed delivered.
+- **weekly_patch.yml Telegram integration — done and tested 2026-07-05.** Rewrote against the actual live version (the local draft was stale — apt-only, no RedHat/Suse, gather_facts off). Added per-host reboot/failure notifications (delegate_to localhost, ignore_errors) plus a run-complete ping from a second play targeting `git-ansible-deb` (inventory hostname, not "git-ansible"). Backed up as `weekly_patch.yml.bak-2026-07-05`. Live-tested with `--limit git-ansible-deb --ask-vault-pass` (real run, not `--check` — command tasks always skip under `--check`) — completion ping confirmed delivered to OerthChannel. Ready for the real Sunday 3am fleet-wide run.
+- **Kuma → Telegram: done 2026-07-05.** Both instances (monitor-deb and backup-dietpi-deb) configured with OerthBot, "apply to all monitors" checked — closes the exact gap that missed today's shardik unplug.
+- Remaining: (1) SMART alerts via smartd — script (`smartd_telegram_alert.sh`) is deployed to `/opt/scripts/` but not wired into smartd.conf, and it's unconfirmed whether smartd runs as a continuous daemon anywhere vs. one-off manual `smartctl` checks; (2) Zabbix's native Telegram media type — unconfirmed whether the Zabbix web frontend is actually deployed/reachable yet.
 
 ---
 
-## Immediate Maintenance (Sysadmin)
+## Next Week — Assigned (2026-07-06 → 2026-07-12)
+_Every specialist gets ≥5 pulled tasks. Goal: clear backlog before scope creep adds more. Full context for each item is in the system-based backlog further down._
 
-- [ ] **Patch all hosts** — weekly_patch.yml runs Sundays 3am (automated). Manual run if urgent.
-- [ ] Fix pi1-deb SD card — 91% full, will fail silently (replacement SD in reserve)
-- [ ] Clean stale entries from GL-MT6000 /etc/hosts: snipeit-deb, grafana-docker-deb, ubuntu-ansible-deb, apache-deb, weltgeist-media, alea_iacta_est-media
-- [ ] Investigate orphaned Docker network br-ca523ef71531 on docker-deb — prune if safe
-- [ ] Remove snipeit-deb from all docs (LXC destroyed 2026-05-10)
-- [ ] Remove grafana-docker-deb, ubuntu-ansible-deb, apache-deb from all docs
-- [ ] MkDocs update on git-ansible — post every session
+### Jordan
+1. Amontillado C: drive audit — 7% free, find what's consuming it
+2. fail2ban rollout via Ansible across all SSH-exposed hosts
+3. Git identity (user.email/user.name) on restic-deb
+4. DC salvage: scavenge remaining 2 DC machines for 32GB DDR4 UDIMM sticks (need 6 more for shardik+aslan grail RAM)
+5. Onboard pbs-deb via onboard2.yml (passwordless sudo + SSH key auth)
+6. Confirm octopi-pi4-deb SSH key auth post-baseline run
+
+### Kai
+1. Manyfold/blaine LXC (CT 103) — one more week, then confirm as permanent home or move
+2. Spec pve3 (garuda) Tailscale clustering — corosync over WAN, cold/warm failover runbook
+3. Add pve3/garuda to the Proxmox cluster (now that the name's confirmed)
+4. Right-size VM RAM allocations audit across all nodes
+5. Investigate maturin VM 112's orphaned 164GB disk on shardik NVMe
+6. GPU transcoding prep for aslan passthrough (joint with Casey, once RAM allows)
+
+### Sam
+1. Ship the cru_stats.sh / backup_drives_update.sh path fix — Alex signed off 2026-07-05
+2. Build the general alert relay bot (Kuma/Zabbix/SMART → Telegram) — approved
+3. Build the CRU label linter (scans scripts/configs for stale cru3-style labels) — approved
+4. auto network_inventory.md script — arp-scan + masscan + ansible facts combined
+5. Validate backup_drives_update.sh Gitea-API refactor — one week of clean runs before calling it trusted
+6. merge-aware todo_sync.sh — cron on git-ansible preserving Gitea `[x]` state on pull
+
+### Riley
+1. Flint 2 AP-mode cutover pre-work (dumb AP, trunk GE1, tagged VLANs 10/20/30/99)
+2. pfSense SG-1100 offline config (WAN, DHCP, VLAN interfaces, firewall rules) — laptop direct to LAN, not live network
+3. Prepare both Hyper-V VLAN options (trunk+vSwitch vs. second NIC) as a documented decision for Chris
+4. DHCP reservation for octopi-pi4-deb (lock 192.168.1.122)
+5. pve3/garuda Tailscale setup on the ThinkStation
+6. Decommission WireGuard (mediastack) and ZeroTier (amontillado) — Tailscale confirmed as the sole VPN 2026-07-05
+
+### Morgan
+1. This reorg — todo.md sorted into system-based sections (done this session, keep maintaining it this way going forward)
+2. Clean up the undocumented-changes tally, keep it current
+3. Session runbooks: shardik recovery, red case inventory page, PBS migration decision log, pve3 DR node page
+4. Set holy_grail.md as the MkDocs front page (docs/index.md or nav reorder)
+5. Cluster capacity page — mobo/CPU/RAM/VM placement per node, upgrade path (Kai + Jordan feed data)
+6. MkDocs Network section overhaul with Riley — network_inventory.md, network_diagram.md, hosts.md, vlan_design.md
+
+### Alex
+1. ⚠️ **Verify CRU onboard/offboard scripts before tomorrow morning's swap (2026-07-06)** — this is time-sensitive
+2. Scope a web frontend for the drive database + hardware inventory + wishlist
+3. Research LAGG + CIFS multisync + TrueNAS community edition as a future path
+4. Investigate Plex mount options optimized for high small-file IOPS (STL/RomM libraries)
+5. STL rsync throughput root-cause, joint with Riley/Taylor — de-escalated 2026-07-05 (400kB/s→25MB/s improvement), continue at lower urgency
+6. STL_FIGURES label audit — confirm no scripts still reference old cru3 names
+
+### Taylor
+1. Wire an actual notification channel into backup-dietpi-deb's Kuma instance — it's ping-only right now, which is why today's shardik drop didn't page anyone
+2. Configure Zabbix → Telegram alerting
+3. Set Uptime Kuma's TrueNAS poll interval to 30 seconds
+4. Document the full Zabbix topology — server on monitor-deb, 11 agents, confirm whether Grafana pulls from it
+5. Coordinate with Sam on the new alert-relay bot — Taylor owns which alerts route through it
+6. Wire smartd_telegram_alert.sh into smartd.conf (-M exec directive); confirm smartd runs as a persistent daemon vs. one-off manual smartctl checks
+
+### Casey
+1. Evaluate Overseerr or Wizarr for Plex request management
+2. Investigate Plex audio normalization options (new ask from Chris)
+3. Add Tautulli for Plex analytics
+4. Add Bazarr for subtitle automation
+5. Resolve the Plex Music library mobile bug (Plex Pass confirmed active)
+6. GPU transcoding — coordinate with Kai once aslan RAM allows
+
+### Drew
+1. Finish the Ender 3 V2 temp tower calibration, confirm a dialed-in profile
+2. Bring argos-pi4-deb online, confirm wall-mount location with Chris
+3. Onboard argos via Ansible (onboard2.yml)
+4. Spec PoE switch + PoE HATs for single-cable Pi rack wiring
+5. Logitech Z-680 2.1→5.1 diagnosis — rear/center channels still not resolved (separate from today's fixed static issue)
+
+### Chris (Owner)
+_Things only you can do — accounts, purchases, physical presence, final calls._
+1. Pick red case hostname from the remaining 8: babar, navius, rocinante, garm, chuchundra, jasconius, camazotz, owsla
+2. Confirm argos-pi4-deb wall-mount location — Chris has no strong preference, Drew/Jordan can pick a practical spot and proceed unless a hard constraint comes up
+3. ⚠️ Check temerant-win's 2x 3TB HDDs for important data before it gets gutted for the TrueNAS rebuild
+4. Order 2x SFF-8087 to SATA breakout cables (~$5-10 ea, eBay) — needed before Jordan finishes the HBA install
+5. Decide Hyper-V VLAN approach for amontillado — trunk+vSwitch vs. second NIC (Riley's prepping both options, final call is yours)
+6. Physical: desk wire tidy — full shutdown and rewire
+7. DC salvage: schedule DC2 walkthrough, confirm DC3/DC4 status, retrieve the 12U half rack — needs your physical presence
+8. Photograph the 5 waiting systems, pve3, printers, GPUs, and laptops for hw inventory / Snipe-IT import
+9. Rack build Phase 1: place the rack in its final location, install SG200-50/patch panel/PDU — physical prep before Riley's config goes live
 
 ---
 
-## In Progress
+## Backlog by System
+_Full context for every item above, plus everything else not yet scheduled. Organized by domain, not by "when."_
 
-- [ ] Inventory 5 remaining waiting systems — match hardware to roles
-- [ ] Inventory pve3 (ThinkStation offsite) — specs, storage, role
-- [ ] Purchase Hologram.io SIM for argos-deb LTE
-- [ ] Pi rack — 3D print or buy, house all 8 Pis cleanly
-- [ ] PoE switch + PoE HATs — single cable per Pi for power + network
+### Shardik & Cluster Stability
+- ⚠️ **Shardik hung/froze 2026-07-05 evening — separate incident from this morning's accidental unplug.** Symptoms: frozen display, keyboard LEDs unresponsive to toggle, unreachable via ping/SSH from multiple hosts (amontillado, aslan), not present in `pvecm status` membership at all. Cluster itself stayed quorate throughout (maturin/aslan/blaine fine) — no impact to other nodes. Hard power-cycled to recover; came up in Memtest86+ (intentional, Chris wanted to run it).
+- ⚠️ **Memtest86+ found a confirmed RAM error 2026-07-05** — moving inversions test (64-bit pattern), failing address in the 30-31GB range, 53% through pass 0. This is very likely the actual root cause of tonight's freeze. **Next step: isolate which of the 4 sticks is bad by testing one at a time** (pull 3, leave 1, repeat per slot) — an interleaved multi-stick failure doesn't tell us which physical DIMM is at fault without isolation testing. Known-good spares in reserve: 2x G.Skill Trident Z RGB 8GB DDR4-3200 (memtest-clean 2026-06-29).
+- ⚠️ **Hardware documentation mismatch discovered 2026-07-05 — needs reconciling once shardik is stable.** Memtest86+ shows shardik's actual live hardware as: **AMD Ryzen 5 1600 (6c/12t)**, not the documented Ryzen 7 2700X (8c/16t); **32GB RAM (4×8GB: 1x Team Group DDR4-2400 + 3x Micron DDR4-2666 2019-W43)**, not the documented 64GB maxed. hw_inv.md and project_lab_state memory both need correcting to match reality — confirm via `lscpu` + RAM check from inside the OS once it boots normally, don't just take the memtest screen's word for it without a second confirmation.
+- **Shardik uptime clock** — reset 2026-07-05 (accidental unplug this morning, not a repeat PSU failure) — now moot given tonight's separate hang; clock resets again once shardik is confirmed stable and back in service. Policy: scheduled patch reboots don't count against it, only unplanned freezes/outages do (Chris, 2026-07-05).
+- ✅ **Shardik back up 2026-07-05 late evening, ZFS tank pool confirmed healthy** — `zpool status tank`: ONLINE, all 4 raidz1 members ONLINE, no known data errors. Hard power cycle didn't hurt anything.
+- ⚠️ **Odd discovery in dmesg 2026-07-05 — AppArmor profiles for Discord, Brave, 1Password, balena-etcher, buildah, ch-run/ch-checkns loading on boot**, plus an HD-Audio codec with mic/headphone/line-in jacks detected. This is desktop/personal-computer software, not what a dedicated headless Proxmox hypervisor should have. Chris confirmed `hostname && hostname -I` on the actual session — this genuinely is shardik (192.168.1.2), not a mixup with a different host. Chris recalls using those apps on eld (restic-deb's prior identity) rather than shardik, and eld's drives have since been wiped — so the profiles likely came from an OS image/clone/template carried over during shardik's May 2026 ZFS rebuild, not anything currently concerning. **Not urgent — investigate OS install provenance when there's time, not tonight.**
+- [ ] Connect a real notification channel to backup-dietpi-deb's Kuma so a drop like today's actually pages someone (Taylor, see Next Week)
+- [ ] No production workloads on shardik until the uptime target holds — KASM (111) is there as a stress test only, that's fine
+- [ ] Shardik: SMART test on 4x 6TB drives (sda/sdb/sdc/sdd) — results pending
+- [ ] Shardik: PBS decision — migrate PBS back to shardik or keep on aslan (Alex + Kai)
+- [ ] Proxmox HA sequencing — **decided 2026-07-05:** hold off until (1) shared storage/ZFS replication exists between nodes, and (2) shardik's uptime lock expires. Revisit after both clear.
+
+### Proxmox / Virtualization & VM Placement (Kai)
+- [ ] Add pve3 (garuda) to the Proxmox cluster (shardik + maturin + aslan + blaine + garuda)
+- [ ] Configure Tailscale on pve3/garuda; full hardware inventory (dmidecode, photos)
+- [ ] Add pve3/garuda to inventory_auto and MkDocs
+- [ ] Migrate mediastack-deb → shardik after uptime target holds (currently on aslan)
+- [ ] Right-size VM RAM allocations across all nodes
 - [ ] Shrink maturin pve-data pool — only cloudinit template remains on local-lvm
 - [ ] Investigate maturin VM 112 leftover disk on shardik NVMe (164GB orphan)
-- [ ] P2V GOODWIM CENTOS drive (Seagate 500GB) — convert CentOS install to Proxmox VM before disposing
-- [ ] Audit offline hosts from router — confirm which are inactive vs decommissioned (eld-win, work-win, tahoe-mac, etc.)
-- [ ] onboard pbs-deb via Ansible (onboard_host.yml not yet run — passwordless sudo added manually)
-- [ ] **Manyfold** — remove from docker-deb :3214 (poor performance). blaine LXC (CT 103) is the candidate — promising results. Kai to complete evaluation and confirm as permanent home before go-live.
-- [ ] **Set Uptime Kuma TrueNAS poll to 30 seconds** — Taylor (USB NIC fragility mitigation)
-- [ ] **Check pihole-pi1-deb SD card** — was 91% full 2026-06-21, run `df -h` on pihole-pi1-deb (192.168.1.120)
-- [ ] **Ender 3 V2 yellow PLA** — run temp tower first to dial in profile before printing anything structural (Drew)
-- [ ] **Pi Status page** — build in MkDocs with uploaded Pi photos (Morgan)
-- [ ] **retropi IP** — confirm IP for slot 4 (retropi). Add to hw_inv.md and hosts.md
-- [ ] **pihole-pi-deb IP** — confirm IP for slot 6. Add to hw_inv.md and hosts.md
-- [ ] **blank-dietpi-deb role** — assign permanent role (slot 2, 192.168.1.121, RPi 2B). Options: Gitea mirror secondary, MQTT broker, rsync relay
-- [ ] **Netgate clarification** — confirm model and role in topology (Riley). Did not respond to nmap/arp-scan — offline?
-- [ ] **Document monitoring topology** — Zabbix server on monitor-deb :10051, agents on 11 hosts. Is Grafana pulling from Zabbix? Taylor to map.
-- [ ] **Identify 192.168.1.218** — locally administered MAC, high ephemeral ports only. Riley to investigate
-- [ ] **Identify alma-rpm role** — Apache :80 running, role undocumented
-- [ ] **Identify rocky-rpm role** — SSH only, role undocumented
-- [ ] **Identify 2404HV-deb role** — Ubuntu 24.04 Hyper-V VM, SSH + node-exporter only
-- [ ] **Identify DIGIDIOT.local AD usage** — Server 2016 DC running as Hyper-V VM. What's joined? Still needed?
-- [ ] **monitor-deb :9221** — unknown service, identify
+- [ ] P2V GOODWIM CentOS drive (Seagate 500GB) before disposing
+- [ ] Manyfold — blaine LXC (CT 103) outperforming docker-deb; one more week before calling it permanent. Do NOT delete CT 103.
+- [ ] GPU transcoding — revisit mediastack on aslan with GTX 1080 Ti passthrough once RAM allows (Casey + Kai)
+- [ ] Rebuild swarm01/02/03 when actually needed (currently destroyed, clean rebuild, no Ceph)
+- [ ] Deploy Traefik / Uptime Kuma / Homepage / Zabbix frontend in Swarm mode (longer-horizon)
+- [ ] Local AI Assistant (aslan): Ollama + GTX 1080 Ti passthrough, Open WebUI, sysadmin/homelab/casual personalities, Whisper/Piper, MkDocs as RAG knowledge base
+
+### Storage, Backup & CRU Rotation (Alex)
+- [ ] STL_FIGURES — audit all scripts for hardcoded old label references (cru3 was: STL_Non-Fantasy → STL_#CRUNCH → STL_FIGURES)
+- [ ] STL_ACCESSORIES_TERRAIN (2.7TB) — rsync in progress since 2026-07-03, blocked on throughput crisis below
+- [ ] STL_SOURCE_MATERIAL (2.7TB) — rsync in progress since 2026-07-03, blocked on throughput crisis below
+- [x] **rsync throughput — major improvement 2026-07-05: ~400kB/s → 25MB/s (~60x).** No longer a viability crisis — 2.7TB is now ~30 hours, not 44 days. Root-cause work continues at lower urgency (Alex/Riley/Taylor), no longer blocking trust in the backups.
+- [ ] FUTURE_USE spare (5.5TB, ST6000VN0001) — partition, format NTFS, label. No content assignment yet.
+- [ ] SOURCE_MATERIAL (1.4T) — no drive assigned, on hold
+- [ ] STL_T-Z status — backup_drives.md and cru_plexfolder_stats.sh live cache disagree on completion date. Confirm actual state before trusting either.
+- [ ] sdc (20TB) — confirmed dedicated TrueNAS emergency spare, shelved, not returning to rotation
+- [ ] ⚠️ **Blaine: install 2x 1TB SATA SSDs next time blaine is shut down.** Confirmed free via dmesg (2026-07-05): `ata3` is clean/never-linked — safe bet. `ata2.01` repeatedly shows "failed to resume link" (SStatus 4) — test before trusting it for anything permanent. Confirm physical SATA power + cable are actually run to both before counting on them.
+- [ ] Establish offsite drive rotation schedule (Tier 3)
+- [ ] Evaluate PBS tape backup to CRU bays (blaine-pve, post-install)
+- [ ] Scope a web frontend for the drive database + hardware inventory + wishlist (new, Alex)
+- [ ] Research LAGG + CIFS multisync + TrueNAS community edition as a future path (new, Alex)
+- [ ] Investigate Plex mount options optimized for high small-file IOPS (new, Alex)
+
+### TrueNAS Hardware & NIC (freenas-bsd 192.168.1.5)
+- [ ] **cos SSH key auth — decided 2026-07-03: staying on password.** Root cause diagnosed (StrictModes rejects pubkey because /mnt/TRYAGAIN pool root is group-writable). Exact fix identified (remove group Write on pool root ACE only, recursive OFF) but Chris declined as too risky for a production pool root. cos's home is now at /mnt/TRYAGAIN/admin/cos. Revisit only if Chris wants to reconsider.
+- [ ] **X540-T2 — evidence strongly points to genuinely dead card.** Both ports refuse link across cable/port cross-tests; enumerates cleanly on PCIe bus so not a bus/detection issue. Bench test on a separate machine is the final formality. Source/RMA a replacement if confirmed dead.
+- [ ] alc0 (onboard NIC) — revived and currently primary, watch for stability over the next 1-2 days before fully trusting it (alc driver has a rougher FreeBSD track record)
+- [ ] Jumbo frames on alc0 — backlog, wait for stability proof first
+- [ ] Alex + Riley: LAGG on freenas-bsd — on hold pending a confirmed working second NIC
+- [ ] **TrueNAS Hardware Rebuild** (temerant donor: Ryzen 5 1600X, 32GB DDR4, GTX 1080 Ti, 500GB SSD) — blocked on HBA cross-flash:
+  - [ ] Check temerant-win's 2x 3TB HDDs for important data first ⚠️
+  - [ ] Flash IBM M1115 (found) to LSI IT mode — Jordan, do NOT attach TrueNAS drives before flashing
+  - [ ] Order 2x SFF-8087 to SATA breakout cables
+  - [ ] Install hardware into existing FreeNAS beige tower, install TrueNAS on 500GB SSD, import TRYAGAIN pool
+  - [ ] Update mediastack-deb fstab if IP changes
+  - [ ] Dedupe TRYAGAIN (fdupes/rdfind, post-rebuild); delete Weltgeist/Alea Iacta Est iocage jails (91GB)
+
+### Network / VLAN / Rack Build (Riley)
+- [x] **Patch panel dropped from rack plan — decided 2026-07-05.** Only real structured cable run in the house (Flint 2 → Beryl AP) isn't anywhere near where the rack will go, so there's nothing to terminate at a panel. Cables plug straight into SG200-50 ports instead. Frees ~1U.
+- [ ] **Theoretical rack contents updated 2026-07-05:** SG200-50 (1U), MD1200 (2U, fixed spec), Dell R750 + HBA for TrueNAS (2U, fixed spec, replaces the vague "TrueNAS rack-mount chassis" placeholder), pfSense/SG-1100 on a 1U shelf, PDU (0-1U). Roughly ~12U or under without the patch panel — workable for the 12U half rack. UPS placement (rackmount vs. floor-standing) still undetermined. Pi rack + maturin shelf may need to live outside the enclosure if space stays tight.
+- [ ] docker-deb static IP or confirmed DHCP reservation ⚠️ (hosts Vaultwarden, Traefik, Portainer)
+- [ ] **VPN rationalization — DECIDED 2026-07-05: Tailscale.** Decommission WireGuard (mediastack) and ZeroTier (amontillado).
+- [ ] Netgate (192.168.1.6) — confirm model and role, unresponsive to nmap/arp-scan
+- [ ] Identify 192.168.1.218 (locally administered MAC, high ephemeral ports only)
+- [ ] Clarify Flint2 + Netgate topology — document which handles what
+- [ ] Scan guest WiFi subnet — third LG TV likely there
+- [ ] Unbound (local DNS resolver), Authelia (auth layer) — longer-horizon
+- [ ] **Rack Build + pfSense + VLANs** — hardware in hand (APC half rack, SG-1100, SG200-50 configured, GS116 to retire). Priority raised: GS116 has a confirmed dead port after 7 years and no port visibility to diagnose others.
+  - Phase 0: **transport rack home** — currently offsite, needs Chris's car
+  - Phase 1 (no downtime): place rack, install SG200-50/PDU (no patch panel — dropped 2026-07-05, only real structured run is Flint2→Beryl and it's nowhere near the rack), Flint 2 to AP mode, SG-1100 offline config
+  - Phase 2 (cutover, ~1hr outage): WAN → SG-1100, SG-1100 → SG200-50 trunk, migrate cables off GS116, verify + rollback plan
+  - Phase 3 (IP migration, full weekend): DHCP reservations by MAC first, then inventory_auto/MkDocs/corosync/fstab/Kuma/Homepage/Zabbix updates
+  - Phase 4 (physical, ongoing): shelf for maturin, Pi rack into rack, TrueNAS rack-mount chassis
+  - VLAN scheme: 10 Servers / 20 Trusted / 30 IoT / 99 Mgmt
+
+### Security & Monitoring (Taylor)
+- [ ] Alert on: drive errors, disk >85%, service down, high temp, RAM pressure
+- [ ] docker-deb watchdog — Sam building, alerts Kuma if container stack hasn't restarted in >1 week
+- [ ] Uptime Kuma TrueNAS poll interval → 30 seconds
+- [ ] Document full Zabbix topology — server on monitor-deb, 11 agents, confirm Grafana pull
+- [ ] monitor-deb :9221 — unknown service, identify
+- [ ] Configure Zabbix → Telegram alerting
+- [ ] Wire smartd_telegram_alert.sh into smartd.conf (-M exec) — script deployed to /opt/scripts/ but not yet wired in; confirm smartd runs as continuous daemon fleet-wide first
+- [ ] Deploy Loki for log aggregation
+- [ ] Vaultwarden autofill port-matching bug in browser extension
+- [ ] Evaluate HashiCorp Vault for Ansible secrets management
+
+### Automation & Scripts (Sam)
+- [x] cru_stats.sh / backup_drives_update.sh path mismatch fix — ✅ Alex signed off 2026-07-05, Sam cleared to ship
+- [x] **Telegram bot (patch notifications) — done 2026-07-05.** OerthBot deployed, weekly_patch.yml wired, see Resolved This Session above.
+- [ ] General alert relay bot (Kuma/Zabbix/SMART → one channel) — approved 2026-07-05
+- [ ] CRU label linter script — approved 2026-07-05
+- [ ] auto network_inventory.md — arp-scan + masscan + ansible facts combined
+- [ ] auto backup date in cru_stats — update_drives_table.py writes Backup column on SMART pass
+- [ ] backup_drives_update.sh Gitea-API refactor — implemented, needs a week of clean runs before trusted
+- [ ] merge-aware todo_sync.sh — cron on git-ansible preserving Gitea `[x]` state on pull
+
+### Documentation / MkDocs (Morgan)
+- [ ] Session runbooks: shardik recovery, red case inventory page, PBS migration log, pve3 DR node page
+- [ ] Cluster capacity page — mobo/CPU/RAM/VM placement/upgrade path per node (Kai + Jordan feed data)
+- [ ] holy_grail.md as MkDocs front page
+- [ ] Pull-before-push check before every SCP (avoid repeat of the completed.md overwrite incident)
+- [ ] MkDocs Network section overhaul with Riley
+- [ ] Pi Status page with uploaded Pi photos
+- [ ] Create Proxmox cluster diagram; document monitoring stack architecture
+- [ ] Create backup_policy.md — 3-2-1 approach, rotation schedule, STL archive policy
+- [ ] hw_inv.md — document retired/added drives; update hosts.md with aslan + Beryl AP
+- [ ] SCP network_inventory.md, vlan_ip_plan.md, site_assets.md to git-ansible docs root
+- [ ] Automate doc updates — push from ED session to git-ansible without manual paste
+- [ ] completed.md auto-population via checkbox_persist.js
+- [ ] ED: create CLAUDE.md for each specialist (domain, personality, rules, escalation paths)
+
+### Media / Plex / Mediastack (Casey)
+- [ ] Add Tautulli (Plex analytics), Bazarr (subtitle automation)
+- [ ] Tdarr transcoding — needs GPU node first (aslan)
+- [ ] Plex Music library mobile fix (Plex Pass confirmed, unresolved)
+- [ ] Add Training and Photos libraries to Plex
+- [ ] Plex audio normalization — new ask, needs investigation
+- [ ] Evaluate Overseerr or Wizarr for request management
+- [ ] Dual reverse proxy — Caddy + Traefik both on docker-deb, resolve with Riley
+- [ ] STL collection page — evaluate Manyfold first; custom page (like vinyl_collection.html) if it doesn't meet the need (Drew + Sam)
+- [ ] Komga / Mylar — comics stack, populate libraries?
+- [ ] RomM: complete tactical RPG collections, dedupe DS ROMs, explore LaunchBox archive migration
+
+### IoT / Maker / Pi Fleet / 3D Printing / Physical AV (Drew)
+- [ ] Ender 3 V2 yellow PLA — temp tower to dial in profile before structural prints
+- [ ] Logitech Z-680 2.1→5.1 issue — static/dropout fixed 2026-07-05 (PC audio driver, not hardware), but the longstanding "stuck at 2.1" issue is separate and still open — rear/center channels not diagnosed
+- [x] Pi 2B — ✅ renamed **docs-dietpi-deb** 2026-07-05 (192.168.1.121), role: documentation-adjacent host. Jordan to update Ansible inventory + hostname; Morgan to add to hosts.md.
+- [ ] Bring argos-pi4-deb and argos-pi4-wifi-deb online; wall-mount argos as HA field station (confirm location w/ Chris); onboard via Ansible
+- [ ] PoE switch + PoE HATs — single cable per Pi
+- [ ] Full cable management on rack
+- [ ] retropi IP and pihole-pi-deb IP — confirm and document in hw_inv.md/hosts.md
+- [ ] Check pihole-pi1-deb SD card (was 91% full)
+- [ ] Purchase Hologram.io SIM for argos-deb LTE
+- [ ] Home Assistant phases 2-4: Zigbee/MQTT/ESPHome/Frigate, automations/Music Assistant/OctoPrint, argos-deb wall kiosk
+
+### Sysadmin / Ansible / Patching (Jordan)
+- [ ] Amontillado C: drive audit (7% free); investigate D: drive (11% free)
+- [ ] fail2ban rollout via Ansible
+- [ ] Git identity on restic-deb
+- [ ] BIOS download links for shardik/maturin/aslan/blaine — links gathered, aslan (F52) and blaine (revision-dependent) need action
+- [ ] Add microcode + non-free-firmware to homelab_baseline.yml
+- [ ] Onboard pbs-deb via onboard2.yml
+- [ ] Confirm octopi-pi4-deb SSH key auth post-baseline
+- [ ] Add Zabbix repo task to homelab_baseline.yml (before agent install)
+- [ ] Fix SSH service name for DietPi hosts (ssh vs. dropbear)
+- [ ] Fix ansible_facts deprecation warnings before ansible-core 2.24
+- [ ] Document mkdocs_dev_material living on restic-deb intentionally
+- [ ] Pin ansible_python_interpreter per host in inventory_auto
+- [ ] Add chrony LXC skip to sync_time.yml; update check_services.yml; fix pause timing in fail2ban.yml
+- [ ] Audit offline hosts from router — inactive vs. decommissioned
 
 ### DC Decommission Salvage
+- [ ] DC1 authorization follow-up — Dell N4032F x2, Lambda GPU workstations, Dell Precision 7920
+- [ ] DC1 NEEDS MORE INFO checklist (see dc_salvage.md)
+- [ ] Dell R730 pickup — get CPU/RAM specs
+- [ ] Dell JBOD (4TB SAS) — confirm chassis/bay count
+- [ ] DC2 walkthrough; DC3/DC4 status confirmation
+- [ ] 12U half rack — retrieve, rack new DC hardware
+- [ ] KEEP: Dell PowerVault MD1200 (12-bay SAS shelf), DLI IP Power Switches x2
+- [ ] EVALUATE: Dell PowerEdge R750 (CPU/RAM/drives/PCIe), Dell M630 blades (pull specs), Hitachi AMS2100 drives (Alex to decide before disposal), Polycom conference gear (resale)
+- [ ] PASS: Synology RS810RP+, Dell M1000e chassis
 
-- [ ] **DC1 authorization follow-up** — Dell N4032F x2, Lambda GPU workstations, Dell Precision 7920
-- [ ] **DC1 NEEDS MORE INFO checklist** — work through on next visit (see dc_salvage.md)
-- [ ] **Dell R730 pickup** — get CPU model + RAM when collecting
-- [ ] **Dell JBOD (4TB SAS)** — confirm chassis/bay count, pair with Dell SAS 12G HBA for TrueNAS
-- [ ] **DC2 walkthrough** — schedule and inventory
-- [ ] **DC3/DC4 status** — confirm if going down, schedule walkthrough
-- [ ] **12U half rack** — retrieve, rack all new DC hardware
-- [x] **Logitech Z-680 sub recap** — ✅ NOT NEEDED, see Critical/Security section. 2026-07-05 static/dropout incident tested and traced to a PC audio driver glitch (fixed by reboot), not hardware. Dropping unless it recurs.
-- [ ] **Dell PowerVault MD1200** — KEEP. 12-bay SAS shelf. Pairs with SAS HBA for TrueNAS expansion. Retrieve when collecting other DC hardware.
-- [ ] **Dell PowerEdge R750** — check CPU/RAM/drives/PCIe cards. Potentially TrueNAS rebuild target or new Proxmox node.
-- [ ] **DLI IP Power Switches (x2)** — KEEP. Get model numbers. Useful for remote power cycling.
-- [ ] **Dell M630 blades** — pull model + service tag. DDR4 ECC RDIMM + E5-2600 v3/v4 CPUs have resale value. Check 2.5" drives in each blade.
-- [ ] **Synology RS810RP+** — pass. Too old (Atom D510, DSM EOL). Donate/scrap.
-- [ ] **Hitachi AMS2100** — pass on controllers. Alex to decide on Cheetah drives before disposal.
-- [ ] **Dell M1000e chassis** — pass. Too power-hungry for homelab. Scrap/sell.
-- [ ] **Polycom conference gear** — resale. Get model numbers, list on eBay/Marketplace.
+**Scavenge checklist (every visit):** Priority 1 — 32GB/16GB DDR4 UDIMM, LSI 9211-8i/9207-8i/M1015/PERC H200, Intel PCIe NICs. Priority 2 — R750 contents, NVMe/SSDs, 10GbE NICs. Priority 3 — SAS drives 1TB+, SAS HBAs (flag for Alex).
 
-**DC Salvage Scavenge Checklist — what to grab on every visit:**
-
-Priority 1 — Pull every one found:
-- Any **32GB DDR4 UDIMM** (Crucial, Kingston, Corsair, G.Skill — non-ECC, unbuffered)
-- Any **16GB DDR4 UDIMM** (already have 10, more is fine)
-- **LSI 9211-8i, 9207-8i, IBM M1015, Dell PERC H200** — TrueNAS HBA (IT mode or flashable)
-- **Intel PCIe NICs** (avoid Realtek)
-
-Priority 2 — Note specs, photograph:
-- **R750 contents** — CPU, RAM type/amount, drives, PCIe cards
-- Any **NVMe drives** (U.2 or M.2)
-- Any **2.5" or 3.5" SSDs**
-- **10GbE NICs** (Intel X540, X550, Mellanox ConnectX-3/4)
-
-Priority 3 — Photograph, flag for Alex:
-- Any **SAS drives 1TB+** (MD1200 candidates)
-- Any **SAS HBAs** (even IR mode — some flashable)
-
-### RAM Upgrade Targets — Scavenge / Shop
-
-State as of 2026-07-02:
+**RAM Upgrade Targets (as of 2026-07-02):**
 
 | Node | Current | Grail Target | Needed |
 |---|---|---|---|
-| shardik | 32GB (4×8GB DDR4-2400) | 128GB (4×32GB DDR4 UDIMM) | 4×32GB — 2 Crucial CT32G4DFD832A in hand, 2 more machines to check |
-| aslan | ✅ 64GB (4×16GB) — COMPLETE 2026-07-02 | 128GB (4×32GB DDR4 UDIMM) | 4×32GB — scavenging DC2/DC3 |
-| maturin | 32GB (4×8GB) | 64GB (maxed) | 4×16GB UDIMM — 10×16GB DDR4-2400 UDIMM found at DC 2026-07-02 |
-| blaine | 32GB (4×8GB DDR3-1333) — confirmed 2026-07-02 | 32GB | ✅ sufficient (DDR3, Sandy Bridge — no upgrade path worth pursuing) |
+| shardik | 32GB (4×8GB DDR4-2400) | 128GB (4×32GB UDIMM) | 4×32GB — 2 in hand, 2 more DC machines to check |
+| aslan | ✅ 64GB (4×16GB) complete | 128GB (4×32GB UDIMM) | 4×32GB — scavenging DC2/DC3 |
+| maturin | 32GB (4×8GB) | 64GB (maxed) | 4×16GB UDIMM — 10 found at DC 2026-07-02 |
+| blaine | 32GB DDR3-1333 | 32GB | ✅ sufficient, no upgrade path worth it |
 
-⚠️ **DC server RAM = DDR4/DDR5 RDIMM ECC — NOT compatible with AM4 consumer boards.** Only workstation/desktop DDR4 UDIMM non-ECC works.
-
-**Found 2026-07-02 at DC:**
-- 10×16GB DDR4-2400 UDIMM (part: 16GF2X16QFHH36-135-K) — assign 4→maturin (maxes it), 4→shardik (interim upgrade), 2 spare
-- 2×32GB DDR4-3200 UDIMM Crucial CT32G4DFD832A — holy grail sticks. 2 more DC machines to check.
-- 8×32GB DDR5 ECC RDIMM SK Hynix (Supermicro) — incompatible with all current nodes. **Sell.**
-- 2×32GB DDR4-2933 RDIMM OWC Mac Pro (already in pve3) — RDIMM, not usable in AM4 nodes.
-
-- [ ] **Scavenge 2 remaining DC machines** — pull all 32GB DDR4 UDIMM sticks found. Need 6 more for grail (4 shardik + 4 aslan − 2 in hand).
-- [ ] **Install 16GB sticks** — Jordan: 4×16GB→maturin (64GB, maxed), 4×16GB→shardik (64GB interim). Verify compatibility on OptiPlex 7050 first.
-- [ ] **Shop (if not found):** 32GB DDR4-3200 UDIMM non-ECC — ~$40-60/stick on eBay. Buy only what DC salvage doesn't cover.
+⚠️ DC server RAM is DDR4/DDR5 RDIMM ECC — not compatible with AM4 consumer boards. Only desktop DDR4 UDIMM non-ECC works.
 
 ### Hardware Inventory Completion
-
-- [ ] Photo and dmidecode all 5 waiting systems
-- [ ] Photo pve3 (ThinkStation offsite)
-- [ ] Photo Elegoo Mars 3, Ender 3 V1, Flashforge Dreamer
-- [ ] Photo GTX 1080 and GTX 1080 Ti cards
-- [ ] Photo all laptops and portable devices
-- [ ] SCP all new photos to MkDocs docs/images/hw/
+- [ ] Photo + dmidecode all 5 waiting systems, pve3, printers (Elegoo Mars 3, Ender 3 V1, Flashforge Dreamer), GPUs, laptops
+- [ ] SCP new photos to MkDocs docs/images/hw/
 - [ ] Import all hardware into Snipe-IT (192.168.1.53 — plow-rpm)
-- [ ] Add 12TB HDD and suspect 20TB HDD to hw_reserve.md (run SMART on both)
-- [ ] Document hw_reserve — NICs found, additional RAM found
+- [ ] Add 12TB + suspect 20TB HDD to hw_reserve.md (SMART both); document hw_reserve NICs/RAM found
+- [ ] Identify alma-rpm, rocky-rpm, 2404HV-deb roles; identify DIGIDIOT.local AD usage
 
----
-
-## Sunday Projects
-_Large multi-step tasks requiring a 4-hour focused block_
-
-### 1. Pi 2B — Assign Role
-**Goal:** Pi 2B (blank-dietpi1-deb, 192.168.1.121) is online — needs a permanent role
-
-- [ ] Check what's currently running (`systemctl list-units --type=service --state=running`)
-- [ ] Decide on role (options: Gitea mirror secondary, rsync log relay, MQTT broker)
-- [ ] Assign hostname reflecting role, update Ansible inventory
-- [ ] Add to MkDocs hosts.md
-
-### 2. TrueNAS Hardware Rebuild ⭐
-**Goal:** Replace aging Z77/i5-3570K with temerant hardware (Ryzen 5 1600X, 32GB DDR4, GTX 1080 Ti)
-**Blocker:** LSI HBA not yet found — order now if not located
-
-- [ ] Check temerant-win 2x 3TB HDDs (Seagate ST3000DM001) for important data ⚠️
-- [ ] Pull mobo, Ryzen 5 1600X, 32GB DDR4, GTX 1080 Ti, 500GB SSD from temerant
-- [ ] **Flash M1115 to LSI IT mode** — Jordan to execute. Chris has done this before. Do NOT attach TrueNAS drives before flashing.
-- [ ] Order 2x SFF-8087 to SATA breakout cables (~$5-10 each eBay)
-- [ ] Install hardware into existing FreeNAS beige full tower
-- [ ] Install TrueNAS on 500GB SSD — replace USB boot drives
-- [ ] Boot TrueNAS, import TRYAGAIN pool
-- [ ] Update mediastack-deb fstab if IP changes
-- [ ] Dedupe/find duplicate filenames on TRYAGAIN — fdupes or rdfind (post-rebuild)
-- [ ] Delete iocage datasets — Weltgeist and Alea Iacta Est jails (91GB)
-
-### 3. Physical Tidy
-
+### Physical / Facilities
 - [ ] Tidy desk wires — full shutdown and rewire
-- [ ] Sort hardware / find HBA
+- [ ] Sort hardware / locate spares
 - [ ] Clean off shelves
-
-### 4. Pi Day — Phase 2
-**Goal:** Phase 1 complete (rack installed, 6 Pis running). Phase 2: remaining Pis + cable management.
-
-- [ ] Bring argos-pi4-deb (.127) and argos-pi4-wifi-deb (.128) online
-- [ ] Wall-mount argos as HA field station — confirm location with Chris, wire sensors (temp/humidity/PIR)
-- [ ] Onboard argos via Ansible (onboard2.yml)
-- [ ] PoE switch + PoE HATs — single cable per Pi for power + network
-- [ ] Full cable management on rack
-
-### 5. TrueNAS NIC Swap + Boot Test — ✅ RESOLVED 2026-07-03 (unexpected path)
-**Goal:** Replace fragile USB NIC with reliable PCIe NIC; confirm Kingston boot mirror
-
-- [ ] **Watch `alc0` for stability over next 1-2 days before fully trusting it** — `alc` driver has a rougher FreeBSD track record than Intel NICs; possible this is why it was originally marked dead (intermittent, not fully broken)
-- [ ] hw_inv.md / network_inventory.md — update NIC status for freenas-bsd (done same session, see below)
-- [ ] Source/RMA replacement X540-T2 (or equivalent Intel-chipset 10GbE/GbE card) if bench test confirms it's dead — add to shopping list
-- [ ] **Jumbo frames on alc0** — backlog, not now. Wait for stability proof first; requires matching MTU on Flint port too. Revisit as separate perf task once alc0 is trusted.
-
-### 6. Shardik PSU Replacement
-**Goal:** Replace confirmed-dead PSU — 1-month uptime target starts when she's back online
-
-- [ ] **Shardik down 2026-07-05** — Chris confirmed likely accidental unplug (not a repeat PSU failure). Caught via new backup-dietpi-deb Kuma monitor, recovered before Chris checked (brief). Uptime clock resets again — new target ~2026-08-05 pending confirmation. **No alert fired** — backup Kuma instance has no notification channel wired up yet, ping-only dashboard so far. Follow-up: connect Telegram bot (or equivalent) to backup-dietpi-deb Kuma so this kind of drop actually pages someone next time.
-
-### 7. Network Inventory & Documentation
-**Goal:** Full enumeration of all hosts, services, and ports on the homelab network
-
-- [ ] SCP network_inventory.md to git-ansible MkDocs docs
-- [ ] Resolve open questions (see network_inventory.md)
-
-### 8. Rack Build + pfSense + VLANs ⭐
-**Goal:** APC half rack, Cisco SG200-50 managed switch, pfSense on SG-1100, full VLAN segmentation
-**Hardware in hand:** APC 4-post enclosed half rack, Netgate SG-1100, Cisco SG200-50 (confirmed 2026-07-03 — the only layer 2 managed switch we have, no separate Dell unit), Netgear GS116 (currently live, retire on cutover)
-**Owner:** Riley (network), Jordan (power/rack), Alex (TrueNAS chassis future)
-**Priority note (2026-07-04):** GS116 has had at least one confirmed dead port for ~7 years and is still in daily use (14/16 ports active). Tonight's NIC throughput debugging found a client-specific bottleneck (git-ansible → freenas-bsd capped at ~340-514kB/s raw TCP while restic-deb's path to the same host sustains 24-25MB/s) that couldn't be fully diagnosed because the GS116 is unmanaged — no port stats, no way to inspect further short of physically swapping cables. A switch with one known-dead port after 7 years of continuous use is a reasonable candidate for other ports quietly degrading too. This is a concrete argument to treat the SG200-50 cutover as sooner-than-"someday" — it would also finally give visibility (per-port error/utilization stats) into problems like tonight's that are currently undiagnosable.
-
-**Phase 1 — Pre-flight (no downtime)**
-- [ ] Place rack in final location
-- [ ] Install SG200-50, patch panel, PDU in rack
-- [ ] Set Flint 2 to AP mode while still live on existing network
-- [ ] Configure SG-1100 offline (laptop direct to LAN port): WAN, DHCP, DNS relay, VLAN interfaces
-
-**Phase 2 — Cutover (planned outage ~1 hour)**
-- [ ] ⚠️ Announce maintenance window — everything goes down briefly
-- [ ] Pull WAN ethernet from Flint 2 → plug into SG-1100 WAN port
-- [ ] SG-1100 LAN → SG200-50 trunk port
-- [ ] Move all cables from GS116 → SG200-50 (correct VLAN per port)
-- [ ] Verify internet, verify all VLANs routing, verify firewall rules
-- [ ] Rollback: if anything breaks, replug Flint 2 WAN and return to GS116
-
-**Phase 3 — IP migration (full weekend)**
-- [ ] ⚠️ All hosts get new IPs — update DHCP reservations by MAC first
-- [ ] Update Ansible inventory_auto with new IPs
-- [ ] Update MkDocs hosts.md, network_inventory.md
-- [ ] Update Proxmox cluster configs (corosync ring addresses)
-- [ ] Update all fstab NFS/CIFS mounts with new IPs
-- [ ] Update Uptime Kuma monitors
-- [ ] Update Homepage dashboard
-- [ ] Update Zabbix agent configs
-
-**VLAN scheme:**
-- VLAN 10 Servers: 192.168.10.0/24 — Proxmox, TrueNAS, VMs, Docker, Pis
-- VLAN 20 Trusted: 192.168.20.0/24 — amontillado, work devices
-- VLAN 30 IoT: 192.168.30.0/24 — TVs, Echo, Fire TV, WiFi clients
-- VLAN 99 Mgmt: 192.168.99.0/24 — switch UI, pfSense UI (amontillado only)
-
-**Phase 4 — Physical rack (no downtime, ongoing)**
-- [ ] Shelf for maturin (OptiPlex SFF) in rack
-- [ ] Pi rack into rack
-- [ ] TrueNAS rack-mount chassis (tied to TrueNAS rebuild Sunday project)
-
-### 9. VM & Container Placement Audit ⭐
-**Goal:** Ensure every VM and LXC is on the optimal hypervisor with right-sized resources
-**Owner:** Kai
-**Blocker:** Wait for shardik uptime target (2026-08-01) before migrating any prod workloads. No production touching shardik until Aug 1. KASM (111) moved there as stress test only — acceptable. Target will likely be amended again.
-
-- [ ] **Migrate mediastack-deb → shardik** after Jul 28 — currently on aslan (migrated from maturin 2026-07-02 for RAM swap). Shardik is the ultimate destination (Ryzen 7 2700X, tank pool). Wait for 1-month uptime target 2026-07-28.
-- [ ] **Right-size VM RAM allocations** across all nodes — audit over/under provisioned VMs
-- [ ] **Swarm VMs (102/104/105)** — decide rebuild or decommission. All stopped on aslan.
-- [ ] **GPU transcoding** — revisit mediastack on aslan with GTX 1080 Ti passthrough once RAM allows. Casey + Kai.
-- [ ] **Manyfold permanent home** — blaine LXC test (CT 103) outperforming docker-deb. Kai to report on LXC results, then decide: keep on blaine or move to dedicated LXC on better node. DO NOT delete CT 103.
-
-### Completed Sunday Projects
-
----
-
-## Planned Projects
-
-### PVE Cluster — blaine-pve + pve3
-
-- [ ] Add blaine-pve to cluster after Proxmox install (Sunday)
-- [ ] **Wednesday Jul 1** — Check SMART results on blaine drives (sda 16TB ~1am, sdb 2TB ~7am Tue, sdc 20TB ~5am Wed). Re-attach to VM 100, relabel, begin STL ACCESSORIES rsync.
-- [ ] **Shardik: SMART test** — run short SMART on 4x 6TB drives (sda/sdb/sdc/sdd), results pending.
-- [ ] **Shardik: PBS decision** — migrate PBS back to shardik or keep on aslan. Alex + Kai. Sunday.
-- [ ] **Red case (ASRock B450M Steel Legend)** — team proposed hostname **garuda** (2026-07-05 meeting, next off the approved 12-name list) — pending Chris sign-off. Role still TBD. Specs: Ryzen 5 1600X, 32GB DDR4-2133, 1TB SSD.
-- [ ] **hw_reserve.md** — SCP to git-ansible + git commit + push (updated this session).
-- [ ] Configure Tailscale on pve3
-- [ ] Full hardware inventory pve3 (dmidecode, photos)
-- [ ] Add pve3 to Proxmox cluster (shardik + maturin + aslan + blaine + pve3)
-- [ ] Add pve3 to inventory_auto and MkDocs
-- [ ] Configure Proxmox HA for automatic VM failover — **sequencing decided 2026-07-05:** hold off until (1) shared storage or ZFS replication exists between nodes (HA can't properly fail over VMs whose disks live on local-only storage), and (2) shardik's "no production workloads until 2026-08-01" uptime lock expires (HA could auto-migrate/restart VMs onto it, violating that lock). Revisit after both are clear.
-- [ ] Set up shared storage — NFS from TrueNAS
-
-### Docker Swarm
-
-- [ ] Rebuild swarm01/02/03 (currently stopped)
-- [ ] Deploy Traefik in Swarm mode — cluster-wide reverse proxy
-- [ ] Deploy Uptime Kuma in Swarm
-- [ ] Deploy Homepage dashboard in Swarm
-- [ ] Deploy Zabbix frontend in Swarm — monitoring survives node failure
-- [ ] Evaluate MkDocs in Swarm
-
-### Monitoring Stack (monitor-deb 192.168.1.29)
-
-- [ ] Add Uptime Kuma to Homepage widget (fix slug)
-- [ ] Configure Zabbix → Telegram alerting
-- [ ] Deploy Loki for log aggregation
-- [ ] Uptime Kuma monitoring of mediastack-deb containers
-- [ ] Document full Zabbix topology — server on monitor-deb, 11 agents deployed
-
-### Local AI Assistant (aslan)
-
-- [ ] Deploy Ollama with GTX 1080 Ti GPU passthrough (GPU already bound to vfio-pci on aslan)
-- [ ] Deploy Open WebUI
-- [ ] Create sysadmin / homelab / casual assistant personalities
-- [ ] Add Whisper (STT) and Piper (TTS)
-- [ ] Feed MkDocs docs as RAG knowledge base
-
-### PBS — Next Steps
-
-- [ ] Evaluate PBS tape backup to CRU bays on blaine-pve (post-install)
-
-### Mediastack / Plex
-
-- [ ] Add Tautulli — Plex analytics
-- [ ] Bazarr — subtitle automation
-- [ ] Tdarr — transcoding (needs GPU node first — aslan)
-- [ ] Add Plex Music library fix for mobile (Plex Pass confirmed, unresolved)
-- [ ] Add Training and Photos libraries to Plex
-- [ ] Dual reverse proxy — Caddy + Traefik both on docker-deb. Riley + Casey to resolve.
-
-### RomM / Gaming
-
-- [ ] Complete tactical RPG collections across all supported platforms
-- [ ] Deduplicate DS ROMs (Fire Emblem Shadow Dragon appears 3x)
-- [ ] Explore LaunchBox ROM archive on NAS — migrate to RomM
-
-### Vaultwarden / Secrets
-
-- [ ] Fix Vaultwarden autofill port matching issue in browser extension
-- [ ] Store all service credentials with full URL including port
-- [ ] Evaluate HashiCorp Vault for Ansible secrets management
-
-### Home Assistant
-
-- [ ] Phase 1 — backup to TrueNAS, Tailscale
-- [ ] Phase 2 — Zigbee, MQTT, ESPHome, Frigate
-- [ ] Phase 3 — automations, Music Assistant, OctoPrint
-- [ ] Phase 4 — argos-deb wall kiosk
-
-### Network
-
-- [ ] Clarify Flint2 + Netgate topology — document which handles what
-- [ ] Evaluate VLANs for IoT/media/server segmentation
-- [ ] Unbound — local DNS resolver
-- [ ] Authelia — auth layer for exposed services
-- [ ] VPN rationalization — Tailscale + WireGuard + ZeroTier all running. Pick one, retire the others.
-- [ ] Scan guest WiFi subnet — third LG TV likely there, range unknown
-
-### Documentation
-
-- [ ] Create Proxmox cluster diagram
-- [ ] Document monitoring stack architecture
-- [ ] Create backup_policy.md — 3-2-1 approach, rotation schedule, STL archive policy
-- [ ] hw_inv.md — document ST6000VN0001 Z4D2EJ31 retired, ST6000DX000 Z4D07FQ5 added
-- [ ] Update hosts.md with aslan and Beryl AP (192.168.1.10)
-- [ ] SCP network_inventory.md to git-ansible MkDocs docs root
-- [ ] SCP vlan_ip_plan.md to git-ansible MkDocs docs root
-- [ ] SCP site_assets.md to git-ansible MkDocs docs root
-
-### Ansible
-
-- [ ] Pin ansible_python_interpreter per host in inventory_auto
-- [ ] Add fail2ban to homelab_baseline.yml
-- [ ] Add chrony LXC skip to sync_time.yml
-- [ ] Update check_services.yml to reflect current services
-- [ ] Update fail2ban.yml — add pause before verify task
-
-### Team Documentation
-
-- [ ] **ED: Create CLAUDE.md for each specialist** — Jordan, Kai, Sam, Riley, Morgan, Alex, Taylor, Casey, Drew — document domain, personality, rules, ownership, escalation paths
-
-### MkDocs / Automation
-
-- [ ] Automate doc updates — push from ED session to git-ansible without manual paste
-- [ ] completed.md auto-population — move checked items from todo.md via checkbox_persist.js
-- [ ] **Sam: merge-aware todo_sync.sh** — deploy cron on git-ansible that pulls todo.md from amontillado but preserves `[x]` state from Gitea (prevent SCP from wiping web-checked boxes)
 
 ---
 
 ## Parking Lot (Research Needed — Not Yet Scheduled)
 
-- [ ] **Swarm architecture** — should monitoring stack move to swarm? Evaluate what makes sense
-- [ ] **Ceph** — second attempt, needs planning and dedicated hardware evaluation
-- [ ] **YouTube channel tech scouting** — Chris to provide channel list
-- [ ] **ZeroTier** — currently unconfigured on amontillado. Evaluate vs Tailscale/WireGuard
-- [ ] **STL collection page** — evaluate Manyfold (:3214 on docker-deb) first; if it doesn't meet the need, build a custom page similar to vinyl_collection.html. Drew + Sam.
-- [ ] **Komga / Mylar** — comics stack running on mediastack. Populate libraries?
-- [ ] **Farson VM** — dedicated vuln/pentest VM (Kali or OpenVAS/Greenbone). Taylor to scope: host node, targets, reporting. Just a whim for now.
-- [ ] **Sam: general alert relay bot** — extend the patch-notification Telegram bot into a unified relay for Kuma/Zabbix/SMART alerts. Proposed 2026-07-05, pending Chris approval.
-- [ ] **Sam: CRU label linter script** — scan all scripts/configs for hardcoded/stale CRU drive labels (cru3 alone has changed 3x). Proposed 2026-07-05, pending Chris approval.
-- [ ] **Casey: evaluate request-management app (Overseerr or Wizarr)** for mediastack. Proposed 2026-07-05, pending Chris interest.
+- [ ] Swarm architecture — should monitoring stack move to swarm?
+- [ ] Ceph — second attempt, needs dedicated hardware evaluation
+- [ ] YouTube channel tech scouting — Chris to provide channel list
+- [ ] Komga / Mylar comics population
+- [ ] Farson VM — dedicated vuln/pentest VM (Taylor to scope, just a whim for now)
+
+---
+
+## Naming Reference
+
+Active Proxmox nodes: shardik (bear), maturin (turtle), aslan (lion), blaine (Blaine the Mono), **garuda = pve3 (bird, confirmed 2026-07-05)**. Remaining unused: babar, navius, rocinante, garm, chuchundra, jasconius, camazotz, owsla — next up for the red case.

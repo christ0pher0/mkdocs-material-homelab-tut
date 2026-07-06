@@ -270,3 +270,12 @@ _Sorted by date and node/area_
 - [x] restic-deb → blaine-pve — complete 2026-06-22. Blaine joined cluster, onboarded via onboard2.yml. restic-deb rebuilt as VM on blaine.
 - [x] Pi rack installed — 6 Pis mounted and running 2026-06-28. Batocera off-rack (powers on for gaming only).
 - [x] TrueNAS boot-pool mirror complete — da0 (SanDisk) + da1 (Kingston), bootloader written 2026-06-28, scrub clean.
+## 2026-07-05 — Telegram Alerting + Monitoring Wins
+- Telegram bot (OerthBot) fully deployed and verified — notify_telegram.py + /etc/oerthbot/config.json (mode 600), admin of OerthChannel
+- weekly_patch.yml Telegram integration — per-host reboot/failure alerts + run-complete ping, live-tested against git-ansible-deb
+- Kuma → Telegram wired on monitor-deb and backup-dietpi-deb (apply to all monitors)
+- cru_stats.sh / backup_drives_update.sh path mismatch — fixed, Alex signed off, Sam shipped
+- STL rsync throughput — ~400kB/s → 25MB/s (~60x), no longer a viability crisis
+- VPN rationalization decided: Tailscale only, WireGuard + ZeroTier to be decommissioned
+- blank-dietpi-deb renamed docs-dietpi-deb
+- garuda confirmed as pve3's hostname
