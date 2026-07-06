@@ -141,16 +141,11 @@ cd ~/material/mkdocs_dev_material && git add docs/todo.md && git commit -m "sync
 ```
 **Both steps required.** SCP alone leaves the git-ansible working directory ahead of Gitea, which breaks the checkbox-persistence webhook (port 9999) on the next commit attempt from any source.
 
-**Also sync `backup_drives.md` if it was updated this session (Part C, Step 3 of the exit chain updates it on blaine):**
-```bash
-# On blaine (192.168.1.11)
-scp ~/backup_drives.md cos@192.168.1.3:~/material/mkdocs_dev_material/docs/backup_drives.md
-```
-```bash
-# On git-ansible (192.168.1.3)
-cd ~/material/mkdocs_dev_material && git add docs/backup_drives.md && git commit -m "sync: backup_drives.md" && git push
-```
-⚠️ **Known gap (found 2026-07-06):** `backup_drives.md` lives on blaine and was being edited locally without ever pulling from/pushing back to git-ansible — the docs site fell behind blaine's actual data (missing STL_ACCESSORIES_TERRAIN, STL_SOURCE_MATERIAL rows). Follow the same discipline as `todo.md`: pull before editing, push after, every session — don't let blaine's local copy become its own silent source of truth.
+**`backup_drives.md`'s Used/Free/SMART columns sync automatically — no manual step needed.** `backup_drives_update.sh` (Part C, Step 3) pushes directly to the live doc via the Gitea API (fetches current content/sha, runs `update_drives_table.py` to merge in fresh stats from `/opt/cru_stats/*.txt`, pushes back) — this bypasses blaine and any local git clone entirely. As long as that script runs clean, the site is already correct for those three columns.
+
+**The `Backup` date column is manual-only, by design — no script sets it.** `update_drives_table.py` only ever touches Used/Free/SMART; there is no automation for the Backup date anywhere in this pipeline. If a session's Backup date needs updating, it has to be entered by hand directly against the actual source of truth (confirm with Alex/Morgan the current preferred path — historically this has been edited on blaine's local copy and SCP'd over, which is how `backup_drives.md` diverged from the site once already; the more direct API-push method above is safer if it can also handle a plain text edit, not just the stats merge).
+
+⚠️ **Known gap (found 2026-07-06):** two separate issues surfaced this session — (1) blaine's local `backup_drives.md` had drifted ahead of the live site because it was edited locally without syncing back (fixed by pushing blaine's copy up); (2) it was initially assumed a "path mismatch" bug was blocking the Backup date from populating automatically — that theory was wrong and has been corrected here. There never was automation for that field. Don't assume a script bug next time the Backup date looks stale — check whether it was ever entered by hand for that session first.
 
 ---
 
