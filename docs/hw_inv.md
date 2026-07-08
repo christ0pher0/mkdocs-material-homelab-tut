@@ -1,5 +1,5 @@
 # Hardware Inventory
-_Last updated: 2026-06-20_
+_Last updated: 2026-07-08_
 _Physical hosts only — VMs/containers documented in network_context.md_
 _Ordered by utility — least capable first, most capable last_
 !!! tip "Adding Photos"
@@ -153,7 +153,7 @@ _Photographed 2026-06-30. Desk location. Z-680 control pod sits on top shelf. 6-
 ## aslan (192.168.1.9) — Proxmox node 3
 | | |
 |--|--|
-| ![idee](images/hw/idee-deb.jpg){ width=300 } | **Role:** Proxmox VE node 3 — GPU passthrough host<br>**Motherboard:** Gigabyte AB350-Gaming 3-CF (AMD B350, AM4)<br>**CPU:** AMD Ryzen 5 1600X (6c/12t, 3.6GHz)<br>**RAM:** 32GB DDR4 2133 (4 slots)<br>**RAM max:** 128GB DDR4<br>**Storage:** Samsung 970 EVO Plus 500GB NVMe (sdc — LVM root + thin pool), 3TB HDD (sda → /mnt/hdd3tb = SDA_store), 12TB HDD (sdb → /mnt/hdd12tb, 22 uncorrectable errors — non-critical only)<br>**GPU:** GTX 1080 Ti — bound to vfio-pci (10de:1b06, 10de:10ef), IOMMU group 2<br>**OS:** Proxmox VE 9.2.3<br>**IP:** 192.168.1.9<br>**Name:** Aslan — Guardian of the Beam, Dark Tower<br>**History:** Was idee-deb (Greyhawk). Repurposed as Proxmox node 3 — 2026-06-16.<br>**Notes:** No physical console — Ryzen has no iGPU and GPU is vfio. Manage via SSH/web UI only. |
+| ![idee](images/hw/idee-deb.jpg){ width=300 } | **Role:** Proxmox VE node 3 — GPU passthrough host<br>**Motherboard:** Gigabyte AB350-Gaming 3-CF (AMD B350, AM4)<br>**CPU:** AMD Ryzen 5 1600X (6c/12t, 3.6GHz)<br>**RAM:** 64GB DDR4-2666 (4x16GB, all 4 slots filled — confirmed via `dmidecode -t memory` 2026-07-08, corrects prior stale 32GB entry)<br>**RAM max:** 128GB DDR4<br>**Storage:** Samsung 970 EVO Plus 500GB NVMe (sdc — LVM root + thin pool), 3TB HDD (sda → /mnt/hdd3tb = SDA_store), 12TB HDD (sdb → /mnt/hdd12tb, 22 uncorrectable errors — non-critical only)<br>**GPU:** GTX 1080 Ti — bound to vfio-pci (10de:1b06, 10de:10ef), IOMMU group 2<br>**OS:** Proxmox VE 9.2.3<br>**IP:** 192.168.1.9<br>**Name:** Aslan — Guardian of the Beam, Dark Tower<br>**History:** Was idee-deb (Greyhawk). Repurposed as Proxmox node 3 — 2026-06-16.<br>**Notes:** No physical console — Ryzen has no iGPU and GPU is vfio. Manage via SSH/web UI only. |
 ### Storage Layout
 | Store | Path | Device | Size | Notes |
 |-------|------|--------|------|-------|
