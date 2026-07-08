@@ -136,7 +136,7 @@ _Photographed 2026-06-30. Desk location. Z-680 control pod sits on top shelf. 6-
 ## maturin (192.168.1.7) — Proxmox node 2
 | | |
 |--|--|
-| ![pve2](images/hw/pve2-deb.jpg){ width=300 } | **Role:** Proxmox VE node 2<br>**Make:** Dell OptiPlex 7050 (SFF)<br>**Motherboard:** Dell 0NW6H5<br>**CPU:** Intel Core i7-6700 @ 3.40GHz (4c/8t, Skylake 2015)<br>**RAM:** 32GB DDR4 2133MHz (4x 8GB — 2x Micron 8ATF1G64AZ-2G6E1 + 2x Samsung M378A1G43EB1-CPB, mixed kit)<br>**RAM max:** 64GB DDR4 (4x 16GB)<br>**BIOS:** Dell 1.11.0 (2018-11-01)<br>**OS:** Proxmox VE / Debian 12<br>**IP:** 192.168.1.7<br>**Form factor:** Small form factor desktop<br>**Best uses:** Proxmox node 2 — runs monitor-deb, git-ansible, docker-deb, mediastack-deb<br>**Easy upgrades:** RAM to 64GB DDR4 (4x 16GB). |
+| ![pve2](images/hw/pve2-deb.jpg){ width=300 } | **Role:** Proxmox VE node 2<br>**Make:** Dell OptiPlex 7050 (SFF)<br>**Motherboard:** Dell 0NW6H5<br>**CPU:** Intel Core i7-6700 @ 3.40GHz (4c/8t, Skylake 2015)<br>**RAM:** 64GB DDR4 (4x16GB, DIMM1-4 — confirmed via `dmidecode -t memory` 2026-07-08, corrects prior stale 32GB entry)<br>**RAM max:** 64GB DDR4 — maxed<br>**BIOS:** Dell 1.11.0 (2018-11-01)<br>**OS:** Proxmox VE / Debian 12<br>**IP:** 192.168.1.7<br>**Form factor:** Small form factor desktop<br>**Best uses:** Proxmox node 2 — runs monitor-deb, git-ansible, docker-deb, mediastack-deb |
 ### Storage
 | Device | Type | Size | Model | Role |
 |--------|------|------|-------|------|
