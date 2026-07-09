@@ -200,6 +200,15 @@ _Photographed 2026-06-30. Desk location. Z-680 control pod sits on top shelf. 6-
 |------|------|------|--------|-------|-----|------|
 | 102 | swarm01-manager | VM | stopped | 4 | 2GB | 64GB | ⏳ pending migration to aslan |
 ---
+## babar (192.168.1.12) — Proxmox node 5 ⭐ Most capable node in the cluster
+| | |
+|--|--|
+| ![babar](images/hw/babar.jpg){ width=300 } | **Role:** Proxmox VE node 5 — joined cluster "wheel" 2026-07-08<br>**Make:** Dell Pro Tower Plus QBT1250 (Serial 7VLF0K4)<br>**Motherboard:** Dell 049TYW<br>**CPU:** Intel Core Ultra 7 265 (20 cores, no hyperthreading, up to 6.5GHz, Arrow Lake)<br>**RAM:** 128GB DDR5-4800 (4x32GB, running at 4400 MT/s configured)<br>**GPU:** NVIDIA GeForce RTX 5060 (Blackwell) + Intel Arrow Lake-S integrated graphics — by far the newest GPU in the fleet, AV1 encode/decode capable<br>**BIOS:** Dell 1.13.2 (2026-03-04)<br>**OS:** Proxmox VE 9.2.4 (kernel 7.0.14-4-pve)<br>**NIC:** Intel I219-LM<br>**IP:** 192.168.1.12<br>**Name:** Babar — elephant, Jean de Brunhoff's *Babar*<br>**History:** Fresh Dell install, default hostname "pve" — renamed to babar, enterprise repos disabled, joined to cluster 2026-07-08.<br>**Best uses:** AI/Ollama (RTX 5060), Plex/Jellyfin hardware transcoding (AV1), heaviest VM workloads in the cluster, candidate to absorb shardik's primary-hypervisor role if instability continues.<br>**Notes:** Significantly outclasses aslan/maturin/shardik/blaine on every axis — CPU, RAM, and GPU. |
+### Storage
+| Device | Type | Size | Model | FS |
+|--------|------|------|-------|----|
+| nvme0n1 | NVMe | 953.9GB (1TB) | SK hynix PVC10 | LVM (pve-root 96GB, pve-data 816GB thin pool, swap 8GB) |
+---
 ## amontillado-win (192.168.1.100) ⭐ Best System
 | | |
 |--|--|
