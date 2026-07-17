@@ -1,7 +1,25 @@
 # Homelab Todo & Roadmap
-_Last updated: 2026-07-09 end of session (Babar joined the Proxmox cluster as 5th node (192.168.1.12, Dell Pro Tower Plus, Core Ultra 7 265, 128GB DDR5, RTX 5060) — full onboarding to Ansible/Zabbix/node_exporter/Uptime Kuma complete. Qdevice permanently removed — 5 physical nodes is odd-count and self-resolving, Proxmox itself refuses a qdevice now. kasm-2404-deb (VM 111) live-migrated off shardik to babar (hw_inv.md had its location wrong — was on shardik, not aslan as documented). NVIDIA driver installed on babar (610.43.03, open-kernel-module, DKMS, Secure Boot MOK-signed) after a near-miss where the generic Debian nvidia-driver package nearly removed proxmox-ve entirely (blocked by Proxmox's own pve-apt-hook safety mechanism). Ollama deployed in a privileged LXC (102) on babar with full RTX 5060 GPU passthrough, confirmed working with live model inference. Shardik's CPU MCE fault further decoded (bank 5/execution unit, uncorrected/context-corrupting) — RAM ruled out via successful aslan/maturin DIMM audits (both corrected to 64GB in hw_inv.md, were stale at 32GB); a 7-hour isolated stress-ng soak test was kicked off in a fresh LXC on shardik to try to reproduce the fault, result not yet checked. New known gaps: hw_inv.md still needs babar's final NVMe storage config and a correction to aslan's stale storage description; cluster storage.cfg has several dir-storage entries (SDA_store/hdd12tb/hdd3tb/nvme_store) that are unscoped to specific nodes and confirmed live-misbehaving on babar (aliasing local root disk instead of erroring) — needs a "nodes" restriction added before anyone trusts those names fleet-wide.)_
+_Last updated: 2026-07-12 Sunday weekly team meeting (scheduled, autonomous run — Chris not present live. Full 10-person status round held. No completions marked [x] on Chris's behalf since he wasn't present to confirm; new action items below need his review/prioritization at the next live session. See action items under each specialist's section and the new items logged this pass.)_
+
+_Prior update — 2026-07-10 Friday one-on-one (Hour 1 Claude School: better-prompts lesson delivered, assignment given — write a "loaded" prompt for the storage.cfg node-scoping risk, due next Friday. Hour 2: Sunday meeting prep brief generated from current backlog — see weekly_meeting notes / session output. No infra changes made this session, no new completions confirmed by Chris.)_
+
+_Prior update — 2026-07-09 end of session (Babar joined the Proxmox cluster as 5th node (192.168.1.12, Dell Pro Tower Plus, Core Ultra 7 265, 128GB DDR5, RTX 5060) — full onboarding to Ansible/Zabbix/node_exporter/Uptime Kuma complete. Qdevice permanently removed — 5 physical nodes is odd-count and self-resolving, Proxmox itself refuses a qdevice now. kasm-2404-deb (VM 111) live-migrated off shardik to babar (hw_inv.md had its location wrong — was on shardik, not aslan as documented). NVIDIA driver installed on babar (610.43.03, open-kernel-module, DKMS, Secure Boot MOK-signed) after a near-miss where the generic Debian nvidia-driver package nearly removed proxmox-ve entirely (blocked by Proxmox's own pve-apt-hook safety mechanism). Ollama deployed in a privileged LXC (102) on babar with full RTX 5060 GPU passthrough, confirmed working with live model inference. Shardik's CPU MCE fault further decoded (bank 5/execution unit, uncorrected/context-corrupting) — RAM ruled out via successful aslan/maturin DIMM audits (both corrected to 64GB in hw_inv.md, were stale at 32GB); a 7-hour isolated stress-ng soak test was kicked off in a fresh LXC on shardik to try to reproduce the fault, result not yet checked. New known gaps: hw_inv.md still needs babar's final NVMe storage config and a correction to aslan's stale storage description; cluster storage.cfg has several dir-storage entries (SDA_store/hdd12tb/hdd3tb/nvme_store) that are unscoped to specific nodes and confirmed live-misbehaving on babar (aliasing local root disk instead of erroring) — needs a "nodes" restriction added before anyone trusts those names fleet-wide.)_
 
 ---
+
+## Action Items — 2026-07-16 (babar onboarding gaps, live-verified)
+
+- [ ] ⚠️ **Add babar to `~/ansible_dev/inventory_auto` on git-ansible** — `[proxmox]` and `[linux]` groups, via `onboard2.yml` (not hand-edited), same as it should have been done 2026-07-08/09. Jordan.
+- [ ] **Add babar to hosts.md hostname table** — table stops before babar joined the cluster (2026-07-08). Morgan/Jordan.
+- [ ] **Add babar to backup Homepage dashboard** (backup-dietpi-deb:3002, next-server process) — likely same root cause as the Kuma manual-entry gap: no scripted onboarding step covers Homepage. Confirm with Drew/Jordan whether Homepage has a config file that can be scripted or if it's manual-UI only like Kuma.
+
+## Action Items — Weekly Team Meeting 2026-07-12 (new this session)
+
+- [ ] ⚠️ **Pull the shardik LXC 150 stress-ng soak test result** — test window (7 hrs, started 2026-07-08/09) closed days ago and nobody has captured the tmux pane yet. Jordan flagged this as the top open item blocking any further MCE diagnosis. `tmux capture-pane -pt <session>` on shardik, then compare timestamps against the bank 0 (2026-07-06) and bank 5 (2026-07-08/09) MCE events in `journalctl -k`.
+- [ ] **Sam proposal 1 (pending Chris approval): storage.cfg node-scoping linter.** Small script to audit every dir-storage entry in cluster storage.cfg and flag any missing a `nodes` restriction — directly targets the confirmed-live SDA_store/hdd12tb/hdd3tb/nvme_store aliasing bug found on babar. Sam's pitch: catches the next one of these before it silently returns wrong data instead of erroring.
+- [ ] **Sam proposal 2 (pending Chris approval): pre-push diff-check for MkDocs SCP workflow.** Wraps the todo.md/completed.md SCP step with a `git diff` against git-ansible's current state before committing, to catch working-directory/Gitea divergence before it breaks the checkbox-persist webhook — aimed at not repeating the 2026-06-28 completed.md overwrite incident.
+- [ ] Taylor confirmed backup-dietpi-deb's Kuma → Telegram wiring is in fact live (per 2026-07-05 resolution) — the older "ping-only" backlog line under Taylor's Next Week list is stale and can be dropped once Chris confirms.
+- [ ] Jordan reported weekly_patch.yml's 3am Sunday cron ran clean again this morning with no failure pings — fleet patch automation continues to hold.
 
 ## Decisions Still Needed from Chris
 
@@ -20,7 +38,7 @@ _Last updated: 2026-07-09 end of session (Babar joined the Proxmox cluster as 5t
 - ⚠️ **Near-miss: generic `apt install nvidia-driver` on babar attempted to remove `proxmox-ve` and the PVE kernel entirely.** Blocked automatically by Proxmox's own `pve-apt-hook` safety mechanism — no actual damage. Root cause: the generic Debian nvidia-driver metapackage drags in a full X11 desktop stack + conflicts with PVE's kernel packages, wrong tool for a headless hypervisor host. **Do not run `apt install nvidia-driver` (or any variant) on a Proxmox host — use NVIDIA's official `.run` installer instead.**
 - **NVIDIA driver installed on babar via the official `.run` installer** (610.43.03, `-m=kernel-open` — mandatory for RTX 5060/Blackwell GPUs, `--dkms` for kernel-update persistence), Secure Boot Machine-Owner-Key (MOK) signed and enrolled at the physical console. **Gotcha for next time:** the MOK enrollment screen appears *before* GRUB, not after — easy to miss if watching for the boot menu; a missed/dropped enrollment shows as `mokutil --list-new` returning empty after a reboot that should have prompted. Also, the actual signing cert isn't DKMS's own key — the NVIDIA installer generates and uses its own cert at `/usr/share/nvidia/nvidia-modsign-crt-<random>.der`; check `modinfo nvidia | grep -i sig` for the real signer rather than assuming.
 - **Ollama deployed on babar with full RTX 5060 GPU passthrough**, confirmed working with live model inference (llama3.2:3b, 53% GPU utilization, 2GB VRAM). Architecture: privileged LXC (102, 8 cores/16GB RAM, rootfs on the new `nvme512` storage), GPU passed through via `lxc.cgroup2.devices.allow`/`lxc.mount.entry` cgroup2 rules rather than full PCIe passthrough — far simpler than fighting unprivileged UID/GID idmap for a homelab use case. Matching userspace-only driver (`--no-kernel-module`) installed inside the container. Full architecture and gotchas saved to memory for reuse if GPU passthrough is needed elsewhere.
-- **Babar fully onboarded into fleet management** — Ansible inventory (`[proxmox]` and `[linux]` groups in `inventory_auto`, via the actual `onboard2.yml` playbook, not hand-edited), Zabbix agent2, Prometheus node_exporter (native systemd install, not Docker — babar has no Docker), Uptime Kuma (manual UI entry, no scripted path exists for Kuma registration in this repo).
+- ⚠️ **CORRECTION 2026-07-16: "Babar fully onboarded into fleet management" (below, originally logged 2026-07-08/09) was wrong on the Ansible piece.** Verified live via `grep -i babar ~/ansible_dev/inventory_auto` on git-ansible — babar is NOT in `[proxmox]` or `[linux]` groups. It is confirmed in `/etc/hosts` (192.168.1.12) but missing from `inventory_auto`, missing from hosts.md's hostname table, and missing from the backup Homepage dashboard (backup-dietpi-deb:3002). Original (inaccurate) claim preserved below for record: Zabbix agent2, Prometheus node_exporter, and Uptime Kuma manual entry are still believed accurate — only the Ansible inventory and doc/dashboard entries are confirmed missing. Original text: "Babar fully onboarded into fleet management — Ansible inventory (`[proxmox]` and `[linux]` groups in `inventory_auto`, via the actual `onboard2.yml` playbook, not hand-edited), Zabbix agent2, Prometheus node_exporter (native systemd install, not Docker — babar has no Docker), Uptime Kuma (manual UI entry, no scripted path exists for Kuma registration in this repo)."
 - **Cluster storage.cfg node-scoping risk confirmed live, not just theoretical.** `pvesm status` on babar shows SDA_store, hdd12tb, hdd3tb, and nvme_store all reporting identical Total/Used/Available numbers, matching `local` exactly — these storage definitions aren't scoped with a `nodes` restriction, so on a node where the "real" underlying path doesn't exist, they silently alias local root-disk stats instead of erroring. `tank-storage` (zfspool) fails outright on babar (`cannot open 'tank': no such pool`) for the same underlying reason. **Needs a `nodes` restriction added to each of these storage.cfg entries — real data-misdirection risk for anyone trusting these names cluster-wide, directly relevant to CRU/STL backup rotation.** Not yet fixed.
 
 ## Resolved This Session (2026-07-06)
@@ -186,7 +204,6 @@ _Full context for every item above, plus everything else not yet scheduled. Orga
 - [ ] Proxmox HA sequencing — **decided 2026-07-05:** hold off until (1) shared storage/ZFS replication exists between nodes, and (2) shardik's uptime lock expires. Revisit after both clear.
 
 ### Proxmox / Virtualization & VM Placement (Kai)
-- [x] **Babar added as 5th cluster node, 2026-07-08/09** — see Resolved This Session above. `garuda` remains reserved/unused in the naming list; it was never actually built as a physical node (the "pve3" items below are stale — no pve3 hardware exists yet, only the name reservation).
 - [ ] hw_inv.md: add babar's nvme128/nvme512 storage table entries (drives are mounted and working, just not documented yet)
 - [ ] Scope cluster storage.cfg dir-storage entries (SDA_store, hdd12tb, hdd3tb, nvme_store) with a `nodes` restriction — confirmed live-misbehaving on babar (aliasing local disk instead of the intended remote path). Alex + Kai.
 - [ ] Add pve3 (garuda) to the Proxmox cluster — **stale, no pve3 hardware built yet; garuda is name-reserved only** (shardik + maturin + aslan + blaine + babar, 5 nodes as of 2026-07-08)
@@ -201,7 +218,6 @@ _Full context for every item above, plus everything else not yet scheduled. Orga
 - [ ] GPU transcoding — revisit mediastack on aslan with GTX 1080 Ti passthrough once RAM allows (Casey + Kai)
 - [ ] Rebuild swarm01/02/03 when actually needed (currently destroyed, clean rebuild, no Ceph)
 - [ ] Deploy Traefik / Uptime Kuma / Homepage / Zabbix frontend in Swarm mode (longer-horizon)
-- [x] **Ollama deployed 2026-07-08/09 — on babar (RTX 5060), not aslan.** Privileged LXC 102, GPU passthrough confirmed working with live inference. This supersedes/redirects the line below — babar's RTX 5060 (8GB, newer architecture) turned out to be the better home than aslan's GTX 1080 Ti for this.
 - [ ] Local AI Assistant next steps: Open WebUI front-end, sysadmin/homelab/casual personalities, Whisper/Piper, MkDocs as RAG knowledge base — Ollama backend itself is done, this is the remaining build-out
 - [ ] Local AI Assistant (aslan): GTX 1080 Ti passthrough — still open as a *separate* potential second Ollama/transcoding instance if capacity is ever needed, not required now that babar covers the primary use case
 
@@ -209,7 +225,6 @@ _Full context for every item above, plus everything else not yet scheduled. Orga
 - [ ] STL_FIGURES — audit all scripts for hardcoded old label references (cru3 was: STL_Non-Fantasy → STL_#CRUNCH → STL_FIGURES)
 - [ ] STL_ACCESSORIES_TERRAIN (2.7TB) — rsync in progress since 2026-07-03, blocked on throughput crisis below
 - [ ] STL_SOURCE_MATERIAL (2.7TB) — rsync in progress since 2026-07-03, blocked on throughput crisis below
-- [x] **rsync throughput — major improvement 2026-07-05: ~400kB/s → 25MB/s (~60x).** No longer a viability crisis — 2.7TB is now ~30 hours, not 44 days. Root-cause work continues at lower urgency (Alex/Riley/Taylor), no longer blocking trust in the backups.
 - [ ] FUTURE_USE spare (5.5TB, ST6000VN0001) — partition, format NTFS, label. No content assignment yet.
 - [ ] SOURCE_MATERIAL (1.4T) — no drive assigned, on hold
 - [ ] STL_T-Z status — backup_drives.md and cru_plexfolder_stats.sh live cache disagree on completion date. Confirm actual state before trusting either.
@@ -236,7 +251,6 @@ _Full context for every item above, plus everything else not yet scheduled. Orga
   - [ ] Dedupe TRYAGAIN (fdupes/rdfind, post-rebuild); delete Weltgeist/Alea Iacta Est iocage jails (91GB)
 
 ### Network / VLAN / Rack Build (Riley)
-- [x] **Patch panel dropped from rack plan — decided 2026-07-05.** Only real structured cable run in the house (Flint 2 → Beryl AP) isn't anywhere near where the rack will go, so there's nothing to terminate at a panel. Cables plug straight into SG200-50 ports instead. Frees ~1U.
 - [ ] **Theoretical rack contents updated 2026-07-05:** SG200-50 (1U), MD1200 (2U, fixed spec), Dell R750 + HBA for TrueNAS (2U, fixed spec, replaces the vague "TrueNAS rack-mount chassis" placeholder), pfSense/SG-1100 on a 1U shelf, PDU (0-1U). Roughly ~12U or under without the patch panel — workable for the 12U half rack. UPS placement (rackmount vs. floor-standing) still undetermined. Pi rack + maturin shelf may need to live outside the enclosure if space stays tight.
 - [ ] docker-deb static IP or confirmed DHCP reservation ⚠️ (hosts Vaultwarden, Traefik, Portainer)
 - [ ] **VPN rationalization — DECIDED 2026-07-05: Tailscale.** Decommission WireGuard (mediastack) and ZeroTier (amontillado).
@@ -246,7 +260,7 @@ _Full context for every item above, plus everything else not yet scheduled. Orga
 - [ ] Scan guest WiFi subnet — third LG TV likely there
 - [ ] Unbound (local DNS resolver) for internal hostname resolution (garm, gan, garuda, etc. instead of raw IPs — Chris flagged 2026-07-06), Authelia (auth layer) — longer-horizon; likely depends on the pfSense/switch VLAN rollout landing first, Riley to scope sequencing
 - [ ] **Rack Build + pfSense + VLANs** — hardware in hand (APC half rack, SG-1100, SG200-50 configured, GS116 to retire). Priority raised: GS116 has a confirmed dead port after 7 years and no port visibility to diagnose others.
-  - Phase 0: **transport rack home** — currently offsite, needs Chris's car
+  - Phase 0: **transport rack home** — ✅ unblocked 2026-07-12, Chris has his car back. Ready whenever Chris can make the trip.
   - Phase 1 (no downtime): place rack, install SG200-50/PDU (no patch panel — dropped 2026-07-05, only real structured run is Flint2→Beryl and it's nowhere near the rack), Flint 2 to AP mode, SG-1100 offline config
   - Phase 2 (cutover, ~1hr outage): WAN → SG-1100, SG-1100 → SG200-50 trunk, migrate cables off GS116, verify + rollback plan
   - Phase 3 (IP migration, full weekend): DHCP reservations by MAC first, then inventory_auto/MkDocs/corosync/fstab/Kuma/Homepage/Zabbix updates
@@ -266,8 +280,6 @@ _Full context for every item above, plus everything else not yet scheduled. Orga
 - [ ] Evaluate HashiCorp Vault for Ansible secrets management
 
 ### Automation & Scripts (Sam)
-- [x] cru_stats.sh / backup_drives_update.sh path mismatch fix — ✅ Alex signed off 2026-07-05, Sam cleared to ship
-- [x] **Telegram bot (patch notifications) — done 2026-07-05.** OerthBot deployed, weekly_patch.yml wired, see Resolved This Session above.
 - [ ] General alert relay bot (Kuma/Zabbix/SMART → one channel) — approved 2026-07-05
 - [ ] CRU label linter script — approved 2026-07-05
 - [ ] auto network_inventory.md — arp-scan + masscan + ansible facts combined
@@ -305,7 +317,6 @@ _Full context for every item above, plus everything else not yet scheduled. Orga
 ### IoT / Maker / Pi Fleet / 3D Printing / Physical AV (Drew)
 - [ ] Ender 3 V2 yellow PLA — temp tower to dial in profile before structural prints
 - [ ] Logitech Z-680 2.1→5.1 issue — static/dropout fixed 2026-07-05 (PC audio driver, not hardware), but the longstanding "stuck at 2.1" issue is separate and still open — rear/center channels not diagnosed
-- [x] Pi 2B — ✅ renamed **docs-dietpi-deb** 2026-07-05 (192.168.1.121), role: documentation-adjacent host. Jordan to update Ansible inventory + hostname; Morgan to add to hosts.md.
 - [ ] Bring argos-pi4-deb and argos-pi4-wifi-deb online; wall-mount argos as HA field station (confirm location w/ Chris); onboard via Ansible
 - [ ] PoE switch + PoE HATs — single cable per Pi
 - [ ] Full cable management on rack
@@ -321,7 +332,6 @@ _Full context for every item above, plus everything else not yet scheduled. Orga
 - [ ] BIOS download links for shardik/maturin/aslan/blaine — links gathered, aslan (F52) and blaine (revision-dependent) need action
 - [ ] Add microcode + non-free-firmware to homelab_baseline.yml
 - [ ] Onboard pbs-deb via onboard2.yml
-- [x] **octopi-pi4-deb connectivity confirmed 2026-07-06** — homelab_baseline.yml run reached `ok` against the host (reaching "ok" requires a working SSH connection). The polkit/fwupd warning in the run is expected and harmless — that task already has `ignore_errors: yes`.
 - [ ] Add Zabbix repo task to homelab_baseline.yml (before agent install)
 - [ ] Fix SSH service name for DietPi hosts (ssh vs. dropbear)
 - [ ] Fix ansible_facts deprecation warnings before ansible-core 2.24
