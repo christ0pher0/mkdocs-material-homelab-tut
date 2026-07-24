@@ -1,5 +1,7 @@
 # Homelab Todo & Roadmap
-_Last updated: 2026-07-21 live session with Chris. Major finding: shardik's CPU is confirmed dead — this closes out the weeks-long MCE investigation thread (bank 0 2026-07-06, bank 5 2026-07-08/09, stress-ng soak test that was never pulled) with a real answer. No spare AM4 CPU in reserve; sourcing decision (buy vs. cannibalize urnst-deb or temerant-win, both Ryzen 5 1600X) still pending Chris. Large network/DNS/IP hygiene pass also done this session — see Resolved below. monitor-deb hit 100% disk full mid-session (real, not cosmetic — caused an ansible task to fail with "No space left on device"); freed ~6G (docker image prune + apt clean), now at 88%/3.6G free, but this is not a permanent fix — Prometheus (9G, 30d retention) will keep growing back toward the ceiling, retention/disk-size decision still open._
+_Last updated: 2026-07-24 live session with Chris. **Shardik explicitly deprioritized by Chris** — "not an issue till I say it is," babar is the better node and covers the primary use case; stop surfacing shardik as a top item. **Backup rotation confirmed done**: Chris confirmed movies, TV, and both outstanding STL rsyncs (STL_ACCESSORIES_TERRAIN, STL_SOURCE_MATERIAL) are complete — backup_drives.md corroborates Movies/TV with real populated stats and clean SMART; STL closure taken on Chris's word. Chris flagged renewed interest in physically setting up the rack + switch (Rack Build Phase 1) as the next priority. Two new curated lists added this session: Top 10 Big Projects and Top 10 Quick Wins (under 30 min each) — see new sections below._
+
+_Prior update — 2026-07-21 live session with Chris. Major finding: shardik's CPU is confirmed dead — this closes out the weeks-long MCE investigation thread (bank 0 2026-07-06, bank 5 2026-07-08/09, stress-ng soak test that was never pulled) with a real answer. No spare AM4 CPU in reserve; sourcing decision (buy vs. cannibalize urnst-deb or temerant-win, both Ryzen 5 1600X) still pending Chris. Large network/DNS/IP hygiene pass also done this session — see Resolved below. monitor-deb hit 100% disk full mid-session (real, not cosmetic — caused an ansible task to fail with "No space left on device"); freed ~6G (docker image prune + apt clean), now at 88%/3.6G free, but this is not a permanent fix — Prometheus (9G, 30d retention) will keep growing back toward the ceiling, retention/disk-size decision still open._
 
 _Prior update — 2026-07-19 Sunday weekly team meeting (scheduled, autonomous run — Chris not present live. Full 10-person status round held, two-hour format. Top blocker restated and escalated: the shardik LXC 150 stress-ng soak test result (7-hr run finished 2026-07-08/09) still hasn't been pulled — now 10+ days stale with no tmux capture logged, top item blocking further MCE diagnosis. Sam proposed two new projects this session (hw_inv.md auto-diff-audit, shardik MCE watcher) — pending Chris approval alongside the two proposals still open from 2026-07-12. No completions marked [x] on Chris's behalf since he wasn't present to confirm; new action items below need his review/prioritization at the next live session.)_
 
@@ -13,9 +15,42 @@ _Prior update — 2026-07-09 end of session (Babar joined the Proxmox cluster as
 
 ---
 
+## Decisions Made This Session (2026-07-24)
+
+- **Shardik deprioritized.** Chris's ruling: "not an issue till I say it is, I don't miss it really, babar is a better replacement." Not a standing blocker anymore — don't keep surfacing the AM4 CPU sourcing decision as a top item.
+- **Movies and TV backup rotation confirmed done.** Verified against backup_drives.md — all active drives show Jun 2026 backup dates, real populated Used/Free stats, clean SMART.
+- **STL_ACCESSORIES_TERRAIN and STL_SOURCE_MATERIAL rsyncs confirmed done**, per Chris.
+- **Rack + switch physical setup flagged as next priority** — Chris wants to move on Rack Build Phase 1 (place rack, install SG200-50/PDU). See Network / VLAN / Rack Build backlog.
+
+## Top 10 Big Projects (curated 2026-07-24)
+
+1. ~~Finish backup rotation~~ — ✅ done, see Decisions above.
+2. Move the half rack into place — Rack Build Phase 1 (Riley).
+3. Physically set up the SG200-50 switch — Rack Build Phase 1 (Riley).
+4. VLAN/pfSense buildout — SG-1100 offline config, segment the 4 approved VLANs. Natural next phase once the switch is in.
+5. STL/media collection frontend — Manyfold, or a custom page like vinyl_collection.html if Manyfold doesn't fit.
+6. DC salvage — finish surveying and decommissioning the remaining DCs (DC1 done, more to go).
+7. Drive database + hardware inventory web frontend — replaces manual doc-editing workflow.
+8. Dual reverse proxy cleanup — Caddy and Traefik both running on docker-deb; pick one, retire the other.
+9. Comics stack — Komga/Mylar, libraries not yet populated.
+10. Monitoring stack overhaul — Prometheus retention decision plus the still-undocumented Proxmox cluster diagram/monitoring architecture.
+
+## Quick Wins — Under 30 Minutes Each (curated 2026-07-24)
+
+1. Add babar to the Ansible inventory — `onboard2.yml` scoped to babar.
+2. Confirm Open WebUI loads clean at 192.168.1.34:3000.
+3. Set git identity on restic-deb — `git config --global user.email/user.name`.
+4. Check the 1 HIGH Zabbix alert sitting on the dashboard.
+5. Add babar to the hosts.md hostname table.
+6. Confirm batocera-deb and pi3-deb are actually in `[linux_skip]`, not `[linux]`.
+7. Drop the stale "Kuma ping-only" line in Taylor's backlog — Telegram wiring confirmed live 2026-07-05.
+8. Remove the stale "cru_stats.sh path fix" line under Sam's list — confirmed already done 2026-07-06.
+9. Confirm whether the Zabbix web frontend is actually deployed/reachable.
+10. Wire SMART alerts into smartd.conf — script already deployed to `/opt/scripts/`, just needs the config line added.
+
 ## Action Items — 2026-07-21 (live session with Chris)
 
-- [ ] ⚠️ **Source an AM4 CPU for shardik.** No spare in hw_reserve.md. Two cannibalize candidates in the fleet, both Ryzen 5 1600X: urnst-deb (tagged "CPU swap test bench") or temerant-win (earmarked for the TrueNAS rebuild — pulling its CPU would need to be sequenced against that project). Buying new is the other option. **Decision pending Chris.**
+- [ ] Source an AM4 CPU for shardik. No spare in hw_reserve.md. Two cannibalize candidates in the fleet, both Ryzen 5 1600X: urnst-deb (tagged "CPU swap test bench") or temerant-win (earmarked for the TrueNAS rebuild — pulling its CPU would need to be sequenced against that project). Buying new is the other option. **Deprioritized 2026-07-23 per Chris — not urgent, babar covers the primary use case. Revisit only when Chris raises it.**
 - [ ] Confirm whether urnst-deb being administratively offline today is prep for the shardik CPU pull — asked, no answer yet.
 - [ ] **Prometheus retention/disk decision for monitor-deb.** Currently 30d retention producing 9G on a ~32G disk; disk hit 100% full today (real outage-causing, not cosmetic — an ansible task failed with "No space left on device"). Freed ~6G today (docker prune + apt clean) as a stopgap, but this refills over time. Options: lower retention (loses history), expand the VM's disk (Kai/Proxmox-side), or accept periodic manual cleanup. **Decision pending Chris.**
 - [ ] Add babar to `~/ansible_dev/inventory_auto` — **re-confirmed still missing 2026-07-21** (`grep -in babar inventory_auto` returns nothing). This is the same gap first flagged 2026-07-16 (see below); babar has never been in Ansible's inventory since joining the cluster 2026-07-08. Jordan, via onboard2.yml.
@@ -50,9 +85,10 @@ _Prior update — 2026-07-09 end of session (Babar joined the Proxmox cluster as
 - [ ] ⚠️ **Stress-ng soak test result STILL not pulled — now 10+ days stale.** Test window closed 2026-07-08/09, first flagged as top blocker at the 2026-07-12 meeting, still sitting unpulled a week later. Jordan/Kai: `tmux capture-pane -pt <session>` on shardik, compare against the bank 0 (2026-07-06) and bank 5 (2026-07-08/09) MCE timestamps in `journalctl -k`. Nothing further happens on shardik's MCE diagnosis until this is read.
 - [ ] **Sam proposal 3 (pending Chris approval): hw_inv.md auto-diff-audit.** Ansible fact-gathering (RAM/storage) diffed against hw_inv.md on a schedule — targets the recurring "docs said 32GB, box has 64GB" pattern that's hit aslan and maturin twice now.
 - [ ] **Sam proposal 4 (pending Chris approval): shardik MCE watcher.** Lightweight journalctl/rasdaemon poll that pings Telegram the moment a new MCE bank event lands, so the next occurrence doesn't sit undiscovered in a boot log for days.
-- [ ] Alex flagged STL_ACCESSORIES_TERRAIN and STL_SOURCE_MATERIAL rsyncs (running since 2026-07-03) haven't had a real status check in two weeks — needs a live percent-complete confirm before either gets assumed done.
+- [x] Movies and TV backups — **confirmed done 2026-07-24.** backup_drives.md shows all active Movie/TV drives with Jun 2026 backup dates, real populated Used/Free stats, clean SMART. Matches Chris's report.
+- [x] STL_ACCESSORIES_TERRAIN and STL_SOURCE_MATERIAL rsyncs — **confirmed done by Chris 2026-07-24.**
 - [ ] Morgan's undocumented-changes tally: babar's three 2026-07-16 onboarding gaps (Ansible inventory, hosts.md, Homepage dashboard) are still open — carried forward again, no movement this week.
-- [ ] Riley: rack Phase 1 (place rack, install SG200-50/PDU) still waiting on Chris's physical time — transport unblocked since 2026-07-12, over a week with no movement.
+- [ ] Riley: rack Phase 1 (place rack, install SG200-50/PDU) still waiting on Chris's physical time — transport unblocked since 2026-07-12. **Chris flagged renewed interest 2026-07-24 — this is now his stated next priority.**
 
 ## Decisions Still Needed from Chris
 
@@ -278,8 +314,8 @@ _Full context for every item above, plus everything else not yet scheduled. Orga
 
 ### Storage, Backup & CRU Rotation (Alex)
 - [ ] STL_FIGURES — audit all scripts for hardcoded old label references (cru3 was: STL_Non-Fantasy → STL_#CRUNCH → STL_FIGURES)
-- [ ] STL_ACCESSORIES_TERRAIN (2.7TB) — rsync in progress since 2026-07-03, blocked on throughput crisis below
-- [ ] STL_SOURCE_MATERIAL (2.7TB) — rsync in progress since 2026-07-03, blocked on throughput crisis below
+- [x] STL_ACCESSORIES_TERRAIN (2.7TB) — done, confirmed by Chris 2026-07-24.
+- [x] STL_SOURCE_MATERIAL (2.7TB) — done, confirmed by Chris 2026-07-24.
 - [ ] FUTURE_USE spare (5.5TB, ST6000VN0001) — partition, format NTFS, label. No content assignment yet.
 - [ ] SOURCE_MATERIAL (1.4T) — no drive assigned, on hold
 - [ ] STL_T-Z status — backup_drives.md and cru_plexfolder_stats.sh live cache disagree on completion date. Confirm actual state before trusting either.
@@ -416,7 +452,7 @@ _Full context for every item above, plus everything else not yet scheduled. Orga
 | Node | Current | Grail Target | Needed |
 |---|---|---|---|
 | shardik | 64GB (confirmed maxed, board ceiling is 64GB) | — | ⚠️ **CPU dead as of 2026-07-21 — RAM upgrade path moot until a CPU is sourced.** Table entry below (32GB/128GB target) is stale, corrected 2026-07-21 per live hw_inv.md figures. |
-| aslan | ✅ 64GB (4×16GB), live dmidecode-confirmed max is 128GB | 128GB (4×32GB UDIMM) | 4×32GB — scavenging DC2/DC3. Partial option: 2×32GB (keep 2×16GB) gets to 96GB for less. |
+| aslan | ✅ **96GB installed 2026-07-22** (2×32GB + 2×16GB mixed) — Chris had 2×32GB sticks on hand already, no purchase needed | 128GB (4×32GB UDIMM) | 2×32GB more (swap the remaining 2×16GB) for full 128GB — not urgent, 96GB is solid headroom for now |
 | maturin | ✅ 64GB (4×16GB) — **live dmidecode-confirmed 2026-07-21: board ceiling is 64GB, already maxed** | 64GB (maxed) | None — this row was stale (previously said 32GB current/needs 4×16GB), corrected. |
 | blaine | 32GB DDR3-1333, live dmidecode-confirmed max is 32GB | 32GB | ✅ sufficient, confirmed maxed, no upgrade path exists |
 
