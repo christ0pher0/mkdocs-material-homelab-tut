@@ -1,5 +1,7 @@
 # Homelab Todo & Roadmap
-_Last updated: 2026-07-24 Friday one-on-one (scheduled, autonomous run — Chris not present live). Hour 1 Claude School: "scheduled tasks vs. asking Claude directly" taught, using this session itself as the live example. Follow-up on 2026-07-17's assignment (demand a proof-command before marking a specialist's "done" as [x]): partially applied — today's earlier live session corroborated Movies/TV backups against real backup_drives.md data, but STL closure was taken on Chris's word alone, no command cited. New assignment: pick one recurring manual check and classify it (scheduled task vs. Sam automation vs. keep live) — due next Friday. Hour 2: Sunday prep brief generated — see session output, top items are Rack Build Phase 1, Sam's 4 stalled proposals, and the Prometheus retention decision. No infra changes made, no completions confirmed by Chris (not present)._
+_Last updated: 2026-07-25 live session with Chris. Scrutiny host-id labeling added across all 5 spoke collectors (maturin/aslan/blaine/babar/freenas-bsd) — dashboard now groups drives by hostname instead of bare device paths, closing out the 2026-07-24 Scrutiny build. Docker & LXC recommendation lists (10 each, not currently running) curated and logged — see new section below. Snipe-IT correctly identified as already deployed, swapped for Stirling-PDF in the LXC list. Starter-batch pick for next deploys: **NetBox and Immich** (Scrutiny already done). Session wrapped for the night, no other completions confirmed._
+
+_Prior update — 2026-07-24 Friday one-on-one (scheduled, autonomous run — Chris not present live). Hour 1 Claude School: "scheduled tasks vs. asking Claude directly" taught, using this session itself as the live example. Follow-up on 2026-07-17's assignment (demand a proof-command before marking a specialist's "done" as [x]): partially applied — today's earlier live session corroborated Movies/TV backups against real backup_drives.md data, but STL closure was taken on Chris's word alone, no command cited. New assignment: pick one recurring manual check and classify it (scheduled task vs. Sam automation vs. keep live) — due next Friday. Hour 2: Sunday prep brief generated — see session output, top items are Rack Build Phase 1, Sam's 4 stalled proposals, and the Prometheus retention decision. No infra changes made, no completions confirmed by Chris (not present)._
 
 _Prior update — 2026-07-24 live session with Chris. **Shardik explicitly deprioritized by Chris** — "not an issue till I say it is," babar is the better node and covers the primary use case; stop surfacing shardik as a top item. **Backup rotation confirmed done**: Chris confirmed movies, TV, and both outstanding STL rsyncs (STL_ACCESSORIES_TERRAIN, STL_SOURCE_MATERIAL) are complete — backup_drives.md corroborates Movies/TV with real populated stats and clean SMART; STL closure taken on Chris's word. Chris flagged renewed interest in physically setting up the rack + switch (Rack Build Phase 1) as the next priority. Two new curated lists added this session: Top 10 Big Projects and Top 10 Quick Wins (under 30 min each) — see new sections below._
 
@@ -28,6 +30,21 @@ _Prior update — 2026-07-09 end of session (Babar joined the Proxmox cluster as
 
 - ⚠️ **ConvertX deployed on docker-deb (port 3005) — ran into a real Vaultwarden/Caddy outage while setting it up, now fixed.** Chris couldn't log into the fresh ConvertX account and Bitwarden was throwing "Error saving" on new items. Root cause found via live troubleshooting: Caddy's TLS listener on docker-deb (shared across all 3 site blocks on port 8443/443 internal) was poisoned by an expired unmanaged cert for `docker-deb.taild502ad.ts.net` (a Tailscale-issued cert, referenced by explicit file path in the Caddyfile) — this broke the TLS handshake for every site sharing that listener, including vaultwarden.lan, not just the expired one. Vaultwarden's mount, config, and the container itself were all healthy the whole time; this was purely a shared-listener TLS cert issue. **Fix:** `sudo tailscale cert --cert-file /var/lib/tailscale/certs/docker-deb.taild502ad.ts.net.crt --key-file ... docker-deb.taild502ad.ts.net` to regenerate (Tailscale's background renewal had actually already refreshed the file on disk — Caddy just hadn't reloaded it since), then `docker restart caddy`. Confirmed fixed via `curl --resolve vaultwarden.lan:8443:127.0.0.1 https://vaultwarden.lan:8443` returning real Vaultwarden HTML. **Gotcha for next time:** testing a multi-site Caddy config with curl requires `--resolve` to force the correct SNI — setting only `-H "Host: ..."` doesn't affect the TLS handshake and will misleadingly fail on every site, cert-healthy or not.
 - **Correction to Taylor's "Vaultwarden autofill port-matching bug" backlog line (Security & Monitoring section below):** today's Bitwarden "won't save logins" symptom was NOT that bug — it was this Caddy cert issue causing outright write failures, not an autofill-detection quirk. The original port-matching autofill bug is unconfirmed/still separate, not touched today.
+- ✅ **ConvertX now fully working over HTTPS at https://convertx.lan:8443.** ConvertX itself couldn't log in over plain HTTP (session cookie has the Secure flag; ConvertX's own docs flag this exact symptom — fixed short-term with `HTTP_ALLOWED=true`, then done properly): added a `convertx.lan` site block to the same Caddyfile (`tls internal`, `reverse_proxy 192.168.1.34:3005` — host-mapped port, not the container name, since ConvertX is a separate compose stack not on Caddy's Docker network), added `192.168.1.34 convertx.lan` to the **router's own `/etc/hosts`** (192.168.1.1, GL-MT6000) — this is a separate DNS source from git-ansible's hosts file and is what actually resolves friendly `.lan` names for Chris's own workstation/phone, since Ansible's hosts-push only reaches the managed Linux fleet. **Confirmed real, pre-existing issue while debugging this:** hitting `convertx.lan` or `vaultwarden.lan` on the *default* ports (80/443, no port specified) returns a generic 404 from something that is NOT our Caddy container — Caddy only publishes 8443/8088 on this host. This lines up exactly with the standing "Dual reverse proxy — Caddy + Traefik both on docker-deb" backlog item (Casey/Riley, Media section below) — Traefik is almost certainly the thing answering on the default ports. Not resolved today; both services must be accessed with an explicit `:8443` for now.
+- ✅ **Both vaultwarden.lan:8443 and convertx.lan:8443 confirmed fully secure end-to-end 2026-07-24.** Caddy's local CA root cert exported from docker-deb and trusted on amontillado — imported into Windows' LocalMachine\Root store (PowerShell `Import-Certificate`, needed an elevated/admin window — first attempt failed with Access Denied from a non-admin shell) and separately into Firefox's own cert store (Firefox doesn't read the Windows store by default — imported directly via Settings → Privacy & Security → Certificates → View Certificates → Authorities → Import, checked "Trust this CA to identify websites"). No more browser warnings, no cleartext traffic on either site.
+- ⚠️ **Router's own `/etc/hosts` (192.168.1.1) confirmed stale — separate finding, not yet actioned.** No entries at all for shardik/maturin/aslan/blaine/babar; still lists swarm01/02/03 (long deleted) and old pi1-deb/pi2-deb/octopi-deb naming. This is the DNS source of truth for any client that isn't part of the managed Ansible fleet (Chris's own workstation/phone) — worth a cleanup pass, and worth remembering that git-ansible's hosts fixes earlier this cycle (truenas-bsd, rocky-rpm, etc.) do **not** reach this file and so won't resolve from Chris's own devices unless mirrored here too.
+
+## Scrutiny Fleet-Wide SMART Monitoring — ✅ DONE 2026-07-24
+
+- **Full build completed same-day as spec'd.** Hub (Scrutiny + InfluxDB) on docker-deb at http://192.168.1.34:8082. Spoke collectors deployed and confirmed publishing on maturin, aslan, blaine, babar (Docker wasn't installed on any PVE host — used native Go binary + cron instead, not the Docker collector originally planned), and freenas-bsd (native FreeBSD binary on the TRYAGAIN pool — not `/opt`, since TrueNAS CORE boot environments can wipe root-filesystem changes on update; cron job added via GUI Tasks → Cron Jobs, not raw crontab, since CORE's config is middleware-managed and won't persist a manually-edited crontab). All collectors run every 30 min (`0,30 * * * *`).
+- **First-pass results, all clean after investigation** — several flagged errors on first collector run turned out to be false alarms or already-known conditions, not new problems:
+  - Blaine sdc "INQUIRY failed" — confirmed online and actively serving CRU data (READING/TROVE WEBSITE/RPG_ARCHIVE via restic-deb); CRU hot-swap backplane likely doesn't pass SMART commands through even though normal I/O works fine.
+  - Blaine sda/sdd flagged "error log" (exit 64) on the collector's first pass — direct `smartctl -a` showed sda completely clean; sdd (blaine's own OS boot SSD) has only old errors from initial burn-in (7 hrs power-on time), SSD_Life_Left 253/253, not current.
+  - Aslan sdb "error log" flag — matches the already-documented condition (12TB HDD, 22 uncorrectable errors, deliberately relegated to non-critical/bulk use only in hw_inv.md). Known, not new.
+  - Aslan sdc "checksum error" flag — direct check showed completely clean (Orico SATA SSD, aslan's actual OS drive per the hw_inv.md correction). One-off blip on first collector pass.
+  - **Net result: no actual drive health problems found anywhere in the fleet.** Good outcome for a first-ever fleet-wide SMART sweep.
+- ⚠️ **Real gap found along the way, unrelated to Scrutiny itself:** TrueNAS's `/etc/resolv.conf` had no working DNS path at first (`fetch` couldn't resolve github.com) — traced to the Global Configuration nameserver; confirmed working once verified against `192.168.1.1`. Worth remembering if any future external-fetch task on TrueNAS mysteriously fails.
+- Deployment method note for future fleet-wide reuse: Ansible ad-hoc (`ansible <hosts> -i ~/ansible_dev/inventory_auto -m shell -a "<command>" --become --ask-vault-pass` from git-ansible) is far faster than hopping SSH sessions host-by-host for read-only fleet checks — used successfully to pull `smartctl --scan` from maturin/aslan/blaine in one shot.
 
 ## Top 10 Big Projects (curated 2026-07-24)
 
@@ -54,6 +71,36 @@ _Prior update — 2026-07-09 end of session (Babar joined the Proxmox cluster as
 8. Remove the stale "cru_stats.sh path fix" line under Sam's list — confirmed already done 2026-07-06.
 9. Confirm whether the Zabbix web frontend is actually deployed/reachable.
 10. Wire SMART alerts into smartd.conf — script already deployed to `/opt/scripts/`, just needs the config line added.
+
+## Docker & LXC — Not Currently Running (curated 2026-07-25)
+
+Docker candidates:
+
+1. Immich — photo/video library with mobile auto-backup and AI search.
+2. Nextcloud — personal cloud storage, file sync, office suite.
+3. n8n — workflow automation; could glue Telegram bot, Kuma, and Zabbix alerts into one pipeline.
+4. Watchtower — auto-updates container images on a schedule.
+5. Dockge or Komodo — visual compose-stack manager.
+6. ~~Scrutiny~~ — ✅ done, see Scrutiny section above (built 2026-07-24).
+7. Speedtest Tracker — scheduled speed tests with history graphs.
+8. Changedetection.io — monitors web pages for changes (restocks, price drops, etc.).
+9. Firefly III — personal finance/budget tracker.
+10. BookStack — wiki with a real editing UI, complements raw MkDocs markdown.
+
+LXC candidates:
+
+1. NetBox — IP address management and network documentation; would have caught the rocky-rpm/idee-deb/stale-hosts drift chased down by hand this cycle.
+2. Semaphore UI — web UI for running Ansible playbooks instead of SSH + CLI every time.
+3. Frigate — NVR with AI object detection, for whenever cameras get added.
+4. Paperless-ngx — document scanning/OCR/archive.
+5. Beszel — lightweight real-time resource monitoring across the fleet.
+6. Wiki.js — more interactive wiki/knowledge base than raw MkDocs.
+7. ntfy — simple push-notification server.
+8. Vikunja — task/kanban project management; could complement or partially replace the todo.md workflow.
+9. Actual Budget — lightweight personal budgeting.
+10. ~~Snipe-IT~~ → Stirling-PDF — self-hosted PDF toolkit (merge, split, OCR, watermark, compress), complements ConvertX. (Snipe-IT already deployed — plow-rpm, 192.168.1.53 — see Hardware Inventory Completion below for its stale-since-05-25 refresh item.)
+
+**Starter batch recommendation (not "install all 20 at once"):** NetBox (addresses IP/DNS drift directly), Scrutiny (✅ already done), Immich (pure upside, no dependency). Rest stays backlog, one at a time — deploy, verify, move on.
 
 ## Action Items — 2026-07-21 (live session with Chris)
 
@@ -471,7 +518,7 @@ _Full context for every item above, plus everything else not yet scheduled. Orga
 - [ ] Automate hardware inventory audit vs hw_inv.md — this session found aslan/maturin RAM stale (32GB documented, 64GB actual) and aslan's storage description stale; recurring enough now to script (Ansible fact-gathering + diff against hw_inv.md), not keep catching by hand — Jordan/Sam
 - [ ] Photo + dmidecode all 5 waiting systems, pve3, printers (Elegoo Mars 3, Ender 3 V1, Flashforge Dreamer), GPUs, laptops
 - [ ] SCP new photos to MkDocs docs/images/hw/
-- [ ] Import all hardware into Snipe-IT (192.168.1.53 — plow-rpm)
+- [ ] **Snipe-IT refresh, not initial import** — corrected 2026-07-24: already has 27 assets logged (plow-rpm, 192.168.1.53), but last activity is 2026-05-25, ~2 months stale. Missing babar entirely (joined 2026-07-08), doesn't reflect shardik's CPU death (2026-07-21) or aslan's RAM upgrade (2026-07-22). Needs a catch-up pass, not a from-scratch import.
 - [ ] Add 12TB + suspect 20TB HDD to hw_reserve.md (SMART both); document hw_reserve NICs/RAM found
 - [ ] Identify alma-rpm, rocky-rpm, 2404HV-deb roles; identify DIGIDIOT.local AD usage
 
