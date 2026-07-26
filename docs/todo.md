@@ -61,16 +61,23 @@ _Prior update — 2026-07-09 end of session (Babar joined the Proxmox cluster as
 
 ## Quick Wins — Under 30 Minutes Each (curated 2026-07-24)
 
-1. Add babar to the Ansible inventory — `onboard2.yml` scoped to babar.
-2. Confirm Open WebUI loads clean at 192.168.1.34:3000.
-3. Set git identity on restic-deb — `git config --global user.email/user.name`.
-4. Check the 1 HIGH Zabbix alert sitting on the dashboard.
-5. Add babar to the hosts.md hostname table.
-6. Confirm batocera-deb and pi3-deb are actually in `[linux_skip]`, not `[linux]`.
-7. Drop the stale "Kuma ping-only" line in Taylor's backlog — Telegram wiring confirmed live 2026-07-05.
-8. Remove the stale "cru_stats.sh path fix" line under Sam's list — confirmed already done 2026-07-06.
-9. Confirm whether the Zabbix web frontend is actually deployed/reachable.
-10. Wire SMART alerts into smartd.conf — script already deployed to `/opt/scripts/`, just needs the config line added.
+1. ~~Add babar to the Ansible inventory~~ — ✅ done 2026-07-26.
+2. ~~Confirm Open WebUI loads clean at 192.168.1.34:3000~~ — ✅ confirmed 2026-07-26, loads clean, llama3.2:3b ready, no errors.
+3. ~~Set git identity on restic-deb~~ — ✅ confirmed already set 2026-07-26 (coshaughnessy@gmail.com / cos), no action needed.
+4. ~~Check the 1 HIGH Zabbix alert sitting on the dashboard~~ — ✅ checked 2026-07-26: pihole-pi1-deb mmcblk0 disk latency spike, no mmc errors in dmesg, host idle at check time. Transient blip on an old 3.79GB SD card, not a failing-card signal. No action needed.
+5. ~~Add babar to the hosts.md hostname table~~ — ✅ done automatically 2026-07-26 as a side effect of the onboard2.yml run (row exists, MAC/OS/status fields placeholder "—" for now).
+6. ~~Confirm batocera-deb and pi3-deb are actually in `[linux_skip]`, not `[linux]`~~ — **premise was wrong 2026-07-26: no `[linux_skip]` group exists in inventory_auto** (actual groups: linux, windows, bsd, network, android, media, mac, debian, redhat, pi, proxmox, control). Mid-fix mistake: assumed the group name instead of checking, briefly deleted both hosts from the file entirely (sed insert silently no-opped against a nonexistent group), caught immediately and restored to `[linux]` exactly as before — confirmed via `grep -n -A 5 '\[linux\]'`. **Open decision for Chris/Jordan, not resolved tonight:** should batocera-deb/pi3-deb move to `[pi]` instead of `[linux]`, given they're both Pi hardware and may not be good candidates for standard Debian package/patch playbooks? Left in `[linux]` (original state) pending that call.
+7. ~~Drop the stale "Kuma ping-only" line in Taylor's backlog~~ — ✅ done 2026-07-26.
+8. ~~Remove the stale "cru_stats.sh path fix" line under Sam's list~~ — ✅ already struck as done in Sam's section, confirmed 2026-07-26.
+9. ~~Confirm whether the Zabbix web frontend is actually deployed/reachable~~ — ✅ confirmed 2026-07-26, live dashboard screenshot from Chris (192.168.1.29:8080, 38 hosts, real data).
+10. **Wire SMART alerts into smartd.conf — scope corrected 2026-07-26, no longer a quick win.** Fleet search (`ansible linux -m shell -a "test -f /opt/scripts/smartd_telegram_alert.sh"`) confirmed the script only exists on git-ansible (a VM, no real physical disk to monitor) — every host with actual drives (babar, docker-deb, restic-deb, monitor-deb, etc.) is missing it. Real scope: confirm smartd runs as a daemon on physical-drive hosts, push the script out, wire each smartd.conf individually. **Chris confirmed 2026-07-26: still wants this — Telegram is active/push, Scrutiny's dashboard is passive/pull, not redundant.** Promoted to a real backlog item, not started tonight (time + scope). Needs proper specing next session: which hosts (likely same set as Scrutiny spokes: maturin/aslan/blaine/babar — freenas-bsd has its own native alerting, probably out of scope here), smartd daemon-mode confirmation first.
+
+## Scrutiny → Telegram Alerting (found 2026-07-26, not yet built)
+
+- **Scrutiny's Hub has native Telegram notification support** (via Shoutrrr, same library pattern as Discord/Slack/ntfy/etc.) — no separate script or Zabbix wiring needed. Config: `telegram://<bot-token>@telegram?chats=@channel-or-chat-id`, placed in `scrutiny.yaml` at `/opt/scrutiny/config/` on docker-deb (already mounted by the Hub container). Confirmed via `example.scrutiny.yaml` from the official repo.
+- **Chris confirmed he wants this** — reuse OerthBot's existing token + OerthChannel rather than a second bot, same pattern as Kuma's Telegram wiring.
+- **Not started 2026-07-26 — real scope, not a quick win:** needs OerthBot's token pulled from `/etc/oerthbot/config.json` on git-ansible and written into docker-deb's `scrutiny.yaml` without the secret getting echoed into any terminal/chat history along the way, then a Scrutiny container restart and a live notification test (`curl -X POST http://localhost:8082/api/health/notify`).
+- This also separately confirms: Zabbix's *default* Linux template only covers disk I/O performance/latency, not SMART attribute data — Zabbix does have an official "Smartctl by Zabbix agent 2" template that could pull real SMART data (zabbix-agent2 is already fleet-wide), but it hasn't been imported/linked. Not needed now that Scrutiny→Telegram covers this more directly.
 
 ## Docker & LXC — Not Currently Running (curated 2026-07-25)
 
@@ -107,7 +114,7 @@ LXC candidates:
 - [ ] Source an AM4 CPU for shardik. No spare in hw_reserve.md. Two cannibalize candidates in the fleet, both Ryzen 5 1600X: urnst-deb (tagged "CPU swap test bench") or temerant-win (earmarked for the TrueNAS rebuild — pulling its CPU would need to be sequenced against that project). Buying new is the other option. **Deprioritized 2026-07-23 per Chris — not urgent, babar covers the primary use case. Revisit only when Chris raises it.**
 - [ ] Confirm whether urnst-deb being administratively offline today is prep for the shardik CPU pull — asked, no answer yet.
 - [ ] **Prometheus retention/disk decision for monitor-deb.** Currently 30d retention producing 9G on a ~32G disk; disk hit 100% full today (real outage-causing, not cosmetic — an ansible task failed with "No space left on device"). Freed ~6G today (docker prune + apt clean) as a stopgap, but this refills over time. Options: lower retention (loses history), expand the VM's disk (Kai/Proxmox-side), or accept periodic manual cleanup. **Decision pending Chris.**
-- [ ] Add babar to `~/ansible_dev/inventory_auto` — **re-confirmed still missing 2026-07-21** (`grep -in babar inventory_auto` returns nothing). This is the same gap first flagged 2026-07-16 (see below); babar has never been in Ansible's inventory since joining the cluster 2026-07-08. Jordan, via onboard2.yml.
+- [x] Add babar to `~/ansible_dev/inventory_auto` — **done 2026-07-26.** Ran `onboard2.yml` (`proxmox` and `linux` groups, both confirmed via `grep -in babar inventory_auto`). Full config pass also landed: packages, SSH keys/hardening, Zabbix agent2. Closes the gap open since babar joined the cluster 2026-07-08.
 - [ ] Clean up `inventory_auto` group membership — the `all`/default groups include many non-Ansible-manageable devices (router, network gear, printer, phones, TVs, Roomba, Windows boxes needing WinRM not SSH). Every ad-hoc/playbook run against `all` throws ~15 "UNREACHABLE" errors that are just noise, not real problems. Worth scoping a proper `[linux]`/`[proxmox]` group and keeping non-Linux devices out entirely.
 - [ ] Two hosts (pihole-pi1-deb, blank-dietpi-deb) missed their apt-update step in today's baseline run due to a dpkg/apt lock collision (leftover from an earlier accidental duplicate ansible-playbook run colliding with itself) — safe to pick up on the next scheduled run, low priority.
 - [ ] Verify Homepage "Pis" section icons render correctly after a refresh (`home-assistant.png`, `octoprint.png`, `pi-hole.png`, `batocera.png`, `raspberry-pi.png` — best-guess icon names against gethomepage's standard set, batocera.png especially unconfirmed).
@@ -122,7 +129,7 @@ LXC candidates:
 
 ## Action Items — 2026-07-16 (babar onboarding gaps, live-verified)
 
-- [ ] ⚠️ **Add babar to `~/ansible_dev/inventory_auto` on git-ansible** — `[proxmox]` and `[linux]` groups, via `onboard2.yml` (not hand-edited), same as it should have been done 2026-07-08/09. Jordan.
+- [x] **Add babar to `~/ansible_dev/inventory_auto` on git-ansible** — **done 2026-07-26**, see Action Items 2026-07-21 above for detail.
 - [ ] **Add babar to hosts.md hostname table** — table stops before babar joined the cluster (2026-07-08). Morgan/Jordan.
 - [ ] **Add babar to backup Homepage dashboard** (backup-dietpi-deb:3002, next-server process) — likely same root cause as the Kuma manual-entry gap: no scripted onboarding step covers Homepage. Confirm with Drew/Jordan whether Homepage has a config file that can be scripted or if it's manual-UI only like Kuma.
 
@@ -290,7 +297,7 @@ _Every specialist gets ≥5 pulled tasks. Goal: clear backlog before scope creep
 6. STL_FIGURES label audit — confirm no scripts still reference old cru3 names
 
 ### Taylor
-1. Wire an actual notification channel into backup-dietpi-deb's Kuma instance — it's ping-only right now, which is why today's shardik drop didn't page anyone
+1. ~~Wire an actual notification channel into backup-dietpi-deb's Kuma instance~~ — **stale, removed 2026-07-26.** Telegram wiring confirmed live 2026-07-05.
 2. Configure Zabbix → Telegram alerting
 3. Set Uptime Kuma's TrueNAS poll interval to 30 seconds
 4. Document the full Zabbix topology — server on monitor-deb, 11 agents, confirm whether Grafana pulls from it
