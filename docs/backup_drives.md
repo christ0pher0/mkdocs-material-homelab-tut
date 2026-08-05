@@ -1,5 +1,5 @@
 # Backup Drive Inventory
-_Last updated: 2026-06-21_
+_Last updated: 2026-08-05_
 _Physical removable backup drives — rotated through restic-deb CRU bays_
 _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 
@@ -47,14 +47,14 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 | Label | Model | Size | Used | Free | Serial | Backup | SMART |
 |-------|-------|------|------|------|--------|--------|-------|
 | STL_#-B | Toshiba DT01ACA300 | 3TB | 2.7T | 70G | Y5FM2SEGS | May 2026 | ✅ |
-| STL_ACCESSORIES_TERRAIN | Seagate ST3000NM0033-9ZM178 | 3TB | — | — | Z1Y331AG | Jul 2026 | ✅ PASSED (2026-07-03) — Airflow_Temp marginal, 45°C past max |
+| STL_ACCESSORIES_TERRAIN | Seagate ST3000NM0033-9ZM178 | 3TB | 1.5T | 1.3T | Z1Y331AG | Jul 2026 | ✅ |
 | STL_C-D | Toshiba DT01ACA300 | 3TB | 2.4T | 357G | Y5GMAEAGS | May 2026 | ✅ |
 | STL_E-H | Seagate ST3000051NS SED | 3TB | 2.7T | 120G | Z2928YTG | May 2026 | ✅ |
 | STL_FIGURES | HGST HUS726T4TALE6L4 | 4TB | 2.9T | 800G | V6KAGYVR | Jun 2026 | ✅ |
 | STL_I-N | Seagate ST33000651NS | 3TB | 2.4T | 428G | Z292SYTG | Jun 2026 | ✅ |
 | STL_MZ4250 | WD WD40EZRX | 4TB | 1.5T | 2.3T | WD-WCC4E6KA88HE | May 2026 | ✅ |
 | STL_O-S | WD WD30EZRS | 3TB | 2.1T | 677G | WD-WMAWZ0009936 | Jun 2026 | ✅ |
-| STL_SOURCE_MATERIAL | Seagate ST33000651NS | 3TB | — | — | Z292SYYH | Jul 2026 | ✅ PASSED (2026-07-03) — Airflow_Temp marginal, 44°C past max |
+| STL_SOURCE_MATERIAL | Seagate ST33000651NS | 3TB | 1.8T | 971G | Z292SYYH | Jul 2026 | ✅ |
 | STL_T-Z | Seagate ST3000DM001 | 3TB | — | — | W1F0BALQ | Jun 2026 | ✅ |
 
 ---
@@ -63,8 +63,8 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 | Label | Model | Size | Used | Free | Serial | Backup | SMART |
 |-------|-------|------|------|------|--------|--------|-------|
 | AUDIOBOOKS 3TB | WD Caviar Green WD30EZRS | 3TB | — | — | WMAW20629019 | Feb 2024 | — |
-| D&D GAMING | Seagate ST3000DM001 | 3TB | — | — | Z5011ZMP | Feb 2024 | — |
-| READING | Seagate ST3000NM0033 | 3TB | — | — | Z1Y32KTB | Feb 2025 | — |
+| D&D GAMING | Seagate ST3000DM001 | 3TB | 1.5T | 1.4T | Z5011ZMP | Jul 2026 | ✅ |
+| READING | Seagate ST3000NM0033 | 3TB | 1.6T | 1.2T | Z1Y32KTB | Aug 2026 | ✅ |
 | TROVE 24-08 | Seagate ST6000VN0001 | 6TB | — | — | Z401Z7A5 | Aug 2024 | — |
 | TROVE BOOKS | Toshiba DT01ACA300 | 3TB | — | — | Y5GM22NGS | Feb 2024 | — |
 
