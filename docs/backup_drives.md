@@ -20,7 +20,7 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 | Label | Model | Size | Used | Free | Serial | Backup | SMART |
 |-------|-------|------|------|------|--------|--------|-------|
 | 3T HIT EVERTHING | Seagate ST3000VN0001 | 3TB | — | — | Z4F95VN8 | Feb 2024 | — |
-| TV_0-A | WD Green WD40EZRX | 4TB | — | — | HARNNY2C48 | May 2026 | — |
+| TV_0-A | WD Green WD40EZRX | 4TB | 2.3T | 1.5T | HARNNY2C48 | Aug 2026 | ✅ |
 | TV_B-D | Seagate ST6000VN0001 | 6TB | 4.6T | 886G | Z4D2DHT9 | May 2026 | ✅ |
 | TV_E-F | Seagate ST3000051NS SED | 3TB | 2.3T | 462G | Z2926W97 | Jun 2026 | ✅ |
 | TV_G | WD Caviar Green WD30EZRS | 3TB | 1.9T | 908G | WMAWZ036055 | Jun 2026 | ✅ |
