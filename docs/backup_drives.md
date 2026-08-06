@@ -82,7 +82,7 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 | Label | Model | Size | Used | Free | Serial | Backup | SMART |
 |-------|-------|------|------|------|--------|--------|-------|
 | PLEX ETC | Toshiba DT01ACA300 | 3TB | — | — | Y5GM755GS | Feb 2024 | — |
-| TROVE WEBSITE - NOT BOOKS | WD Caviar Green WD30EZRS | 3TB | 2.5T | 255G | WD-WMAWZ0029010 | BOOKS 2026 | ✅ |
+| TROVE WEBSITE - NOT BOOKS | WD Caviar Green WD30EZRS | 3TB | 2.5T | 255G | WD-WMAWZ0029010 | Aug 2026 | ✅ |
 
 ---
 
