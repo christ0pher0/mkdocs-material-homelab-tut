@@ -1,5 +1,5 @@
 # Backup Drive Inventory
-_Last updated: 2026-08-05_
+_Last updated: 2026-08-06_
 _Physical removable backup drives — rotated through restic-deb CRU bays_
 _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 
@@ -63,8 +63,8 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 | Label | Model | Size | Used | Free | Serial | Backup | SMART |
 |-------|-------|------|------|------|--------|--------|-------|
 | AUDIOBOOKS 3TB | WD Caviar Green WD30EZRS | 3TB | — | — | WMAW20629019 | Feb 2024 | — |
-| RPG_ARCHIVE | Seagate ST3000DM001 | 3TB | 1.5T | 1.4T | Z5011ZMP | Jul 2026 | ✅ |
 | READING | Seagate ST3000NM0033 | 3TB | 1.6T | 1.2T | Z1Y32KTB | Aug 2026 | ✅ |
+| RPG_ARCHIVE | Seagate ST3000DM001 | 3TB | 1.7T | 1.1T | Z5011ZMP | Aug 2026 | ✅ |
 | TROVE 24-08 | Seagate ST6000VN0001 | 6TB | — | — | Z401Z7A5 | Aug 2024 | — |
 | TROVE BOOKS | Toshiba DT01ACA300 | 3TB | — | — | Y5GM22NGS | Feb 2024 | — |
 
@@ -82,7 +82,7 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 | Label | Model | Size | Used | Free | Serial | Backup | SMART |
 |-------|-------|------|------|------|--------|--------|-------|
 | PLEX ETC | Toshiba DT01ACA300 | 3TB | — | — | Y5GM755GS | Feb 2024 | — |
-| TROVE WEBSITE - NOT BOOKS | WD Caviar Green WD30EZRS | 3TB | 2.5T | 0.3T | WD-WMAWZ0029010 | — | — |
+| TROVE WEBSITE - NOT BOOKS | WD Caviar Green WD30EZRS | 3TB | 2.5T | 255G | WD-WMAWZ0029010 | BOOKS 2026 | ✅ |
 
 ---
 
