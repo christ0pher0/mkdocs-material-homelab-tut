@@ -41,9 +41,9 @@ _Prior update — 2026-07-09 end of session (Babar joined the Proxmox cluster as
 
 ## Action Items — Live Session 2026-08-07 (new this session)
 
-- [ ] ⚠️ **Identify the "24-02 AudioBooks" drive before treating it as PLEX ETC.** Currently mounted at cru2, serial (Y5GM7S5GS) near-matches PLEX ETC's doc entry (typo-fixed from Y5GM755GS), but its actual NTFS label has nothing to do with PLEX ETC and may be the real missing Audiobooks drive instead (see AUDIOBOOKS 3TB mixup below). Chris was going to browse via SMB to confirm contents — not done before session end.
-- [ ] Find plex source paths (if any) for the 3 newly mounted drives — cru1="3TB_HIT_Music", cru2="24-02 AudioBooks", cru3="24-02 Music" — none identified yet, no backup run.
-- [ ] Once "24-02 AudioBooks" identity is confirmed, correct `backup_drives.md` accordingly — either it's genuinely PLEX ETC (keep the serial fix) or it's the long-missing Audiobooks drive (needs its own new row, and PLEX ETC's serial fix should be reverted/re-checked since Y5GM7S5GS may not actually belong to it).
+- [x] **"24-02 AudioBooks" (cru2, Toshiba DT01ACA300, serial Y5GM7S5GS) confirmed as the real, long-missing Audiobooks drive** — Chris checked contents via SMB and confirmed. AUDIOBOOKS 3TB's doc row corrected: model fixed (was wrongly "WD Caviar Green WD30EZRS", now "Toshiba DT01ACA300"), serial set to Y5GM7S5GS, on both blaine's local file and the live git-ansible doc.
+- [x] **"PLEX ETC" deleted entirely from both files — confirmed it was never a real distinct drive**, just confusion with the Audiobooks drive above (same serial-typo coincidence that started this whole thread). Both files now at 36 drives, consistent.
+- [ ] Find plex source paths (if any) for the 3 newly mounted drives — cru1="3TB_HIT_Music", cru2="24-02 AudioBooks" (now correctly = AUDIOBOOKS 3TB), cru3="24-02 Music" — none identified yet, no backup run.
 - [x] 6TB drive (ST6000VN0001) exonerated — confirmed working in a different bay, last night's failure was the bay/cable not the drive.
 - [x] Restic-deb zero-CRU-drives emergency resolved — READING, TOSHIBA, 6TB all attached/mounted first thing this session.
 - [x] TROVE 24-08 (=TheTrove) and TROVE BOOKS (=Trove-Books) confirmed as already-in-rotation drives with stale/typo'd doc entries, not missing backups. Serial typo fixed (TROVE 24-08), physical NTFS labels renamed to match doc convention.
