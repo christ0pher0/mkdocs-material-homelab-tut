@@ -84,11 +84,13 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 ---
 ## Archive-Only Drives
 _Drives with no live plex share or source — the drive itself is the primary/only copy, not a backup destination._
+
 | Label | Model | Size | Used | Free | Serial | Backup | SMART |
 |-------|-------|------|------|------|--------|--------|-------|
 | TROVE 24-08 | Seagate ST6000VN0001 | 6TB | 4.8T | 730G | Z4D1Z7AS | Aug 2026 | ✅ |
 | TROVE BOOKS | Toshiba DT01ACA300 | 3TB | 2.4T | 425G | Y5GM22NGS | Aug 2026 | ✅ |
 | TROVE WEBSITE - NOT BOOKS | WD Caviar Green WD30EZRS | 3TB | 2.5T | 255G | WD-WMAWZ0029010 | Aug 2026 | ✅ |
+
 ---
 
 ## Backup Strategy
