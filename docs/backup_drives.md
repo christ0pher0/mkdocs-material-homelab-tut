@@ -79,7 +79,6 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 ## Other Archive Drives
 | Label | Model | Size | Used | Free | Serial | Backup | SMART |
 |-------|-------|------|------|------|--------|--------|-------|
-| PLEX ETC | Toshiba DT01ACA300 | 3TB | — | — | Y5GM755GS | Feb 2024 | — |
 
 ---
 ## Archive-Only Drives
