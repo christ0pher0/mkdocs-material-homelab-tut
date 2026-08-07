@@ -62,7 +62,7 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 ## Books / Audiobook Archive Drives
 | Label | Model | Size | Used | Free | Serial | Backup | SMART |
 |-------|-------|------|------|------|--------|--------|-------|
-| AUDIOBOOKS 3TB | WD Caviar Green WD30EZRS | 3TB | — | — | WMAW20629019 | Feb 2024 | — |
+| AUDIOBOOKS 3TB | WD Caviar Green WD30EZRS | 3TB | — | — | TBD | Feb 2024 | — |
 | READING | Seagate ST3000NM0033 | 3TB | 1.6T | 1.2T | Z1Y32KTB | Aug 2026 | ✅ |
 | RPG_ARCHIVE | Seagate ST3000DM001 | 3TB | 1.7T | 1.1T | Z5011ZMP | Aug 2026 | ✅ |
 | TROVE 24-08 | Seagate ST6000VN0001 | 6TB | — | — | Z401Z7A5 | Aug 2024 | — |
