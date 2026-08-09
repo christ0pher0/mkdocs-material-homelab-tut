@@ -62,7 +62,7 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 ## Books / Audiobook Archive Drives
 | Label | Model | Size | Used | Free | Serial | Backup | SMART |
 |-------|-------|------|------|------|--------|--------|-------|
-| 24-02 AudioBooks | Toshiba DT01ACA300 | 3TB | 2.7T | 117G | Y5GM7S5GS | Aug 2026 | ✅ |
+| AUDIOBOOKS | Toshiba DT01ACA300 | 3TB | 2.7T | 117G | Y5GM7S5GS | Aug 2026 | ✅ |
 | READING | Seagate ST3000NM0033 | 3TB | 1.6T | 1.2T | Z1Y32KTB | Aug 2026 | ✅ |
 | RPG_ARCHIVE | Seagate ST3000DM001 | 3TB | 1.7T | 1.1T | Z5011ZMP | Aug 2026 | ✅ |
 
@@ -71,8 +71,8 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 ## Music Archive Drives
 | Label | Model | Size | Used | Free | Serial | Backup | SMART |
 |-------|-------|------|------|------|--------|--------|-------|
-| 3TB_HIT_Music | Seagate ST3000DM001 | 3TB | 2.7T | 102G | Z5011NMK | Aug 2026 | ✅ |
-| 24-02 Music | Toshiba DT01ACA300 | 3TB | 2.7T | 89G | Y5GM81UGS | Aug 2026 | ✅ |
+| MUSIC_PLEX | Seagate ST3000DM001 | 3TB | 2.7T | 102G | Z5011NMK | Aug 2026 | ✅ |
+| MUSIC_NOT_PLEX | Toshiba DT01ACA300 | 3TB | 2.7T | 89G | Y5GM81UGS | Aug 2026 | ✅ |
 
 ---
 
