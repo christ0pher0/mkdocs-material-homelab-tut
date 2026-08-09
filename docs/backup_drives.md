@@ -1,5 +1,5 @@
 # Backup Drive Inventory
-_Last updated: 2026-08-07_
+_Last updated: 2026-08-09_
 _Physical removable backup drives — rotated through restic-deb CRU bays_
 _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 
