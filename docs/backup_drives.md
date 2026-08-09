@@ -71,8 +71,8 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 ## Music Archive Drives
 | Label | Model | Size | Used | Free | Serial | Backup | SMART |
 |-------|-------|------|------|------|--------|--------|-------|
-| MUSIC 10-21-2018 | Seagate ST3000DM001 | 3TB | — | — | Z5011NMK | Feb 2024 | — |
-| MUSIC+ MUSIC NOT PLEX | Toshiba DT01ACA300 | 3TB | — | — | Y5GM81UGS | Feb 2024 | — |
+| 3TB_HIT_Music | Seagate ST3000DM001 | 3TB | 2.7T | 102G | Z5011NMK | Aug 2026 | ✅ |
+| 24-02 Music | Toshiba DT01ACA300 | 3TB | 2.7T | 89G | Y5GM81UGS | Aug 2026 | ✅ |
 
 ---
 
