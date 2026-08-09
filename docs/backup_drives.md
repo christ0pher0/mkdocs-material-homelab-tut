@@ -62,7 +62,7 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 ## Books / Audiobook Archive Drives
 | Label | Model | Size | Used | Free | Serial | Backup | SMART |
 |-------|-------|------|------|------|--------|--------|-------|
-| AUDIOBOOKS 3TB | Toshiba DT01ACA300 | 3TB | — | — | Y5GM7S5GS | Feb 2024 | — |
+| 24-02 AudioBooks | Toshiba DT01ACA300 | 3TB | 2.7T | 117G | Y5GM7S5GS | Aug 2026 | ✅ |
 | READING | Seagate ST3000NM0033 | 3TB | 1.6T | 1.2T | Z1Y32KTB | Aug 2026 | ✅ |
 | RPG_ARCHIVE | Seagate ST3000DM001 | 3TB | 1.7T | 1.1T | Z5011ZMP | Aug 2026 | ✅ |
 
