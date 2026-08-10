@@ -19,7 +19,7 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 ## TV Archive Drives
 | Label | Model | Size | Used | Free | Serial | Backup | SMART |
 |-------|-------|------|------|------|--------|--------|-------|
-| 3T_HIT Everything Else 24-01 | Seagate ST3000VN0001 | 3TB | 2.4T | 439G | Z4F05VN6 | Aug 2026 | ✅ |
+| Next | Seagate Constellation ES.2 ST33000651NS | 3TB | 152M | 2.8T | TBD | — | ✅ |
 | TV_0-A | WD Green WD40EZRX | 4TB | 2.3T | 1.5T | HARNNY2C48 | Aug 2026 | ✅ |
 | TV_B-D | Seagate ST6000VN0001 | 6TB | 4.6T | 886G | Z4D2DHT9 | May 2026 | ✅ |
 | TV_E-F | Seagate ST3000051NS SED | 3TB | 2.3T | 462G | Z2926W97 | Jun 2026 | ✅ |
@@ -79,6 +79,8 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 ## Other Archive Drives
 | Label | Model | Size | Used | Free | Serial | Backup | SMART |
 |-------|-------|------|------|------|--------|--------|-------|
+| 3T_HIT Everything Else 24-01 | Seagate ST3000VN0001 | 3TB | 2.4T | 439G | Z4F05VN6 | Aug 2026 | ✅ |
+| SPARE_6TB_01 | Seagate ST6000VN0001 | 6TB | — | — | Z40Z2HT9 | — | — |
 
 ---
 ## Archive-Only Drives
@@ -89,7 +91,6 @@ _Drives with no live plex share or source — the drive itself is the primary/on
 | TROVE 24-08 | Seagate ST6000VN0001 | 6TB | 4.8T | 730G | Z4D1Z7AS | Aug 2026 | ✅ |
 | TROVE BOOKS | Toshiba DT01ACA300 | 3TB | 2.4T | 425G | Y5GM22NGS | Aug 2026 | ✅ |
 | TROVE WEBSITE - NOT BOOKS | WD Caviar Green WD30EZRS | 3TB | 2.5T | 255G | WD-WMAWZ0029010 | Aug 2026 | ✅ |
-| RPG_ARCHIVE | Seagate ST3000DM001 | 3TB | 1.7T | 1.1T | Z5011ZMP | Aug 2026 | ✅ |
 | SPARE_16TB_02 | Seagate ST16000NM001G-2KK103 | 16TB | 531M | 15T | ZL2CYHB1 | — | ✅ |
 | SPARE_2TB_01 | Seagate ST2000DM001-1CH164 | 2TB | 123M | 1.9T | Z240SPT1 | — | ✅ |
 
