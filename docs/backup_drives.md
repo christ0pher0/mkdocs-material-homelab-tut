@@ -80,6 +80,8 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 | Label | Model | Size | Used | Free | Serial | Backup | SMART |
 |-------|-------|------|------|------|--------|--------|-------|
 | 3T_HIT Everything Else 24-01 | Seagate ST3000VN0001 | 3TB | 2.4T | 439G | Z4F05VN6 | Aug 2026 | ✅ |
+| SPARE_16TB_02 | Seagate ST16000NM001G-2KK103 | 16TB | 531M | 15T | ZL2CYHB1 | — | ✅ |
+| SPARE_2TB_01 | Seagate ST2000DM001-1CH164 | 2TB | 123M | 1.9T | Z240SPT1 | — | ✅ |
 | SPARE_6TB_01 | Seagate ST6000VN0001 | 6TB | — | — | Z40Z2HT9 | — | — |
 
 ---
@@ -91,8 +93,6 @@ _Drives with no live plex share or source — the drive itself is the primary/on
 | TROVE 24-08 | Seagate ST6000VN0001 | 6TB | 4.8T | 730G | Z4D1Z7AS | Aug 2026 | ✅ |
 | TROVE BOOKS | Toshiba DT01ACA300 | 3TB | 2.4T | 425G | Y5GM22NGS | Aug 2026 | ✅ |
 | TROVE WEBSITE - NOT BOOKS | WD Caviar Green WD30EZRS | 3TB | 2.5T | 255G | WD-WMAWZ0029010 | Aug 2026 | ✅ |
-| SPARE_16TB_02 | Seagate ST16000NM001G-2KK103 | 16TB | 531M | 15T | ZL2CYHB1 | — | ✅ |
-| SPARE_2TB_01 | Seagate ST2000DM001-1CH164 | 2TB | 123M | 1.9T | Z240SPT1 | — | ✅ |
 
 ---
 
