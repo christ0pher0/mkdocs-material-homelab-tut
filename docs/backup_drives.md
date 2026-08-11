@@ -81,6 +81,7 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 |-------|-------|------|------|------|--------|--------|-------|
 | 3T_HIT Everything Else 24-01 | Seagate ST3000VN0001 | 3TB | 2.4T | 439G | Z4F05VN6 | Aug 2026 | ✅ |
 | SPARE_16TB_02 | Seagate ST16000NM001G-2KK103 | 16TB | 531M | 15T | ZL2CYHB1 | — | ✅ |
+| SPARE_3TB_01 | Seagate ST3000NM0033-9ZM178 | 3TB | — | — | Z1Y32ZY0 | — | ✅ |
 | SPARE_256GB_SSD_01 | Crucial M4-CT256M4SS | 256GB | — | — | 0000000012500920DA4E | — | — |
 | SPARE_2TB_01 | Seagate ST2000DM001-1CH164 | 2TB | 123M | 1.9T | Z240SPT1 | — | ✅ |
 | SPARE_3TB_02 | Seagate ST33000651NS | 3TB | — | — | Z292RW0Z | — | ✅ |
