@@ -80,13 +80,16 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 | Label | Model | Size | Used | Free | Serial | Backup | SMART |
 |-------|-------|------|------|------|--------|--------|-------|
 | 3T_HIT Everything Else 24-01 | Seagate ST3000VN0001 | 3TB | 2.4T | 439G | Z4F05VN6 | Aug 2026 | ✅ |
+| SPARE_16TB_01 | Seagate ST16000NM001G-2KK103 | 16TB | — | — | ZL2CVBME | — | ✅ |
 | SPARE_16TB_02 | Seagate ST16000NM001G-2KK103 | 16TB | 531M | 15T | ZL2CYHB1 | — | ✅ |
 | SPARE_3TB_01 | Seagate ST3000NM0033-9ZM178 | 3TB | — | — | Z1Y32ZY0 | — | ✅ |
 | SPARE_256GB_SSD_01 | Crucial M4-CT256M4SS | 256GB | — | — | 0000000012500920DA4E | — | — |
 | SPARE_2TB_01 | Seagate ST2000DM001-1CH164 | 2TB | 123M | 1.9T | Z240SPT1 | — | ✅ |
 | SPARE_3TB_02 | Seagate ST33000651NS | 3TB | — | — | Z292RW0Z | — | ✅ |
 | SPARE_3TB_03 | Seagate ST33000651NS | 3TB | — | — | Z292SZ1H | — | — |
+| SPARE_3TB_04 | Toshiba DT01ACA300 | 3TB | — | — | Y5GM7NSGS | — | ✅ |
 | SPARE_6TB_01 | Seagate ST6000VN0001 | 6TB | — | — | Z40Z2HT9 | — | — |
+| SPARE_6TB_02 | Seagate ST6000VN0001-1SF17Z | 6TB | — | — | Z4D2EJ31 | — | ✅ |
 
 ---
 ## Archive-Only Drives
