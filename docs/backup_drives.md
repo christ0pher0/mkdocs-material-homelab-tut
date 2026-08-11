@@ -87,10 +87,10 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 | SPARE_3TB_01 | Seagate ST3000NM0033-9ZM178 | 3TB | — | — | Z1Y32ZY0 | — | ✅ |
 | SPARE_3TB_02 | Seagate ST33000651NS | 3TB | — | — | Z292RW0Z | — | ✅ |
 | SPARE_3TB_03 | Seagate ST33000651NS | 3TB | — | — | Z292SZ1H | — | — |
-| SPARE_3TB_04 | Toshiba DT01ACA300 | 3TB | — | — | Y5GM7NSGS | — | ✅ |
+| SPARE_3TB_04 | Toshiba DT01ACA300 | 3TB | — | — | Y5GM7NSGS | — | — |
 | TRUENAS20TB_SPARE | OOS20000G | 20TB | — | — | 00013AJR | — | ✅ |
 | SPARE_6TB_01 | Seagate ST6000VN0001 | 6TB | — | — | Z40Z2HT9 | — | — |
-| SPARE_6TB_02 | Seagate ST6000VN0001-1SF17Z | 6TB | — | — | Z4D2EJ31 | — | ✅ |
+| SPARE_6TB_02 | Seagate ST6000VN0001-1SF17Z | 6TB | — | — | Z4D2EJ31 | — | — |
 
 ---
 ## Archive-Only Drives
