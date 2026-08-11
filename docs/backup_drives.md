@@ -79,7 +79,7 @@ _Usage stats populated by `~/scripts/cru_stats.sh` on restic-deb_
 ## Other Archive Drives
 | Label | Model | Size | Used | Free | Serial | Backup | SMART |
 |-------|-------|------|------|------|--------|--------|-------|
-| 3T_HIT Everything Else 24-01 | Seagate ST3000VN0001 | 3TB | 2.4T | 439G | Z4F05VN6 | Aug 2026 | ✅ |
+| PERSONAL | Seagate ST3000VN0001 | 3TB | 2.4T | 439G | Z4F05VN6 | Aug 2026 | ✅ |
 | SPARE_16TB_01 | Seagate ST16000NM001G-2KK103 | 16TB | — | — | ZL2CVBME | — | ✅ |
 | SPARE_16TB_02 | Seagate ST16000NM001G-2KK103 | 16TB | 531M | 15T | ZL2CYHB1 | — | ✅ |
 | SPARE_256GB_SSD_01 | Crucial M4-CT256M4SS | 256GB | — | — | 0000000012500920DA4E | — | ✅ |
