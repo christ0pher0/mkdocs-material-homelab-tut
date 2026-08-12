@@ -88,3 +88,10 @@
 - [x] **Telegram bot (patch notifications) — done 2026-07-05.** OerthBot deployed, weekly_patch.yml wired, see Resolved This Session above.
 - [x] Pi 2B — ✅ renamed **docs-dietpi-deb** 2026-07-05 (192.168.1.121), role: documentation-adjacent host. Jordan to update Ansible inventory + hostname; Morgan to add to hosts.md.
 - [x] **octopi-pi4-deb connectivity confirmed 2026-07-06** — homelab_baseline.yml run reached `ok` against the host (reaching "ok" requires a working SSH connection). The polkit/fwupd warning in the run is expected and harmless — that task already has `ignore_errors: yes`.
+
+## Backup Drive Fleet — Full Rebuild (2026-08-11)
+- Full CRU drive set rotation completed: SPARE_3TB_01/02/03/04, SPARE_16TB_01/02, SPARE_6TB_01/02, SPARE_2TB_01, SPARE_256GB_SSD_01, TRUENAS20TB_SPARE all formatted, SMART-verified, and documented
+- 3T_HIT Everything Else 24-01 relabeled PERSONAL, confirmed fully current against live Plex source (0 files pending, dry-run clean)
+- backup_drives.md fully reconciled between blaine and git-ansible — 45 drives, correct sections, correct sort order, real SMART data
+- CentOS workstation recovery: home directory + target scripts recovered via ddrescue before physical drive failure; full P2V abandoned after drive mechanically failed
+- Alex: backups are finally done.
