@@ -36,84 +36,84 @@ Cover art and protagonist art for each entry. Images sourced from [Fire Emblem W
 
 ### 1. Shadow Dragon and the Blade of Light &rarr; Shadow Dragon (DS)
 
-<img src="assets/fire_emblem/01_shadow_dragon_cover.jpg" width="160"> <img src="assets/fire_emblem/01_marth.png" width="160">
+<img src="/assets/fire_emblem/01_shadow_dragon_cover.jpg" width="160"> <img src="/assets/fire_emblem/01_marth.png" width="160">
 
 *Marth*
 
 ### 2. Mystery of the Emblem &rarr; New Mystery of the Emblem (DS)
 
-<img src="assets/fire_emblem/02_new_mystery_cover.png" width="160"> <img src="assets/fire_emblem/02_marth.png" width="160"> <img src="assets/fire_emblem/02_kris.png" width="160">
+<img src="/assets/fire_emblem/02_new_mystery_cover.png" width="160"> <img src="/assets/fire_emblem/02_marth.png" width="160"> <img src="/assets/fire_emblem/02_kris.png" width="160">
 
 *Marth, Kris (DS-original avatar)*
 
 ### 3. Gaiden &rarr; Echoes: Shadows of Valentia (3DS)
 
-<img src="assets/fire_emblem/03_echoes_cover.png" width="160"> <img src="assets/fire_emblem/03_alm.png" width="160"> <img src="assets/fire_emblem/03_celica.png" width="160">
+<img src="/assets/fire_emblem/03_echoes_cover.png" width="160"> <img src="/assets/fire_emblem/03_alm.png" width="160"> <img src="/assets/fire_emblem/03_celica.png" width="160">
 
 *Alm, Celica*
 
 ### 4. Genealogy of the Holy War (SFC)
 
-<img src="assets/fire_emblem/04_genealogy_cover.png" width="160"> <img src="assets/fire_emblem/04_sigurd.png" width="160">
+<img src="/assets/fire_emblem/04_genealogy_cover.png" width="160"> <img src="/assets/fire_emblem/04_sigurd.png" width="160">
 
 *Sigurd*
 
 ### 5. Thracia 776 (SFC)
 
-<img src="assets/fire_emblem/05_thracia_cover.png" width="160"> <img src="assets/fire_emblem/05_leif.png" width="160">
+<img src="/assets/fire_emblem/05_thracia_cover.png" width="160"> <img src="/assets/fire_emblem/05_leif.png" width="160">
 
 *Leif*
 
 ### 6. The Binding Blade (GBA, Japan)
 
-<img src="assets/fire_emblem/06_binding_blade_cover.jpg" width="160"> <img src="assets/fire_emblem/06_roy.png" width="160">
+<img src="/assets/fire_emblem/06_binding_blade_cover.jpg" width="160"> <img src="/assets/fire_emblem/06_roy.png" width="160">
 
 *Roy*
 
 ### 7. Fire Emblem / Blazing Blade (GBA, US)
 
-<img src="assets/fire_emblem/07_blazing_blade_cover.jpg" width="160"> <img src="assets/fire_emblem/07_eliwood.png" width="160"> <img src="assets/fire_emblem/07_lyn.png" width="160">
+<img src="/assets/fire_emblem/07_blazing_blade_cover.jpg" width="160"> <img src="/assets/fire_emblem/07_eliwood.png" width="160"> <img src="/assets/fire_emblem/07_lyn.png" width="160">
 
 *Eliwood, Lyn*
 
 ### 8. The Sacred Stones (GBA)
 
-<img src="assets/fire_emblem/08_sacred_stones_cover.jpg" width="160"> <img src="assets/fire_emblem/08_eirika.png" width="160"> <img src="assets/fire_emblem/08_ephraim.png" width="160">
+<img src="/assets/fire_emblem/08_sacred_stones_cover.jpg" width="160"> <img src="/assets/fire_emblem/08_eirika.png" width="160"> <img src="/assets/fire_emblem/08_ephraim.png" width="160">
 
 *Eirika, Ephraim*
 
 ### 9. Path of Radiance (GameCube)
 
-<img src="assets/fire_emblem/09_path_of_radiance_cover.jpg" width="160"> <img src="assets/fire_emblem/09_ike.png" width="160">
+<img src="/assets/fire_emblem/09_path_of_radiance_cover.jpg" width="160"> <img src="/assets/fire_emblem/09_ike.png" width="160">
 
 *Ike*
 
 ### 10. Radiant Dawn (Wii)
 
-<img src="assets/fire_emblem/10_radiant_dawn_cover.jpg" width="160"> <img src="assets/fire_emblem/10_micaiah.png" width="160">
+<img src="/assets/fire_emblem/10_radiant_dawn_cover.jpg" width="160"> <img src="/assets/fire_emblem/10_micaiah.png" width="160">
 
 *Micaiah (co-lead with Ike, reprising his Path of Radiance art above)*
 
 ### 11. Awakening (3DS)
 
-<img src="assets/fire_emblem/11_awakening_cover.png" width="160"> <img src="assets/fire_emblem/11_robin.png" width="160"> <img src="assets/fire_emblem/11_chrom.png" width="160">
+<img src="/assets/fire_emblem/11_awakening_cover.png" width="160"> <img src="/assets/fire_emblem/11_robin.png" width="160"> <img src="/assets/fire_emblem/11_chrom.png" width="160">
 
 *Robin, Chrom*
 
 ### 12. Fates (3DS)
 
-<img src="assets/fire_emblem/12_fates_birthright_cover.png" width="160"> <img src="assets/fire_emblem/12_fates_conquest_cover.png" width="160"> <img src="assets/fire_emblem/12_corrin.png" width="160">
+<img src="/assets/fire_emblem/12_fates_birthright_cover.png" width="160"> <img src="/assets/fire_emblem/12_fates_conquest_cover.png" width="160"> <img src="/assets/fire_emblem/12_corrin.png" width="160">
 
 *Corrin — Birthright and Conquest box art shown; Revelation was DLC-only with no standalone box art*
 
 ### 13. Three Houses (Switch) — not on XBATOCERA
 
-<img src="assets/fire_emblem/13_three_houses_cover.png" width="160"> <img src="assets/fire_emblem/13_byleth.png" width="160">
+<img src="/assets/fire_emblem/13_three_houses_cover.png" width="160"> <img src="/assets/fire_emblem/13_byleth.png" width="160">
 
 *Byleth*
 
 ### 14. Engage (Switch) — not on XBATOCERA
 
-<img src="assets/fire_emblem/14_engage_cover.jpg" width="160"> <img src="assets/fire_emblem/14_alear.png" width="160">
+<img src="/assets/fire_emblem/14_engage_cover.jpg" width="160"> <img src="/assets/fire_emblem/14_alear.png" width="160">
 
 *Alear*
