@@ -1,5 +1,6 @@
 # DIGIDIOT Network Inventory
-_Last updated: 2026-06-28 — Generated from arp-scan + nmap -sV + masscan -p1-65535 + docker ps + qm/pct list + Hyper-V Manager_
+_Last updated: 2026-08-24 — Generated from arp-scan + nmap -sV + masscan -p1-65535 + docker ps + qm/pct list + Hyper-V Manager_
+_2026-08-24 amendments below are from live SSH/docker checks during a Homepage config session, not a fresh full scan — see inline notes._
 
 ---
 
@@ -15,7 +16,7 @@ _Last updated: 2026-06-28 — Generated from arp-scan + nmap -sV + masscan -p1-6
 | 192.168.1.1 | router-net | GL-MT6000 Flint 2 (GL Technologies) | Router, OpenWrt, LuCI on :80/:8080 |
 | 192.168.1.2 | shardik | ASRock AB350M Pro4, Ryzen 7 2700X, 64GB DDR4 | Proxmox node 1 — back online 2026-06-28 |
 | 192.168.1.3 | git-ansible-deb | VM on maturin (see below) | Ansible control node, MkDocs, Gitea webhook |
-| 192.168.1.5 | freenas-bsd | Realtek USB NIC (onboard dead) | TrueNAS CORE — TRYAGAIN pool |
+| 192.168.1.5 | freenas-bsd | Onboard alc0 (AR8161) — working as of 2026-07-03 | TrueNAS CORE — TRYAGAIN pool |
 | 192.168.1.7 | maturin | Dell OptiPlex 7050 SFF, i7-6700, 32GB DDR4 | Proxmox node 2 |
 | 192.168.1.9 | aslan | Gigabyte AB350-Gaming 3-CF, Ryzen 5 1600X, 32GB DDR4 | Proxmox node 3, GTX 1080 Ti (vfio) |
 | 192.168.1.10 | beryl-ap | GL-MT3000 Beryl AX (GL Technologies) | WiFi AP, OpenWrt, AP mode |
@@ -94,7 +95,7 @@ _AD Domain: DIGIDIOT.local (controller: DIGIDIOTSERVER)_
 |---------|----|-------|-----|-------|----|------|
 | Fortunato-11 | — | Off | — | 2 | Windows 11 | Work VM — offline |
 | Luchesi-240 | 192.168.1.103 | Running | 2.8GB | 12 | Windows 10 | LabVIEW + FlexLM license manager |
-| RheL9-172 | 192.168.1.53 | Running | 6.2GB | 12 | RHEL 9 | plow-rpm — Snipe-IT asset mgmt, nginx, Portainer agent |
+| RheL9-172 | 192.168.1.53 | Running | 6.2GB | 12 | RHEL 9 | plow-rpm — Snipe-IT asset mgmt only as of 2026-08-24 (`docker ps -a` showed just `snipe-it-app-1` + `snipe-it-db-1`). The `nginx1`/`site2-nginx-1` containers and Portainer agent from the June scan are gone — removed at some point, not replaced. |
 | Server 2016 | 192.168.1.217 | Running | 3.2GB | 12 | Windows Server 2016 | DIGIDIOTSERVER — Active Directory DC, DIGIDIOT.local |
 | Ubuntu Server 2024.4 | 192.168.1.35 | Running | 1.4GB | 12 | Ubuntu 24.04 | 2404HV-deb — SSH + node-exporter |
 
@@ -108,7 +109,7 @@ _Pi rack fully documented 2026-06-30. 6-slot 3D printed red/black tower, desk lo
 
 | Slot | IP | Hostname | Hardware | OS | Services |
 |------|----|----------|----------|----|---------|
-| S1 | 192.168.1.125 | ha-net | RPi 4 | Home Assistant OS / DietPi (alt SD) | HA, Jellyfin :8096, Vaultwarden, Zabbix agent :10050 |
+| S1 | 192.168.1.125 | tools-deb (OS-reported hostname; "ha-net" is only a resolvable SSH alias/DNS name — same mismatch pattern as freenas-bsd/truenas-bsd) | RPi 4 | Home Assistant OS / DietPi (alt SD) | HA, Jellyfin :8096, Zabbix agent :10050. **Vaultwarden confirmed NOT running here** (checked 2026-08-24: no `vaultwarden` systemd unit, no matching docker container) — remove any assumption of a 3rd Vaultwarden instance. HA/Jellyfin still-running status not re-verified this pass. |
 | S2 | 192.168.1.121 | blank-dietpi-deb | RPi 2B | DietPi | SSH — role TBD |
 | S3 | 192.168.1.126 | backup-dietpi-deb | RPi 2B | DietPi | Gitea mirror :3000, Vaultwarden backup :8888, xrdp :3389 |
 | S4 | 192.168.1.124 | retropi | RPi Model B | RetroPie | SSH, Samba — EOL, kept for patching only ⚠️ |
@@ -126,7 +127,7 @@ _Pi rack fully documented 2026-06-30. 6-slot 3D printed red/black tower, desk lo
 ---
 
 ## TrueNAS (freenas-bsd — 192.168.1.5)
-_⚠️ Active NIC = USB (Realtek) — fragile, PCIe swap pending_
+_Active NIC = onboard alc0 (AR8161), static 192.168.1.5/24 — as of 2026-07-03. USB NIC retired. Watching for stability (alc driver history is rougher than Intel). X540-T2 PCIe card installed same session, suspected DOA (no link either port), pending bench test elsewhere._
 
 | Service | Port | Notes |
 |---------|------|-------|
@@ -172,6 +173,8 @@ _No iocage jails running._
 - [ ] **Portainer agents on mediastack-deb and plow-rpm** — registered in Portainer on docker-deb?
 - [ ] **FlareSolverr + Prowlarr** — mark as complete on todo.md (both running)
 - [ ] **pihole-pi1-deb SD card** — 91% full ⚠️
+- [ ] **homepage-ts (monitor-deb :3003)** — separate config from the main Homepage (:3002, `/home/cos/monitoring/homepage-ts/config`). Deferred 2026-08-24: decide whether it should mirror the 5 services just added to the main dashboard (Manyfold, Pi-hole (Book), Prometheus, Overseerr, Tube Archivist) or stay a deliberately trimmed subset.
+- [ ] **docker_inv.md is stale** (last generated 2026-06-11) — the nightly `docker_inv.yml` auto-generation appears to not be running; container lists in that file (including the now-removed plow-rpm nginx containers) shouldn't be trusted without a live check
 
 ---
 
