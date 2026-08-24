@@ -23,6 +23,7 @@ _2026-08-24 amendments below are from live SSH/docker checks during a Homepage c
 | 192.168.1.11 | blaine | Gigabyte mobo, i5-2500K, 30GB RAM | Proxmox node 4 |
 | 192.168.1.21 | immich-deb | Hardware/host type unconfirmed (found via 2026-08-24 docker_inv.yml run, not documented before that) | Immich — self-hosted photo/video management |
 | 192.168.1.100 | amontillado | MSI, Windows 11 | Primary workstation + Hyper-V host |
+| 192.168.1.129 | unnamed — no hostname resolves, no DHCP reservation confirmed, **IP may shift** | Dell OptiPlex 3040 | Batocera retro gaming mini-PC — 2nd Batocera system, separate from batocera-pi5-deb in the Pi rack. Dropbear SSH (:22) confirmed via nmap 2026-08-24; :80/:443 filtered, no web UI reachable. Found by process of elimination (unnamed host in a live nmap sweep) — worth a DHCP reservation once a hostname is picked, so it stops needing rediscovery. |
 
 ---
 
@@ -135,7 +136,7 @@ _Pi rack fully documented 2026-06-30. 6-slot 3D printed red/black tower, desk lo
 | S2 | 192.168.1.121 | blank-dietpi-deb | RPi 2B | DietPi | SSH — role TBD |
 | S3 | 192.168.1.126 | backup-dietpi-deb | RPi 2B | DietPi | Gitea mirror :3000, Vaultwarden backup :8888, xrdp :3389 |
 | S4 | 192.168.1.124 | retropi | RPi Model B | RetroPie | SSH, Samba — EOL, kept for patching only ⚠️ |
-| S5 | 192.168.1.123 | batocera-deb | RPi 5 | Batocera | Retro gaming — 52Pi case |
+| S5 | 192.168.1.123 | batocera-deb (Zabbix has it registered as `batocera-pi5-deb` — naming mismatch, same pattern as ha-net/tools-deb) | RPi 5 | Batocera | Retro gaming — 52Pi case. **Confirmed 2026-08-24: usually powered off** — Zabbix's recurring "ICMP ping unavailable" High-severity alert for this host is expected, not a fault. See also the separate Batocera mini-PC (Dell OptiPlex 3040, 192.168.1.129) in Physical Infrastructure above. |
 | S6 | 192.168.1.120 | pihole-pi-deb | RPi Model B | Raspbian | Pi-hole DNS :53, web :80/:443 — SD card ⚠️ |
 
 ### Not Racked
@@ -205,6 +206,8 @@ _No iocage jails running._
 - [ ] **Docker log rotation on monitor-deb** — no `max-size`/`max-file` configured, which is what let pve-exporter's log grow unbounded. Needs `/etc/docker/daemon.json` change + daemon restart (plan for a maintenance window, not urgent)
 - [ ] **backup-dietpi-deb SD card health** — 2026-08-24 Vaultwarden outage traced to root-owned db files after a hard hang; resolved via chown, but whether the underlying hang was SD card wear is unconfirmed
 - [ ] **Plaintext credentials in Homepage's services.yaml** — Proxmox root token, Grafana password, several API keys in cleartext. Rotate when convenient, Proxmox token first (full API access)
+- [ ] **Batocera mini-PC (192.168.1.129) has no hostname or DHCP reservation** — currently identified only by MAC/IP. Worth reserving its IP once a hostname is picked, so it doesn't need rediscovering if the lease changes
+- [ ] **Zabbix's High-severity alert for batocera-pi5-deb** — confirmed benign (host is normally powered off), but the alert itself is still configured as High severity for what's expected/routine behavior. Worth adjusting the trigger severity or adding a maintenance window so it stops registering as a real problem
 
 ---
 
