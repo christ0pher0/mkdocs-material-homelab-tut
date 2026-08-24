@@ -21,6 +21,7 @@ _2026-08-24 amendments below are from live SSH/docker checks during a Homepage c
 | 192.168.1.9 | aslan | Gigabyte AB350-Gaming 3-CF, Ryzen 5 1600X, 32GB DDR4 | Proxmox node 3, GTX 1080 Ti (vfio) |
 | 192.168.1.10 | beryl-ap | GL-MT3000 Beryl AX (GL Technologies) | WiFi AP, OpenWrt, AP mode |
 | 192.168.1.11 | blaine | Gigabyte mobo, i5-2500K, 30GB RAM | Proxmox node 4 |
+| 192.168.1.21 | immich-deb | Hardware/host type unconfirmed (found via 2026-08-24 docker_inv.yml run, not documented before that) | Immich — self-hosted photo/video management |
 | 192.168.1.100 | amontillado | MSI, Windows 11 | Primary workstation + Hyper-V host |
 
 ---
@@ -67,6 +68,18 @@ _No VMs currently deployed. Back online 2026-06-28. 1-month uptime target: 2026-
 
 ---
 
+## immich-deb (192.168.1.21) — Docker Containers
+_Found via 2026-08-24 docker_inv.yml run — not in any doc before that. Host type (bare metal/VM) unconfirmed._
+
+| Container | Image | Port | Purpose |
+|-----------|-------|------|---------|
+| immich_server | ghcr.io/immich-app/immich-server:release | :2283 | Immich web/API |
+| immich_postgres | ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0 | internal | Immich backend |
+| immich_machine_learning | ghcr.io/immich-app/immich-machine-learning:release-cuda | internal | Immich ML (face/object detection) — CUDA build, implies GPU passthrough |
+| immich_redis | valkey/valkey:9 | internal | Immich backend |
+
+---
+
 ## docker-deb (192.168.1.34) — Docker Containers
 
 | Container | Image | Port | Purpose |
@@ -84,6 +97,15 @@ _No VMs currently deployed. Back online 2026-06-28. 1-month uptime target: 2026-
 | traefik | traefik | :80/:443/:8080 | Reverse proxy ⚠️ dual proxy — resolve with Riley |
 | vaultwarden | vaultwarden/server | internal | Password manager (behind Caddy) |
 | portainer | portainer/portainer-ce | :9443 | Container management UI |
+| firefly_iii_core | fireflyiii/core:latest | :8091 | Personal finance / budgeting — confirmed by Chris 2026-08-24 |
+| firefly_iii_cron | alpine | internal | Firefly III scheduled tasks |
+| firefly_iii_db | mariadb:lts | internal | Firefly III backend |
+| scrutiny | (unlabeled image) | :8082 | S.M.A.R.T. disk health monitoring — found 2026-08-24 |
+| scrutiny-influxdb | (unlabeled image) | :8087 | Scrutiny backend |
+| convertx | c4illin/convertx | :3005 | File conversion tool — found 2026-08-24 |
+| open-webui | (unlabeled image) | :3000 | LLM chat UI — likely frontend for Ollama on babar (192.168.1.20:11434) — found 2026-08-24 |
+
+**2026-08-24:** this host was running 7 more containers (Firefly III x3, Scrutiny x2, ConvertX, open-webui) than any doc had recorded, all "Up 30 hours" at discovery — worth periodically diffing live `docker ps` against this table instead of assuming it's current.
 
 ---
 
@@ -174,7 +196,15 @@ _No iocage jails running._
 - [ ] **FlareSolverr + Prowlarr** — mark as complete on todo.md (both running)
 - [ ] **pihole-pi1-deb SD card** — 91% full ⚠️
 - [ ] **homepage-ts (monitor-deb :3003)** — separate config from the main Homepage (:3002, `/home/cos/monitoring/homepage-ts/config`). Deferred 2026-08-24: decide whether it should mirror the 5 services just added to the main dashboard (Manyfold, Pi-hole (Book), Prometheus, Overseerr, Tube Archivist) or stay a deliberately trimmed subset.
-- [ ] **docker_inv.md is stale** (last generated 2026-06-11) — the nightly `docker_inv.yml` auto-generation appears to not be running; container lists in that file (including the now-removed plow-rpm nginx containers) shouldn't be trusted without a live check
+- [x] **docker_inv.md staleness** — fixed 2026-08-24: root cause was a missing `--vault-password-file` flag on the cron line (added 2026-08-24, alongside `--vault-password-file` on the same job in root's crontab), not a removed automation. Playbook now runs clean.
+- [ ] **`collect_running_services.yml`** (2:35am cron, feeds `software_inventory.md`) — check for the same missing-vault-flag bug that `docker_inv.yml` had
+- [ ] **digidiot.com** — domain registered 2026-08-24. Intended use (public access to specific services via reverse proxy + real certs? replace `DIGIDIOT.local` AD naming? just claiming the name?) not yet decided
+- [ ] **urnst-deb (192.168.1.27)** — appears in `inventory_auto` but unreachable ("No route to host") and undocumented anywhere else. Real decommissioned host, or stale inventory entry with nothing behind it?
+- [ ] **Possible duplicate Pi inventory entries** — `pi1-deb`/`pihole-pi1-deb`, `pi2-deb`/`blank-dietpi-deb`, `pi4-deb`/`backup-dietpi-deb` all appeared as separate entries in the same 2026-08-24 `docker_inv.yml` run — looks like the same physical Pis listed twice under different names in `inventory_auto`
+- [ ] **pve-exporter (monitor-deb)** — logged 4.4GB and was the direct cause of the disk hitting 100% full on 2026-08-24. Log was truncated as a workaround; root cause (probably repeated Shardik/Babar connection errors) not yet identified
+- [ ] **Docker log rotation on monitor-deb** — no `max-size`/`max-file` configured, which is what let pve-exporter's log grow unbounded. Needs `/etc/docker/daemon.json` change + daemon restart (plan for a maintenance window, not urgent)
+- [ ] **backup-dietpi-deb SD card health** — 2026-08-24 Vaultwarden outage traced to root-owned db files after a hard hang; resolved via chown, but whether the underlying hang was SD card wear is unconfirmed
+- [ ] **Plaintext credentials in Homepage's services.yaml** — Proxmox root token, Grafana password, several API keys in cleartext. Rotate when convenient, Proxmox token first (full API access)
 
 ---
 
@@ -192,10 +222,16 @@ _No iocage jails running._
 | :8007 | PBS UI | 192.168.1.4 |
 | :8081 | cAdvisor | 192.168.1.34 |
 | :8082 | qBittorrent | 192.168.1.36 |
+| :8082 | Scrutiny | 192.168.1.34 (same port # as qBittorrent, different host — no actual conflict) |
+| :8087 | Scrutiny InfluxDB | 192.168.1.34 |
 | :8088 | Caddy (Vaultwarden) | 192.168.1.34 |
 | :8090 | Tube Archivist | 192.168.1.34 |
+| :8091 | Firefly III | 192.168.1.34 |
 | :8443/:8444 | Caddy HTTPS | 192.168.1.34 |
 | :8888 | Vaultwarden backup | 192.168.1.126 |
+| :2283 | Immich | 192.168.1.21 |
+| :3000 | open-webui | 192.168.1.34 (same port # as Grafana on .29, different host) |
+| :3005 | ConvertX | 192.168.1.34 |
 | :9000/:9443 | Portainer | 192.168.1.34 |
 | :9100 | node-exporter | multiple hosts |
 | :9999 | webhook.py | 192.168.1.3 |
