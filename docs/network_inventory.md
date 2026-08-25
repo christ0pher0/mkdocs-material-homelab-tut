@@ -1,6 +1,7 @@
 # DIGIDIOT Network Inventory
 _Last updated: 2026-08-24 — Generated from arp-scan + nmap -sV + masscan -p1-65535 + docker ps + qm/pct list + Hyper-V Manager_
 _2026-08-24 amendments below are from live SSH/docker checks during a Homepage config session, not a fresh full scan — see inline notes._
+_2026-08-25: Open Questions list merged with a follow-up action-item pass — added Immich and Firefly III (both real, undocumented), and layered "first step" commands onto 9 existing items (digidiot.com, urnst-deb, duplicate Pi entries, `collect_running_services.yml`, homepage-ts, pve-exporter, Docker log rotation, backup-dietpi-deb SD card, plaintext credentials) rather than duplicating them as new entries._
 
 ---
 
@@ -181,6 +182,8 @@ _No iocage jails running._
 
 ## Open Questions / Action Items
 
+- [ ] **Immich** — real, undocumented. First step: `grep -A 15 "## immich-deb" /home/cos/material/mkdocs_dev_material/docs/docker_inv.md` on git-ansible — the fresh scan already captured its IP, containers, and ports; that's enough to write it into this doc and Homepage without more digging.
+- [ ] **Firefly III** — real, but its host is unknown; didn't show up under an obvious name in the 2026-08-24 scan. First step: `grep -ri firefly /home/cos/material/mkdocs_dev_material/docs/docker_inv.md /home/cos/material/mkdocs_dev_material/docs/network_inventory.md` on git-ansible — if empty, it's either under a container name that doesn't say "firefly," or on a host `docker_inv.yml` couldn't reach; may just need someone to say which box it's on.
 - [ ] **Dual reverse proxy** — Caddy + Traefik both running on docker-deb. Riley + Casey to determine which is authoritative
 - [ ] **DIGIDIOT.local AD domain** — document what's joined, whether still in use, whether DIGIDIOTSERVER needs to stay running
 - [ ] **192.168.1.167** — likely second LG TV based on port pattern. Confirm
@@ -196,16 +199,16 @@ _No iocage jails running._
 - [ ] **Portainer agents on mediastack-deb and plow-rpm** — registered in Portainer on docker-deb?
 - [ ] **FlareSolverr + Prowlarr** — mark as complete on todo.md (both running)
 - [ ] **pihole-pi1-deb SD card** — 91% full ⚠️
-- [ ] **homepage-ts (monitor-deb :3003)** — separate config from the main Homepage (:3002, `/home/cos/monitoring/homepage-ts/config`). Deferred 2026-08-24: decide whether it should mirror the 5 services just added to the main dashboard (Manyfold, Pi-hole (Book), Prometheus, Overseerr, Tube Archivist) or stay a deliberately trimmed subset.
 - [x] **docker_inv.md staleness** — fixed 2026-08-24: root cause was a missing `--vault-password-file` flag on the cron line (added 2026-08-24, alongside `--vault-password-file` on the same job in root's crontab), not a removed automation. Playbook now runs clean.
-- [ ] **`collect_running_services.yml`** (2:35am cron, feeds `software_inventory.md`) — check for the same missing-vault-flag bug that `docker_inv.yml` had
-- [ ] **digidiot.com** — domain registered 2026-08-24. Intended use (public access to specific services via reverse proxy + real certs? replace `DIGIDIOT.local` AD naming? just claiming the name?) not yet decided
-- [ ] **urnst-deb (192.168.1.27)** — appears in `inventory_auto` but unreachable ("No route to host") and undocumented anywhere else. Real decommissioned host, or stale inventory entry with nothing behind it?
-- [ ] **Possible duplicate Pi inventory entries** — `pi1-deb`/`pihole-pi1-deb`, `pi2-deb`/`blank-dietpi-deb`, `pi4-deb`/`backup-dietpi-deb` all appeared as separate entries in the same 2026-08-24 `docker_inv.yml` run — looks like the same physical Pis listed twice under different names in `inventory_auto`
-- [ ] **pve-exporter (monitor-deb)** — logged 4.4GB and was the direct cause of the disk hitting 100% full on 2026-08-24. Log was truncated as a workaround; root cause (probably repeated Shardik/Babar connection errors) not yet identified
-- [ ] **Docker log rotation on monitor-deb** — no `max-size`/`max-file` configured, which is what let pve-exporter's log grow unbounded. Needs `/etc/docker/daemon.json` change + daemon restart (plan for a maintenance window, not urgent)
-- [ ] **backup-dietpi-deb SD card health** — 2026-08-24 Vaultwarden outage traced to root-owned db files after a hard hang; resolved via chown, but whether the underlying hang was SD card wear is unconfirmed
-- [ ] **Plaintext credentials in Homepage's services.yaml** — Proxmox root token, Grafana password, several API keys in cleartext. Rotate when convenient, Proxmox token first (full API access)
+- [ ] **homepage-ts (monitor-deb :3003)** — separate config from the main Homepage (:3002). Still undecided whether it should mirror the 5 services just added to the main dashboard (Manyfold, Pi-hole (Book), Prometheus, Overseerr, Tube Archivist) or stay a deliberately trimmed subset. First step: `cat /home/cos/monitoring/homepage-ts/config/services.yaml` on monitor-deb to see its current scope.
+- [ ] **`collect_running_services.yml`** (2:35am cron, feeds `software_inventory.md`) — same class of missing-vault-flag bug `docker_inv.yml` had is plausible, hasn't been checked. First step: `tail -50 /var/log/software_inventory.log` on git-ansible.
+- [ ] **digidiot.com** — domain registered 2026-08-24. This is a decision point before it's a technical task: public-facing access to specific services (Firefly III, Immich, etc. via reverse proxy + real Let's Encrypt certs instead of Tailscale certs)? Just claiming the name/email? Replacing the internal `DIGIDIOT.local` AD naming? First step is stating the intent — the DNS/reverse-proxy work downstream depends entirely on which one.
+- [ ] **urnst-deb (192.168.1.27)** — appears in `inventory_auto` but unreachable ("No route to host") and undocumented anywhere else. Real decommissioned host, or stale inventory entry with nothing behind it? First step: check the router's DHCP lease list at router-net (192.168.1.1) LuCI UI for that IP/MAC — tells us whether it's ever actually been on the network.
+- [ ] **Possible duplicate Pi inventory entries** — `pi1-deb`/`pihole-pi1-deb`, `pi2-deb`/`blank-dietpi-deb`, `pi4-deb`/`backup-dietpi-deb` all appeared as separate entries in the same 2026-08-24 `docker_inv.yml` run — looks like the same physical Pis listed twice under different names in `inventory_auto`, inflating every ansible run. First step: `grep -E "192\.168\.1\.(120|121|124|126)" ~/ansible_dev/inventory_auto` on git-ansible to confirm whether the same IPs are genuinely listed twice.
+- [ ] **pve-exporter (monitor-deb)** — logged 4.4GB and was the direct cause of the disk hitting 100% full on 2026-08-24. Log was truncated as a workaround; root cause not yet identified. First step: `docker logs pve-exporter --tail 50` on monitor-deb — almost certainly the same Shardik-unreachable errors Homepage was also logging.
+- [ ] **Docker log rotation on monitor-deb** — no `max-size`/`max-file` configured, which is what let pve-exporter's log grow unbounded; nothing prevents a recurrence. First step: `cat /etc/docker/daemon.json 2>/dev/null` on monitor-deb before deciding what to add (needs a daemon restart to take effect — plan for a maintenance window, not mid-incident).
+- [ ] **backup-dietpi-deb SD card health** — 2026-08-24 Vaultwarden outage traced to root-owned db files after a hard hang; resolved via chown, but whether the underlying hang was SD card wear is unconfirmed. First step: `sudo smartctl -a /dev/mmcblk0 2>&1 | head -20` on that Pi (may not support SMART on SD, in which case just watch for recurrence).
+- [ ] **Plaintext credentials in Homepage's services.yaml** — Proxmox root token, Grafana password, several API keys in cleartext. First step: whenever convenient, rotate the Proxmox `home_page` token first since it's full API access, not just a dashboard widget key.
 - [ ] **Batocera mini-PC (192.168.1.129) has no hostname or DHCP reservation** — currently identified only by MAC/IP. Worth reserving its IP once a hostname is picked, so it doesn't need rediscovering if the lease changes
 - [ ] **Zabbix's High-severity alert for batocera-pi5-deb** — confirmed benign (host is normally powered off), but the alert itself is still configured as High severity for what's expected/routine behavior. Worth adjusting the trigger severity or adding a maintenance window so it stops registering as a real problem
 

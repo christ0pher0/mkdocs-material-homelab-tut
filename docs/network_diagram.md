@@ -1,6 +1,6 @@
 # Network Diagram
 
-_Last update: 2026-06-30 22:10:02_
+_Last update: 2026-08-24 20:10:07_
 
 ```mermaid
 graph LR
@@ -26,14 +26,14 @@ graph LR
     Switch --> git_ansible_deb
     pbs_deb["pbs-deb<br/>192.168.1.4<br/>Debian/Ubuntu"]
     Switch --> pbs_deb
-    rocky_rpm["rocky-rpm<br/>192.168.1.20<br/>RHEL/Rocky"]
-    Switch --> rocky_rpm
+    babar["babar<br/>192.168.1.12<br/>Linux"]
+    Switch --> babar
+    immich_deb["immich-deb<br/>192.168.1.21<br/>Debian/Ubuntu"]
+    Switch --> immich_deb
     kasm_2404_deb["kasm-2404-deb<br/>192.168.1.26<br/>Debian/Ubuntu"]
     Switch --> kasm_2404_deb
     urnst_deb["urnst-deb<br/>192.168.1.27<br/>Debian/Ubuntu"]
     Switch --> urnst_deb
-    idee_deb["idee-deb<br/>192.168.1.28<br/>Debian/Ubuntu"]
-    Switch --> idee_deb
     monitor_deb["monitor-deb<br/>192.168.1.29<br/>Debian/Ubuntu"]
     Switch --> monitor_deb
     pihole_book_deb["pihole-book-deb<br/>192.168.1.33<br/>Debian/Ubuntu"]
@@ -46,6 +46,8 @@ graph LR
     Switch --> mediastack_deb
     restic_deb["restic-deb<br/>192.168.1.40<br/>Debian/Ubuntu"]
     Switch --> restic_deb
+    rocky_rpm["rocky-rpm<br/>192.168.1.51<br/>RHEL/Rocky"]
+    Switch --> rocky_rpm
     alma_rpm["alma-rpm<br/>192.168.1.52<br/>RHEL/Rocky"]
     Switch --> alma_rpm
     plow_rpm["plow-rpm<br/>192.168.1.53<br/>RHEL/Rocky"]
@@ -58,8 +60,6 @@ graph LR
     Switch --> pi2_deb
     blank_dietpi_deb["blank-dietpi-deb<br/>192.168.1.121<br/>Debian/Ubuntu"]
     Switch --> blank_dietpi_deb
-    octopi_deb["octopi-deb<br/>192.168.1.122<br/>Debian/Ubuntu"]
-    Switch --> octopi_deb
     octopi_pi4_deb["octopi-pi4-deb<br/>192.168.1.122<br/>Debian/Ubuntu"]
     Switch --> octopi_pi4_deb
     batocera_deb["batocera-deb<br/>192.168.1.123<br/>Debian/Ubuntu"]
@@ -70,6 +70,8 @@ graph LR
     Switch --> tools_deb
     pi4_deb["pi4-deb<br/>192.168.1.126<br/>Debian/Ubuntu"]
     Switch --> pi4_deb
+    backup_dietpi_deb["backup-dietpi-deb<br/>192.168.1.126<br/>Debian/Ubuntu"]
+    Switch --> backup_dietpi_deb
     argos_deb["argos-deb<br/>192.168.1.127<br/>Debian/Ubuntu"]
     Switch --> argos_deb
     amontillado_win["amontillado-win<br/>192.168.1.100<br/>Windows"]
@@ -82,8 +84,8 @@ graph LR
     Switch --> temerant_win
     fortunato_win["fortunato-win<br/>192.168.1.106<br/>Windows"]
     Switch --> fortunato_win
-    freenas_bsd["freenas-bsd<br/>192.168.1.5<br/>TrueNAS"]
-    Switch --> freenas_bsd
+    truenas_bsd["truenas-bsd<br/>192.168.1.5<br/>TrueNAS"]
+    Switch --> truenas_bsd
     dell_printer_net["dell-printer-net<br/>192.168.1.162<br/>Network"]
     Switch --> dell_printer_net
     pixel8_droid["pixel8-droid<br/>192.168.1.201<br/>Android"]
@@ -96,10 +98,10 @@ graph LR
     Switch --> tv1_media
     tv2_media["tv2-media<br/>192.168.1.141<br/>Media"]
     Switch --> tv2_media
+    firetv_media["firetv-media<br/>192.168.1.145<br/>Media"]
+    Switch --> firetv_media
     tahoe_mac["tahoe-mac<br/>192.168.1.200<br/>macOS"]
     Switch --> tahoe_mac
-    backup_dietpi_deb["backup-dietpi-deb<br/>192.168.1.126<br/>Debian/Ubuntu"]
-    Switch --> backup_dietpi_deb
 
     classDef infra fill:#4a4a8a,stroke:#9999cc,color:#fff
     classDef proxmox fill:#5a3e00,stroke:#e8a000,color:#fff
@@ -115,41 +117,42 @@ graph LR
     class maturin proxmox
     class git_ansible_deb linux
     class pbs_deb linux
-    class rocky_rpm linux
+    class babar linux
+    class immich_deb linux
     class kasm_2404_deb linux
     class urnst_deb linux
-    class idee_deb linux
     class monitor_deb linux
     class pihole_book_deb linux
     class docker_deb linux
     class 2404HV_deb linux
     class mediastack_deb linux
     class restic_deb linux
+    class rocky_rpm linux
     class alma_rpm linux
     class plow_rpm linux
     class pi1_deb linux
     class pihole_pi1_deb linux
     class pi2_deb linux
     class blank_dietpi_deb linux
-    class octopi_deb linux
     class octopi_pi4_deb linux
     class batocera_deb linux
     class pi3_deb linux
     class tools_deb linux
     class pi4_deb linux
+    class backup_dietpi_deb linux
     class argos_deb linux
     class amontillado_win windows
     class todash_win windows
     class work_win windows
     class temerant_win windows
     class fortunato_win windows
-    class freenas_bsd bsd
+    class truenas_bsd bsd
     class dell_printer_net network
     class pixel8_droid network
     class alexa_droid network
     class roomba_droid network
     class tv1_media network
     class tv2_media network
+    class firetv_media network
     class tahoe_mac network
-    class backup_dietpi_deb linux
 ```
