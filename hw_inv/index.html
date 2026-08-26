@@ -1,0 +1,2852 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://192.168.1.3/hw_inv/">
+      
+      
+        <link rel="prev" href="../hosts/">
+      
+      
+        <link rel="next" href="../hw_reserve/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Hardware Inventory - Homelab</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Merriweather+Sans:300,300i,400,400i,700,700i%7CRed+Hat+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Merriweather Sans";--md-code-font:"Red Hat Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="green" data-md-color-accent="deep-purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#hardware-inventory" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Homelab" class="md-header__button md-logo" aria-label="Homelab" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M224 96a160 160 0 1 0 0 320 160 160 0 1 0 0-320m224 160a224 224 0 1 1-448 0 224 224 0 1 1 448 0"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Homelab
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Hardware Inventory
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="green" data-md-color-accent="deep-purple"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="deep-orange"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Homelab" class="md-nav__button md-logo" aria-label="Homelab" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M224 96a160 160 0 1 0 0 320 160 160 0 1 0 0-320m224 160a224 224 0 1 1-448 0 224 224 0 1 1 448 0"/></svg>
+
+    </a>
+    Homelab
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Overview
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Welcome
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../homelab/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Homelab
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../todo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Todo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../completed/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Completed
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Infrastructure
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Infrastructure
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../proxmox/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Proxmox
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../network-schema/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Network Schema
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../network_context/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Network Context
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../network_devices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Network Devices
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../network_diagram/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Network Diagram
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tailscale/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tailscale Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vlan_ip_plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Planned VLANS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../network_inventory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Network Inventory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hosts & Inventory
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Hosts & Inventory
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../host/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Host
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hosts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hosts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hardware Inventory
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hardware Inventory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#lab-audio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lab Audio
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ewaste-recycled" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ewaste / Recycled
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Ewaste / Recycled">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pi-rack-3d-printed-redblack-tower" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pi Rack — 3D Printed Red/Black Tower
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#argos-deb-1921681127" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        argos-deb (192.168.1.127)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hw_reserve/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hardware Reserve
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../backup_drives/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backup Drive Rotation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../wishlist/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Wishlist
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../docker_inv/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker Inventory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../software_inventory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Software Inventory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../upgrade_radar/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Upgrade Radar
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Runbooks
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Runbooks
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cru_backup_workflow_runbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRU Backup Workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monitoring & Reports
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Monitoring & Reports
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../scan_results/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scan Results
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../disk_space/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Disk Space
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../system_info/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Info
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../services/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Services
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ping_report/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ping Report
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user_audit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Audit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mediastack
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Mediastack
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mediastack_apps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MediaStack Applications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../apps_to_investigate/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Apps to Investigate
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../git.commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../git_info/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git Info
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../code-examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Code Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../concerts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concerts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vinyl_collection.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Albums
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fire_emblem_chronology/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fire Emblem Chronology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#lab-audio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lab Audio
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ewaste-recycled" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ewaste / Recycled
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Ewaste / Recycled">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pi-rack-3d-printed-redblack-tower" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pi Rack — 3D Printed Red/Black Tower
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#argos-deb-1921681127" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        argos-deb (192.168.1.127)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="hardware-inventory">Hardware Inventory</h1>
+<p><em>Last updated: 2026-07-08</em>
+<em>Physical hosts only — VMs/containers documented in network_context.md</em>
+<em>Ordered by utility — least capable first, most capable last</em></p>
+<div class="admonition tip">
+<p class="admonition-title">Adding Photos</p>
+<p>Save host photos to <code>docs/images/hw/</code> and name them to match the image references below (e.g. <code>proxmox-deb.jpg</code>).</p>
+</div>
+<hr />
+<h2 id="lab-audio">Lab Audio</h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Model</th>
+<th>Status</th>
+<th>Location</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Logitech Z-680 5.1</td>
+<td>Z-680 (THX, Dolby Digital, DTS)</td>
+<td>⚠️ <strong>Partially functional</strong></td>
+<td>Control pod on Pi rack</td>
+<td>Only 1 speaker working. Sub caps blown — known failure mode for this model. Drew to recap sub or replace system.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="ewaste-recycled">Ewaste / Recycled</h2>
+<table>
+<thead>
+<tr>
+<th>Photo</th>
+<th>System</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="sys2" src="../images/hw/waiting-02-ewaste.jpg" width="100" /></td>
+<td>MSI H61M-P23 (B3) — LGA1155</td>
+<td>Broken CPU cooler, won't POST — recycled</td>
+</tr>
+<tr>
+<td>---</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>## lee-deb — Dell Inspiron 3647</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>--</td>
+<td>--</td>
+<td></td>
+</tr>
+<tr>
+<td><img alt="lee" src="../images/hw/lee-deb.jpg" width="300" /></td>
+<td><strong>Role:</strong> Immich photo server — memorial machine<br><strong>Make:</strong> Dell Inspiron 3647 (Small Form Factor)<br><strong>Chipset:</strong> Intel H81 (Haswell, 2013)<br><strong>CPU:</strong> Unknown — up to i7-4790 (4th gen)<br><strong>RAM:</strong> Unknown — max 16GB DDR3<br><strong>Storage:</strong> Samsung 870 EVO 1TB SSD (pending install)<br><strong>OS:</strong> Ubuntu Server 26.04 LTS (pending install)<br><strong>IP:</strong> Not yet assigned<br><strong>PSU:</strong> 220W — low-profile GPU only<br><strong>Name:</strong> lee — personal/memorial<br><strong>Best uses:</strong> Immich photo server, lightweight Linux utility box, PiHole<br><strong>Easy upgrades:</strong> SSD already planned. RAM cheap if needed.<br><strong>Notes:</strong> Sentimental machine — belongs to family. Original HDD preserved as-is.</td>
+<td></td>
+</tr>
+<tr>
+<td>---</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>## restic-deb → blaine-pve (192.168.1.40)</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>--</td>
+<td>--</td>
+<td></td>
+</tr>
+<tr>
+<td><img alt="eld" src="../images/hw/eld.jpg" width="300" /></td>
+<td><strong>Role:</strong> ⚠️ Planned repurpose — Proxmox VE node (blaine-pve). Currently Ubuntu 26.04 LTS.<br><strong>Motherboard:</strong> Gigabyte Z77-DS3H (Intel Z77, LGA1155)<br><strong>CPU:</strong> Intel Core i5-2500K @ 3.30GHz (Sandy Bridge 2011, 4c/4t)<br><strong>RAM:</strong> 32GB DDR3 (2x Samsung 8GB DDR3-1600 + 2x Timetec 8GB DDR3-1333) — upgraded 2026-06<br><strong>RAM max:</strong> 32GB DDR3 — maxed<br><strong>BIOS:</strong> AMI F8 (2012-08-20)<br><strong>OS:</strong> Ubuntu 26.04 LTS (kernel 7.0.0-22-generic) → Proxmox VE (planned)<br><strong>Form factor:</strong> Thermaltake white full tower — 2x CRU hot-swap bays, USB 3.0 front panel<br><strong>IP:</strong> 192.168.1.40<br><strong>Name (current):</strong> restic-deb — Greyhawk. <strong>Planned name:</strong> blaine-pve — Dark Tower (Blaine the Mono)<br><strong>CRU scripts:</strong> Committed to Gitea pre-wipe (192.168.1.3:3000/cos/scripts-restic-deb, commit 4ad5a94)<br><strong>Best uses:</strong> Proxmox node, CRU drive rotation (drives stay connected to PVE host), PBS mirror candidate</td>
+<td></td>
+</tr>
+<tr>
+<td>### Storage</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Device</td>
+<td>Type</td>
+<td>Size</td>
+</tr>
+<tr>
+<td>--------</td>
+<td>------</td>
+<td>------</td>
+</tr>
+<tr>
+<td>sdd</td>
+<td>SSD</td>
+<td>238.5GB</td>
+</tr>
+<tr>
+<td>sda</td>
+<td>HDD (external)</td>
+<td>3.6TB</td>
+</tr>
+<tr>
+<td>sdb</td>
+<td>HDD (external)</td>
+<td>3.6TB</td>
+</tr>
+<tr>
+<td>sdc</td>
+<td>HDD (external)</td>
+<td>2.7TB</td>
+</tr>
+<tr>
+<td>---</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>## truenas (192.168.1.5) — NAS Primary Storage</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>--</td>
+<td>--</td>
+<td></td>
+</tr>
+<tr>
+<td><img alt="freenas" src="../images/hw/freenas.jpg" width="300" /></td>
+<td><strong>Role:</strong> NAS — primary storage<br><strong>Motherboard:</strong> Gigabyte Z77-DS3H (Intel Z77, LGA1155) — ⚠️ pending replacement with temerant hardware<br><strong>CPU:</strong> Intel Core i5-3570K @ 3.40GHz (4 cores) — Ivy Bridge 2012 — ⚠️ pending replacement<br><strong>RAM:</strong> 32GB DDR3-1600 (2x Crucial Ballistix 8GB + 2x Crucial UDIMM 8GB) — upgraded 2026-06<br><strong>RAM max:</strong> 32GB DDR3 — maxed (pending upgrade to 32GB DDR4 via temerant hardware swap)<br><strong>BIOS:</strong> AMI F9 (2012-09-19) — CMOS battery replaced 2026-07-03 (board wasn't holding boot device order across power cycles)<br><strong>OS:</strong> TrueNAS CORE 13.0-U6.8 — migrated 2026-04-27<br><strong>Hostname:</strong> truenas-bsd — canonical name, confirmed live on git-ansible 2026-07-21 (<code>ping truenas-bsd</code> resolves 192.168.1.5). Matches fleet convention (shardik-pve1-deb, maturin-pve2-deb, aslan-pve3-deb, blaine-pve4-deb, babar-pve5-deb). Source was /etc/hosts on git-ansible, not the router's DHCP reservation (that field is <code>tag</code>, doesn't generate DNS records). ⚠️ Only fixed on git-ansible so far — rest of fleet got /etc/hosts from the last homelab_baseline.yml run and still holds freenas-bsd until baseline runs again. Box's own OS-level <code>hostname</code> still reports truenas.local (harmless, not network-resolvable, cosmetic only).<br><strong>NIC:</strong> Intel X540-T2 <code>ix0</code> — ✅ PRIMARY as of 2026-07-04, static 192.168.1.5/24, confirmed active/stable at 1000baseT full-duplex (capped by SG200-50 switch, not the card). Earlier "suspected DOA" diagnosis was wrong — both ports showing "no link" via <code>dhclient</code> was because the interfaces were never brought administratively up (<code>ifconfig up</code>), not a hardware fault; once brought up, ix0 came up clean. <code>ix1</code> still DOWN, untested further, low priority. Onboard <code>alc0</code> (AR8161, alc driver) — retired 2026-07-04, physically unplugged. Had been severely throughput-limited (~340kB/s regardless of protocol/client, cause traced to marginal hardware/cabling, never fully root-caused) before being fully replaced by ix0. USB NIC (ue0) retired earlier. Separately: Dell 0THGMP (Intel I350-T4 quad-port) tried 2026-07-04 as an alternative — caused continuous beeping + auto-shutdown on this board, looks like a BIOS/Option ROM/CSM issue specific to this aging Z77-DS3H board rather than the card itself (reportedly worked fine in another machine previously, possibly shardik) — not resolved, not installed.<br><strong>Form factor:</strong> Beige full tower ATX (~1999) — 5x CRU hot-swap bays, 1x CRU bay available, 2x internal mounts available<br><strong>Best uses:</strong> NAS — irreplaceable 90TB RAIDZ1 pool.<br><strong>History:</strong> Case bought 1999. TRYAGAIN pool survived a motherboard failure — imported in 30 minutes after emergency mobo swap. No data loss. Migrated from FreeNAS 11.3 to TrueNAS 13.0 on 2026-04-27.<br><br><strong>⭐ Planned Hardware Rebuild — temerant components:</strong><br>- Gigabyte AB350-Gaming (AMD B350, AM4)<br>- Ryzen 5 1600X (6c/12t)<br>- 32GB DDR4<br>- GTX 1080 Ti (Plex hardware transcoding)<br>- 500GB SSD for TrueNAS OS boot (replace USB drives)<br>- LSI 9207-8i or 9211-8i HBA (~$20-40 eBay) + 2x SFF-8087 breakout cables ⚠️ HBA not yet found — order if not located<br>- Future: up to 8 drives total — 1x CRU hot-swap + 2x internal mounts available</td>
+<td></td>
+</tr>
+<tr>
+<td>### Storage</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Pool</td>
+<td>Drives</td>
+<td>Size each</td>
+</tr>
+<tr>
+<td>------</td>
+<td>--------</td>
+<td>-----------</td>
+</tr>
+<tr>
+<td>TRYAGAIN</td>
+<td>5x (ada0-ada4)</td>
+<td>18.19TiB</td>
+</tr>
+<tr>
+<td>boot-pool</td>
+<td>1x USB (da1)</td>
+<td>29GB SanDisk</td>
+</tr>
+<tr>
+<td>### TRYAGAIN Drives</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Device</td>
+<td>Model</td>
+<td>Serial</td>
+</tr>
+<tr>
+<td>--------</td>
+<td>-------</td>
+<td>--------</td>
+</tr>
+<tr>
+<td>ada0</td>
+<td>Seagate Exos X20 ST20000NM007D</td>
+<td>ZVT6XFQC</td>
+</tr>
+<tr>
+<td>ada1</td>
+<td>Seagate Exos X20 ST20000NM007D</td>
+<td>ZVT7CXJR</td>
+</tr>
+<tr>
+<td>ada2</td>
+<td>Seagate Exos X20 ST20000NM007D</td>
+<td>ZVT7B8G6</td>
+</tr>
+<tr>
+<td>ada3</td>
+<td>Seagate Exos X20 ST20000NM007D</td>
+<td>ZVT7JN18</td>
+</tr>
+<tr>
+<td>ada4</td>
+<td>WD Ultrastar DC HC560 WUH722020BLE6L4</td>
+<td>9BHXKBKL</td>
+</tr>
+<tr>
+<td>### TRYAGAIN Datasets</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Dataset</td>
+<td>Type</td>
+<td>Used</td>
+</tr>
+<tr>
+<td>---------</td>
+<td>------</td>
+<td>------</td>
+</tr>
+<tr>
+<td>plex</td>
+<td>dataset</td>
+<td>~59TB</td>
+</tr>
+<tr>
+<td>jails</td>
+<td>dataset</td>
+<td>1.15TiB</td>
+</tr>
+<tr>
+<td>iocage</td>
+<td>dataset</td>
+<td>91.74GiB</td>
+</tr>
+<tr>
+<td>QUANTUM-g52439</td>
+<td>zvol</td>
+<td>25.61GiB</td>
+</tr>
+<tr>
+<td>### ZFS Health</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>- Last scrub: 2026-05-18 — repaired 1.11M, 0 errors</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>- ✅ ada4 replaced with WD HC560 WUH722020BLE6L4 — resilver complete 2026-06, pool HEALTHY</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>- ⚠️ boot-pool DEGRADED — USB boot drive needs replacement (parts available in reserve)</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>---</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>## Raspberry Pis</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Photo</td>
+<td>Hostname</td>
+<td>IP</td>
+</tr>
+<tr>
+<td>-------</td>
+<td>----------</td>
+<td>----</td>
+</tr>
+<tr>
+<td><img alt="pi3" src="../images/hw/pi3-deb.jpg" width="100" /></td>
+<td>pi3-deb</td>
+<td>192.168.1.124</td>
+</tr>
+<tr>
+<td><img alt="pi1" src="../images/hw/pi1-deb.jpg" width="100" /></td>
+<td>pi1-deb</td>
+<td>192.168.1.120</td>
+</tr>
+<tr>
+<td><img alt="pi2" src="../images/hw/pi2-deb.jpg" width="100" /></td>
+<td>pi2-deb</td>
+<td>192.168.1.121</td>
+</tr>
+<tr>
+<td>—</td>
+<td>pi2b (unassigned)</td>
+<td>TBD</td>
+</tr>
+<tr>
+<td><img alt="pi4" src="../images/hw/pi4-deb.jpg" width="100" /></td>
+<td>pi4-deb</td>
+<td>192.168.1.126</td>
+</tr>
+<tr>
+<td><img alt="octopi" src="../images/hw/octopi-deb.jpg" width="100" /></td>
+<td>octopi-pi4-deb</td>
+<td>192.168.1.122</td>
+</tr>
+<tr>
+<td><img alt="ha" src="../images/hw/ha-net.jpg" width="100" /></td>
+<td>ha-net</td>
+<td>192.168.1.125</td>
+</tr>
+<tr>
+<td><img alt="batocera" src="../images/hw/batocera.jpg" width="100" /></td>
+<td>batocera-deb</td>
+<td>192.168.1.123</td>
+</tr>
+<tr>
+<td><img alt="argos" src="../images/hw/argos-deb.jpg" width="100" /></td>
+<td>argos-deb</td>
+<td>192.168.1.127</td>
+</tr>
+</tbody>
+</table>
+<h3 id="pi-rack-3d-printed-redblack-tower">Pi Rack — 3D Printed Red/Black Tower</h3>
+<p><em>Photographed 2026-06-30. Desk location. Z-680 control pod sits on top shelf. 6-slot, 3-tier (2 per tier).</em></p>
+<p><img alt="Pi Rack" src="../images/pi_rack.svg" width="500" /></p>
+<table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Hostname</th>
+<th>IP</th>
+<th>Model</th>
+<th>Software</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Top</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Z-680 control pod rests here</td>
+</tr>
+<tr>
+<td>S1</td>
+<td>ha-net</td>
+<td>192.168.1.125</td>
+<td>RPi 4</td>
+<td>Home Assistant OS · Jellyfin · Vaultwarden</td>
+<td>Tier 1 left</td>
+</tr>
+<tr>
+<td>S2</td>
+<td>blank-dietpi-deb</td>
+<td>192.168.1.121</td>
+<td>RPi 2B</td>
+<td>DietPi</td>
+<td>Tier 1 right — role TBD</td>
+</tr>
+<tr>
+<td>S3</td>
+<td>backup-dietpi-deb</td>
+<td>192.168.1.126</td>
+<td>RPi 2B</td>
+<td>DietPi · Gitea mirror · Vaultwarden backup</td>
+<td>Tier 2 left</td>
+</tr>
+<tr>
+<td>S4</td>
+<td>retropi</td>
+<td>TBD</td>
+<td>RPi ?</td>
+<td>RetroPie</td>
+<td>Tier 2 right — EOL, kept for patching only</td>
+</tr>
+<tr>
+<td>S5</td>
+<td>batocera-deb</td>
+<td>192.168.1.123</td>
+<td>RPi 5</td>
+<td>Batocera</td>
+<td>Tier 3 left — 52Pi case</td>
+</tr>
+<tr>
+<td>S6</td>
+<td>pihole-pi-deb</td>
+<td>192.168.1.120</td>
+<td>RPi (armv6l)</td>
+<td>Pi-hole</td>
+<td>Tier 3 right — IP confirmed 2026-07-22 via live SSH, same box as pi1-deb/pihole-pi1-deb aliases</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="argos-deb-1921681127">argos-deb (192.168.1.127)</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="argos" src="../images/hw/argos-deb.jpg" width="300" /></td>
+<td><strong>Role:</strong> IoT field station — TBD<br><strong>Model:</strong> Raspberry Pi 4 Model B Rev 1.1 (BCM2711)<br><strong>RAM:</strong> 1GB (870MB available)<br><strong>Storage:</strong> 32GB PNY microSD (Bookworm 64-bit)<br><strong>OS:</strong> Raspberry Pi OS Bookworm 64-bit — onboarded ✅<br><strong>IP:</strong> 192.168.1.127<br><strong>Origin:</strong> Ewaste find — someone's serious IoT project<br><strong>Display:</strong> Official Raspberry Pi 7" touchscreen ✅ working<br><strong>Camera:</strong> Raspberry Pi Camera V2.1 — untested on Bookworm<br><strong>Cellular:</strong> Sixfab mPCI-E Base Shield V2 + Quectel EC25-A 4G LTE — needs SIM card<br><strong>Radio:</strong> Adafruit RFM9x LoRa — long range RF, GPIO connected<br><strong>Best uses:</strong> Mobile homelab node (Tailscale+LTE), LoRa gateway, security camera, HA kiosk display, field sensor station<br><strong>Easy upgrades:</strong> Add SIM card (Hologram.io), reconnect Sixfab shield, test LoRa radio</td>
+</tr>
+<tr>
+<td>---</td>
+<td></td>
+</tr>
+<tr>
+<td>## 3D Printers</td>
+<td></td>
+</tr>
+<tr>
+<td>Photo</td>
+<td>Printer</td>
+</tr>
+<tr>
+<td>-------</td>
+<td>---------</td>
+</tr>
+<tr>
+<td><img alt="ender3v1" src="../images/hw/ender3v1.jpg" width="100" /></td>
+<td>Creality Ender 3 V1</td>
+</tr>
+<tr>
+<td><img alt="mars3" src="../images/hw/mars3.jpg" width="100" /></td>
+<td>Elegoo Mars 3</td>
+</tr>
+<tr>
+<td><img alt="dreamer" src="../images/hw/dreamer.jpg" width="100" /></td>
+<td>Flashforge Dreamer</td>
+</tr>
+<tr>
+<td><img alt="ender3v2" src="../images/hw/ender3v2.jpg" width="100" /></td>
+<td>Creality Ender 3 V2</td>
+</tr>
+<tr>
+<td>---</td>
+<td></td>
+</tr>
+<tr>
+<td>## GPU Stock (undeployed)</td>
+<td></td>
+</tr>
+<tr>
+<td>Photo</td>
+<td>Item</td>
+</tr>
+<tr>
+<td>-------</td>
+<td>------</td>
+</tr>
+<tr>
+<td><img alt="1080" src="images/hw/gtx1080.jpg" width="100" /></td>
+<td>GTX 1080</td>
+</tr>
+<tr>
+<td><img alt="1080ti" src="../images/hw/gtx1080ti.jpg" width="100" /></td>
+<td>GTX 1080 Ti</td>
+</tr>
+<tr>
+<td>---</td>
+<td></td>
+</tr>
+<tr>
+<td>## pve3 (offsite — ThinkStation)</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>--</td>
+<td>--</td>
+</tr>
+<tr>
+<td><img alt="thinkstation" src="images/hw/thinkstation.jpg" width="300" /></td>
+<td><strong>Role:</strong> Proxmox VE node 4 — offsite<br><strong>Make:</strong> Lenovo ThinkStation (model unknown)<br><strong>CPU:</strong> Unknown<br><strong>RAM:</strong> Unknown<br><strong>Storage:</strong> Unknown<br><strong>OS:</strong> Proxmox VE<br><strong>Location:</strong> Offsite<br><strong>Tailscale:</strong> Not yet configured<br><strong>Best uses:</strong> Proxmox node 4 — offsite DR<br><strong>Notes:</strong> Needs full inventory, Tailscale, and documentation</td>
+</tr>
+<tr>
+<td>---</td>
+<td></td>
+</tr>
+<tr>
+<td>## Unknown Waiting System</td>
+<td></td>
+</tr>
+<tr>
+<td>Photo</td>
+<td>#</td>
+</tr>
+<tr>
+<td>-------</td>
+<td>---</td>
+</tr>
+<tr>
+<td><img alt="sys5" src="images/hw/waiting-05.jpg" width="100" /></td>
+<td>5</td>
+</tr>
+<tr>
+<td>---</td>
+<td></td>
+</tr>
+<tr>
+<td>## urnst-deb (192.168.1.27)</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>--</td>
+<td>--</td>
+</tr>
+<tr>
+<td><img alt="urnst" src="../images/hw/urnst-deb.jpg" width="300" /></td>
+<td><strong>Role:</strong> Hardware diagnostics + TBD — Proxmox node candidate<br><strong>Motherboard:</strong> Gigabyte AB350-Gaming-CF (AMD B350, AM4)<br><strong>CPU:</strong> AMD Ryzen 5 1600X (6c/12t, 3.6GHz)<br><strong>RAM:</strong> 16GB DDR4 2133 — upgraded 2026-06 (filled remaining slots from reserve)<br><strong>RAM max:</strong> 16GB DDR4 (4x 4GB) — maxed<br><strong>GPU:</strong> AMD Radeon HD 7450 — display only<br><strong>OS:</strong> Debian 13 (Trixie) — fresh install 2026-04-13<br><strong>Form factor:</strong> Thermaltake white full tower — 2x 5.25" bays, front USB<br><strong>IP:</strong> 192.168.1.27<br><strong>Name:</strong> Urnst — County of Urnst, Greyhawk<br><strong>Best uses:</strong> Proxmox node candidate, PBS backup server, general Linux server, CPU swap test bench<br><strong>Easy upgrades:</strong> Replace HD 7450 with GTX 1080/1080 Ti from stock.<br><strong>⚠️ Status:</strong> Administratively offline as of 2026-07-21 (intentional, confirmed by Chris — not a fault, "no route to host" during ansible run was expected).</td>
+</tr>
+<tr>
+<td>### Storage</td>
+<td></td>
+</tr>
+<tr>
+<td>Device</td>
+<td>Type</td>
+</tr>
+<tr>
+<td>--------</td>
+<td>------</td>
+</tr>
+<tr>
+<td>sda</td>
+<td>HDD</td>
+</tr>
+<tr>
+<td>sdb</td>
+<td>HDD</td>
+</tr>
+<tr>
+<td>sdc</td>
+<td>HDD</td>
+</tr>
+<tr>
+<td>---</td>
+<td></td>
+</tr>
+<tr>
+<td>## maturin (192.168.1.7) — Proxmox node 2</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>--</td>
+<td>--</td>
+</tr>
+<tr>
+<td><img alt="pve2" src="images/hw/pve2-deb.jpg" width="300" /></td>
+<td><strong>Role:</strong> Proxmox VE node 2<br><strong>Make:</strong> Dell OptiPlex 7050 (SFF)<br><strong>Motherboard:</strong> Dell 0NW6H5<br><strong>CPU:</strong> Intel Core i7-6700 @ 3.40GHz (4c/8t, Skylake 2015)<br><strong>RAM:</strong> 64GB DDR4 (4x16GB, DIMM1-4 — confirmed via <code>dmidecode -t memory</code> 2026-07-08, corrects prior stale 32GB entry)<br><strong>RAM max:</strong> 64GB DDR4 — maxed<br><strong>BIOS:</strong> Dell 1.11.0 (2018-11-01)<br><strong>OS:</strong> Proxmox VE / Debian 12<br><strong>IP:</strong> 192.168.1.7<br><strong>Form factor:</strong> Small form factor desktop<br><strong>Best uses:</strong> Proxmox node 2 — runs monitor-deb, git-ansible, docker-deb, mediastack-deb</td>
+</tr>
+<tr>
+<td>### Storage</td>
+<td></td>
+</tr>
+<tr>
+<td>Device</td>
+<td>Type</td>
+</tr>
+<tr>
+<td>--------</td>
+<td>------</td>
+</tr>
+<tr>
+<td>sda</td>
+<td>SSD</td>
+</tr>
+<tr>
+<td>nvme0n1</td>
+<td>NVMe</td>
+</tr>
+<tr>
+<td>### VMs on maturin</td>
+<td></td>
+</tr>
+<tr>
+<td>VMID</td>
+<td>Name</td>
+</tr>
+<tr>
+<td>------</td>
+<td>------</td>
+</tr>
+<tr>
+<td>106</td>
+<td>git-ansible</td>
+</tr>
+<tr>
+<td>107</td>
+<td>docker-deb</td>
+</tr>
+<tr>
+<td>113</td>
+<td>mediastack-deb</td>
+</tr>
+<tr>
+<td>900</td>
+<td>ubuntu-24.04-template</td>
+</tr>
+<tr>
+<td>---</td>
+<td></td>
+</tr>
+<tr>
+<td>## aslan (192.168.1.9) — Proxmox node 3</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>--</td>
+<td>--</td>
+</tr>
+<tr>
+<td><img alt="idee" src="../images/hw/idee-deb.jpg" width="300" /></td>
+<td><strong>Role:</strong> Proxmox VE node 3 — GPU passthrough host<br><strong>Motherboard:</strong> Gigabyte AB350-Gaming 3-CF (AMD B350, AM4)<br><strong>CPU:</strong> AMD Ryzen 5 1600X (6c/12t, 3.6GHz)<br><strong>RAM:</strong> ✅ 96GB DDR4-2666 (2x32GB + 2x16GB, mixed/asymmetric config — upgraded 2026-07-22, confirmed via <code>free -h</code> post-swap: 94GB usable + hypervisor overhead)<br><strong>RAM max:</strong> 128GB DDR4 — 32GB headroom remaining, would need the last 2x16GB swapped to 32GB for full max<br><strong>Storage:</strong> Samsung 970 EVO Plus 500GB NVMe (sdc — LVM root + thin pool), 3TB HDD (sda → /mnt/hdd3tb = SDA_store), 12TB HDD (sdb → /mnt/hdd12tb, 22 uncorrectable errors — non-critical only)<br><strong>GPU:</strong> GTX 1080 Ti — bound to vfio-pci (10de:1b06, 10de:10ef), IOMMU group 2<br><strong>OS:</strong> Proxmox VE 9.2.3<br><strong>IP:</strong> 192.168.1.9<br><strong>Name:</strong> Aslan — Guardian of the Beam, Dark Tower<br><strong>History:</strong> Was idee-deb (Greyhawk). Repurposed as Proxmox node 3 — 2026-06-16.<br><strong>Notes:</strong> No physical console — Ryzen has no iGPU and GPU is vfio. Manage via SSH/web UI only.</td>
+</tr>
+<tr>
+<td>### Storage Layout</td>
+<td></td>
+</tr>
+<tr>
+<td>Store</td>
+<td>Path</td>
+</tr>
+<tr>
+<td>-------</td>
+<td>------</td>
+</tr>
+<tr>
+<td>local</td>
+<td>/</td>
+</tr>
+<tr>
+<td>local-lvm</td>
+<td>thin pool</td>
+</tr>
+<tr>
+<td>SDA_store</td>
+<td>/mnt/pve/SDA_store</td>
+</tr>
+<tr>
+<td>hdd12tb</td>
+<td>/mnt/hdd12tb</td>
+</tr>
+<tr>
+<td>### VMs &amp; LXC on aslan</td>
+<td></td>
+</tr>
+<tr>
+<td>VMID</td>
+<td>Name</td>
+</tr>
+<tr>
+<td>------</td>
+<td>------</td>
+</tr>
+<tr>
+<td>104</td>
+<td>swarm02-worker</td>
+</tr>
+<tr>
+<td>105</td>
+<td>swarm03-worker</td>
+</tr>
+<tr>
+<td>108</td>
+<td>alma-rpm</td>
+</tr>
+<tr>
+<td>109</td>
+<td>rocky-rpm</td>
+</tr>
+<tr>
+<td>110</td>
+<td>pihole-book-deb</td>
+</tr>
+<tr>
+<td>111</td>
+<td>kasm-2404-deb</td>
+</tr>
+<tr>
+<td>115</td>
+<td>pbs</td>
+</tr>
+<tr>
+<td>---</td>
+<td></td>
+</tr>
+<tr>
+<td>## temerant-win (192.168.1.105) — ⭐ Donor system for TrueNAS rebuild</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>--</td>
+<td>--</td>
+</tr>
+<tr>
+<td><img alt="temerant" src="../images/hw/temerant-win.jpg" width="300" /></td>
+<td><strong>Role:</strong> Hardware donor for TrueNAS rebuild — pending data check<br><strong>Motherboard:</strong> Gigabyte AB350-Gaming (AMD B350, AM4)<br><strong>CPU:</strong> AMD Ryzen 5 1600X (6c/12t, 3.6GHz)<br><strong>RAM:</strong> 32GB DDR4 2133 (4x 8GB G.Skill F4-2400C15 — full 4 slots)<br><strong>RAM max:</strong> 64GB DDR4<br><strong>GPU:</strong> NVIDIA GeForce GTX 1080 Ti (11GB VRAM) ✅ already installed<br><strong>OS:</strong> Windows 10 Pro (1909 — EOL) — LaunchBox/ROM gaming<br><strong>Form factor:</strong> Mid-tower, tempered glass, AIO cooler, RGB<br><strong>IP:</strong> 192.168.1.105<br><strong>Name:</strong> Temerant — world of Kingkiller Chronicle (Rothfuss)<br><strong>Planned fate:</strong> Gut mobo + CPU + RAM + GPU + 500GB SSD → install into TrueNAS beige full tower. Temerant chassis retired.<br><strong>⚠️ Before gutting:</strong> Check 2x 3TB HDDs for important data. Move to urnst-deb or eld-win if needed.<br><strong>Notes:</strong> Currently used for LaunchBox ROM gaming (Z:\ROMs mapped from \freenas\plex\ROMs). RetroAchievements configured.</td>
+</tr>
+<tr>
+<td>### Storage</td>
+<td></td>
+</tr>
+<tr>
+<td>Device</td>
+<td>Type</td>
+</tr>
+<tr>
+<td>--------</td>
+<td>------</td>
+</tr>
+<tr>
+<td>Disk C:</td>
+<td>SSD</td>
+</tr>
+<tr>
+<td>Disk D:</td>
+<td>HDD</td>
+</tr>
+<tr>
+<td>Disk E:</td>
+<td>HDD</td>
+</tr>
+<tr>
+<td>---</td>
+<td></td>
+</tr>
+<tr>
+<td>## shardik (192.168.1.2) — Proxmox node 1</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>--</td>
+<td>--</td>
+</tr>
+<tr>
+<td><img alt="proxmox-deb" src="../images/hw/proxmox-deb.jpg" width="300" /></td>
+<td><strong>Role:</strong> Proxmox VE node 1 — primary hypervisor<br><strong>Motherboard:</strong> ASRock AB350M Pro4<br><strong>CPU:</strong> ❌ AMD Ryzen 7 2700X (8c/16t, 3.7GHz) — DEAD, confirmed 2026-07-21<br><strong>RAM:</strong> ✅ 64GB DDR4 2667MHz — upgraded 2026-06<br><strong>RAM max:</strong> 64GB — maxed<br><strong>BIOS:</strong> AMI P10.43<br><strong>OS:</strong> Proxmox VE / Debian 12<br><strong>Form factor:</strong> Cooler Master full tower — 5x CRU hot-swap bays, LG optical<br><strong>IP:</strong> 192.168.1.2<br><strong>ZFS:</strong> Masked off (systemd.mask=zfs-mount.service) — ZFS recovery failed 2026-05, node rebuilt<br><strong>⚠️ DOWN:</strong> CPU dead — needs AM4 replacement. Prior 2026-06-28 PSU/CMOS diagnosis superseded — that was a false resolution. No spare AM4 CPU in hw_reserve.md. Candidates to cannibalize: urnst-deb (Ryzen 5 1600X — listed as CPU swap test bench) or temerant-win (Ryzen 5 1600X — earmarked for TrueNAS rebuild). Sourcing decision pending Chris.<br><strong>Best uses:</strong> Primary hypervisor<br><strong>Easy upgrades:</strong> AM4 CPU path researched 2026-07-31 — board (ASRock AB350M Pro4) officially supports up to <strong>AMD Ryzen 9 5950X (16c/32t)</strong> per ASRock's spec page, once BIOS is updated to a version supporting Vermeer (5000 series). Board has no CPU-less BIOS flashback — the update requires a working supported CPU installed first (Summit Ridge/Pinnacle Ridge/Raven Ridge all qualify, so either 1600X candidate — urnst-deb or temerant-win — works for that step), then swap in the 5950X. Chris found a used 5950X at $293 on eBay 2026-07-31 (fair market price, $280–295 typical range) but listing is marked "for parts only" — not guaranteed functional, not yet purchased.</td>
+</tr>
+<tr>
+<td>### Storage</td>
+<td></td>
+</tr>
+<tr>
+<td>Device</td>
+<td>Type</td>
+</tr>
+<tr>
+<td>--------</td>
+<td>------</td>
+</tr>
+<tr>
+<td>nvme0n1</td>
+<td>NVMe</td>
+</tr>
+<tr>
+<td>sda</td>
+<td>HDD</td>
+</tr>
+<tr>
+<td>sdb</td>
+<td>HDD</td>
+</tr>
+<tr>
+<td>sdc</td>
+<td>HDD</td>
+</tr>
+<tr>
+<td>sdd</td>
+<td>HDD</td>
+</tr>
+<tr>
+<td>### VMs &amp; LXC on shardik</td>
+<td></td>
+</tr>
+<tr>
+<td>VMID</td>
+<td>Name</td>
+</tr>
+<tr>
+<td>------</td>
+<td>------</td>
+</tr>
+<tr>
+<td>102</td>
+<td>swarm01-manager</td>
+</tr>
+<tr>
+<td>---</td>
+<td></td>
+</tr>
+<tr>
+<td>## babar (192.168.1.12) — Proxmox node 5 ⭐ Most capable node in the cluster</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>--</td>
+<td>--</td>
+</tr>
+<tr>
+<td><img alt="babar" src="images/hw/babar.jpg" width="300" /></td>
+<td><strong>Role:</strong> Proxmox VE node 5 — joined cluster "wheel" 2026-07-08<br><strong>Make:</strong> Dell Pro Tower Plus QBT1250 (Serial 7VLF0K4)<br><strong>Motherboard:</strong> Dell 049TYW<br><strong>CPU:</strong> Intel Core Ultra 7 265 (20 cores, no hyperthreading, up to 6.5GHz, Arrow Lake)<br><strong>RAM:</strong> 128GB DDR5-4800 (4x32GB, running at 4400 MT/s configured)<br><strong>RAM max:</strong> 128GB — maxed ✅ dmidecode-confirmed 2026-07-21<br><strong>GPU:</strong> NVIDIA GeForce RTX 5060 (Blackwell) + Intel Arrow Lake-S integrated graphics — by far the newest GPU in the fleet, AV1 encode/decode capable<br><strong>BIOS:</strong> Dell 1.13.2 (2026-03-04)<br><strong>OS:</strong> Proxmox VE 9.2.4 (kernel 7.0.14-4-pve)<br><strong>NIC:</strong> Intel I219-LM<br><strong>IP:</strong> 192.168.1.12<br><strong>Name:</strong> Babar — elephant, Jean de Brunhoff's <em>Babar</em><br><strong>History:</strong> Fresh Dell install, default hostname "pve" — renamed to babar, enterprise repos disabled, joined to cluster 2026-07-08.<br><strong>Best uses:</strong> AI/Ollama (RTX 5060), Plex/Jellyfin hardware transcoding (AV1), heaviest VM workloads in the cluster, candidate to absorb shardik's primary-hypervisor role if instability continues.<br><strong>Notes:</strong> Significantly outclasses aslan/maturin/shardik/blaine on every axis — CPU, RAM, and GPU.</td>
+</tr>
+<tr>
+<td>### Storage</td>
+<td></td>
+</tr>
+<tr>
+<td>Device</td>
+<td>Type</td>
+</tr>
+<tr>
+<td>--------</td>
+<td>------</td>
+</tr>
+<tr>
+<td>nvme0n1</td>
+<td>NVMe</td>
+</tr>
+<tr>
+<td>### VMs &amp; LXC on babar</td>
+<td></td>
+</tr>
+<tr>
+<td>VMID</td>
+<td>Name</td>
+</tr>
+<tr>
+<td>------</td>
+<td>------</td>
+</tr>
+<tr>
+<td>111</td>
+<td>kasm-2404-deb</td>
+</tr>
+<tr>
+<td>102</td>
+<td>ollama</td>
+</tr>
+<tr>
+<td>---</td>
+<td></td>
+</tr>
+<tr>
+<td>## amontillado-win (192.168.1.100) ⭐ Best System</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>--</td>
+<td>--</td>
+</tr>
+<tr>
+<td><img alt="amontillado" src="../images/hw/amontillado.jpg" width="300" /></td>
+<td><strong>Role:</strong> Primary workstation / Hyper-V host / AI powerhouse<br><strong>Motherboard:</strong> MSI PRO Z690-A WIFI (MS-7D25)<br><strong>CPU:</strong> Intel i7-13700K (16 cores / 24 threads — Raptor Lake 2022)<br><strong>RAM:</strong> 128GB DDR5 4000MHz — 4x 32GB: G.Skill + Crucial<br><strong>RAM max:</strong> 128GB — maxed ✅ dmidecode-confirmed 2026-07-21<br><strong>BIOS:</strong> AMI A.F0 (2023-11-13)<br><strong>OS:</strong> Windows 11 + Hyper-V<br><strong>GPU:</strong> NVIDIA GeForce GTX 1080 Ti (11GB VRAM) + Intel UHD Graphics<br><strong>Form factor:</strong> Phanteks Eclipse P400A — mesh front, tempered glass, RGB<br><strong>IP:</strong> 192.168.1.100<br><strong>Name:</strong> Amontillado — Poe<br><strong>Best uses:</strong> Primary workstation, Hyper-V host, AI workloads, heavy compilation, anything that needs 128GB RAM<br><strong>Easy upgrades:</strong> Upgrade GPU to RTX 3090/4090 for serious AI work — i7-13700K won't bottleneck it.</td>
+</tr>
+<tr>
+<td>### Storage</td>
+<td></td>
+</tr>
+<tr>
+<td>Drive</td>
+<td>Size</td>
+</tr>
+<tr>
+<td>-------</td>
+<td>------</td>
+</tr>
+<tr>
+<td>Disk 0</td>
+<td>465GB</td>
+</tr>
+<tr>
+<td>Disk 1</td>
+<td>2.79TB</td>
+</tr>
+<tr>
+<td>Disk 2</td>
+<td>931GB</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../hosts/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Hosts">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Hosts
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../hw_reserve/" class="md-footer__link md-footer__link--next" aria-label="Next: Hardware Reserve">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Hardware Reserve
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2025 C. O'Shaughnessy as inspired by James Willett
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.footer"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../javascripts/checkbox_persist.js"></script>
+      
+    
+  </body>
+</html>

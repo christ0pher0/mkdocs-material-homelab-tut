@@ -1,0 +1,101 @@
+from graphviz import Digraph
+import os
+
+# Directories
+DOCS_DIR = os.path.join(os.path.dirname(__file__), '../docs')
+os.makedirs(DOCS_DIR, exist_ok=True)
+
+# Create a new directed graph
+dot = Digraph(comment='Home Lab Network Setup')
+
+# Add nodes
+nodes = {
+    'ONT': 'ONT',
+    'Router': 'Router',
+    'Firewall': 'Firewall',
+    'Switch': 'Managed Switch',
+    'WiFi': 'Wi-Fi Mesh AP',
+    'TrueNAS': 'TrueNAS Server',
+    'Proxmox1': 'Proxmox Node 1',
+    'Proxmox2': 'Proxmox Node 2',
+    'Proxmox3': 'Proxmox Node 3',
+    'Docker': 'Docker Host Machine',
+    'Servers': 'Servers',
+    'IoT': 'IoT Devices',
+    'Guest': 'Guest Network',
+    'VLANs': 'VLANs'
+}
+
+for key, label in nodes.items():
+    dot.node(key, label)
+
+# Add edges
+edges = [
+    ('ONT', 'Router'),
+    ('Router', 'Firewall'),
+    ('Firewall', 'Switch'),
+    ('Switch', 'WiFi'),
+    ('Switch', 'TrueNAS'),
+    ('Switch', 'Proxmox1'),
+    ('Switch', 'Proxmox2'),
+    ('Switch', 'Proxmox3'),
+    ('Switch', 'Docker'),
+    ('Switch', 'Servers'),
+    ('Switch', 'IoT'),
+    ('Switch', 'Guest'),
+    ('Switch', 'VLANs')
+]
+
+for start, end in edges:
+    dot.edge(start, end)
+
+# Save the diagram
+png_path = os.path.join(DOCS_DIR, 'home_lab_network_setup.png')
+dot.render(filename=os.path.join(DOCS_DIR, 'home_lab_network_setup'), format='png', cleanup=True)
+
+# Create the Markdown content
+markdown_content = f"""
+# Home Lab Network Setup
+
+![Home Lab Network Diagram](home_lab_network_setup.png)
+
+## Components
+
+- **ONT (Optical Network Terminal)**: The entry point for fiber optic internet.
+- **Router**: Manages network traffic and provides basic firewall functions.
+- **Firewall**: Provides advanced security features to protect the network.
+- **Managed Switch**: Distributes network connections to various devices.
+- **Wi-Fi Mesh AP**: Provides wireless network coverage throughout the home.
+- **TrueNAS Server**: Network-attached storage for data storage and management.
+- **Proxmox Nodes**: Three nodes for running virtual machines and containers.
+- **Docker Host Machine**: Runs Docker containers for various applications.
+- **Servers**: General-purpose servers for various tasks.
+- **IoT Devices**: Internet of Things devices connected to the network.
+- **Guest Network**: A separate network for guest devices.
+- **VLANs**: Virtual LANs for network segmentation and organization.
+
+## Network Flow
+
+1. **ONT** receives the fiber optic internet signal.
+2. The signal is passed to the **Router**.
+3. The **Router** forwards the traffic to the **Firewall** for security processing.
+4. The **Firewall** sends the traffic to the **Managed Switch**.
+5. The **Managed Switch** distributes the traffic to various devices:
+   - **Wi-Fi Mesh AP** for wireless coverage.
+   - **TrueNAS Server** for data storage.
+   - **Proxmox Nodes** for virtualization.
+   - **Docker Host Machine** for containerized applications.
+   - **Servers** for general tasks.
+   - **IoT Devices** for smart home functions.
+   - **Guest Network** for guest access.
+   - **VLANs** for network segmentation.
+
+This setup ensures a secure, efficient, and organized home lab network.
+"""
+
+# Save the Markdown content to a file
+md_path = os.path.join(DOCS_DIR, 'home_lab_network_setup.md')
+with open(md_path, 'w') as f:
+    f.write(markdown_content)
+
+print("Network diagram and Markdown file have been created successfully.")

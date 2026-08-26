@@ -1,0 +1,7 @@
+.md-typeset .task-list-item input[type="checkbox"] {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    -webkit-appearance: checkbox !important;
+    appearance: checkbox !important;
+    opacity: 1 !important;
+}
