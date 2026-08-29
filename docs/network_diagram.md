@@ -1,6 +1,6 @@
 # Network Diagram
 
-_Last update: 2026-08-27 03:10:07_
+_Last update: 2026-08-28 03:10:07_
 
 ```mermaid
 graph LR
@@ -30,6 +30,8 @@ graph LR
     Switch --> babar
     immich_deb["immich-deb<br/>192.168.1.21<br/>Debian/Ubuntu"]
     Switch --> immich_deb
+    web_deb["web-deb<br/>192.168.1.22<br/>Debian/Ubuntu"]
+    Switch --> web_deb
     kasm_2404_deb["kasm-2404-deb<br/>192.168.1.26<br/>Debian/Ubuntu"]
     Switch --> kasm_2404_deb
     urnst_deb["urnst-deb<br/>192.168.1.27<br/>Debian/Ubuntu"]
@@ -119,6 +121,7 @@ graph LR
     class pbs_deb linux
     class babar linux
     class immich_deb linux
+    class web_deb linux
     class kasm_2404_deb linux
     class urnst_deb linux
     class monitor_deb linux
