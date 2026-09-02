@@ -1,5 +1,5 @@
 # Hosts
-_Last update: 2026-08-31 03:05:01_
+_Last update: 2026-09-01 03:05:01_
 
 | # | Hostname | IP Address | MAC Address | OS | Status | Notes |
 |---|----------|------------|------------|----|--------|-------|
@@ -34,4 +34,4 @@ _Last update: 2026-08-31 03:05:01_
 | 29 | tools-deb | 192.168.1.125 | E4:5F:01:65:56:EE | Debian/Ubuntu Linux | Online | ------ |
 | 30 | backup-dietpi-deb | 192.168.1.126 | B8:27:EB:E4:37:9E | Debian/Ubuntu Linux | Online | ------ |
 | 31 | unknown-192.168.1.129 | 192.168.1.129 | 18:66:DA:4B:65:59 | Linux 5.3 - 5.4 | Online | ------ |
-| 32 | tv1-media | 192.168.1.140 | A8:23:FE:13:A9:D1 | Media Device | Online | ------ |
+| 32 | unknown-192.168.1.217 | 192.168.1.217 | 16:D1:97:80:67:08 | Unknown | Online | ------ |
