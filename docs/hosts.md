@@ -1,5 +1,5 @@
 # Hosts
-_Last update: 2026-09-02 03:05:01_
+_Last update: 2026-09-03 03:05:02_
 
 | # | Hostname | IP Address | MAC Address | OS | Status | Notes |
 |---|----------|------------|------------|----|--------|-------|
@@ -30,7 +30,8 @@ _Last update: 2026-09-02 03:05:01_
 | 25 | DIGIDIOT-DC1 | 192.168.1.110 | 00:15:5D:00:B3:22 | Microsoft Windows Server 2016 | Online | ------ |
 | 26 | pihole-pi1-deb | 192.168.1.120 | B8:27:EB:EC:8D:EA | Debian/Ubuntu Linux | Online | ------ |
 | 27 | blank-dietpi-deb | 192.168.1.121 | B8:27:EB:E5:8C:02 | Debian/Ubuntu Linux | Online | ------ |
-| 28 | tools-deb | 192.168.1.125 | E4:5F:01:65:56:EE | Debian/Ubuntu Linux | Online | ------ |
-| 29 | backup-dietpi-deb | 192.168.1.126 | B8:27:EB:E4:37:9E | Debian/Ubuntu Linux | Online | ------ |
-| 30 | unknown-192.168.1.129 | 192.168.1.129 | 18:66:DA:4B:65:59 | Linux 5.3 - 5.4 | Online | ------ |
-| 31 | tv1-media | 192.168.1.140 | A8:23:FE:13:A9:D1 | Media Device | Online | ------ |
+| 28 | octopi-pi4-deb | 192.168.1.122 | DC:A6:32:5E:04:08 | Debian/Ubuntu Linux | Online | ------ |
+| 29 | tools-deb | 192.168.1.125 | E4:5F:01:65:56:EE | Debian/Ubuntu Linux | Online | ------ |
+| 30 | backup-dietpi-deb | 192.168.1.126 | B8:27:EB:E4:37:9E | Debian/Ubuntu Linux | Online | ------ |
+| 31 | unknown-192.168.1.129 | 192.168.1.129 | 18:66:DA:4B:65:59 | Linux 5.3 - 5.4 | Online | ------ |
+| 32 | tv1-media | 192.168.1.140 | A8:23:FE:13:A9:D1 | Media Device | Online | ------ |

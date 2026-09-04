@@ -1,8 +1,8 @@
 # Network Scan Results
 
-_Last updated: 2026-09-02 03:00:22_
+_Last updated: 2026-09-03 03:00:23_
 
-_Hosts found: 31_
+_Hosts found: 32_
 
 ## Status
 
@@ -35,6 +35,7 @@ _Hosts found: 31_
 | 192.168.1.110 | DIGIDIOT-DC1 | Microsoft Windows Server 2016 | 53/dns, 80/http, 135/msrpc, 139/netbios, 443/https, 445/smb | 00:15:5D:00:B3:22 |
 | 192.168.1.120 | pihole-pi1-deb | Debian/Ubuntu Linux | 22/ssh, 53/dns, 80/http, 443/https | B8:27:EB:EC:8D:EA |
 | 192.168.1.121 | blank-dietpi-deb | Debian/Ubuntu Linux | 22/ssh, 80/http | B8:27:EB:E5:8C:02 |
+| 192.168.1.122 | octopi-pi4-deb | Debian/Ubuntu Linux | 22/ssh, 80/http, 443/https, 9100/node-exporter | DC:A6:32:5E:04:08 |
 | 192.168.1.125 | tools-deb | Debian/Ubuntu Linux | 22/ssh, 111/rpcbind | E4:5F:01:65:56:EE |
 | 192.168.1.126 | backup-dietpi-deb | Debian/Ubuntu Linux | 22/ssh, 80/http, 3000/grafana | B8:27:EB:E4:37:9E |
 | 192.168.1.129 | unknown-192.168.1.129 | Linux 5.3 - 5.4 | 22/ssh, 111/rpcbind, 139/netbios, 445/smb | 18:66:DA:4B:65:59 |
