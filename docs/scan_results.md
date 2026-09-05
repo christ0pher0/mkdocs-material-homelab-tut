@@ -1,6 +1,6 @@
 # Network Scan Results
 
-_Last updated: 2026-09-03 03:00:23_
+_Last updated: 2026-09-04 03:00:23_
 
 _Hosts found: 32_
 
@@ -18,7 +18,7 @@ _Hosts found: 32_
 | 192.168.1.11 | blaine | Unknown | 22/ssh, 8006/proxmox | 90:2B:34:5E:B0:A2 |
 | 192.168.1.12 | babar | Unknown | 22/ssh, 8006/proxmox | D4:A2:CD:98:0A:83 |
 | 192.168.1.13 | unknown-192.168.1.13 | Unknown | none detected | 00:15:5D:00:B3:23 |
-| 192.168.1.20 | ollama | Linux 5.3 - 5.4 | 22/ssh | BC:24:11:84:AF:CB |
+| 192.168.1.20 | ollama | Linux 3.2.0 | 22/ssh | BC:24:11:84:AF:CB |
 | 192.168.1.21 | immich-deb | Debian/Ubuntu Linux | 22/ssh | BC:24:11:76:B2:0D |
 | 192.168.1.22 | web-deb | Debian/Ubuntu Linux | 22/ssh, 80/http | BC:24:11:DE:88:99 |
 | 192.168.1.26 | kasm-2404-deb | Debian/Ubuntu Linux | 22/ssh, 443/https, 8080/http-proxy, 9100/node-exporter | BC:24:11:D7:B3:48 |
