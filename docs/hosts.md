@@ -1,5 +1,5 @@
 # Hosts
-_Last update: 2026-09-04 03:05:01_
+_Last update: 2026-09-05 03:05:01_
 
 | # | Hostname | IP Address | MAC Address | OS | Status | Notes |
 |---|----------|------------|------------|----|--------|-------|
@@ -13,7 +13,7 @@ _Last update: 2026-09-04 03:05:01_
 | 8 | blaine | 192.168.1.11 | 90:2B:34:5E:B0:A2 | Unknown | Online | ------ |
 | 9 | babar | 192.168.1.12 | D4:A2:CD:98:0A:83 | Unknown | Online | ------ |
 | 10 | unknown-192.168.1.13 | 192.168.1.13 | 00:15:5D:00:B3:23 | Unknown | Online | ------ |
-| 11 | ollama | 192.168.1.20 | BC:24:11:84:AF:CB | Linux 3.2.0 | Online | ------ |
+| 11 | ollama | 192.168.1.20 | BC:24:11:84:AF:CB | Linux 5.3 - 5.4 | Online | ------ |
 | 12 | immich-deb | 192.168.1.21 | BC:24:11:76:B2:0D | Debian/Ubuntu Linux | Online | ------ |
 | 13 | web-deb | 192.168.1.22 | BC:24:11:DE:88:99 | Debian/Ubuntu Linux | Online | ------ |
 | 14 | kasm-2404-deb | 192.168.1.26 | BC:24:11:D7:B3:48 | Debian/Ubuntu Linux | Online | ------ |
