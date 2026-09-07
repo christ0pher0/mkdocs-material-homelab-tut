@@ -1,8 +1,8 @@
 # Network Scan Results
 
-_Last updated: 2026-09-05 03:00:22_
+_Last updated: 2026-09-06 03:00:30_
 
-_Hosts found: 32_
+_Hosts found: 33_
 
 ## Status
 
@@ -31,6 +31,7 @@ _Hosts found: 32_
 | 192.168.1.52 | alma-rpm | RHEL/Rocky/Alma Linux | 22/ssh, 80/http, 9100/node-exporter | BC:24:11:E5:47:A1 |
 | 192.168.1.53 | plow-rpm | RHEL/Rocky/Alma Linux | 22/ssh, 111/rpcbind, 8000/http-alt | BC:24:11:80:24:7F |
 | 192.168.1.100 | amontillado-win | Windows | 22/ssh, 135/msrpc, 139/netbios, 445/smb | 04:7C:16:C1:44:8E |
+| 192.168.1.104 | work-win | Windows | none detected | 9C:29:76:42:1E:AE |
 | 192.168.1.106 | fortunato-win | Windows | none detected | 00:15:5D:00:B3:1A |
 | 192.168.1.110 | DIGIDIOT-DC1 | Microsoft Windows Server 2016 | 53/dns, 80/http, 135/msrpc, 139/netbios, 443/https, 445/smb | 00:15:5D:00:B3:22 |
 | 192.168.1.120 | pihole-pi1-deb | Debian/Ubuntu Linux | 22/ssh, 53/dns, 80/http, 443/https | B8:27:EB:EC:8D:EA |
