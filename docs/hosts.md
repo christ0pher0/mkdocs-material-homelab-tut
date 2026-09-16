@@ -1,5 +1,5 @@
 # Hosts
-_Last update: 2026-09-14 03:05:01_
+_Last update: 2026-09-15 03:05:02_
 
 | # | Hostname | IP Address | MAC Address | OS | Status | Notes |
 |---|----------|------------|------------|----|--------|-------|
@@ -35,3 +35,4 @@ _Last update: 2026-09-14 03:05:01_
 | 30 | backup-dietpi-deb | 192.168.1.126 | B8:27:EB:E4:37:9E | Debian/Ubuntu Linux | Online | ------ |
 | 31 | XBATOCERA | 192.168.1.129 | 18:66:DA:4B:65:59 | Linux 5.3 - 5.4 | Online | ------ |
 | 32 | tv1-media | 192.168.1.140 | A8:23:FE:13:A9:D1 | Media Device | Online | ------ |
+| 33 | LGwebOSTV | 192.168.1.177 | 74:E6:B8:6B:63:8F | Linux 3.11 - 4.1 | Online | ------ |
