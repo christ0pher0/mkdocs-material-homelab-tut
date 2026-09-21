@@ -1,8 +1,8 @@
 # Network Scan Results
 
-_Last updated: 2026-09-16 03:00:23_
+_Last updated: 2026-09-17 03:00:23_
 
-_Hosts found: 31_
+_Hosts found: 32_
 
 ## Status
 
@@ -14,6 +14,7 @@ _Hosts found: 31_
 | 192.168.1.5 | truenas-bsd | FreeBSD | 22/ssh, 80/http, 111/rpcbind, 139/netbios, 443/https, 445/smb | A0:36:9F:C8:3B:88 |
 | 192.168.1.7 | maturin | Unknown | 22/ssh, 8006/proxmox | D8:9E:F3:0C:62:CC |
 | 192.168.1.9 | aslan | Unknown | 22/ssh, 8006/proxmox | E0:D5:5E:62:9D:22 |
+| 192.168.1.10 | unknown-192.168.1.10 | Linux 2.6.9 - 2.6.27 | 22/ssh, 80/http, 443/https, 8080/http-proxy | 94:83:C4:5E:B1:27 |
 | 192.168.1.11 | blaine | Unknown | 22/ssh, 8006/proxmox | 90:2B:34:5E:B0:A2 |
 | 192.168.1.12 | babar | Unknown | 22/ssh, 8006/proxmox | D4:A2:CD:98:0A:83 |
 | 192.168.1.13 | unknown-192.168.1.13 | Unknown | none detected | 00:15:5D:00:B3:23 |
