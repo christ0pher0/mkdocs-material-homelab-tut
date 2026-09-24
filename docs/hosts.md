@@ -1,5 +1,5 @@
 # Hosts
-_Last update: 2026-09-22 03:05:01_
+_Last update: 2026-09-23 03:05:01_
 
 | # | Hostname | IP Address | MAC Address | OS | Status | Notes |
 |---|----------|------------|------------|----|--------|-------|
@@ -9,7 +9,7 @@ _Last update: 2026-09-22 03:05:01_
 | 4 | truenas-bsd | 192.168.1.5 | A0:36:9F:C8:3B:88 | FreeBSD | Online | ------ |
 | 5 | maturin | 192.168.1.7 | D8:9E:F3:0C:62:CC | Unknown | Online | ------ |
 | 6 | aslan | 192.168.1.9 | E0:D5:5E:62:9D:22 | Unknown | Online | ------ |
-| 7 | unknown-192.168.1.10 | 192.168.1.10 | 94:83:C4:5E:B1:27 | Linux 2.6.9 - 2.6.27 | Online | ------ |
+| 7 | GL-MT3000 | 192.168.1.10 | 94:83:C4:5E:B1:27 | Linux 2.6.9 - 2.6.27 | Online | ------ |
 | 8 | blaine | 192.168.1.11 | 90:2B:34:5E:B0:A2 | Unknown | Online | ------ |
 | 9 | babar | 192.168.1.12 | D4:A2:CD:98:0A:83 | Unknown | Online | ------ |
 | 10 | unknown-192.168.1.13 | 192.168.1.13 | 00:15:5D:00:B3:23 | Unknown | Online | ------ |
@@ -33,5 +33,4 @@ _Last update: 2026-09-22 03:05:01_
 | 28 | octopi-pi4-deb | 192.168.1.122 | DC:A6:32:5E:04:08 | Debian/Ubuntu Linux | Online | ------ |
 | 29 | tools-deb | 192.168.1.125 | E4:5F:01:65:56:EE | Debian/Ubuntu Linux | Online | ------ |
 | 30 | backup-dietpi-deb | 192.168.1.126 | B8:27:EB:E4:37:9E | Debian/Ubuntu Linux | Online | ------ |
-| 31 | unknown-192.168.1.129 | 192.168.1.129 | 18:66:DA:4B:65:59 | Linux 5.3 - 5.4 | Online | ------ |
-| 32 | tv1-media | 192.168.1.140 | A8:23:FE:13:A9:D1 | Media Device | Online | ------ |
+| 31 | XBATOCERA | 192.168.1.129 | 18:66:DA:4B:65:59 | Linux 5.3 - 5.4 | Online | ------ |
