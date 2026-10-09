@@ -1,6 +1,6 @@
 # Network Scan Results
 
-_Last updated: 2026-10-07 03:00:24_
+_Last updated: 2026-10-08 03:00:23_
 
 _Hosts found: 31_
 
@@ -38,4 +38,4 @@ _Hosts found: 31_
 | 192.168.1.125 | tools-deb | Debian/Ubuntu Linux | 22/ssh, 111/rpcbind | E4:5F:01:65:56:EE |
 | 192.168.1.126 | backup-dietpi-deb | Debian/Ubuntu Linux | 22/ssh, 80/http, 3000/grafana | B8:27:EB:E4:37:9E |
 | 192.168.1.129 | unknown-192.168.1.129 | Linux 5.3 - 5.4 | 22/ssh, 111/rpcbind, 139/netbios, 445/smb | 18:66:DA:4B:65:59 |
-| 192.168.1.217 | unknown-192.168.1.217 | Unknown | none detected | 16:D1:97:80:67:08 |
+| 192.168.1.140 | tv1-media | Media Device | 3000/grafana | A8:23:FE:13:A9:D1 |
