@@ -1,8 +1,8 @@
 # Network Scan Results
 
-_Last updated: 2026-10-15 03:00:23_
+_Last updated: 2026-10-16 03:00:24_
 
-_Hosts found: 32_
+_Hosts found: 33_
 
 ## Status
 
@@ -40,3 +40,4 @@ _Hosts found: 32_
 | 192.168.1.126 | backup-dietpi-deb | Debian/Ubuntu Linux | 22/ssh, 80/http, 3000/grafana | B8:27:EB:E4:37:9E |
 | 192.168.1.129 | XBATOCERA.lan | Linux 5.3 - 5.4 | 22/ssh, 111/rpcbind, 139/netbios, 445/smb | 18:66:DA:4B:65:59 |
 | 192.168.1.140 | tv1-media | Media Device | 3000/grafana | A8:23:FE:13:A9:D1 |
+| 192.168.1.217 | Pixel-8a.lan | Unknown | none detected | 16:D1:97:80:67:08 |
