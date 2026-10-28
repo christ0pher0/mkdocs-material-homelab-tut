@@ -1,6 +1,6 @@
 # Network Diagram
 
-_Last update: 2026-10-26 03:10:08_
+_Last update: 2026-10-27 03:10:07_
 
 ```mermaid
 graph LR
@@ -54,8 +54,6 @@ graph LR
     Switch --> alma_rpm
     plow_rpm["plow-rpm<br/>192.168.1.53<br/>RHEL/Rocky"]
     Switch --> plow_rpm
-    pi1_deb["pi1-deb<br/>192.168.1.120<br/>Debian/Ubuntu"]
-    Switch --> pi1_deb
     pihole_pi1_deb["pihole-pi1-deb<br/>192.168.1.120<br/>Debian/Ubuntu"]
     Switch --> pihole_pi1_deb
     pi2_deb["pi2-deb<br/>192.168.1.121<br/>Debian/Ubuntu"]
@@ -133,7 +131,6 @@ graph LR
     class rocky_rpm linux
     class alma_rpm linux
     class plow_rpm linux
-    class pi1_deb linux
     class pihole_pi1_deb linux
     class pi2_deb linux
     class blank_dietpi_deb linux
