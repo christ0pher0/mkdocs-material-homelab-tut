@@ -1,20 +1,21 @@
 # Network Scan Results
 
-_Last updated: 2026-10-27 03:00:23_
+_Last updated: 2026-10-28 03:00:27_
 
-_Hosts found: 30_
+_Hosts found: 31_
 
 ## Status
 
 | IP Address | Hostname | Operating System | Open Ports | MAC Address |
 |------------|----------|-----------------|------------|-------------|
 | 192.168.1.1 | router-net | Network Device | 22/ssh, 53/dns, 80/http, 443/https, 3000/grafana, 8080/http-proxy | 94:83:C4:AA:EE:FF |
+| 192.168.1.2 | shardik | Unknown | 22/ssh, 8006/proxmox | 70:85:C2:DC:1C:C8 |
 | 192.168.1.3 | git-ansible | Linux 2.6.32 | 22/ssh, 80/http, 8000/http-alt |  |
 | 192.168.1.4 | pbs-deb | Debian/Ubuntu Linux | 22/ssh, 111/rpcbind | BC:24:11:55:0B:AC |
 | 192.168.1.5 | truenas-bsd | FreeBSD | 22/ssh, 80/http, 111/rpcbind, 139/netbios, 443/https, 445/smb | A0:36:9F:C8:3B:88 |
 | 192.168.1.7 | maturin | Unknown | 22/ssh, 8006/proxmox | D8:9E:F3:0C:62:CC |
 | 192.168.1.9 | aslan | Unknown | 22/ssh, 8006/proxmox | E0:D5:5E:62:9D:22 |
-| 192.168.1.10 | unknown-192.168.1.10 | Linux 2.6.9 - 2.6.27 | 22/ssh, 80/http, 443/https, 8080/http-proxy | 94:83:C4:5E:B1:27 |
+| 192.168.1.10 | GL-MT3000.lan | Linux 2.6.9 - 2.6.27 | 22/ssh, 80/http, 443/https, 8080/http-proxy | 94:83:C4:5E:B1:27 |
 | 192.168.1.11 | blaine | Unknown | 22/ssh, 8006/proxmox | 90:2B:34:5E:B0:A2 |
 | 192.168.1.13 | unknown-192.168.1.13 | Unknown | none detected | 00:15:5D:00:B3:23 |
 | 192.168.1.21 | immich-deb | Debian/Ubuntu Linux | 22/ssh | BC:24:11:76:B2:0D |
@@ -36,5 +37,5 @@ _Hosts found: 30_
 | 192.168.1.122 | octopi-pi4-deb | Debian/Ubuntu Linux | 22/ssh, 80/http, 443/https, 9100/node-exporter | DC:A6:32:5E:04:08 |
 | 192.168.1.125 | tools-deb | Debian/Ubuntu Linux | 22/ssh, 111/rpcbind | E4:5F:01:65:56:EE |
 | 192.168.1.126 | backup-dietpi-deb | Debian/Ubuntu Linux | 22/ssh, 80/http, 3000/grafana | B8:27:EB:E4:37:9E |
-| 192.168.1.129 | unknown-192.168.1.129 | Linux 5.3 - 5.4 | 22/ssh, 111/rpcbind, 139/netbios, 445/smb | 18:66:DA:4B:65:59 |
-| 192.168.1.140 | tv1-media | Media Device | 3000/grafana | A8:23:FE:13:A9:D1 |
+| 192.168.1.129 | XBATOCERA.lan | Linux 5.3 - 5.4 | 22/ssh, 111/rpcbind, 139/netbios, 445/smb | 18:66:DA:4B:65:59 |
+| 192.168.1.217 | Pixel-8a.lan | Unknown | none detected | 16:D1:97:80:67:08 |
