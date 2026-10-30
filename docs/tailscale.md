@@ -1,5 +1,5 @@
 # Tailscale Network
-_Last updated: 2026-10-28_
+_Last updated: 2026-10-30_
 _Tailnet: taild502ad.ts.net_
 _MagicDNS enabled — hosts reachable by short name within tailnet_
 
@@ -12,9 +12,11 @@ _MagicDNS enabled — hosts reachable by short name within tailnet_
 | alma-rpm | 100.125.65.58 | alma-rpm.taild502ad.ts.net | Linux | 192.168.1.52 |
 | amontillado | 100.126.7.50 | amontillado.taild502ad.ts.net | Windows | 192.168.1.100 |
 | aslan | 100.104.111.22 | aslan.taild502ad.ts.net | Linux | 192.168.1.9 |
+| celene-arch | 100.85.67.88 | celene-arch.taild502ad.ts.net | Linux | 192.168.1.60 |
 | coe-thinkpad-p1-gen-4i *(offline)* | 100.81.219.113 | coe-thinkpad-p1-gen-4i.taild502ad.ts.net | Linux | — |
 | docker-deb | 100.121.121.10 | docker-deb.taild502ad.ts.net | Linux | 192.168.1.34 |
 | git-ansible | 100.68.195.68 | git-ansible.taild502ad.ts.net | Linux | 192.168.1.3 |
+| immich-deb | 100.108.109.5 | immich-deb.taild502ad.ts.net | Linux | — |
 | kasm-2404-deb | 100.80.14.29 | kasm-2404-deb.taild502ad.ts.net | Linux | 192.168.1.26 |
 | maturin | 100.75.181.63 | maturin.taild502ad.ts.net | Linux | 192.168.1.7 |
 | mediastack-deb | 100.103.127.40 | mediastack-deb.taild502ad.ts.net | Linux | 192.168.1.36 |

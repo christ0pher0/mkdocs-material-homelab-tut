@@ -1,6 +1,6 @@
 # Network IP Schema
 
-_Last updated: 2026-04-06_
+_Last updated: 2026-10-30_
 
 ## IP Range Assignments
 
@@ -8,7 +8,8 @@ _Last updated: 2026-04-06_
 |-------|---------|
 | 1-19 | Infrastructure (router, proxmox, NAS, network gear) |
 | 20-49 | Debian/Ubuntu servers, VMs, containers |
-| 50-69 | RPM servers (Rocky, Alma, RHEL) |
+| 50-59 | RPM servers (Rocky, Alma, RHEL) |
+| 60-69 | Other Linux, non-deb/rpm (Arch, CachyOS, etc.) |
 | 100-119 | Windows workstations |
 | 120-139 | Raspberry Pis |
 | 140-159 | TVs, media devices, Plex jails |
@@ -45,12 +46,17 @@ _Last updated: 2026-04-06_
 | 192.168.1.71 | pihole-book-deb | PiHole |
 | 192.168.1.72 | batocera-deb | Batocera retro gaming |
 
-### RPM Servers (50-69)
+### RPM Servers (50-59)
 | IP | Hostname | Description |
 |----|----------|-------------|
-| 192.168.1.80 | rocky-rpm | Rocky Linux (moving from .51) |
-| 192.168.1.81 | alma-rpm | AlmaLinux (moving from .52) |
-| 192.168.1.82 | plow-rpm | RHEL 9 Hyper-V VM (moving from .53) |
+| 192.168.1.51 | rocky-rpm | Rocky Linux |
+| 192.168.1.52 | alma-rpm | AlmaLinux |
+| 192.168.1.53 | plow-rpm | RHEL 9 Hyper-V VM (Snipe-IT) |
+
+### Other Linux, non-deb/rpm (60-69)
+| IP | Hostname | Description |
+|----|----------|-------------|
+| 192.168.1.60 | celene-arch | MacBook Pro 13" 2016, CachyOS (Wi-Fi reservation; Tailscale 100.85.67.88) |
 
 ### Windows Workstations (100-119)
 | IP | Hostname | Description |
@@ -100,9 +106,6 @@ _Last updated: 2026-04-06_
 
 | Host | Current IP | New IP | Status |
 |------|-----------|--------|--------|
-| rocky-rpm | 192.168.1.51 | 192.168.1.80 | Pending |
-| alma-rpm | 192.168.1.52 | 192.168.1.81 | Pending |
-| plow-rpm | 192.168.1.53 | 192.168.1.82 | Pending |
 | pi1-deb | 192.168.1.75 | 192.168.1.120 | Pending |
 | pi2-deb | 192.168.1.124 | 192.168.1.121 | Pending |
 | lg-tv-net | 192.168.1.105 | 192.168.1.142 | Pending |
@@ -112,4 +115,3 @@ _Last updated: 2026-04-06_
 | pixel8-droid | 192.168.1.202 | 192.168.1.201 | Pending |
 | fire-tablet-droid | 192.168.1.242 | 192.168.1.202 | Pending |
 | roomba-droid | 192.168.1.241 | 192.168.1.203 | Pending |
-

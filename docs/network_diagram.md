@@ -1,6 +1,6 @@
 # Network Diagram
 
-_Last update: 2026-10-28 03:10:02_
+_Last update: 2026-10-29 03:10:07_
 
 ```mermaid
 graph LR
@@ -26,8 +26,6 @@ graph LR
     Switch --> git_ansible_deb
     pbs_deb["pbs-deb<br/>192.168.1.4<br/>Debian/Ubuntu"]
     Switch --> pbs_deb
-    babar["babar<br/>192.168.1.12<br/>Linux"]
-    Switch --> babar
     immich_deb["immich-deb<br/>192.168.1.21<br/>Debian/Ubuntu"]
     Switch --> immich_deb
     web_deb["web-deb<br/>192.168.1.22<br/>Debian/Ubuntu"]
@@ -42,8 +40,6 @@ graph LR
     Switch --> pihole_book_deb
     docker_deb["docker-deb<br/>192.168.1.34<br/>Debian/Ubuntu"]
     Switch --> docker_deb
-    2404HV_deb["2404HV-deb<br/>192.168.1.35<br/>Debian/Ubuntu"]
-    Switch --> 2404HV_deb
     mediastack_deb["mediastack-deb<br/>192.168.1.36<br/>Debian/Ubuntu"]
     Switch --> mediastack_deb
     restic_deb["restic-deb<br/>192.168.1.40<br/>Debian/Ubuntu"]
@@ -56,24 +52,20 @@ graph LR
     Switch --> plow_rpm
     pihole_pi1_deb["pihole-pi1-deb<br/>192.168.1.120<br/>Debian/Ubuntu"]
     Switch --> pihole_pi1_deb
-    pi2_deb["pi2-deb<br/>192.168.1.121<br/>Debian/Ubuntu"]
-    Switch --> pi2_deb
     blank_dietpi_deb["blank-dietpi-deb<br/>192.168.1.121<br/>Debian/Ubuntu"]
     Switch --> blank_dietpi_deb
     octopi_pi4_deb["octopi-pi4-deb<br/>192.168.1.122<br/>Debian/Ubuntu"]
     Switch --> octopi_pi4_deb
-    batocera_deb["batocera-deb<br/>192.168.1.123<br/>Debian/Ubuntu"]
-    Switch --> batocera_deb
-    pi3_deb["pi3-deb<br/>192.168.1.124<br/>Debian/Ubuntu"]
-    Switch --> pi3_deb
     tools_deb["tools-deb<br/>192.168.1.125<br/>Debian/Ubuntu"]
     Switch --> tools_deb
-    pi4_deb["pi4-deb<br/>192.168.1.126<br/>Debian/Ubuntu"]
-    Switch --> pi4_deb
     backup_dietpi_deb["backup-dietpi-deb<br/>192.168.1.126<br/>Debian/Ubuntu"]
     Switch --> backup_dietpi_deb
     argos_deb["argos-deb<br/>192.168.1.127<br/>Debian/Ubuntu"]
     Switch --> argos_deb
+    batocera_deb["batocera-deb<br/>192.168.1.123<br/>Debian/Ubuntu"]
+    Switch --> batocera_deb
+    pi3_deb["pi3-deb<br/>192.168.1.124<br/>Debian/Ubuntu"]
+    Switch --> pi3_deb
     amontillado_win["amontillado-win<br/>192.168.1.100<br/>Windows"]
     Switch --> amontillado_win
     todash_win["todash-win<br/>192.168.1.103<br/>Windows"]
@@ -117,7 +109,6 @@ graph LR
     class maturin proxmox
     class git_ansible_deb linux
     class pbs_deb linux
-    class babar linux
     class immich_deb linux
     class web_deb linux
     class kasm_2404_deb linux
@@ -125,22 +116,19 @@ graph LR
     class monitor_deb linux
     class pihole_book_deb linux
     class docker_deb linux
-    class 2404HV_deb linux
     class mediastack_deb linux
     class restic_deb linux
     class rocky_rpm linux
     class alma_rpm linux
     class plow_rpm linux
     class pihole_pi1_deb linux
-    class pi2_deb linux
     class blank_dietpi_deb linux
     class octopi_pi4_deb linux
-    class batocera_deb linux
-    class pi3_deb linux
     class tools_deb linux
-    class pi4_deb linux
     class backup_dietpi_deb linux
     class argos_deb linux
+    class batocera_deb linux
+    class pi3_deb linux
     class amontillado_win windows
     class todash_win windows
     class work_win windows
