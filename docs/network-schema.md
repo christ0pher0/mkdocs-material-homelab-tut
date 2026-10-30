@@ -10,6 +10,7 @@ _Last updated: 2026-10-30_
 | 20-49 | Debian/Ubuntu servers, VMs, containers |
 | 50-59 | RPM servers (Rocky, Alma, RHEL) |
 | 60-69 | Other Linux, non-deb/rpm (Arch, CachyOS, etc.) |
+| 70-79 | Apple (macOS, iPadOS) |
 | 100-119 | Windows workstations |
 | 120-139 | Raspberry Pis |
 | 140-159 | TVs, media devices, Plex jails |
@@ -42,9 +43,6 @@ _Last updated: 2026-10-30_
 | 192.168.1.33 | server2204-hv-deb | Hyper-V Ubuntu 22.04 |
 | 192.168.1.34 | docker-deb | Docker host |
 | 192.168.1.35 | 2404HV-deb | Hyper-V Ubuntu 24.04 |
-| 192.168.1.70 | octopi-deb | OctoPrint (3D printer) |
-| 192.168.1.71 | pihole-book-deb | PiHole |
-| 192.168.1.72 | batocera-deb | Batocera retro gaming |
 
 ### RPM Servers (50-59)
 | IP | Hostname | Description |
@@ -57,6 +55,12 @@ _Last updated: 2026-10-30_
 | IP | Hostname | Description |
 |----|----------|-------------|
 | 192.168.1.60 | celene-arch | MacBook Pro 13" 2016, CachyOS (Wi-Fi reservation; Tailscale 100.85.67.88) |
+
+### Apple (70-79)
+| IP | Hostname | Description |
+|----|----------|-------------|
+| 192.168.1.70 | ket-mac | macOS (Golden Gate-capable), Wi-Fi reservation; Ansible user beygraf; formerly tahoe-mac |
+| 192.168.1.71 | ipad-ios | iPad (Wi-Fi reservation; not managed by Ansible) |
 
 ### Windows Workstations (100-119)
 | IP | Hostname | Description |
