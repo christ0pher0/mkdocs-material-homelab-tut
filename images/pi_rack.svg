@@ -1,0 +1,81 @@
+<svg viewBox="0 0 340 530" xmlns="http://www.w3.org/2000/svg">
+  <rect width="340" height="530" fill="#1a1a1a" rx="8"/>
+  <text x="170" y="26" text-anchor="middle" font-size="13" font-weight="600" fill="#f0f0f0">Pi Rack — 3D Printed Tower</text>
+  <text x="170" y="42" text-anchor="middle" font-size="10" fill="#888888">Red/Black · Desk · Z-680 pod on top</text>
+
+  <!-- Z-680 pod -->
+  <rect x="60" y="52" width="220" height="28" rx="4" fill="#2a2a2a" stroke="#444" stroke-width="1"/>
+  <text x="170" y="70" text-anchor="middle" font-size="10" fill="#aaaaaa">Z-680 Control Pod</text>
+
+  <!-- Rack frame -->
+  <rect x="40" y="88" width="260" height="408" rx="6" fill="none" stroke="#c0392b" stroke-width="2.5"/>
+  <line x1="40" y1="224" x2="300" y2="224" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="4,2"/>
+  <line x1="40" y1="360" x2="300" y2="360" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="4,2"/>
+  <text x="28" y="168" text-anchor="middle" font-size="8" fill="#c0392b" transform="rotate(-90,28,168)">TIER 1</text>
+  <text x="28" y="304" text-anchor="middle" font-size="8" fill="#c0392b" transform="rotate(-90,28,304)">TIER 2</text>
+  <text x="28" y="440" text-anchor="middle" font-size="8" fill="#c0392b" transform="rotate(-90,28,440)">TIER 3</text>
+
+  <!-- SLOT 1 — ha-net -->
+  <rect x="52" y="98" width="110" height="114" rx="4" fill="#222222" stroke="#444" stroke-width="1"/>
+  <rect x="52" y="98" width="110" height="18" rx="4" fill="#27ae60"/>
+  <rect x="52" y="107" width="110" height="9" fill="#27ae60"/>
+  <text x="107" y="111" text-anchor="middle" font-size="9" font-weight="600" fill="#111111">ha-net</text>
+  <text x="154" y="109" text-anchor="end" font-size="7" fill="#004d20">S1</text>
+  <text x="107" y="129" text-anchor="middle" font-size="8" fill="#c0392b">192.168.1.125 · RPi 4</text>
+  <text x="107" y="143" text-anchor="middle" font-size="8" fill="#c0392b">Home Assistant OS</text>
+  <text x="107" y="156" text-anchor="middle" font-size="8" fill="#c0392b">Jellyfin · Vaultwarden</text>
+
+  <!-- SLOT 2 — blank-dietpi-deb -->
+  <rect x="178" y="98" width="110" height="114" rx="4" fill="#222222" stroke="#444" stroke-width="1"/>
+  <rect x="178" y="98" width="110" height="18" rx="4" fill="#27ae60"/>
+  <rect x="178" y="107" width="110" height="9" fill="#27ae60"/>
+  <text x="233" y="111" text-anchor="middle" font-size="9" font-weight="600" fill="#111111">blank-dietpi-deb</text>
+  <text x="280" y="109" text-anchor="end" font-size="7" fill="#004d20">S2</text>
+  <text x="233" y="129" text-anchor="middle" font-size="8" fill="#c0392b">192.168.1.121 · RPi 2B</text>
+  <text x="233" y="143" text-anchor="middle" font-size="8" fill="#c0392b">DietPi</text>
+  <text x="233" y="156" text-anchor="middle" font-size="8" fill="#c0392b">Role TBD</text>
+
+  <!-- SLOT 3 — backup-dietpi-deb -->
+  <rect x="52" y="234" width="110" height="114" rx="4" fill="#222222" stroke="#444" stroke-width="1"/>
+  <rect x="52" y="234" width="110" height="18" rx="4" fill="#27ae60"/>
+  <rect x="52" y="243" width="110" height="9" fill="#27ae60"/>
+  <text x="107" y="247" text-anchor="middle" font-size="9" font-weight="600" fill="#111111">backup-dietpi-deb</text>
+  <text x="154" y="245" text-anchor="end" font-size="7" fill="#004d20">S3</text>
+  <text x="107" y="265" text-anchor="middle" font-size="8" fill="#c0392b">192.168.1.126 · RPi 2B</text>
+  <text x="107" y="279" text-anchor="middle" font-size="8" fill="#c0392b">DietPi</text>
+  <text x="107" y="292" text-anchor="middle" font-size="8" fill="#c0392b">Gitea · Vaultwarden</text>
+
+  <!-- SLOT 4 — retropi -->
+  <rect x="178" y="234" width="110" height="114" rx="4" fill="#222222" stroke="#444" stroke-width="1"/>
+  <rect x="178" y="234" width="110" height="18" rx="4" fill="#f39c12"/>
+  <rect x="178" y="243" width="110" height="9" fill="#f39c12"/>
+  <text x="233" y="247" text-anchor="middle" font-size="9" font-weight="600" fill="#111111">retropi</text>
+  <text x="280" y="245" text-anchor="end" font-size="7" fill="#7a4a00">S4</text>
+  <text x="233" y="265" text-anchor="middle" font-size="8" fill="#c0392b">IP TBD · RPi ?</text>
+  <text x="233" y="279" text-anchor="middle" font-size="8" fill="#c0392b">RetroPie</text>
+  <text x="233" y="292" text-anchor="middle" font-size="8" fill="#c0392b">EOL — review</text>
+
+  <!-- SLOT 5 — batocera-deb -->
+  <rect x="52" y="370" width="110" height="114" rx="4" fill="#222222" stroke="#444" stroke-width="1"/>
+  <rect x="52" y="370" width="110" height="18" rx="4" fill="#27ae60"/>
+  <rect x="52" y="379" width="110" height="9" fill="#27ae60"/>
+  <text x="107" y="383" text-anchor="middle" font-size="9" font-weight="600" fill="#111111">batocera-deb</text>
+  <text x="154" y="381" text-anchor="end" font-size="7" fill="#004d20">S5</text>
+  <text x="107" y="401" text-anchor="middle" font-size="8" fill="#c0392b">192.168.1.123 · RPi 5</text>
+  <text x="107" y="415" text-anchor="middle" font-size="8" fill="#c0392b">Batocera · 52Pi case</text>
+
+  <!-- SLOT 6 — pihole-pi-deb -->
+  <rect x="178" y="370" width="110" height="114" rx="4" fill="#222222" stroke="#444" stroke-width="1"/>
+  <rect x="178" y="370" width="110" height="18" rx="4" fill="#27ae60"/>
+  <rect x="178" y="379" width="110" height="9" fill="#27ae60"/>
+  <text x="233" y="383" text-anchor="middle" font-size="9" font-weight="600" fill="#111111">pihole-pi-deb</text>
+  <text x="280" y="381" text-anchor="end" font-size="7" fill="#004d20">S6</text>
+  <text x="233" y="401" text-anchor="middle" font-size="8" fill="#c0392b">IP TBD · RPi ?</text>
+  <text x="233" y="415" text-anchor="middle" font-size="8" fill="#c0392b">Pi-hole</text>
+
+  <!-- Legend -->
+  <rect x="52" y="504" width="10" height="8" fill="#27ae60" rx="1"/>
+  <text x="66" y="511" font-size="8" fill="#888888">Confirmed</text>
+  <rect x="130" y="504" width="10" height="8" fill="#f39c12" rx="1"/>
+  <text x="144" y="511" font-size="8" fill="#888888">Review</text>
+</svg>
